@@ -26,6 +26,9 @@ importers:
       react-dom:
         specifier: ^18
         version: 18.3.1(react@18.3.1)
+      types:
+        specifier: workspace:^
+        version: link:../../packages/types
     devDependencies:
       '@types/node':
         specifier: ^20
@@ -54,6 +57,9 @@ importers:
 
   apps/client:
     dependencies:
+      api:
+        specifier: workspace:^
+        version: link:../../packages/api
       next:
         specifier: 14.2.3
         version: 14.2.3(react-dom@18.3.1)(react@18.3.1)
@@ -63,6 +69,15 @@ importers:
       react-dom:
         specifier: ^18
         version: 18.3.1(react@18.3.1)
+      shared:
+        specifier: workspace:^
+        version: link:../../packages/shared
+      style:
+        specifier: workspace:^
+        version: link:../../packages/style
+      types:
+        specifier: workspace:^
+        version: link:../../packages/types
     devDependencies:
       '@types/node':
         specifier: ^20
@@ -88,6 +103,14 @@ importers:
       typescript:
         specifier: ^5
         version: 5.4.5
+
+  packages/api: {}
+
+  packages/shared: {}
+
+  packages/style: {}
+
+  packages/types: {}
 
 packages:
 
