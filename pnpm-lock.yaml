@@ -66,9 +66,6 @@ importers:
       shared:
         specifier: workspace:^
         version: link:../../packages/shared
-      style:
-        specifier: workspace:^
-        version: link:../../packages/style
       types:
         specifier: workspace:^
         version: link:../../packages/types
@@ -115,9 +112,6 @@ importers:
       shared:
         specifier: workspace:^
         version: link:../../packages/shared
-      style:
-        specifier: workspace:^
-        version: link:../../packages/style
       types:
         specifier: workspace:^
         version: link:../../packages/types
@@ -149,7 +143,26 @@ importers:
 
   packages/api: {}
 
-  packages/shared: {}
+  packages/shared:
+    dependencies:
+      '@radix-ui/react-slot':
+        specifier: ^1.0.2
+        version: 1.0.2(@types/react@18.3.3)(react@18.3.1)
+      class-variance-authority:
+        specifier: ^0.7.0
+        version: 0.7.0
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      lucide-react:
+        specifier: ^0.394.0
+        version: 0.394.0(react@18.3.1)
+      tailwind-merge:
+        specifier: ^2.3.0
+        version: 2.3.0
+      tailwindcss-animate:
+        specifier: ^1.0.7
+        version: 1.0.7(tailwindcss@3.4.4)
 
   packages/style: {}
 

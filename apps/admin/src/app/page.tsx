@@ -1,11 +1,12 @@
 import Image from "next/image";
 
-import { Test } from "shared";
+import { Test, Button } from "shared";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex flex-col items-center justify-between min-h-screen p-24">
       <Test />
+      <Button>button</Button>
     </main>
   );
 }

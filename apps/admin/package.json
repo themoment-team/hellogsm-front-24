@@ -14,8 +14,7 @@
     "react-dom": "^18",
     "types": "workspace:^",
     "shared": "workspace:^",
-    "api": "workspace:^",
-    "style": "workspace:^"
+    "api": "workspace:^"
   },
   "devDependencies": {
     "@types/node": "^20",
