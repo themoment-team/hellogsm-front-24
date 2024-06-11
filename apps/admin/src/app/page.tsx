@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 import { Test, Button } from "shared";
 
 export default function Home() {
