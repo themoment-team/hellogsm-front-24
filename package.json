@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "pnpm --filter client",
-    "admin": "pnpm --filter admin"
+    "admin": "pnpm --filter admin",
+    "storybook": "pnpm --filter storybook"
   },
   "keywords": [],
   "author": "",
