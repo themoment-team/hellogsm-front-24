@@ -14,5 +14,8 @@
   "dependencies": {
     "@tanstack/react-query": "^5.40.1",
     "axios": "^1.7.2"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.1"
   }
 }
