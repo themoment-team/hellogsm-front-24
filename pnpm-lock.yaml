@@ -130,6 +130,9 @@ importers:
       shared:
         specifier: workspace:^
         version: link:../../packages/shared
+      tailwind-config:
+        specifier: workspace:^
+        version: link:../../packages/tailwind-config
       tailwind-merge:
         specifier: ^2.3.0
         version: 2.3.0
