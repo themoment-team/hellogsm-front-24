@@ -1,10 +1,12 @@
-import { Test, Button } from "shared";
+import { Button } from "admin/components";
+
+import { Button as BTN } from "shared";
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-between min-h-screen p-24">
-      <Test />
-      <Button>button</Button>
-    </main>
+    <>
+      <BTN>button1</BTN>
+      <Button>button2</Button>
+    </>
   );
 }
