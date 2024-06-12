@@ -103,9 +103,21 @@ importers:
 
   apps/client:
     dependencies:
+      '@radix-ui/react-slot':
+        specifier: ^1.0.2
+        version: 1.0.2(@types/react@18.3.3)(react@18.3.1)
       api:
         specifier: workspace:^
         version: link:../../packages/api
+      class-variance-authority:
+        specifier: ^0.7.0
+        version: 0.7.0
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      lucide-react:
+        specifier: ^0.394.0
+        version: 0.394.0(react@18.3.1)
       next:
         specifier: 14.2.3
         version: 14.2.3(@babel/core@7.24.7)(react-dom@18.3.1)(react@18.3.1)
@@ -118,6 +130,12 @@ importers:
       shared:
         specifier: workspace:^
         version: link:../../packages/shared
+      tailwind-merge:
+        specifier: ^2.3.0
+        version: 2.3.0
+      tailwindcss-animate:
+        specifier: ^1.0.7
+        version: 1.0.7(tailwindcss@3.4.4)
       types:
         specifier: workspace:^
         version: link:../../packages/types
@@ -221,76 +239,6 @@ importers:
         version: 8.1.6(react-dom@18.3.1)(react@18.3.1)
       tailwindcss:
         specifier: ^3.4.4
-        version: 3.4.4
-      typescript:
-        specifier: ^5
-        version: 5.4.5
-
-  apps/test:
-    dependencies:
-      next:
-        specifier: 14.2.3
-        version: 14.2.3(@babel/core@7.24.7)(react-dom@18.3.1)(react@18.3.1)
-      react:
-        specifier: ^18
-        version: 18.3.1
-      react-dom:
-        specifier: ^18
-        version: 18.3.1(react@18.3.1)
-    devDependencies:
-      '@chromatic-com/storybook':
-        specifier: ^1.5.0
-        version: 1.5.0(react@18.3.1)
-      '@storybook/addon-essentials':
-        specifier: ^8.1.6
-        version: 8.1.6(@types/react-dom@18.3.0)(@types/react@18.3.3)(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1)
-      '@storybook/addon-interactions':
-        specifier: ^8.1.6
-        version: 8.1.6
-      '@storybook/addon-links':
-        specifier: ^8.1.6
-        version: 8.1.6(react@18.3.1)
-      '@storybook/addon-onboarding':
-        specifier: ^8.1.6
-        version: 8.1.6(react@18.3.1)
-      '@storybook/blocks':
-        specifier: ^8.1.6
-        version: 8.1.6(@types/react-dom@18.3.0)(@types/react@18.3.3)(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1)
-      '@storybook/nextjs':
-        specifier: ^8.1.6
-        version: 8.1.6(esbuild@0.20.2)(next@14.2.3)(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.5)(webpack@5.91.0)
-      '@storybook/react':
-        specifier: ^8.1.6
-        version: 8.1.6(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.5)
-      '@storybook/test':
-        specifier: ^8.1.6
-        version: 8.1.6
-      '@types/node':
-        specifier: ^20
-        version: 20.14.2
-      '@types/react':
-        specifier: ^18
-        version: 18.3.3
-      '@types/react-dom':
-        specifier: ^18
-        version: 18.3.0
-      eslint:
-        specifier: ^8
-        version: 8.57.0
-      eslint-config-next:
-        specifier: 14.2.3
-        version: 14.2.3(eslint@8.57.0)(typescript@5.4.5)
-      eslint-plugin-storybook:
-        specifier: ^0.8.0
-        version: 0.8.0(eslint@8.57.0)(typescript@5.4.5)
-      postcss:
-        specifier: ^8
-        version: 8.4.38
-      storybook:
-        specifier: ^8.1.6
-        version: 8.1.6(react-dom@18.3.1)(react@18.3.1)
-      tailwindcss:
-        specifier: ^3.4.1
         version: 3.4.4
       typescript:
         specifier: ^5
