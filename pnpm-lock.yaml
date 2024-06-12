@@ -60,15 +60,6 @@ importers:
       api:
         specifier: workspace:^
         version: link:../../packages/api
-      class-variance-authority:
-        specifier: ^0.7.0
-        version: 0.7.0
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
-      lucide-react:
-        specifier: ^0.394.0
-        version: 0.394.0(react@18.3.1)
       next:
         specifier: 14.2.3
         version: 14.2.3(@babel/core@7.24.7)(react-dom@18.3.1)(react@18.3.1)
@@ -84,12 +75,6 @@ importers:
       tailwind-config:
         specifier: workspace:^
         version: link:../../packages/tailwind-config
-      tailwind-merge:
-        specifier: ^2.3.0
-        version: 2.3.0
-      tailwindcss-animate:
-        specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@3.4.4)
       types:
         specifier: workspace:^
         version: link:../../packages/types
@@ -97,12 +82,6 @@ importers:
       '@types/node':
         specifier: ^20
         version: 20.14.2
-      '@types/react':
-        specifier: ^18
-        version: 18.3.3
-      '@types/react-dom':
-        specifier: ^18
-        version: 18.3.0
       autoprefixer:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.38)
@@ -130,15 +109,6 @@ importers:
       api:
         specifier: workspace:^
         version: link:../../packages/api
-      class-variance-authority:
-        specifier: ^0.7.0
-        version: 0.7.0
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
-      lucide-react:
-        specifier: ^0.394.0
-        version: 0.394.0(react@18.3.1)
       next:
         specifier: 14.2.3
         version: 14.2.3(@babel/core@7.24.7)(react-dom@18.3.1)(react@18.3.1)
@@ -154,12 +124,6 @@ importers:
       tailwind-config:
         specifier: workspace:^
         version: link:../../packages/tailwind-config
-      tailwind-merge:
-        specifier: ^2.3.0
-        version: 2.3.0
-      tailwindcss-animate:
-        specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@3.4.4)
       types:
         specifier: workspace:^
         version: link:../../packages/types
@@ -167,12 +131,6 @@ importers:
       '@types/node':
         specifier: ^20
         version: 20.14.2
-      '@types/react':
-        specifier: ^18
-        version: 18.3.3
-      '@types/react-dom':
-        specifier: ^18
-        version: 18.3.0
       eslint:
         specifier: ^8
         version: 8.57.0
@@ -272,24 +230,9 @@ importers:
 
   packages/shared:
     dependencies:
-      class-variance-authority:
-        specifier: ^0.7.0
-        version: 0.7.0
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
-      lucide-react:
-        specifier: ^0.394.0
-        version: 0.394.0(react@18.3.1)
       tailwind-config:
         specifier: workspace:^
         version: link:../tailwind-config
-      tailwind-merge:
-        specifier: ^2.3.0
-        version: 2.3.0
-      tailwindcss-animate:
-        specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@3.4.4)
 
   packages/tailwind-config: {}
 

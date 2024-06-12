@@ -11,22 +11,15 @@
   "dependencies": {
     "@radix-ui/react-slot": "^1.0.2",
     "api": "workspace:^",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.394.0",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
     "shared": "workspace:^",
     "tailwind-config": "workspace:^",
-    "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7",
     "types": "workspace:^"
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
     "autoprefixer": "^10.4.19",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
