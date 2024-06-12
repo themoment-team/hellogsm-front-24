@@ -2,17 +2,10 @@ import type { StorybookConfig } from "@storybook/nextjs";
 
 const config: StorybookConfig = {
   stories: [
-    "../src/**/*.mdx",
     "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-    "../**/*.stories.@(js|jsx|mjs|ts|tsx)",
     "../../../apps/client/src/components/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-    "../../../apps/client/src/app/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-    "../../../apps/client/src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
     "../../../apps/admin/src/components/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-    "../../../apps/admin/src/app/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-    "../../../apps/admin/src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
     "../../../packages/shared/src/components/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-    "../../../packages/shared/src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
   addons: [
     "@storybook/addon-onboarding",
@@ -23,8 +16,24 @@ const config: StorybookConfig = {
   ],
   framework: {
     name: "@storybook/nextjs",
-    options: {},
+    options: {
+      nextConfigPath: "../../admin/next.config.js",
+    },
   },
-  staticDirs: ["../public"],
+  staticDirs: ["../../admin/public", "../../client/public"],
+  babel: async (config) => ({
+    ...config,
+    presets: [
+      [
+        "next/babel",
+        {
+          "preset-react": {
+            runtime: "automatic",
+            importSource: "@emotion/react",
+          },
+        },
+      ],
+    ],
+  }),
 };
 export default config;
