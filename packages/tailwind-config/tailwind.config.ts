@@ -6,7 +6,6 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "../shared/src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "../../apps/client/src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "../../apps/client/src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "../../apps/client/src/pages/**/*.{ts,tsx}",
@@ -19,6 +18,13 @@ const config: Config = {
     "../../apps/admin/src/components/**/*.{ts,tsx}",
     "../../apps/admin/src/app/**/*.{ts,tsx}",
     "../../apps/admin/src/**/*.{ts,tsx}",
+    "../../packages/shared/src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "../../packages/shared/src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "../../packages/shared/src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "../../packages/shared/src/pages/**/*.{ts,tsx}",
+    "../../packages/shared/src/components/**/*.{ts,tsx}",
+    "../../packages/shared/src/app/**/*.{ts,tsx}",
+    "../../packages/shared/src/**/*.{ts,tsx}",
   ],
 
   prefix: "",
@@ -89,4 +95,5 @@ const config: Config = {
   },
   plugins: [require("tailwindcss-animate")],
 };
+
 export default config;
