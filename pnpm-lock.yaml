@@ -226,7 +226,11 @@ importers:
         specifier: ^5
         version: 5.4.5
 
-  packages/api: {}
+  packages/api:
+    dependencies:
+      shared:
+        specifier: workspace:^
+        version: link:../shared
 
   packages/shared:
     dependencies:
