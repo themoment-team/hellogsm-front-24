@@ -4,9 +4,30 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "pnpm --filter client",
+    "admin": "pnpm --filter admin",
+    "storybook": "pnpm --filter storybook"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.0.2",
+    "@storybook/react": "^8.1.6",
+    "@tanstack/react-query": "^5.40.1",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "axios": "^1.7.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.394.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.4"
+  }
 }
