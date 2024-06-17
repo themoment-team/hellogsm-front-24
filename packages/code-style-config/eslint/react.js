@@ -2,7 +2,6 @@ module.exports = {
   plugins: ["react", "react-refresh", "jsx-a11y"],
   extends: [
     "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
     "plugin:react/jsx-runtime",
     "plugin:@tanstack/eslint-plugin-query/recommended",
   ],

@@ -1,8 +1,12 @@
 {
-  "name": "code-style-config",
+  "name": "eslint-config-code-style",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "workspaces": [
+    "eslint",
+    "prettier"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

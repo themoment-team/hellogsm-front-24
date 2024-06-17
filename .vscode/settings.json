@@ -1,3 +1,7 @@
 {
-  "cSpell.words": ["tailwindcss"]
+  "cSpell.words": ["tailwindcss"],
+
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  }
 }
