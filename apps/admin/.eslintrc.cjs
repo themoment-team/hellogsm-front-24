@@ -1,8 +1,12 @@
-require('eslint-config-code-style/eslint/patch');
+require('eslint-config-custom/eslint/patch');
 
 module.exports = {
   env: { browser: true, es2020: true },
-  extends: ['next/core-web-vitals', 'eslint-config-code-style/eslint', 'eslint-config-code-style/eslint/react'],
+  extends: [
+    'next/core-web-vitals',
+    'eslint-config-custom/eslint',
+    'eslint-config-custom/eslint/react',
+  ],
   settings: {
     react: {
       // 현재 React 버전을 명시합니다.

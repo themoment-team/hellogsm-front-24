@@ -16,7 +16,7 @@
     "react-dom": "^18",
     "shared": "workspace:^",
     "tailwind-config": "workspace:^",
-    "eslint-config-code-style": "workspace:^",
+    "eslint-config-custom": "workspace:^",
     "types": "workspace:^"
   },
   "devDependencies": {
@@ -27,5 +27,5 @@
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.4"
   },
-  "prettier": "eslint-config-code-style/prettier"
+  "prettier": "eslint-config-custom/prettier"
 }

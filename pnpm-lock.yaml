@@ -75,7 +75,7 @@ importers:
       api:
         specifier: workspace:^
         version: link:../../packages/api
-      eslint-config-code-style:
+      eslint-config-custom:
         specifier: workspace:^
         version: link:../../packages/code-style-config
       next:
