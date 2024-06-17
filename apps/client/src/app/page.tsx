@@ -1,5 +1,6 @@
-import { Button } from "client/components";
 import { Button as BTN } from "shared";
+
+import { Button } from "client/components";
 
 export default function Home() {
   return (

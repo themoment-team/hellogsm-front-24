@@ -1,4 +1,3 @@
-// eslint-disable-next-line unused-imports/no-unused-imports-ts
 import * as React from 'react';
 
 import { Slot } from '@radix-ui/react-slot';
