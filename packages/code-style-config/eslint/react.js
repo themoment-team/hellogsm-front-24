@@ -1,5 +1,5 @@
 module.exports = {
-  plugins: ["react", "react-refresh", "jsx-a11y"],
+  plugins: ["react", "react-refresh", "jsx-a11y", "unused-imports", "sort-exports"],
   extends: [
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
@@ -96,6 +96,17 @@ module.exports = {
         alphabetize: { order: "asc", caseInsensitive: true },
       },
     ],
+    "no-restricted-imports": [
+      "error",
+      {
+        patterns: ["../"],
+      },
+    ],
+    "unused-imports/no-unused-imports-ts": ["error"],
+    "no-console": "error",
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "sort-exports/sort-exports": ["error"],
+    "no-unused-vars": "off",
     "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
     "jsx-a11y/alt-text": [
       "warn",
@@ -111,4 +122,12 @@ module.exports = {
     "react/no-unknown-property": "off",
     "react/prop-types": "off",
   },
+  overrides: [
+    {
+      files: ["**/style.ts", "**/*.stories.tsx"],
+      rules: {
+        "sort-exports/sort-exports": ["off"],
+      },
+    },
+  ],
 };

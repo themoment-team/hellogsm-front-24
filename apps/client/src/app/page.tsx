@@ -1,5 +1,4 @@
 import { Button } from "client/components";
-
 import { Button as BTN } from "shared";
 
 export default function Home() {

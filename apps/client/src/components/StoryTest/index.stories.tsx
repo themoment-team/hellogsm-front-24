@@ -1,6 +1,7 @@
+import StoryTest from ".";
+
 import type { Meta, StoryObj } from "@storybook/react";
 
-import StoryTest from ".";
 
 const meta = {
   title: "Client/StoryTest",
