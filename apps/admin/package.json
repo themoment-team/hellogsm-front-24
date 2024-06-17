@@ -16,6 +16,7 @@
     "react-dom": "^18",
     "shared": "workspace:^",
     "tailwind-config": "workspace:^",
+    "code-style-config": "workspace:^",
     "types": "workspace:^"
   },
   "devDependencies": {
