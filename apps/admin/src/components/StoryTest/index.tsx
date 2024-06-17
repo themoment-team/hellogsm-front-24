@@ -1,18 +1,15 @@
-'use client'
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 const StoryTest = () => {
-  const [count, setCount] = useState(0);  
+  const [count, setCount] = useState(0);
 
-  useEffect(() => {  
-    console.log(count);  
+  useEffect(() => {
+    console.log(count);
   }, []);
 
-  
-    return (
-    <h1 className="text-orange-500">StoryTest</h1>
-)
+  return <h1 className="text-orange-500">StoryTest</h1>;
 };
 
 export default StoryTest;
