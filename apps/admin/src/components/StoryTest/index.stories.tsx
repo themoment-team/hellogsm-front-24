@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import StoryTest from '.';
 
-import StoryTest from ".";
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
-  title: "Admin/StoryTest",
+  title: 'Admin/StoryTest',
   component: StoryTest,
 } satisfies Meta<typeof StoryTest>;
 
