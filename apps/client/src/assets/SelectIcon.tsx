@@ -1,8 +1,8 @@
-interface Props {
+interface SelectIconProps {
   style?: string;
 }
 
-const SelectIcon: React.FC<Props> = ({ style }) => (
+const SelectIcon: React.FC<SelectIconProps> = ({ style }) => (
   <svg
     className={style}
     width="11"
