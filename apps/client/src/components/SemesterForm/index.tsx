@@ -1,20 +1,14 @@
 import { UseFormRegister } from 'react-hook-form';
 
 import { SelectIcon } from 'client/assets';
-import { ScoreFormType } from 'client/types';
+import { ScoreFormType, SemesterId, SemesterType } from 'client/types';
 
 const array = [0, 1, 2, 3, 4, 5, 6, 7] as const;
 const scoreArray = ['A', 'B', 'C', 'D', 'E'] as const;
 
 interface SemesterFormProps {
-  title:
-    | '1학년 1학기'
-    | '1학년 2학기'
-    | '2학년 1학기'
-    | '2학년 2학기'
-    | '3학년 1학기'
-    | '3학년 2학기';
-  id: 'score1_1' | 'score1_2' | 'score2_1' | 'score2_2' | 'score3_1';
+  title: SemesterType;
+  id: SemesterId;
   register: UseFormRegister<ScoreFormType>;
 }
 
