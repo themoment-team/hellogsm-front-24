@@ -5,9 +5,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { SemesterForm } from 'client/components';
 import { scoreFormSchema } from 'client/schemas';
-import { ScoreFormType } from 'client/types';
+import { ScoreFormType, SemesterId, SemesterType } from 'client/types';
 
-const semesterArray = [
+const semesterArray: { title: SemesterType; id: SemesterId }[] = [
   { title: '1학년 1학기', id: 'score1_1' },
   { title: '1학년 2학기', id: 'score1_2' },
   { title: '2학년 1학기', id: 'score2_1' },
