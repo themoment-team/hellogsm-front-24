@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { SemesterForm } from 'client/components';
+import { cn } from 'client/lib/utils';
 import { scoreFormSchema } from 'client/schemas';
 import { ScoreFormType, SemesterId, SemesterType } from 'client/types';
 
@@ -25,14 +26,31 @@ const TestCalculatePage = () => {
   };
 
   return (
-    <div className="flex h-lvh items-center justify-center">
-      <form onSubmit={handleSubmit(handleFormSubmit)} className="flex flex-col items-center">
-        <div className="flex gap-6">
+    <div className={cn('flex', 'h-lvh', 'items-center', 'justify-center')}>
+      <form
+        onSubmit={handleSubmit(handleFormSubmit)}
+        className={cn('flex', 'flex-col', 'items-center')}
+      >
+        <div className={cn('flex', 'gap-6')}>
           {semesterArray.map(({ title, id }) => (
             <SemesterForm title={title} id={id} register={register} key={id} />
           ))}
         </div>
-        <button className="pointer mt-[100px] select-none rounded-[10px] border border-[#0F0921] px-[87.5px] py-[10px] text-[28px]/[40.54px] font-[700] text-[#0F0921]">
+        <button
+          className={cn(
+            'pointer',
+            'mt-[100px]',
+            'select-none',
+            'rounded-[10px]',
+            'border',
+            'border-[#0F0921]',
+            'px-[87.5px]',
+            'py-[10px]',
+            'text-[28px]/[40.54px]',
+            'font-[700]',
+            'text-[#0F0921]',
+          )}
+        >
           저장
         </button>
       </form>
