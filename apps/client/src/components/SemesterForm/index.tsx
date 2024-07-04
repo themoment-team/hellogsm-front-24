@@ -4,7 +4,7 @@ import { SelectIcon } from 'client/assets';
 import { cn } from 'client/lib/utils';
 import { ScoreFormType, SemesterId, SemesterType } from 'client/types';
 
-const array = [0, 1, 2, 3, 4, 5, 6, 7] as const;
+const selectCountArray = [0, 1, 2, 3, 4, 5, 6, 7] as const;
 const scoreArray = ['A', 'B', 'C', 'D', 'E'] as const;
 
 interface SemesterFormProps {
@@ -33,7 +33,7 @@ const SemesterForm: React.FC<SemesterFormProps> = ({ title, id, register }) => (
       {title}
     </h1>
     <div className={cn('flex', 'flex-col', 'gap-[13px]')}>
-      {array.map((item, idx) => (
+      {selectCountArray.map((item, idx) => (
         <div className={cn('relative', 'z-[1]', 'rounded-[6px]', 'bg-[#484453]')} key={item}>
           <select
             className={cn(
