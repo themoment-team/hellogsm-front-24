@@ -139,7 +139,23 @@ const SelectSeparator = React.forwardRef<
 ));
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
+const Example = () => {
+  return (
+    <Select>
+      <SelectTrigger className="w-[180px]">
+        <SelectValue placeholder="전형 선택" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="전형선택">전형선택</SelectItem>
+        <SelectItem value="일반전형">일반전형</SelectItem>
+        <SelectItem value="특별전형">특별전형</SelectItem>
+      </SelectContent>
+    </Select>
+  );
+};
+
 export {
+  Example,
   Select,
   SelectGroup,
   SelectValue,
