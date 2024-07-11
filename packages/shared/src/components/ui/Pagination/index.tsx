@@ -2,7 +2,7 @@ import * as React from "react";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 
 import { cn } from "shared/lib/utils";
-import { ButtonProps, buttonVariants } from "shared/components";
+import { ButtonProps, buttonVariants } from "shared/components/ui/Button";
 
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav
@@ -56,7 +56,8 @@ const PaginationPrevious = ({
     className={cn("gap-1 pl-2.5", className)}
     {...props}
   >
-    <ChevronLeft className="w-4 h-4 mr-[5.25rem]" />
+    <ChevronLeft className="w-4 h-4" />
+    <span>Previous</span>
   </PaginationLink>
 );
 PaginationPrevious.displayName = "PaginationPrevious";
@@ -68,7 +69,8 @@ const PaginationNext = ({ className, ...props }: React.ComponentProps<typeof Pag
     className={cn("gap-1 pr-2.5", className)}
     {...props}
   >
-    <ChevronRight className="w-4 h-4 ml-[2.875rem]" />
+    <span>Next</span>
+    <ChevronRight className="w-4 h-4" />
   </PaginationLink>
 );
 PaginationNext.displayName = "PaginationNext";
@@ -85,7 +87,37 @@ const PaginationEllipsis = ({ className, ...props }: React.ComponentProps<"span"
 );
 PaginationEllipsis.displayName = "PaginationEllipsis";
 
+const Example = () => {
+  return (
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious href="#" />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#">1</PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink isActive={true} href="#">
+            2
+          </PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#">3</PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationEllipsis />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationNext href="#" />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  );
+};
+
 export {
+  Example,
   Pagination,
   PaginationContent,
   PaginationEllipsis,
