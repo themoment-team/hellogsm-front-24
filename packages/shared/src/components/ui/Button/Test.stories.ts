@@ -11,17 +11,52 @@ export default meta;
 
 type Story = StoryObj<typeof Button>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
     variant: "default",
     children: "Test",
-    size: "default",
   },
 };
 
-export const Secondary: Story = {
+export const Fill: Story = {
+  args: {
+    variant: "fill",
+    children: "Continue",
+  },
+};
+
+export const Destructive: Story = {
   args: {
     variant: "destructive",
-    children: "Test",
+    children: "Destructive",
+  },
+};
+
+export const Outline: Story = {
+  args: {
+    variant: "outline",
+    children: "Outline",
+  },
+};
+
+export const Subtitle: Story = {
+  args: {
+    variant: "subtitle",
+    children: "Subtitle",
+  },
+};
+
+export const Small: Story = {
+  args: {
+    variant: "default",
+    children: "Small",
+    size: "sm",
+  },
+};
+
+export const Ghost: Story = {
+  args: {
+    variant: "ghost",
+    children: "Ghost",
   },
 };
