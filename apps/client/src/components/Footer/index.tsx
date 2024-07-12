@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 import { FooterGSMLogo } from 'client/assets';
 
 import { cn } from 'shared/lib/utils';
@@ -29,18 +27,38 @@ const Footer = () => {
               ©{year} Copyright 광주소프트웨어마이스터고등학교 ALL RIGHTS RESERVED.
             </p>
             <div className={cn('flex', 'gap-6')}>
-              <Link href="/policy/privacy" className={cn('text-h5', 'font-bold')}>
+              <a
+                href="https://official.hellogsm.kr/policy/privacy"
+                className={cn('text-h5', 'font-bold')}
+                target="_blank"
+                rel="noreferrer"
+              >
                 개인정보처리방침
-              </Link>
-              <Link href="/policy/cctv" className={cn('text-h5', 'font-bold')}>
+              </a>
+              <a
+                href="https://official.hellogsm.kr/policy/cctv"
+                className={cn('text-h5', 'font-bold')}
+                target="_blank"
+                rel="noreferrer"
+              >
                 영상정보처리기기운영·관리방침
-              </Link>
-              <Link href="/policy/copyright" className={cn('text-h5', 'font-bold')}>
+              </a>
+              <a
+                href="https://official.hellogsm.kr/policy/copyright"
+                className={cn('text-h5', 'font-bold')}
+                target="_blank"
+                rel="noreferrer"
+              >
                 저작권신고 및 보호규정
-              </Link>
-              <Link href="/about/location" className={cn('text-h5', 'font-bold')}>
+              </a>
+              <a
+                href="https://official.hellogsm.kr/about/location"
+                className={cn('text-h5', 'font-bold')}
+                target="_blank"
+                rel="noreferrer"
+              >
                 찾아오시는 길
-              </Link>
+              </a>
             </div>
           </div>
           <p className={cn('text-body2', 'w-full', 'text-right', 'font-normal', 'text-white/60')}>
