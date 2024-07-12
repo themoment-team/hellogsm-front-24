@@ -4,9 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { SemesterForm } from 'client/components';
-import { cn } from 'client/lib/utils';
 import { scoreFormSchema } from 'client/schemas';
 import { ScoreFormType, SemesterId, SemesterType } from 'client/types';
+
+import { cn } from 'shared/lib/utils';
 
 const semesterArray: { title: SemesterType; id: SemesterId }[] = [
   { title: '1학년 1학기', id: 'score1_1' },
@@ -22,7 +23,7 @@ const TestCalculatePage = () => {
   });
 
   const handleFormSubmit: SubmitHandler<ScoreFormType> = (data) => {
-    console.log(data);
+    // console.log(data);
   };
 
   return (
