@@ -2,6 +2,7 @@ module.exports = {
   plugins: ["no-relative-import-paths"],
   extends: ["@rushstack/eslint-config/profile/web-app"],
   rules: {
+    quotes: ["error", "single"],
     "@typescript-eslint/explicit-function-return-type": "off",
     "@rushstack/typedef-var": "off",
     "@typescript-eslint/naming-convention": [
