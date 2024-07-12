@@ -1,40 +1,121 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { SemesterForm } from 'client/components';
+import { SquareIcon } from 'client/assets';
+import { FreeGradeForm, FreeSemesterForm } from 'client/components';
+import { defaultSubjectArray } from 'client/constants';
 import { cn } from 'client/lib/utils';
 import { scoreFormSchema } from 'client/schemas';
-import { ScoreFormType, SemesterId, SemesterType } from 'client/types';
-
-const semesterArray: { title: SemesterType; id: SemesterId }[] = [
-  { title: '1학년 1학기', id: 'score1_1' },
-  { title: '1학년 2학기', id: 'score1_2' },
-  { title: '2학년 1학기', id: 'score2_1' },
-  { title: '2학년 2학기', id: 'score2_2' },
-  { title: '3학년 1학기', id: 'score3_1' },
-] as const;
+import { GradesInputMethodType, ScoreFormType, SemesterId } from 'client/types';
 
 const TestCalculatePage = () => {
-  const { register, handleSubmit } = useForm<ScoreFormType>({
+  const [gradesInputMethod, setGradeInputMethod] = useState<GradesInputMethodType>('freeGrade');
+  const [freeSemester, setFreeSemester] = useState<SemesterId | null>(null);
+  const [subjectArray] = useState<string[]>([...defaultSubjectArray]);
+
+  const { register, handleSubmit, setValue } = useForm<ScoreFormType>({
     resolver: zodResolver(scoreFormSchema),
   });
 
+  const gradesInputMethodButton = (type: GradesInputMethodType) => [
+    `${gradesInputMethod === type ? 'bg-[#19BAFF]' : 'bg-[#484453]'}`,
+    `${gradesInputMethod === type ? 'text-[#ffffff]' : 'text-[#ABA9B1]'}`,
+    'w-[140px]',
+    'h-[65px]',
+    'rounded-[6px]',
+    'text-[17px]/[24.62px]',
+    'font-[700]',
+  ];
+
+  const subjectDiv = [
+    'flex',
+    'w-[100px]',
+    'h-[37px]',
+    'rounded-[6px]',
+    'bg-[#19BAFF]',
+    'gap-[13px]',
+    'items-center',
+    'justify-center',
+    'font-[700]',
+    'text-[17px]/[24.62px]',
+    'text-[#F8F8F8]',
+  ];
+
   const handleFormSubmit: SubmitHandler<ScoreFormType> = (data) => {
-    console.log(data);
+    const body = {
+      ...data,
+      freeSemester: gradesInputMethod === 'freeSemester' ? freeSemester : null,
+    };
+
+    console.log(body);
   };
 
+  useEffect(() => {
+    if (gradesInputMethod === 'freeGrade') {
+      setValue('score1_1', null);
+      setValue('score1_2', null);
+    }
+
+    if (gradesInputMethod === 'freeSemester' && freeSemester === null) {
+      subjectArray.forEach((_, i) => setValue(`score1_1.${i}`, '선택'));
+      subjectArray.forEach((_, i) => setValue(`score1_2.${i}`, '선택'));
+    }
+
+    if (gradesInputMethod === 'freeSemester' && freeSemester !== null) {
+      setValue(freeSemester, null);
+    }
+  }, [freeSemester, gradesInputMethod, setValue, subjectArray]);
+
   return (
-    <div className={cn('flex', 'h-lvh', 'items-center', 'justify-center')}>
+    <div className={cn('flex', 'h-lvh', 'items-center', 'justify-center', 'bg-[#0F0921]')}>
       <form
         onSubmit={handleSubmit(handleFormSubmit)}
         className={cn('flex', 'flex-col', 'items-center')}
       >
+        <div className={cn('flex', 'gap-6', 'mb-[30px]')}>
+          <button
+            onClick={() => setGradeInputMethod('freeGrade')}
+            className={cn(...gradesInputMethodButton('freeGrade'))}
+          >
+            자유학년제
+          </button>
+          <button
+            onClick={() => setGradeInputMethod('freeSemester')}
+            className={cn(...gradesInputMethodButton('freeSemester'))}
+          >
+            자유학기제
+          </button>
+        </div>
         <div className={cn('flex', 'gap-6')}>
-          {semesterArray.map(({ title, id }) => (
-            <SemesterForm title={title} id={id} register={register} key={id} />
-          ))}
+          <div className={cn('flex', 'flex-col')}>
+            <SquareIcon />
+            <div className={cn('mt-[20px]', 'flex', 'flex-col', 'gap-[13px]')}>
+              {gradesInputMethod === 'freeSemester' && (
+                <div className={cn(...subjectDiv)}>자유학기제</div>
+              )}
+              {subjectArray.map((subject) => (
+                <div className={cn(...subjectDiv)} key={subject}>
+                  {subject}
+                </div>
+              ))}
+            </div>
+          </div>
+          {gradesInputMethod === 'freeGrade' && (
+            <FreeGradeForm register={register} subjectArray={subjectArray} />
+          )}
+
+          {gradesInputMethod === 'freeSemester' && (
+            <FreeSemesterForm
+              register={register}
+              subjectArray={subjectArray}
+              freeSemester={freeSemester}
+              setFreeSemester={setFreeSemester}
+            />
+          )}
         </div>
         <button
           className={cn(
@@ -49,6 +130,7 @@ const TestCalculatePage = () => {
             'text-[28px]/[40.54px]',
             'font-[700]',
             'text-[#0F0921]',
+            'bg-[#FFFFFF]',
           )}
         >
           저장
