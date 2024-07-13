@@ -27,7 +27,9 @@ const SemesterForm: React.FC<SemesterFormProps> = ({
   freeSemester,
   setFreeSemester,
 }) => {
-  const handleButtonClick = () => setFreeSemester!(id);
+  const handleButtonClick = () => {
+    if (setFreeSemester) setFreeSemester(id);
+  };
 
   return (
     <div className={cn('flex', 'flex-col')}>
