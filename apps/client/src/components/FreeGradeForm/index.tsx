@@ -3,9 +3,9 @@
 import { UseFormRegister } from 'react-hook-form';
 
 import { SemesterForm } from 'client/components';
-import { ScoreFormType, SemesterId, SemesterType } from 'client/types';
+import { ScoreFormType, SemesterType } from 'client/types';
 
-const freeGradeArray: { title: SemesterType; id: SemesterId }[] = [
+const freeGradeArray: SemesterType[] = [
   { title: '2학년 1학기', id: 'score2_1' },
   { title: '2학년 2학기', id: 'score2_2' },
   { title: '3학년 1학기', id: 'score3_1' },

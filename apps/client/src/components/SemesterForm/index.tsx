@@ -4,12 +4,12 @@ import { UseFormRegister } from 'react-hook-form';
 
 import { SelectIcon } from 'client/assets';
 import { cn } from 'client/lib/utils';
-import { ScoreFormType, SemesterId, SemesterType } from 'client/types';
+import { ScoreFormType, SemesterId, SemesterTitleType } from 'client/types';
 
 const scoreArray = ['A', 'B', 'C', 'D', 'E'] as const;
 
 interface SemesterFormProps {
-  title: SemesterType;
+  title: SemesterTitleType;
   id: SemesterId;
   register: UseFormRegister<ScoreFormType>;
   subjectArray: string[];
