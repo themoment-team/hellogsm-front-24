@@ -66,69 +66,68 @@ const SemesterForm: React.FC<SemesterFormProps> = ({
             {freeSemester === id ? 'ON' : 'OFF'}
           </button>
         )}
-        {freeSemester === id &&
-          subjectArray.map((i) => (
-            <div
-              className={cn(
-                'rounded-[6px]',
-                'bg-[#484453]',
-                'text-[17px]/[24.62px]',
-                'font-[500]',
-                'flex',
-                'text-[#FFFFFF8F]/[0.54]',
-                'h-[37px]',
-                'w-full',
-                'flex',
-                'justify-center',
-                'items-center',
-              )}
-              key={i}
-            >
-              자유학기제
-            </div>
-          ))}
-        {freeSemester !== id &&
-          subjectArray.map((item, idx) => (
-            <div className={cn('relative', 'z-[1]', 'rounded-[6px]', 'bg-[#484453]')} key={item}>
-              <select
+        {freeSemester === id
+          ? subjectArray.map((i) => (
+              <div
                 className={cn(
-                  'relative',
-                  'z-[3]',
-                  'flex',
-                  'h-[37px]',
-                  'w-full',
-                  'cursor-pointer',
-                  'select-none',
-                  'appearance-none',
                   'rounded-[6px]',
-                  'bg-transparent',
-                  'text-center',
+                  'bg-[#484453]',
                   'text-[17px]/[24.62px]',
                   'font-[500]',
+                  'flex',
                   'text-[#FFFFFF8F]/[0.54]',
+                  'h-[37px]',
+                  'w-full',
+                  'flex',
+                  'justify-center',
+                  'items-center',
                 )}
-                defaultValue="선택"
-                {...register(`${id}.${idx}`)}
+                key={i}
               >
-                <option hidden>선택</option>
-                {scoreArray.map((score, idx) => (
-                  <option key={score} value={5 - idx}>
-                    {score}
-                  </option>
-                ))}
-              </select>
-              <SelectIcon
-                style={cn(
-                  'absolute',
-                  'right-5',
-                  'top-1/2',
-                  'z-[2]',
-                  '-translate-y-1/2',
-                  'transform',
-                )}
-              />
-            </div>
-          ))}
+                자유학기제
+              </div>
+            ))
+          : subjectArray.map((item, idx) => (
+              <div className={cn('relative', 'z-[1]', 'rounded-[6px]', 'bg-[#484453]')} key={item}>
+                <select
+                  className={cn(
+                    'relative',
+                    'z-[3]',
+                    'flex',
+                    'h-[37px]',
+                    'w-full',
+                    'cursor-pointer',
+                    'select-none',
+                    'appearance-none',
+                    'rounded-[6px]',
+                    'bg-transparent',
+                    'text-center',
+                    'text-[17px]/[24.62px]',
+                    'font-[500]',
+                    'text-[#FFFFFF8F]/[0.54]',
+                  )}
+                  defaultValue="선택"
+                  {...register(`${id}.${idx}`)}
+                >
+                  <option hidden>선택</option>
+                  {scoreArray.map((score, idx) => (
+                    <option key={score} value={5 - idx}>
+                      {score}
+                    </option>
+                  ))}
+                </select>
+                <SelectIcon
+                  style={cn(
+                    'absolute',
+                    'right-5',
+                    'top-1/2',
+                    'z-[2]',
+                    '-translate-y-1/2',
+                    'transform',
+                  )}
+                />
+              </div>
+            ))}
       </div>
     </div>
   );
