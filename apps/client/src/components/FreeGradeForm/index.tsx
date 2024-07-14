@@ -1,5 +1,3 @@
-/* eslint-disable @rushstack/no-new-null */
-
 import { UseFormRegister } from 'react-hook-form';
 
 import { SemesterForm } from 'client/components';
