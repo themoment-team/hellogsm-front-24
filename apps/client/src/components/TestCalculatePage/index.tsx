@@ -130,7 +130,7 @@ const TestCalculatePage = () => {
             'text-[28px]/[40.54px]',
             'font-[700]',
             'text-[#0F0921]',
-            'bg-[#FFFFFF]',
+            'bg-white',
           )}
         >
           저장

@@ -62,7 +62,7 @@ const SemesterForm: React.FC<SemesterFormProps> = ({
               'h-[37px]',
               'rounded-[6px]',
               `${freeSemester === id ? 'bg-[#19BAFF]' : 'bg-[#484453]'}`,
-              `${freeSemester === id ? 'text-[#ffffff]' : 'text-[#ABA9B1]'}`,
+              `${freeSemester === id ? 'text-white' : 'text-[#ABA9B1]'}`,
             )}
           >
             {freeSemester === id ? 'ON' : 'OFF'}
