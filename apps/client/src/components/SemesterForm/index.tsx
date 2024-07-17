@@ -1,8 +1,9 @@
 import { UseFormRegister } from 'react-hook-form';
 
 import { SelectIcon } from 'client/assets';
-import { cn } from 'client/lib/utils';
 import { ScoreFormType, SemesterId, SemesterType } from 'client/types';
+
+import { cn } from 'shared/lib/utils';
 
 const selectCountArray = [0, 1, 2, 3, 4, 5, 6, 7] as const;
 const scoreArray = ['A', 'B', 'C', 'D', 'E'] as const;
