@@ -10,11 +10,11 @@ import { FreeGradeForm, FreeSemesterForm } from 'client/components';
 import { defaultSubjectArray } from 'client/constants';
 import { cn } from 'client/lib/utils';
 import { scoreFormSchema } from 'client/schemas';
-import { GradesInputMethodType, ScoreFormType, SemesterId } from 'client/types';
+import type { GradesInputMethodType, ScoreFormType, SemesterIdType } from 'client/types';
 
 const TestCalculatePage = () => {
   const [gradesInputMethod, setGradeInputMethod] = useState<GradesInputMethodType>('freeGrade');
-  const [freeSemester, setFreeSemester] = useState<SemesterId | null>(null);
+  const [freeSemester, setFreeSemester] = useState<SemesterIdType | null>(null);
   const [subjectArray] = useState<string[]>([...defaultSubjectArray]);
 
   const { register, handleSubmit, setValue } = useForm<ScoreFormType>({

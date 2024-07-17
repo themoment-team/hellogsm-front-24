@@ -5,7 +5,7 @@ import { UseFormRegister } from 'react-hook-form';
 import { SelectIcon } from 'client/assets';
 import { scoreArray } from 'client/constants';
 import { cn } from 'client/lib/utils';
-import { ScoreFormType, SemesterId, SemesterType } from 'client/types';
+import type { ScoreFormType, SemesterIdType, SemesterType } from 'client/types';
 
 const freeSemesterArray: SemesterType[] = [
   { title: '1학년 1학기', id: 'score1_1' },
@@ -18,8 +18,8 @@ const freeSemesterArray: SemesterType[] = [
 interface FreeSemesterFormProps {
   register: UseFormRegister<ScoreFormType>;
   subjectArray: string[];
-  freeSemester: SemesterId | null;
-  setFreeSemester: React.Dispatch<React.SetStateAction<SemesterId | null>>;
+  freeSemester: SemesterIdType | null;
+  setFreeSemester: React.Dispatch<React.SetStateAction<SemesterIdType | null>>;
 }
 
 const FreeSemesterForm: React.FC<FreeSemesterFormProps> = ({
