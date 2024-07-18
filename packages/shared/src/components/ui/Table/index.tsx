@@ -3,7 +3,7 @@ import * as React from "react";
 import { cn } from "shared/lib/utils";
 import { Toggle } from "shared/components";
 import { CheckIcon } from "shared/assets";
-import { Button } from "shared/components";
+import { Button, Clip } from "shared/components";
 
 const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
   ({ className, ...props }, ref) => (
@@ -105,10 +105,14 @@ const Example = () => (
         </TableCell>
         <TableCell className="w-[154px] text-zinc-600">대성여자중학교</TableCell>
         <TableCell className="max-w-full text-zinc-900">일반전형</TableCell>
-        <TableCell className="w-[96px]">미정</TableCell>
+        <TableCell className="w-[96px]">
+          <Clip variant="미정">미정</Clip>
+        </TableCell>
         <TableCell className="w-[180px]  text-zinc-400">진행 전</TableCell>
         <TableCell className="w-[180px]  text-zinc-400">진행 전</TableCell>
-        <TableCell className="w-[96px]">미정</TableCell>
+        <TableCell className="w-[96px]">
+          <Clip variant="미정">미정</Clip>
+        </TableCell>
         <TableCell className="w-[149px]">
           <Button className="ml-[45px]" variant="outline">
             원서수정

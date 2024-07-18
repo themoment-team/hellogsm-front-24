@@ -9,9 +9,9 @@ interface ClipProps {
 const clipVariants = cva(cn("py-0.5", "px-1.5", "rounded", "w-fit"), {
   variants: {
     variant: {
-      합격: cn("bg-blue-50 text-blue-500"),
-      불합격: cn("bg-rose-50 text-rose-500"),
-      미정: cn("bg-gray-100 text-gray-500"),
+      합격: cn("bg-blue-50", "text-blue-500"),
+      불합격: cn("bg-rose-50", "text-rose-500"),
+      미정: cn("bg-gray-100", "text-gray-500"),
     },
   },
   defaultVariants: {
