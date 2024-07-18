@@ -1,7 +1,7 @@
 import { UseFormRegister } from 'react-hook-form';
 
 import { SelectIcon } from 'client/assets';
-import { ScoreFormType, SemesterId, SemesterType } from 'client/types';
+import { ScoreFormType, SemesterIdType, SemesterTitleType } from 'client/types';
 
 import { cn } from 'shared/lib/utils';
 
@@ -9,8 +9,8 @@ const selectCountArray = [0, 1, 2, 3, 4, 5, 6, 7] as const;
 const scoreArray = ['A', 'B', 'C', 'D', 'E'] as const;
 
 interface SemesterFormProps {
-  title: SemesterType;
-  id: SemesterId;
+  title: SemesterTitleType;
+  id: SemesterIdType;
   register: UseFormRegister<ScoreFormType>;
 }
 
