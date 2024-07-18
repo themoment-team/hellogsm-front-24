@@ -109,7 +109,7 @@ const Example = () => (
         <TableCell className="w-[180px]  text-zinc-400">진행 전</TableCell>
         <TableCell className="w-[180px]  text-zinc-400">진행 전</TableCell>
         <TableCell className="w-[96px]">미정</TableCell>
-        <TableCell className="w-[149px] ">
+        <TableCell className="w-[149px]">
           <Button className="ml-[45px]" variant="outline">
             원서수정
           </Button>
