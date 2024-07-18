@@ -35,6 +35,15 @@
     --radius: 0.5rem;
   }
 
+  .toggle-icon path {
+    transition: stroke 0.3s ease;
+  }
+
+  .toggle-icon-hover:hover path,
+  .toggle-icon-active[data-state="on"] path {
+    stroke: #10b981; /* emerald-500 color */
+  }
+
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
