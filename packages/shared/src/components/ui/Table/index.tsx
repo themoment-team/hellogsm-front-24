@@ -1,6 +1,9 @@
 import * as React from "react";
 
 import { cn } from "shared/lib/utils";
+import { Toggle } from "shared/components";
+import { CheckIcon } from "shared/assets";
+import { Button } from "shared/components";
 
 const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
   ({ className, ...props }, ref) => (
@@ -90,21 +93,24 @@ TableCaption.displayName = "TableCaption";
 
 const Example = () => (
   <Table>
-    <TableCaption>A list of your recent invoices.</TableCaption>
-    <TableHeader>
-      <TableRow>
-        <TableHead className="w-[100px]">Invoice</TableHead>
-        <TableHead>Status</TableHead>
-        <TableHead>Method</TableHead>
-        <TableHead className="text-right">Amount</TableHead>
-      </TableRow>
-    </TableHeader>
     <TableBody>
       <TableRow>
-        <TableCell className="font-medium">INV001</TableCell>
-        <TableCell>Paid</TableCell>
-        <TableCell>Credit Card</TableCell>
-        <TableCell className="text-right">$250.00</TableCell>
+        <TableCell className="w-[100px]">0189</TableCell>
+        <TableCell className="w-[130px]">
+          <Toggle icon={<CheckIcon />}>제출 완료</Toggle>
+        </TableCell>
+        <TableCell className="w-[154px]">진예원</TableCell>
+        <TableCell className="w-[154px]">대성여자중학교</TableCell>
+        <TableCell className="max-w-full">일반전형</TableCell>
+        <TableCell className="w-[96px]">미정</TableCell>
+        <TableCell className="w-[180px]">진행 전</TableCell>
+        <TableCell className="w-[180px]">진행 전</TableCell>
+        <TableCell className="w-[96px]">미정</TableCell>
+        <TableCell className="w-[149px] ">
+          <Button className="ml-[45px]" variant="outline">
+            원서수정
+          </Button>
+        </TableCell>
       </TableRow>
     </TableBody>
   </Table>
