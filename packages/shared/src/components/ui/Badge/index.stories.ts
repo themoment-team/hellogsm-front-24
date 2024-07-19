@@ -1,15 +1,15 @@
-import { Clip } from ".";
+import { Badge } from ".";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
-const meta: Meta<typeof Clip> = {
-  title: "Shared/Clip",
-  component: Clip,
+const meta: Meta<typeof Badge> = {
+  title: "Shared/Badge",
+  component: Badge,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof Clip>;
+type Story = StoryObj<typeof Badge>;
 
 export const 미정: Story = {
   args: {

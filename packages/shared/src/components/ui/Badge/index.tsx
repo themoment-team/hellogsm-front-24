@@ -1,12 +1,12 @@
 import { cva } from "class-variance-authority";
 import { cn } from "shared/lib/utils";
 
-interface ClipProps {
+interface BadgeProps {
   children: React.ReactNode;
   variant: "합격" | "불합격" | "미정";
 }
 
-const clipVariants = cva(cn("py-0.5", "px-1.5", "rounded", "w-fit"), {
+const badgeVariants = cva(cn("py-0.5", "px-1.5", "rounded", "w-fit"), {
   variants: {
     variant: {
       합격: cn("bg-blue-50", "text-blue-500"),
@@ -19,8 +19,8 @@ const clipVariants = cva(cn("py-0.5", "px-1.5", "rounded", "w-fit"), {
   },
 });
 
-const Clip: React.FC<ClipProps> = ({ variant, children }) => (
-  <div className={cn(clipVariants({ variant }))}>{children}</div>
+const Badge: React.FC<BadgeProps> = ({ variant, children }) => (
+  <div className={cn(badgeVariants({ variant }))}>{children}</div>
 );
 
-export { Clip };
+export { Badge };
