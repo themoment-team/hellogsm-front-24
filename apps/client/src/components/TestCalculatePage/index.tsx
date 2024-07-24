@@ -15,9 +15,9 @@ import type { GradesInputMethodType, ScoreFormType, SemesterIdType } from 'clien
 const TestCalculatePage = () => {
   const [gradesInputMethod, setGradeInputMethod] = useState<GradesInputMethodType>('freeGrade');
   const [freeSemester, setFreeSemester] = useState<SemesterIdType | null>(null);
-  const [subjectArray] = useState<string[]>([...defaultSubjectArray]);
+  const [subjectArray, setSubjectArray] = useState<string[]>([...defaultSubjectArray]);
 
-  const { register, handleSubmit, setValue } = useForm<ScoreFormType>({
+  const { register, handleSubmit, setValue, unregister } = useForm<ScoreFormType>({
     resolver: zodResolver(scoreFormSchema),
   });
 
@@ -37,7 +37,6 @@ const TestCalculatePage = () => {
     'h-[37px]',
     'rounded-[6px]',
     'bg-[#19BAFF]',
-    'gap-[13px]',
     'items-center',
     'justify-center',
     'font-[700]',
@@ -54,7 +53,22 @@ const TestCalculatePage = () => {
     console.log(body);
   };
 
+  const handleAddSubjectClick = () => {
+    const newSubject = `추가과목 ${subjectArray.length - 7}`;
+    setSubjectArray((prev) => [...prev, newSubject]);
+  };
+
+  const handleDeleteSubjectClick = (deleteSubject: string, idx: number) => {
+    const filteredSubjects = subjectArray.filter((subject) => subject !== deleteSubject);
+    unregister(`newSubjects.${idx}`);
+    setSubjectArray(filteredSubjects);
+  };
+
   useEffect(() => {
+    if (subjectArray.length <= 8) {
+      setValue('newSubjects', null);
+    }
+
     if (gradesInputMethod === 'freeGrade') {
       setValue('score1_1', null);
       setValue('score1_2', null);
@@ -71,9 +85,20 @@ const TestCalculatePage = () => {
   }, [freeSemester, gradesInputMethod, setValue, subjectArray]);
 
   return (
-    <div className={cn('flex', 'h-lvh', 'items-center', 'justify-center', 'bg-[#0F0921]')}>
+    <div
+      className={cn(
+        'flex',
+        'h-lvh',
+        'justify-center',
+        'bg-[#0F0921]',
+        'overflow-y-scroll',
+        'pt-[120px]',
+      )}
+    >
       <form
-        onSubmit={handleSubmit(handleFormSubmit)}
+        onSubmit={handleSubmit(handleFormSubmit, (error) => {
+          console.log(error);
+        })}
         className={cn('flex', 'flex-col', 'items-center')}
       >
         <div className={cn('flex', 'gap-6', 'mb-[30px]')}>
@@ -97,11 +122,44 @@ const TestCalculatePage = () => {
               {gradesInputMethod === 'freeSemester' && (
                 <div className={cn(...subjectDiv)}>자유학기제</div>
               )}
-              {subjectArray.map((subject) => (
-                <div className={cn(...subjectDiv)} key={subject}>
-                  {subject}
-                </div>
-              ))}
+              {subjectArray.map((subject, idx) =>
+                idx < 8 ? (
+                  <div className={cn(...subjectDiv)} key={subject}>
+                    {subject}
+                  </div>
+                ) : (
+                  <div key={subject} className={cn('relative')}>
+                    <input
+                      {...register(`newSubjects.${idx - 8}`)}
+                      className={cn(
+                        'bg-[#484453]',
+                        'w-[100px]',
+                        'h-[37px]',
+                        'rounded-[6px]',
+                        'text-[17px]/[24.62px]',
+                        'font-[500]',
+                        'text-[#FFFFFF8F]/[0.54]',
+                        'flex',
+                        'text-center',
+                      )}
+                      type="text"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteSubjectClick(subject, idx - 8)}
+                      className={cn(
+                        'absolute',
+                        'top-1/2',
+                        'left-[-40px]',
+                        '-translate-y-1/2',
+                        'text-red-500',
+                      )}
+                    >
+                      삭제
+                    </button>
+                  </div>
+                ),
+              )}
             </div>
           </div>
           {gradesInputMethod === 'freeGrade' && (
@@ -118,6 +176,22 @@ const TestCalculatePage = () => {
           )}
         </div>
         <button
+          type="button"
+          onClick={handleAddSubjectClick}
+          className={cn(
+            'text-[#F8F8F8]',
+            'bg-[#0C4680]',
+            'w-full',
+            'mt-[12px]',
+            'rounded-[6px]',
+            'h-[37px]',
+            'min-h-[37px]',
+          )}
+        >
+          +과목추가
+        </button>
+        <button
+          type="submit"
           className={cn(
             'pointer',
             'mt-[100px]',
