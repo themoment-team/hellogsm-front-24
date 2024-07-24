@@ -8,4 +8,5 @@ export const scoreFormSchema = z.object({
   score2_1: z.nullable(z.array(z.string().refine((value) => value && value !== DEFAULT_VALUE))),
   score2_2: z.nullable(z.array(z.string().refine((value) => value && value !== DEFAULT_VALUE))),
   score3_1: z.nullable(z.array(z.string().refine((value) => value && value !== DEFAULT_VALUE))),
+  newSubjects: z.nullable(z.array(z.string().min(2))),
 });
