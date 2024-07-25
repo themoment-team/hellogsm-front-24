@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -17,7 +18,7 @@ const TestCalculatePage = () => {
   const [freeSemester, setFreeSemester] = useState<SemesterIdType | null>(null);
   const [subjectArray, setSubjectArray] = useState<string[]>([...defaultSubjectArray]);
 
-  const { register, handleSubmit, setValue, unregister } = useForm<ScoreFormType>({
+  const { register, handleSubmit, setValue, unregister, watch } = useForm<ScoreFormType>({
     resolver: zodResolver(scoreFormSchema),
   });
 
@@ -30,6 +31,25 @@ const TestCalculatePage = () => {
     'text-[17px]/[24.62px]',
     'font-[700]',
   ];
+
+  const handleDeleteSubjectClick = (deleteSubject: string, idx: number) => {
+    const filteredSubjects = subjectArray.filter((subject) => subject !== deleteSubject);
+    unregister(`newSubjects.${idx - 7}`);
+    setSubjectArray(filteredSubjects);
+
+    const newSubjects = watch('newSubjects');
+    const score1_1 = watch('score1_1');
+    const score1_2 = watch('score1_2');
+    const score2_1 = watch('score2_1');
+    const score2_2 = watch('score2_2');
+    const score3_1 = watch('score3_1');
+    setValue('newSubjects', newSubjects && newSubjects.filter((_, i) => idx - 7 !== i)); // newSubjects 배열에서 인덱스가 N인 값 제거
+    setValue('score1_1', score1_1 && score1_1.filter((_, i) => i !== idx)); // score1_1 배열에서 인덱스가 기본과목.length + index인 값 제거 (삭제 버튼 클릭한 인덱스 제거)
+    setValue('score1_2', score1_2 && score1_2.filter((_, i) => i !== idx));
+    setValue('score2_1', score2_1 && score2_1.filter((_, i) => i !== idx));
+    setValue('score2_2', score2_2 && score2_2.filter((_, i) => i !== idx));
+    setValue('score3_1', score3_1 && score3_1.filter((_, i) => i !== idx));
+  };
 
   const subjectDiv = [
     'flex',
@@ -56,12 +76,6 @@ const TestCalculatePage = () => {
   const handleAddSubjectClick = () => {
     const newSubject = `추가과목 ${subjectArray.length - 7}`;
     setSubjectArray((prev) => [...prev, newSubject]);
-  };
-
-  const handleDeleteSubjectClick = (deleteSubject: string, idx: number) => {
-    const filteredSubjects = subjectArray.filter((subject) => subject !== deleteSubject);
-    unregister(`newSubjects.${idx}`);
-    setSubjectArray(filteredSubjects);
   };
 
   useEffect(() => {
@@ -96,9 +110,7 @@ const TestCalculatePage = () => {
       )}
     >
       <form
-        onSubmit={handleSubmit(handleFormSubmit, (error) => {
-          console.log(error);
-        })}
+        onSubmit={handleSubmit(handleFormSubmit)}
         className={cn('flex', 'flex-col', 'items-center')}
       >
         <div className={cn('flex', 'gap-6', 'mb-[30px]')}>
@@ -146,13 +158,15 @@ const TestCalculatePage = () => {
                     />
                     <button
                       type="button"
-                      onClick={() => handleDeleteSubjectClick(subject, idx - 8)}
+                      onClick={() => handleDeleteSubjectClick(subject, idx)}
                       className={cn(
+                        gradesInputMethod === 'freeGrade' ? 'left-[570px]' : 'left-[870px]',
                         'absolute',
                         'top-1/2',
-                        'left-[-40px]',
                         '-translate-y-1/2',
                         'text-red-500',
+                        'flex',
+                        'w-[28px]',
                       )}
                     >
                       삭제
