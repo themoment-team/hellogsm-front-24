@@ -22,6 +22,8 @@ const TestCalculatePage = () => {
     resolver: zodResolver(scoreFormSchema),
   });
 
+  const newSubjectIdx = (idx: number) => idx - 8;
+
   const gradesInputMethodButton = (type: GradesInputMethodType) => [
     `${gradesInputMethod === type ? 'bg-[#19BAFF]' : 'bg-[#484453]'}`,
     `${gradesInputMethod === type ? 'text-[#ffffff]' : 'text-[#ABA9B1]'}`,
@@ -34,7 +36,7 @@ const TestCalculatePage = () => {
 
   const handleDeleteSubjectClick = (deleteSubject: string, idx: number) => {
     const filteredSubjects = subjectArray.filter((subject) => subject !== deleteSubject);
-    unregister(`newSubjects.${idx - 7}`);
+    unregister(`newSubjects.${newSubjectIdx(idx)}`);
     setSubjectArray(filteredSubjects);
 
     const newSubjects = watch('newSubjects');
@@ -43,7 +45,7 @@ const TestCalculatePage = () => {
     const score2_1 = watch('score2_1');
     const score2_2 = watch('score2_2');
     const score3_1 = watch('score3_1');
-    setValue('newSubjects', newSubjects && newSubjects.filter((_, i) => idx - 7 !== i)); // newSubjects 배열에서 인덱스가 N인 값 제거
+    setValue('newSubjects', newSubjects && newSubjects.filter((_, i) => newSubjectIdx(idx) !== i)); // newSubjects 배열에서 인덱스가 N인 값 제거
     setValue('score1_1', score1_1 && score1_1.filter((_, i) => i !== idx)); // score1_1 배열에서 인덱스가 기본과목.length + index인 값 제거 (삭제 버튼 클릭한 인덱스 제거)
     setValue('score1_2', score1_2 && score1_2.filter((_, i) => i !== idx));
     setValue('score2_1', score2_1 && score2_1.filter((_, i) => i !== idx));
@@ -142,7 +144,7 @@ const TestCalculatePage = () => {
                 ) : (
                   <div key={subject} className={cn('relative')}>
                     <input
-                      {...register(`newSubjects.${idx - 8}`)}
+                      {...register(`newSubjects.${newSubjectIdx(idx)}`)}
                       className={cn(
                         'bg-[#484453]',
                         'w-[100px]',
