@@ -117,12 +117,14 @@ const TestCalculatePage = () => {
       >
         <div className={cn('flex', 'gap-6', 'mb-[30px]')}>
           <button
+            type="button"
             onClick={() => setGradeInputMethod('freeGrade')}
             className={cn(...gradesInputMethodButton('freeGrade'))}
           >
             자유학년제
           </button>
           <button
+            type="button"
             onClick={() => setGradeInputMethod('freeSemester')}
             className={cn(...gradesInputMethodButton('freeSemester'))}
           >
