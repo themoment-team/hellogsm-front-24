@@ -17,12 +17,11 @@ const TestCalculatePage = () => {
   const [gradesInputMethod, setGradeInputMethod] = useState<GradesInputMethodType>('freeGrade');
   const [freeSemester, setFreeSemester] = useState<SemesterIdType | null>(null);
   const [subjectArray, setSubjectArray] = useState<string[]>([...defaultSubjectArray]);
+  const defaultSubjectLength = defaultSubjectArray.length;
 
   const { register, handleSubmit, setValue, unregister, watch } = useForm<ScoreFormType>({
     resolver: zodResolver(scoreFormSchema),
   });
-
-  const newSubjectIdx = (idx: number) => idx - 8;
 
   const gradesInputMethodButton = (type: GradesInputMethodType) => [
     `${gradesInputMethod === type ? 'bg-[#19BAFF]' : 'bg-[#484453]'}`,
@@ -36,7 +35,7 @@ const TestCalculatePage = () => {
 
   const handleDeleteSubjectClick = (deleteSubject: string, idx: number) => {
     const filteredSubjects = subjectArray.filter((subject) => subject !== deleteSubject);
-    unregister(`newSubjects.${newSubjectIdx(idx)}`);
+    unregister(`newSubjects.${idx - defaultSubjectLength}`);
     setSubjectArray(filteredSubjects);
 
     const newSubjects = watch('newSubjects');
@@ -45,7 +44,10 @@ const TestCalculatePage = () => {
     const score2_1 = watch('score2_1');
     const score2_2 = watch('score2_2');
     const score3_1 = watch('score3_1');
-    setValue('newSubjects', newSubjects && newSubjects.filter((_, i) => newSubjectIdx(idx) !== i)); // newSubjects 배열에서 인덱스가 N인 값 제거
+    setValue(
+      'newSubjects',
+      newSubjects && newSubjects.filter((_, i) => idx - defaultSubjectLength !== i),
+    ); // newSubjects 배열에서 인덱스가 N인 값 제거
     setValue('score1_1', score1_1 && score1_1.filter((_, i) => i !== idx)); // score1_1 배열에서 인덱스가 기본과목.length + index인 값 제거 (삭제 버튼 클릭한 인덱스 제거)
     setValue('score1_2', score1_2 && score1_2.filter((_, i) => i !== idx));
     setValue('score2_1', score2_1 && score2_1.filter((_, i) => i !== idx));
@@ -146,7 +148,7 @@ const TestCalculatePage = () => {
                 ) : (
                   <div key={subject} className={cn('relative')}>
                     <input
-                      {...register(`newSubjects.${newSubjectIdx(idx)}`)}
+                      {...register(`newSubjects.${idx - defaultSubjectLength}`)}
                       className={cn(
                         'bg-[#484453]',
                         'w-[100px]',
