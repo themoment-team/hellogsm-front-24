@@ -39,20 +39,20 @@ const TestCalculatePage = () => {
     setSubjectArray(filteredSubjects);
 
     const newSubjects = watch('newSubjects');
-    const score1_1 = watch('score1_1');
-    const score1_2 = watch('score1_2');
-    const score2_1 = watch('score2_1');
-    const score2_2 = watch('score2_2');
-    const score3_1 = watch('score3_1');
+    const score1_1 = watch('achievement1_1');
+    const score1_2 = watch('achievement1_2');
+    const score2_1 = watch('achievement2_1');
+    const score2_2 = watch('achievement2_2');
+    const score3_1 = watch('achievement3_1');
     setValue(
       'newSubjects',
       newSubjects && newSubjects.filter((_, i) => idx - defaultSubjectLength !== i),
     ); // newSubjects 배열에서 인덱스가 N인 값 제거
-    setValue('score1_1', score1_1 && score1_1.filter((_, i) => i !== idx)); // score1_1 배열에서 인덱스가 기본과목.length + index인 값 제거 (삭제 버튼 클릭한 인덱스 제거)
-    setValue('score1_2', score1_2 && score1_2.filter((_, i) => i !== idx));
-    setValue('score2_1', score2_1 && score2_1.filter((_, i) => i !== idx));
-    setValue('score2_2', score2_2 && score2_2.filter((_, i) => i !== idx));
-    setValue('score3_1', score3_1 && score3_1.filter((_, i) => i !== idx));
+    setValue('achievement1_1', score1_1 && score1_1.filter((_, i) => i !== idx)); // score1_1 배열에서 인덱스가 기본과목.length + index인 값 제거 (삭제 버튼 클릭한 인덱스 제거)
+    setValue('achievement1_2', score1_2 && score1_2.filter((_, i) => i !== idx));
+    setValue('achievement2_1', score2_1 && score2_1.filter((_, i) => i !== idx));
+    setValue('achievement2_2', score2_2 && score2_2.filter((_, i) => i !== idx));
+    setValue('achievement3_1', score3_1 && score3_1.filter((_, i) => i !== idx));
   };
 
   const subjectDiv = [
@@ -88,13 +88,12 @@ const TestCalculatePage = () => {
     }
 
     if (gradesInputMethod === 'freeGrade') {
-      setValue('score1_1', null);
-      setValue('score1_2', null);
+      setValue('achievement1_1', null);
+      setValue('achievement1_2', null);
     }
-
     if (gradesInputMethod === 'freeSemester' && freeSemester === null) {
-      subjectArray.forEach((_, i) => setValue(`score1_1.${i}`, '선택'));
-      subjectArray.forEach((_, i) => setValue(`score1_2.${i}`, '선택'));
+      subjectArray.forEach((_, i) => setValue(`achievement1_1.${i}`, '선택'));
+      subjectArray.forEach((_, i) => setValue(`achievement1_2.${i}`, '선택'));
     }
 
     if (gradesInputMethod === 'freeSemester' && freeSemester !== null) {

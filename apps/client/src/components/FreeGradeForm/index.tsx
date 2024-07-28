@@ -6,9 +6,9 @@ import { cn } from 'client/lib/utils';
 import { ScoreFormType, SemesterType } from 'client/types';
 
 const freeGradeArray: SemesterType[] = [
-  { title: '2학년 1학기', id: 'score2_1' },
-  { title: '2학년 2학기', id: 'score2_2' },
-  { title: '3학년 1학기', id: 'score3_1' },
+  { title: '2학년 1학기', id: 'achievement2_1' },
+  { title: '2학년 2학기', id: 'achievement2_2' },
+  { title: '3학년 1학기', id: 'achievement3_1' },
 ] as const;
 
 interface FreeGradeFormProps {
