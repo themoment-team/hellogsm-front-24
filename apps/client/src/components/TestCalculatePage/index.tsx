@@ -33,7 +33,7 @@ const TestCalculatePage = () => {
     'font-[700]',
   ];
 
-  const handleDeleteSubjectClick = (deleteSubject: string, idx: number) => {
+  const handleDeleteSubjectClick = (idx: number) => {
     const filteredSubjects = subjectArray.filter((_, i) => i !== idx);
     unregister(`newSubjects.${idx - defaultSubjectLength}`);
     setSubjectArray(filteredSubjects);
@@ -164,7 +164,7 @@ const TestCalculatePage = () => {
                     />
                     <button
                       type="button"
-                      onClick={() => handleDeleteSubjectClick(subject, idx)}
+                      onClick={() => handleDeleteSubjectClick(idx)}
                       className={cn(
                         gradesInputMethod === 'freeGrade' ? 'left-[570px]' : 'left-[870px]',
                         'absolute',
