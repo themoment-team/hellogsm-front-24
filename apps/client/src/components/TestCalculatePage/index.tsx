@@ -34,7 +34,7 @@ const TestCalculatePage = () => {
   ];
 
   const handleDeleteSubjectClick = (deleteSubject: string, idx: number) => {
-    const filteredSubjects = subjectArray.filter((subject) => subject !== deleteSubject);
+    const filteredSubjects = subjectArray.filter((_, i) => i !== idx);
     unregister(`newSubjects.${idx - defaultSubjectLength}`);
     setSubjectArray(filteredSubjects);
 
@@ -78,12 +78,12 @@ const TestCalculatePage = () => {
   };
 
   const handleAddSubjectClick = () => {
-    const newSubject = `추가과목 ${subjectArray.length - 7}`;
+    const newSubject = `추가과목 ${subjectArray.length - defaultSubjectLength}`;
     setSubjectArray((prev) => [...prev, newSubject]);
   };
 
   useEffect(() => {
-    if (subjectArray.length <= 8) {
+    if (subjectArray.length <= defaultSubjectLength) {
       setValue('newSubjects', null);
     }
 
@@ -100,7 +100,7 @@ const TestCalculatePage = () => {
     if (gradesInputMethod === 'freeSemester' && freeSemester !== null) {
       setValue(freeSemester, null);
     }
-  }, [freeSemester, gradesInputMethod, setValue, subjectArray]);
+  }, [defaultSubjectLength, freeSemester, gradesInputMethod, setValue, subjectArray]);
 
   return (
     <div
@@ -141,7 +141,7 @@ const TestCalculatePage = () => {
                 <div className={cn(...subjectDiv)}>자유학기제</div>
               )}
               {subjectArray.map((subject, idx) =>
-                idx < 8 ? (
+                idx < defaultSubjectLength ? (
                   <div className={cn(...subjectDiv)} key={subject}>
                     {subject}
                   </div>
