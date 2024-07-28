@@ -38,22 +38,56 @@ const ItemColors = {
 
 interface SubItemProps extends ButtonProps {
   color: keyof typeof ItemColors;
+  isSelected: boolean;
 }
 
-const SubItem: React.FC<SubItemProps> = ({ children, onClick, color }) => (
-  <div onClick={onClick} className={cn('flex', 'gap-2', 'py-2', 'px-3', 'items-center', 'pl-10')}>
+const SubItem: React.FC<SubItemProps> = ({ children, onClick, color, isSelected }) => (
+  <div
+    onClick={onClick}
+    className={cn('flex', 'gap-2', 'py-2', 'px-3', 'items-center', 'pl-10', 'cursor-pointer')}
+  >
     <div
       className={cn('w-2', 'h-2', 'rounded-full')}
       style={{
         border: `solid 2px ${ItemColors[color]}`,
       }}
     />
-    <span className={cn('font-normal', 'text-sm', 'leading-5', 'text-gray-400')}>{children}</span>
+    <span
+      className={cn(
+        'font-normal',
+        'text-sm',
+        'leading-5',
+        'text-gray-400',
+        isSelected && 'text-blue-900',
+      )}
+    >
+      {children}
+    </span>
   </div>
 );
 
+const ManageTypeArray = [
+  {
+    color: 'blue',
+    type: '전체 지원자 관리',
+  },
+  {
+    color: 'amber',
+    type: '1차 전형 합격자 관리',
+  },
+  {
+    color: 'green',
+    type: '최종 합격자 관리',
+  },
+  {
+    color: 'rose',
+    type: '불합격자 관리',
+  },
+] as const;
+
 const SideMenu = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
   return (
     <nav
@@ -92,10 +126,16 @@ const SideMenu = () => {
             지원자관리
           </Item>
           <div>
-            <SubItem color="blue">전체 지원자 관리</SubItem>
-            <SubItem color="amber">1차 전형 합격자 관리</SubItem>
-            <SubItem color="green">최종 합격자 관리</SubItem>
-            <SubItem color="rose">불합격자 관리</SubItem>
+            {ManageTypeArray.map(({ color, type }, index) => (
+              <SubItem
+                color={color}
+                key={type}
+                isSelected={index === selectedIndex}
+                onClick={() => setSelectedIndex(index)}
+              >
+                {type}
+              </SubItem>
+            ))}
           </div>
         </div>
       </div>
