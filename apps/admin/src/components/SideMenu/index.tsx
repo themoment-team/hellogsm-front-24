@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { PropsWithChildren } from 'react';
 
 import { ButtonProps } from 'shared';
 
@@ -8,11 +9,7 @@ import { ChevronsLeft, Puzzle } from 'admin/assets';
 
 import { cn } from 'shared/lib/utils';
 
-interface ItemProps {
-  children: React.ReactNode;
-}
-
-const Item: React.FC<ItemProps> = ({ children }) => (
+const Item = ({ children }: PropsWithChildren) => (
   <div
     className={cn(
       'flex',
