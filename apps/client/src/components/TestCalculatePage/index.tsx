@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -15,9 +16,10 @@ import type { GradesInputMethodType, ScoreFormType, SemesterIdType } from 'clien
 const TestCalculatePage = () => {
   const [gradesInputMethod, setGradeInputMethod] = useState<GradesInputMethodType>('freeGrade');
   const [freeSemester, setFreeSemester] = useState<SemesterIdType | null>(null);
-  const [subjectArray] = useState<string[]>([...defaultSubjectArray]);
+  const [subjectArray, setSubjectArray] = useState<string[]>([...defaultSubjectArray]);
+  const defaultSubjectLength = defaultSubjectArray.length;
 
-  const { register, handleSubmit, setValue } = useForm<ScoreFormType>({
+  const { register, handleSubmit, setValue, unregister, watch } = useForm<ScoreFormType>({
     resolver: zodResolver(scoreFormSchema),
   });
 
@@ -31,13 +33,34 @@ const TestCalculatePage = () => {
     'font-[700]',
   ];
 
+  const handleDeleteSubjectClick = (idx: number) => {
+    const filteredSubjects = subjectArray.filter((_, i) => i !== idx);
+    unregister(`newSubjects.${idx - defaultSubjectLength}`);
+    setSubjectArray(filteredSubjects);
+
+    const newSubjects = watch('newSubjects');
+    const score1_1 = watch('achievement1_1');
+    const score1_2 = watch('achievement1_2');
+    const score2_1 = watch('achievement2_1');
+    const score2_2 = watch('achievement2_2');
+    const score3_1 = watch('achievement3_1');
+    setValue(
+      'newSubjects',
+      newSubjects && newSubjects.filter((_, i) => idx - defaultSubjectLength !== i),
+    ); // newSubjects 배열에서 인덱스가 N인 값 제거
+    setValue('achievement1_1', score1_1 && score1_1.filter((_, i) => i !== idx)); // score1_1 배열에서 인덱스가 기본과목.length + index인 값 제거 (삭제 버튼 클릭한 인덱스 제거)
+    setValue('achievement1_2', score1_2 && score1_2.filter((_, i) => i !== idx));
+    setValue('achievement2_1', score2_1 && score2_1.filter((_, i) => i !== idx));
+    setValue('achievement2_2', score2_2 && score2_2.filter((_, i) => i !== idx));
+    setValue('achievement3_1', score3_1 && score3_1.filter((_, i) => i !== idx));
+  };
+
   const subjectDiv = [
     'flex',
     'w-[100px]',
     'h-[37px]',
     'rounded-[6px]',
     'bg-[#19BAFF]',
-    'gap-[13px]',
     'items-center',
     'justify-center',
     'font-[700]',
@@ -54,36 +77,55 @@ const TestCalculatePage = () => {
     console.log(body);
   };
 
+  const handleAddSubjectClick = () => {
+    const newSubject = `추가과목 ${subjectArray.length - defaultSubjectLength}`;
+    setSubjectArray((prev) => [...prev, newSubject]);
+  };
+
   useEffect(() => {
-    if (gradesInputMethod === 'freeGrade') {
-      setValue('score1_1', null);
-      setValue('score1_2', null);
+    if (subjectArray.length <= defaultSubjectLength) {
+      setValue('newSubjects', null);
     }
 
+    if (gradesInputMethod === 'freeGrade') {
+      setValue('achievement1_1', null);
+      setValue('achievement1_2', null);
+    }
     if (gradesInputMethod === 'freeSemester' && freeSemester === null) {
-      subjectArray.forEach((_, i) => setValue(`score1_1.${i}`, '선택'));
-      subjectArray.forEach((_, i) => setValue(`score1_2.${i}`, '선택'));
+      subjectArray.forEach((_, i) => setValue(`achievement1_1.${i}`, '선택'));
+      subjectArray.forEach((_, i) => setValue(`achievement1_2.${i}`, '선택'));
     }
 
     if (gradesInputMethod === 'freeSemester' && freeSemester !== null) {
       setValue(freeSemester, null);
     }
-  }, [freeSemester, gradesInputMethod, setValue, subjectArray]);
+  }, [defaultSubjectLength, freeSemester, gradesInputMethod, setValue, subjectArray]);
 
   return (
-    <div className={cn('flex', 'h-lvh', 'items-center', 'justify-center', 'bg-[#0F0921]')}>
+    <div
+      className={cn(
+        'flex',
+        'h-lvh',
+        'justify-center',
+        'bg-[#0F0921]',
+        'overflow-y-scroll',
+        'pt-[120px]',
+      )}
+    >
       <form
         onSubmit={handleSubmit(handleFormSubmit)}
         className={cn('flex', 'flex-col', 'items-center')}
       >
         <div className={cn('flex', 'gap-6', 'mb-[30px]')}>
           <button
+            type="button"
             onClick={() => setGradeInputMethod('freeGrade')}
             className={cn(...gradesInputMethodButton('freeGrade'))}
           >
             자유학년제
           </button>
           <button
+            type="button"
             onClick={() => setGradeInputMethod('freeSemester')}
             className={cn(...gradesInputMethodButton('freeSemester'))}
           >
@@ -97,11 +139,46 @@ const TestCalculatePage = () => {
               {gradesInputMethod === 'freeSemester' && (
                 <div className={cn(...subjectDiv)}>자유학기제</div>
               )}
-              {subjectArray.map((subject) => (
-                <div className={cn(...subjectDiv)} key={subject}>
-                  {subject}
-                </div>
-              ))}
+              {subjectArray.map((subject, idx) =>
+                idx < defaultSubjectLength ? (
+                  <div className={cn(...subjectDiv)} key={subject}>
+                    {subject}
+                  </div>
+                ) : (
+                  <div key={subject} className={cn('relative')}>
+                    <input
+                      {...register(`newSubjects.${idx - defaultSubjectLength}`)}
+                      className={cn(
+                        'bg-[#484453]',
+                        'w-[100px]',
+                        'h-[37px]',
+                        'rounded-[6px]',
+                        'text-[17px]/[24.62px]',
+                        'font-[500]',
+                        'text-[#FFFFFF8F]/[0.54]',
+                        'flex',
+                        'text-center',
+                      )}
+                      type="text"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteSubjectClick(idx)}
+                      className={cn(
+                        gradesInputMethod === 'freeGrade' ? 'left-[570px]' : 'left-[870px]',
+                        'absolute',
+                        'top-1/2',
+                        '-translate-y-1/2',
+                        'text-red-500',
+                        'flex',
+                        'w-[28px]',
+                      )}
+                    >
+                      삭제
+                    </button>
+                  </div>
+                ),
+              )}
             </div>
           </div>
           {gradesInputMethod === 'freeGrade' && (
@@ -118,6 +195,22 @@ const TestCalculatePage = () => {
           )}
         </div>
         <button
+          type="button"
+          onClick={handleAddSubjectClick}
+          className={cn(
+            'text-[#F8F8F8]',
+            'bg-[#0C4680]',
+            'w-full',
+            'mt-[12px]',
+            'rounded-[6px]',
+            'h-[37px]',
+            'min-h-[37px]',
+          )}
+        >
+          +과목추가
+        </button>
+        <button
+          type="submit"
           className={cn(
             'pointer',
             'mt-[100px]',
