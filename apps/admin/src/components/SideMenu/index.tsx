@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { ButtonProps } from 'shared';
 
-import { ChevronsLeft } from 'admin/assets';
+import { ChevronsLeft, Puzzle } from 'admin/assets';
 
 import { cn } from 'shared/lib/utils';
 
@@ -13,7 +13,20 @@ interface ItemProps {
 }
 
 const Item: React.FC<ItemProps> = ({ children }) => (
-  <div className={cn('flex', 'gap-2', 'py-2', 'px-3')}>{children}</div>
+  <div
+    className={cn(
+      'flex',
+      'gap-2',
+      'py-2',
+      'px-3',
+      'items-center',
+      'text-sm',
+      'font-semibold',
+      'leading-5',
+    )}
+  >
+    {children}
+  </div>
 );
 
 const ItemColors = {
@@ -28,14 +41,14 @@ interface SubItemProps extends ButtonProps {
 }
 
 const SubItem: React.FC<SubItemProps> = ({ children, onClick, color }) => (
-  <div onClick={onClick} className={cn('flex', 'gap-2', 'py-2', 'px-3', 'items-center')}>
+  <div onClick={onClick} className={cn('flex', 'gap-2', 'py-2', 'px-3', 'items-center', 'pl-10')}>
     <div
       className={cn('w-2', 'h-2', 'rounded-full')}
       style={{
         border: `solid 2px ${ItemColors[color]}`,
       }}
     />
-    {children}
+    <span className={cn('font-normal', 'text-sm', 'leading-5', 'text-gray-400')}>{children}</span>
   </div>
 );
 
@@ -43,33 +56,53 @@ const SideMenu = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
   return (
-    <>
-      {isOpen && (
-        <nav
-          className={cn('w-60', 'h-dvh', 'py-8', 'px-4', 'bg-white', 'flex-col', 'justify-between')}
-        >
-          <div className={cn('flex', 'flex-col', 'gap-10')}>
-            <div className={cn('flex', 'w-full', 'justify-between')}>
-              <span className={cn('text-gray-80', 'text-base', 'font-semibold', 'leading-6')}>
-                HELLO <span className={cn('text-[#2563EB]')}>ADMIN!</span>
-              </span>
-              <ChevronsLeft />
-            </div>
-
-            <div className={cn('flex', 'flex-col', 'gap-2')}>
-              <Item>지원자관리</Item>
-              <div>
-                <SubItem color="blue">전체 지원자 관리</SubItem>
-                <SubItem color="amber">전체 지원자 관리</SubItem>
-                <SubItem color="green">전체 지원자 관리</SubItem>
-                <SubItem color="rose">전체 지원자 관리</SubItem>
-              </div>
-            </div>
-          </div>
-          <Item>로그아웃</Item>
-        </nav>
+    <nav
+      className={cn(
+        'w-60',
+        'h-dvh',
+        'py-8',
+        'px-4',
+        'bg-white',
+        'flex',
+        'flex-col',
+        'justify-between',
+        'absolute',
+        !isOpen && 'translate-x-[-200px]',
+        'ease-in-out',
+        'duration-150',
+        'transition-all',
       )}
-    </>
+    >
+      <div className={cn('flex', 'flex-col', 'gap-10')}>
+        <div className={cn('flex', 'w-full', 'justify-between')}>
+          <span className={cn('text-gray-80', 'text-base', 'font-semibold')}>
+            HELLO <span className={cn('text-[#2563EB]')}>ADMIN!</span>
+          </span>
+          <div
+            className={cn('cursor-pointer', !isOpen && 'scale-x-[-1]')}
+            onClick={() => setIsOpen((prev) => !prev)}
+          >
+            <ChevronsLeft />
+          </div>
+        </div>
+
+        <div className={cn('flex', 'flex-col', 'gap-2')}>
+          <Item>
+            <Puzzle />
+            지원자관리
+          </Item>
+          <div>
+            <SubItem color="blue">전체 지원자 관리</SubItem>
+            <SubItem color="amber">1차 전형 합격자 관리</SubItem>
+            <SubItem color="green">최종 합격자 관리</SubItem>
+            <SubItem color="rose">불합격자 관리</SubItem>
+          </div>
+        </div>
+      </div>
+      <div className={cn('mt-auto')}>
+        <Item>로그아웃</Item>
+      </div>
+    </nav>
   );
 };
 
