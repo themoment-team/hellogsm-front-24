@@ -3,8 +3,6 @@
 import { useState } from 'react';
 import { PropsWithChildren } from 'react';
 
-import { ButtonProps } from 'shared';
-
 import { ChevronsLeft, Puzzle } from 'admin/assets';
 
 import { cn } from 'shared/lib/utils';
@@ -26,18 +24,13 @@ const Item = ({ children }: PropsWithChildren) => (
   </div>
 );
 
-interface SubItemProps extends ButtonProps {
+interface SubItemProps extends PropsWithChildren {
   isSelected: boolean;
   circleClassName: string;
+  onClick: () => void;
 }
 
-const SubItem: React.FC<SubItemProps> = ({
-  children,
-  onClick,
-  color,
-  isSelected,
-  circleClassName,
-}) => (
+const SubItem = ({ children, onClick, isSelected, circleClassName }: SubItemProps) => (
   <div
     onClick={onClick}
     className={cn('flex', 'gap-2', 'py-2', 'px-3', 'items-center', 'pl-10', 'cursor-pointer')}
