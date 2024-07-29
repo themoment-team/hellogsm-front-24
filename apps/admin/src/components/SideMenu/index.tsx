@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { PropsWithChildren } from 'react';
 
-import { ChevronsLeft, Puzzle } from 'admin/assets';
+import { ChevronsLeft, Puzzle, Exit } from 'admin/assets';
 
 import { cn } from 'shared/lib/utils';
 
@@ -125,9 +125,10 @@ const SideMenu = () => {
           </div>
         </div>
       </div>
-      <div className={cn('mt-auto')}>
-        <Item>로그아웃</Item>
-      </div>
+      <Item>
+        <Exit />
+        로그아웃
+      </Item>
     </nav>
   );
 };
