@@ -26,28 +26,24 @@ const Item = ({ children }: PropsWithChildren) => (
   </div>
 );
 
-const ItemColors = {
-  blue: '#2563EB',
-  amber: '#FCD34D',
-  green: '#22C55E',
-  rose: '#F43F5E',
-} as const;
-
 interface SubItemProps extends ButtonProps {
-  color: keyof typeof ItemColors;
   isSelected: boolean;
+  circleClassName: string;
 }
 
-const SubItem: React.FC<SubItemProps> = ({ children, onClick, color, isSelected }) => (
+const SubItem: React.FC<SubItemProps> = ({
+  children,
+  onClick,
+  color,
+  isSelected,
+  circleClassName,
+}) => (
   <div
     onClick={onClick}
     className={cn('flex', 'gap-2', 'py-2', 'px-3', 'items-center', 'pl-10', 'cursor-pointer')}
   >
     <div
-      className={cn('w-2', 'h-2', 'rounded-full')}
-      style={{
-        border: `solid 2px ${ItemColors[color]}`,
-      }}
+      className={cn('w-2', 'h-2', 'rounded-full', 'border-solid', 'border-2', circleClassName)}
     />
     <span
       className={cn(
@@ -65,19 +61,19 @@ const SubItem: React.FC<SubItemProps> = ({ children, onClick, color, isSelected 
 
 const ManageTypeArray = [
   {
-    color: 'blue',
+    borderStyle: 'border-blue-600',
     type: '전체 지원자 관리',
   },
   {
-    color: 'amber',
+    borderStyle: 'border-amber-300',
     type: '1차 전형 합격자 관리',
   },
   {
-    color: 'green',
+    borderStyle: 'border-green-500',
     type: '최종 합격자 관리',
   },
   {
-    color: 'rose',
+    borderStyle: 'border-rose-500',
     type: '불합격자 관리',
   },
 ] as const;
@@ -123,12 +119,12 @@ const SideMenu = () => {
             지원자관리
           </Item>
           <div>
-            {ManageTypeArray.map(({ color, type }, index) => (
+            {ManageTypeArray.map(({ borderStyle, type }, index) => (
               <SubItem
-                color={color}
                 key={type}
                 isSelected={index === selectedIndex}
                 onClick={() => setSelectedIndex(index)}
+                circleClassName={borderStyle}
               >
                 {type}
               </SubItem>
