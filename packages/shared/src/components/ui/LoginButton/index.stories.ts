@@ -11,4 +11,14 @@ export default meta;
 
 type Story = StoryObj<typeof LoginButton>;
 
-export const Primary: Story = {};
+export const Google: Story = {
+  args: {
+    variant: "google",
+  },
+};
+
+export const Kakao: Story = {
+  args: {
+    variant: "kakao",
+  },
+};
