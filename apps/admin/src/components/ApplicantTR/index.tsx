@@ -5,7 +5,8 @@ import { checkIsPassedDate } from 'shared';
 import { CheckIcon } from 'shared/assets';
 import { Table, TableBody, TableCell, Toggle, TableRow, Badge, Button } from 'shared/components';
 
-const StoryTest = () => {
+const ApplicantTR = () => {
+  // TODO 연산을 줄이기 위해 추후에는 테이블 상위 컴포넌트에서 일자 계산으로 변경
   const example직무적성처리시작일자 = new Date('2024-07-31');
   const example심층면접처리시작일자 = new Date('2024-08-30');
 
@@ -45,4 +46,4 @@ const StoryTest = () => {
   );
 };
 
-export default StoryTest;
+export default ApplicantTR;
