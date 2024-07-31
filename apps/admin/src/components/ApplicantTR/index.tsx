@@ -1,15 +1,16 @@
 'use client';
 
+import { checkIsPassedDate } from 'shared';
+
 import { CheckIcon } from 'shared/assets';
 import { Table, TableBody, TableCell, Toggle, TableRow, Badge, Button } from 'shared/components';
 
 const StoryTest = () => {
-  const today = new Date();
   const example직무적성처리시작일자 = new Date('2024-07-31');
   const example심층면접처리시작일자 = new Date('2024-08-30');
 
-  const is직무적성처리기간 = today.getTime() >= example직무적성처리시작일자.getTime();
-  const is심층면접처리기간 = today.getTime() >= example심층면접처리시작일자.getTime();
+  const is직무적성처리기간 = checkIsPassedDate(example직무적성처리시작일자);
+  const is심층면접처리기간 = checkIsPassedDate(example심층면접처리시작일자);
 
   return (
     <Table>
@@ -26,12 +27,12 @@ const StoryTest = () => {
           <TableCell className="w-[154px] text-zinc-600">대성여자중학교</TableCell>
           <TableCell className="max-w-full text-zinc-900">일반전형</TableCell>
           <TableCell className="w-[96px]">
-            <Badge variant="미정">미정</Badge>
+            {is직무적성처리기간 ? <span>TextField 예정</span> : <Badge variant="미정">미정</Badge>}
           </TableCell>
           <TableCell className="w-[180px] text-zinc-400">진행 전</TableCell>
           <TableCell className="w-[180px] text-zinc-400">진행 전</TableCell>
           <TableCell className="w-[96px]">
-            <Badge variant="미정">미정</Badge>
+            {is심층면접처리기간 ? <span>TextField 예정</span> : <Badge variant="미정">미정</Badge>}
           </TableCell>
           <TableCell className="w-[149px]">
             <Button className="ml-[45px]" variant="outline">
