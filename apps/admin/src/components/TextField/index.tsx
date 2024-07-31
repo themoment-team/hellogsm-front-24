@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { cn } from 'shared/lib/utils';
 
-const TextFiled = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
+const TextField = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
   ({ className, ...props }, ref) => {
     // useDebounce, formatScore
 
@@ -24,6 +24,6 @@ const TextFiled = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<H
     );
   },
 );
-TextFiled.displayName = 'TextFiled';
+TextField.displayName = 'TextField';
 
-export { TextFiled };
+export { TextField };
