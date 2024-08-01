@@ -8,6 +8,8 @@ import { Button } from "shared/components";
 import { GoogleIcon, KakaoIcon } from "shared/assets";
 import { cn } from "shared/lib/utils";
 
+import { authUrl } from "api/libs";
+
 const loginButtonVariants = cva(
   cn(
     "text-gray-700",
@@ -39,23 +41,33 @@ interface LoginButtonProps
     VariantProps<typeof loginButtonVariants> {}
 
 const LoginButton = React.forwardRef<HTMLButtonElement, LoginButtonProps>(
-  ({ className, variant, ...props }, ref) => {
+  ({ className, variant, children, ...props }, ref) => {
     const OAuthValues = {
       google: {
         icon: <GoogleIcon />,
-        text: "Google",
+        href: authUrl.getLogin("google"),
       },
       kakao: {
         icon: <KakaoIcon />,
-        text: "Kakao",
+        href: authUrl.getLogin("kakao"),
       },
     };
 
     return (
-      <Button ref={ref} className={cn(loginButtonVariants({ variant }), className)} {...props}>
-        {variant && OAuthValues[variant].icon}
-        {variant && OAuthValues[variant].text} 계정으로 로그인
-      </Button>
+      <>
+        {variant && (
+          <a href={`${process.env.NEXT_PUBLIC_API_BASE_URL}${OAuthValues[variant].href}`}>
+            <Button
+              ref={ref}
+              className={cn(loginButtonVariants({ variant }), className)}
+              {...props}
+            >
+              {OAuthValues[variant].icon}
+              {children}
+            </Button>
+          </a>
+        )}
+      </>
     );
   },
 );
