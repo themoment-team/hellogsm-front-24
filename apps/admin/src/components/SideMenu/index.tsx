@@ -76,7 +76,7 @@ const SideMenu = () => {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
   return (
-    <nav
+    <aside
       className={cn(
         'w-60',
         'h-dvh',
@@ -129,7 +129,7 @@ const SideMenu = () => {
         <Exit />
         로그아웃
       </Item>
-    </nav>
+    </aside>
   );
 };
 
