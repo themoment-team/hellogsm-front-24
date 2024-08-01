@@ -27,21 +27,18 @@ const ApplicantTR = () => {
     },
   });
 
-  const watchedValues = watch(['직무적성점수', '심층면접점수']);
-  const debouncedScores = {
-    직무적성점수: useDebounce(watchedValues[0], 1000),
-    심층면접점수: useDebounce(watchedValues[1], 1000),
-  };
+  const debounced직무적성점수 = useDebounce(watch('직무적성점수'), 1000);
+  const debounced심층면접점수 = useDebounce(watch('심층면접점수'), 1000);
 
   useEffect(() => {
-    const formatted직무적성점수 = formatScore(debouncedScores.직무적성점수);
-    setValue('직무적성점수', formatted직무적성점수 !== 'NaN' ? formatted직무적성점수 : '');
-  }, [debouncedScores.직무적성점수, setValue]);
+    const formatAndSetScore = (score: string, fieldName: '직무적성점수' | '심층면접점수') => {
+      const formattedScore = formatScore(score);
+      setValue(fieldName, formattedScore !== 'NaN' ? formattedScore : '');
+    };
 
-  useEffect(() => {
-    const formatted심층면접점수 = formatScore(debouncedScores.심층면접점수);
-    setValue('심층면접점수', formatted심층면접점수 !== 'NaN' ? formatted심층면접점수 : '');
-  }, [debouncedScores.심층면접점수, setValue]);
+    formatAndSetScore(debounced직무적성점수, '직무적성점수');
+    formatAndSetScore(debounced심층면접점수, '심층면접점수');
+  }, [debounced직무적성점수, debounced심층면접점수, setValue]);
 
   return (
     <Table>
