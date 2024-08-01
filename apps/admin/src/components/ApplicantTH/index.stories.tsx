@@ -1,4 +1,4 @@
-import ApplicantTH from '.';
+import { ApplicantTH } from 'admin/components';
 
 import type { Meta, StoryObj } from '@storybook/react';
 

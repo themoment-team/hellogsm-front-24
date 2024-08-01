@@ -1,4 +1,4 @@
-import ApplicantTR from '.';
+import { ApplicantTR } from 'admin/components';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
