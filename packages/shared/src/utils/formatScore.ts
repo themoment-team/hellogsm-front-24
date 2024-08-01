@@ -12,11 +12,6 @@ const formatScore = (score: string, maxScore: number = 100): string => {
   // 소숫점 2자리로 자르고 maxScore와 비교
   let scoreResult = Math.min(onlyNumberScore, maxScore).toFixed(2);
 
-  // 소숫점이 없을 경우 .00을 붙임
-  if (!scoreResult.includes(".")) {
-    scoreResult += ".00";
-  }
-
   return scoreResult;
 };
 
