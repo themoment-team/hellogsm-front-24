@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
+import { useForm, Controller } from 'react-hook-form';
 import { checkIsPassedDate } from 'shared';
 
 import { TextFiled } from 'admin/components';
@@ -13,28 +14,34 @@ import { cn } from 'shared/lib/utils';
 import { formatScore } from 'shared/utils';
 
 const ApplicantTR = () => {
-  // TODO 연산을 줄이기 위해 추후에는 테이블 상위 컴포넌트에서 일자 계산으로 변경
   const example직무적성처리시작일자 = new Date('2024-07-31');
   const example심층면접처리시작일자 = new Date('2024-08-30');
 
   const is직무적성처리기간 = checkIsPassedDate(example직무적성처리시작일자);
   const is심층면접처리기간 = checkIsPassedDate(example심층면접처리시작일자);
 
-  const [직무적성점수, set직무적성점수] = useState<string>('');
-  const [심층면접점수, set심층면접점수] = useState<string>('');
+  const { control, watch, setValue } = useForm({
+    defaultValues: {
+      직무적성점수: '',
+      심층면접점수: '',
+    },
+  });
 
-  const debounced직무적성점수 = useDebounce(직무적성점수, 1000);
-  const debounced심층면접점수 = useDebounce(심층면접점수, 1000);
+  const watchedValues = watch(['직무적성점수', '심층면접점수']);
+  const debouncedScores = {
+    직무적성점수: useDebounce(watchedValues[0], 1000),
+    심층면접점수: useDebounce(watchedValues[1], 1000),
+  };
 
   useEffect(() => {
-    const formatted직무적성점수 = formatScore(debounced직무적성점수);
-    set직무적성점수(formatted직무적성점수);
-  }, [debounced직무적성점수]);
+    const formatted직무적성점수 = formatScore(debouncedScores.직무적성점수);
+    setValue('직무적성점수', formatted직무적성점수 !== 'NaN' ? formatted직무적성점수 : '');
+  }, [debouncedScores.직무적성점수, setValue]);
 
   useEffect(() => {
-    const formatted심층면접점수 = formatScore(debounced심층면접점수);
-    set심층면접점수(formatted심층면접점수);
-  }, [debounced심층면접점수]);
+    const formatted심층면접점수 = formatScore(debouncedScores.심층면접점수);
+    setValue('심층면접점수', formatted심층면접점수 !== 'NaN' ? formatted심층면접점수 : '');
+  }, [debouncedScores.심층면접점수, setValue]);
 
   return (
     <Table>
@@ -53,7 +60,11 @@ const ApplicantTR = () => {
           <TableCell className="w-[96px]">
             {is직무적성처리기간 ? (
               <div className={cn('flex', 'gap-1.5')}>
-                <TextFiled value={직무적성점수} onChange={(e) => set직무적성점수(e.target.value)} />
+                <Controller
+                  name="직무적성점수"
+                  control={control}
+                  render={({ field }) => <TextFiled {...field} />}
+                />
                 <Button variant="subtitle">저장</Button>
               </div>
             ) : (
@@ -65,7 +76,11 @@ const ApplicantTR = () => {
           <TableCell className="w-[96px]">
             {is심층면접처리기간 ? (
               <div className={cn('flex', 'gap-1.5')}>
-                <TextFiled value={심층면접점수} onChange={(e) => set심층면접점수(e.target.value)} />
+                <Controller
+                  name="심층면접점수"
+                  control={control}
+                  render={({ field }) => <TextFiled {...field} />}
+                />
                 <Button variant="subtitle">저장</Button>
               </div>
             ) : (
