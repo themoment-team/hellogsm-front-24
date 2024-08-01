@@ -1,35 +1,21 @@
-//
+// delay동안 value의 변경이 없다면 debouncedValue에 value가 적용됩니다.
 
-// 사용 예시
+import { useState, useEffect } from "react";
 
-// const [text, setText] = useState('');
+const useDebounce = (value: string, delay: number) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
 
-// const debouncedSetText = useDebounce((value: string) => {
-//   setText(value); // 여기 아래에 formatScore 등 추가로 작성 가능
-// }, 500); // 500ms 디바운스 설정
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
 
-// const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-//   debouncedSetText(event.target.value);
-// }, [debouncedSetText]);
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
 
-import { useCallback, useRef } from "react";
-
-const useDebounce = (callback: (...args: any[]) => void, delay: number) => {
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const debouncedCallback = useCallback(
-    (...args: any[]) => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-      timeoutRef.current = setTimeout(() => {
-        callback(...args);
-      }, delay);
-    },
-    [callback, delay],
-  );
-
-  return debouncedCallback;
+  return debouncedValue;
 };
 
 export default useDebounce;

@@ -1,12 +1,16 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 import { checkIsPassedDate } from 'shared';
 
 import { TextFiled } from 'admin/components';
 
 import { CheckIcon } from 'shared/assets';
 import { Table, TableBody, TableCell, Toggle, TableRow, Badge, Button } from 'shared/components';
+import { useDebounce } from 'shared/hooks';
 import { cn } from 'shared/lib/utils';
+import { formatScore } from 'shared/utils';
 
 const ApplicantTR = () => {
   // TODO 연산을 줄이기 위해 추후에는 테이블 상위 컴포넌트에서 일자 계산으로 변경
@@ -15,6 +19,22 @@ const ApplicantTR = () => {
 
   const is직무적성처리기간 = checkIsPassedDate(example직무적성처리시작일자);
   const is심층면접처리기간 = checkIsPassedDate(example심층면접처리시작일자);
+
+  const [직무적성점수, set직무적성점수] = useState<string>('');
+  const [심층면접점수, set심층면접점수] = useState<string>('');
+
+  const debounced직무적성점수 = useDebounce(직무적성점수, 1000);
+  const debounced심층면접점수 = useDebounce(심층면접점수, 1000);
+
+  useEffect(() => {
+    const formatted직무적성점수 = formatScore(debounced직무적성점수);
+    set직무적성점수(formatted직무적성점수);
+  }, [debounced직무적성점수]);
+
+  useEffect(() => {
+    const formatted심층면접점수 = formatScore(debounced심층면접점수);
+    set심층면접점수(formatted심층면접점수);
+  }, [debounced심층면접점수]);
 
   return (
     <Table>
@@ -33,7 +53,7 @@ const ApplicantTR = () => {
           <TableCell className="w-[96px]">
             {is직무적성처리기간 ? (
               <div className={cn('flex', 'gap-1.5')}>
-                <TextFiled />
+                <TextFiled value={직무적성점수} onChange={(e) => set직무적성점수(e.target.value)} />
                 <Button variant="subtitle">저장</Button>
               </div>
             ) : (
@@ -45,7 +65,7 @@ const ApplicantTR = () => {
           <TableCell className="w-[96px]">
             {is심층면접처리기간 ? (
               <div className={cn('flex', 'gap-1.5')}>
-                <TextFiled />
+                <TextFiled value={심층면접점수} onChange={(e) => set심층면접점수(e.target.value)} />
                 <Button variant="subtitle">저장</Button>
               </div>
             ) : (
