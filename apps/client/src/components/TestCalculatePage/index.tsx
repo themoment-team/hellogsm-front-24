@@ -7,11 +7,30 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { SquareIcon } from 'client/assets';
-import { FreeGradeForm, FreeSemesterForm } from 'client/components';
-import { defaultSubjectArray } from 'client/constants';
+import {
+  ArtPhysicalForm,
+  FreeGradeForm,
+  FreeSemesterForm,
+  NonSubjectForm,
+} from 'client/components';
 import { cn } from 'client/lib/utils';
 import { scoreFormSchema } from 'client/schemas';
 import type { GradesInputMethodType, ScoreFormType, SemesterIdType } from 'client/types';
+
+const gradeArray = ['1학년', '2학년', '3학년'] as const;
+
+export const defaultSubjectArray = [
+  '국어',
+  '도덕',
+  '사회',
+  '역사',
+  '수학',
+  '과학',
+  '기술가정',
+  '영어',
+] as const;
+
+const artPhysicalSubjectArray = ['체육', '미술', '음악'] as const;
 
 const TestCalculatePage = () => {
   const [gradesInputMethod, setGradeInputMethod] = useState<GradesInputMethodType>('freeGrade');
@@ -200,15 +219,43 @@ const TestCalculatePage = () => {
           className={cn(
             'text-[#F8F8F8]',
             'bg-[#0C4680]',
-            'w-full',
             'mt-[12px]',
             'rounded-[6px]',
             'h-[37px]',
             'min-h-[37px]',
+            gradesInputMethod === 'freeGrade' ? 'w-[553px]' : 'w-[855px]',
           )}
         >
           +과목추가
         </button>
+        <div className={cn('flex', 'gap-6', 'mt-[50px]')}>
+          <div className={cn('flex', 'flex-col')}>
+            <SquareIcon />
+            <div className={cn('mt-[20px]', 'flex', 'flex-col', 'gap-[13px]')}>
+              {artPhysicalSubjectArray.map((subject) => (
+                <div className={cn(...subjectDiv)} key={subject}>
+                  {subject}
+                </div>
+              ))}
+            </div>
+          </div>
+          <ArtPhysicalForm register={register} />
+        </div>
+
+        <div className={cn('flex', 'gap-6', 'mt-[50px]')}>
+          <div className={cn('flex', 'flex-col')}>
+            <div className={cn(...subjectDiv, 'h-[55px]')}>학년</div>
+            <div className={cn('mt-[20px]', 'flex', 'flex-col', 'gap-[13px]')}>
+              {gradeArray.map((subject) => (
+                <div className={cn(...subjectDiv)} key={subject}>
+                  {subject}
+                </div>
+              ))}
+            </div>
+          </div>
+          <NonSubjectForm register={register} />
+        </div>
+
         <button
           type="submit"
           className={cn(

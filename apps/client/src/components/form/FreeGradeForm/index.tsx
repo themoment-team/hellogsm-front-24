@@ -16,7 +16,7 @@ interface FreeGradeFormProps {
   subjectArray: string[];
 }
 
-const FreeGradeForm: React.FC<FreeGradeFormProps> = ({ register, subjectArray }) => {
+const FreeGradeForm = ({ register, subjectArray }: FreeGradeFormProps) => {
   return (
     <>
       {freeGradeArray.map(({ id, title }) => (

@@ -19,4 +19,8 @@ export const scoreFormSchema = z.object({
     z.array(z.string().refine((value) => value && value !== DEFAULT_VALUE)),
   ),
   newSubjects: z.nullable(z.array(z.string().min(1))),
+  artsPhysicalAchievement: z.array(z.string().refine((value) => value && value !== DEFAULT_VALUE)),
+  absentDays: z.array(z.string().refine((value) => !isNaN(Number(value)) && value)),
+  attendanceDays: z.array(z.string().refine((value) => !isNaN(Number(value)) && value)),
+  volunteerTime: z.array(z.string().refine((value) => !isNaN(Number(value)) && value)),
 });
