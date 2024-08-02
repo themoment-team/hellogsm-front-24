@@ -1,6 +1,5 @@
 import { UseFormRegister } from 'react-hook-form';
 
-import { nonSubjectArray } from 'client/constants';
 import { ScoreFormType } from 'client/types';
 
 import { cn } from 'shared/lib/utils';
@@ -9,7 +8,7 @@ interface NonSubjectFormProps {
   register: UseFormRegister<ScoreFormType>;
 }
 
-const absentArray = ['1학년 결석', '2학년 결석', '3학년 결석'];
+const absentArray = ['1학년 결석', '2학년 결석', '3학년 결석'] as const;
 
 const attendanceArray = [
   '1학년 지각',
@@ -21,9 +20,11 @@ const attendanceArray = [
   '1학년 결과',
   '2학년 결과',
   '3학년 결과',
-];
+] as const;
 
-const volunteerArray = ['1학년 봉사', '2학년 봉사', '3학년 봉사'];
+export const nonSubjectArray = ['결석', '지각', '조퇴', '결과', '봉사활동(시간)'] as const;
+
+const volunteerArray = ['1학년 봉사', '2학년 봉사', '3학년 봉사'] as const;
 
 const inputClass = cn(
   'w-[127px]',

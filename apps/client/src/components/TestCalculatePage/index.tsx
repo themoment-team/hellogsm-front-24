@@ -13,10 +13,24 @@ import {
   FreeSemesterForm,
   NonSubjectForm,
 } from 'client/components';
-import { artPhysicalSubjectArray, defaultSubjectArray, gradeArray } from 'client/constants';
 import { cn } from 'client/lib/utils';
 import { scoreFormSchema } from 'client/schemas';
 import type { GradesInputMethodType, ScoreFormType, SemesterIdType } from 'client/types';
+
+const gradeArray = ['1학년', '2학년', '3학년'] as const;
+
+export const defaultSubjectArray = [
+  '국어',
+  '도덕',
+  '사회',
+  '역사',
+  '수학',
+  '과학',
+  '기술가정',
+  '영어',
+] as const;
+
+const artPhysicalSubjectArray = ['체육', '미술', '음악'] as const;
 
 const TestCalculatePage = () => {
   const [gradesInputMethod, setGradeInputMethod] = useState<GradesInputMethodType>('freeGrade');
