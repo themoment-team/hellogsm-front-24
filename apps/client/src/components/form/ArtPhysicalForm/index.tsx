@@ -23,7 +23,7 @@ interface ArtPhysicalFormProps {
   register: UseFormRegister<ScoreFormType>;
 }
 
-const ArtPhysicalForm: React.FC<ArtPhysicalFormProps> = ({ register }) => {
+const ArtPhysicalForm = ({ register }: ArtPhysicalFormProps) => {
   return (
     <div>
       <div className={cn('flex', 'gap-6')}>

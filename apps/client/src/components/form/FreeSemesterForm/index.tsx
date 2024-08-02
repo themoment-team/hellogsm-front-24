@@ -22,12 +22,12 @@ interface FreeSemesterFormProps {
   setFreeSemester: React.Dispatch<React.SetStateAction<SemesterIdType | null>>;
 }
 
-const FreeSemesterForm: React.FC<FreeSemesterFormProps> = ({
+const FreeSemesterForm = ({
   register,
   subjectArray,
   freeSemester,
   setFreeSemester,
-}) => {
+}: FreeSemesterFormProps) => {
   return (
     <>
       {freeSemesterArray.map(({ id, title }) => {

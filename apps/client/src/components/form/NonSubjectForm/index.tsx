@@ -36,7 +36,7 @@ const inputClass = cn(
   'text-[#FFFFFF8F]/[0.54]',
 );
 
-const NonSubjectForm: React.FC<NonSubjectFormProps> = ({ register }) => (
+const NonSubjectForm = ({ register }: NonSubjectFormProps) => (
   <div className={cn('flex', 'flex-col')}>
     <div className={cn('flex', 'gap-6')}>
       {nonSubjectArray.map((semester) => (
