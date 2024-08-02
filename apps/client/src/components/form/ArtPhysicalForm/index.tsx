@@ -76,7 +76,7 @@ const ArtPhysicalForm = ({ register }: ArtPhysicalFormProps) => {
             >
               <option hidden>선택</option>
               {scoreArray.map((score, idx) => (
-                <option key={score} value={score !== '없음' ? 5 - idx : 0}>
+                <option key={score} value={score === '없음' ? 0 : 5 - idx}>
                   {score}
                 </option>
               ))}
