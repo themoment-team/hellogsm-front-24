@@ -4,3 +4,4 @@ export * from "./Toggle";
 export * from "./Table";
 export * from "./Badge";
 export * from "./Input";
+export * from "./LoginButton";
