@@ -349,9 +349,19 @@ importers:
       api:
         specifier: workspace:^
         version: link:../api
+      eslint-config-custom:
+        specifier: workspace:^
+        version: link:../code-style-config
       tailwind-config:
         specifier: workspace:^
         version: link:../tailwind-config
+    devDependencies:
+      eslint:
+        specifier: ^8
+        version: 8.57.0
+      eslint-config-next:
+        specifier: 14.2.3
+        version: 14.2.3(eslint@8.57.0)(typescript@5.4.4)
 
   packages/tailwind-config: {}
 

@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "pnpm --filter client",
     "admin": "pnpm --filter admin",
+    "shared": "pnpm --filter shared",
     "storybook": "pnpm --filter storybook",
     "lint": "pnpm --filter code-style-config"
   },
