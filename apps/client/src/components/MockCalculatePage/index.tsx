@@ -94,8 +94,30 @@ const MockCalculatePage = () => {
     if (gradesInputMethod === 'freeSemester' && !freeSemester) return;
     const isFreeSemester = gradesInputMethod === 'freeSemester';
 
+    const {
+      achievement1_1,
+      achievement1_2,
+      achievement2_1,
+      achievement2_2,
+      achievement3_1,
+      artsPhysicalAchievement,
+      absentDays,
+      attendanceDays,
+      volunteerTime,
+      newSubjects,
+    } = data;
+
     const body: MiddleSchoolAchievementType = {
-      ...data,
+      achievement1_1: achievement1_1 ? achievement1_1.map((i) => Number(i)) : null,
+      achievement1_2: achievement1_2 ? achievement1_2.map((i) => Number(i)) : null,
+      achievement2_1: achievement2_1 ? achievement2_1.map((i) => Number(i)) : null,
+      achievement2_2: achievement2_2 ? achievement2_2.map((i) => Number(i)) : null,
+      achievement3_1: achievement3_1 ? achievement3_1.map((i) => Number(i)) : null,
+      artsPhysicalAchievement: artsPhysicalAchievement.map((i) => Number(i)),
+      absentDays: absentDays.map((i) => Number(i)),
+      attendanceDays: attendanceDays.map((i) => Number(i)),
+      volunteerTime: volunteerTime.map((i) => Number(i)),
+      newSubjects: newSubjects,
       liberalSystem: isFreeSemester ? '자유학년제' : '자유학기제',
       freeSemester: (isFreeSemester
         ? freeSemesterConvertor[freeSemester!]
