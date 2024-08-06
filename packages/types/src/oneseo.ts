@@ -55,6 +55,7 @@ export interface GetMyOneseoType {
   middleSchoolAchievement: MiddleSchoolAchievementType &
     GEDAchievementType & {
       artsPhysicalSubjects: string[];
+      generalSubjects: string[];
     };
   step: number | null;
 }
