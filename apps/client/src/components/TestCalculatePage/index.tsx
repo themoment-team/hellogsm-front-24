@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @rushstack/no-new-null */
 /* eslint-disable @typescript-eslint/naming-convention */
 'use client';
 
@@ -5,6 +7,7 @@ import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { FreeSemesterType, GetMyOneseoType, MiddleSchoolAchievementType } from 'types';
 
 import { SquareIcon } from 'client/assets';
 import {
@@ -13,33 +16,62 @@ import {
   FreeSemesterForm,
   NonSubjectForm,
 } from 'client/components';
+import { artPhysicalSubjectArray, defaultSubjectArray, gradeArray } from 'client/constants';
 import { cn } from 'client/lib/utils';
 import { scoreFormSchema } from 'client/schemas';
 import type { GradesInputMethodType, ScoreFormType, SemesterIdType } from 'client/types';
 
-const gradeArray = ['1학년', '2학년', '3학년'] as const;
+import { usePostMockScore } from 'api/hooks';
 
-export const defaultSubjectArray = [
-  '국어',
-  '도덕',
-  '사회',
-  '역사',
-  '수학',
-  '과학',
-  '기술가정',
-  '영어',
-] as const;
+const freeSemesterConvertor = {
+  achievement1_1: '1-1',
+  achievement1_2: '1-2',
+  achievement2_1: '2-1',
+  achievement2_2: '2-2',
+  achievement3_1: '3-1',
+};
 
-const artPhysicalSubjectArray = ['체육', '미술', '음악'] as const;
+const reversedFreeSemesterConvertor = {
+  '1-1': 'achievement1_1',
+  '1-2': 'achievement1_2',
+  '2-1': 'achievement2_1',
+  '2-2': 'achievement2_2',
+  '3-1': 'achievement3_1',
+};
 
-const TestCalculatePage = () => {
+const TestCalculatePage = ({ data }: { data: GetMyOneseoType | null }) => {
   const [gradesInputMethod, setGradeInputMethod] = useState<GradesInputMethodType>('freeGrade');
   const [freeSemester, setFreeSemester] = useState<SemesterIdType | null>(null);
   const [subjectArray, setSubjectArray] = useState<string[]>([...defaultSubjectArray]);
   const defaultSubjectLength = defaultSubjectArray.length;
+  const defaultData = data?.middleSchoolAchievement;
 
   const { register, handleSubmit, setValue, unregister, watch } = useForm<ScoreFormType>({
     resolver: zodResolver(scoreFormSchema),
+    defaultValues: {
+      achievement1_1:
+        defaultData?.achievement1_1 && defaultData.achievement1_1.map((i) => String(i)),
+      achievement1_2:
+        defaultData?.achievement1_2 && defaultData.achievement1_2.map((i) => String(i)),
+      achievement2_1:
+        defaultData?.achievement2_1 && defaultData.achievement2_1.map((i) => String(i)),
+      achievement2_2:
+        defaultData?.achievement2_2 && defaultData.achievement2_2.map((i) => String(i)),
+      achievement3_1:
+        defaultData?.achievement3_1 && defaultData.achievement3_1.map((i) => String(i)),
+      artsPhysicalAchievement:
+        defaultData?.artsPhysicalAchievement &&
+        defaultData.artsPhysicalAchievement.map((i) => String(i)),
+      newSubjects: defaultData?.newSubjects && defaultData?.newSubjects,
+      absentDays: defaultData?.absentDays && defaultData.absentDays.map((i) => String(i)),
+      attendanceDays:
+        defaultData?.attendanceDays && defaultData.attendanceDays.map((i) => String(i)),
+      volunteerTime: defaultData?.volunteerTime && defaultData.volunteerTime.map((i) => String(i)),
+    },
+  });
+
+  const { mutate: mutatePostMockScore } = usePostMockScore('CANDIDATE', {
+    onSuccess: (data) => console.log(data),
   });
 
   const gradesInputMethodButton = (type: GradesInputMethodType) => [
@@ -88,18 +120,57 @@ const TestCalculatePage = () => {
   ];
 
   const handleFormSubmit: SubmitHandler<ScoreFormType> = (data) => {
-    const body = {
-      ...data,
-      freeSemester: gradesInputMethod === 'freeSemester' ? freeSemester : null,
+    if (gradesInputMethod === 'freeSemester' && !freeSemester) return;
+    const isFreeSemester = gradesInputMethod === 'freeSemester';
+    const {
+      achievement1_1,
+      achievement1_2,
+      achievement2_1,
+      achievement2_2,
+      achievement3_1,
+      artsPhysicalAchievement,
+      absentDays,
+      attendanceDays,
+      volunteerTime,
+      newSubjects,
+    } = data;
+
+    const body: MiddleSchoolAchievementType = {
+      achievement1_1: achievement1_1 ? achievement1_1.map((i) => Number(i)) : null,
+      achievement1_2: achievement1_2 ? achievement1_2.map((i) => Number(i)) : null,
+      achievement2_1: achievement2_1 ? achievement2_1.map((i) => Number(i)) : null,
+      achievement2_2: achievement2_2 ? achievement2_2.map((i) => Number(i)) : null,
+      achievement3_1: achievement3_1 ? achievement3_1.map((i) => Number(i)) : null,
+      artsPhysicalAchievement: artsPhysicalAchievement.map((i) => Number(i)),
+      absentDays: absentDays.map((i) => Number(i)),
+      attendanceDays: attendanceDays.map((i) => Number(i)),
+      volunteerTime: volunteerTime.map((i) => Number(i)),
+      newSubjects: newSubjects,
+      liberalSystem: isFreeSemester ? '자유학년제' : '자유학기제',
+      freeSemester: (isFreeSemester
+        ? freeSemesterConvertor[freeSemester!]
+        : null) as FreeSemesterType,
     };
 
     console.log(body);
+    mutatePostMockScore(body);
   };
 
   const handleAddSubjectClick = () => {
     const newSubject = `추가과목 ${subjectArray.length - defaultSubjectLength}`;
     setSubjectArray((prev) => [...prev, newSubject]);
   };
+
+  useEffect(() => {
+    if (defaultData?.liberalSystem === '자유학기제') setGradeInputMethod('freeSemester');
+    else setGradeInputMethod('freeGrade');
+
+    if (defaultData?.newSubjects?.length)
+      Array(defaultData.newSubjects.length).forEach(() => handleAddSubjectClick);
+
+    if (defaultData?.freeSemester)
+      setFreeSemester(reversedFreeSemesterConvertor[defaultData.freeSemester] as SemesterIdType);
+  }, []);
 
   useEffect(() => {
     if (subjectArray.length <= defaultSubjectLength) {
@@ -118,7 +189,14 @@ const TestCalculatePage = () => {
     if (gradesInputMethod === 'freeSemester' && freeSemester !== null) {
       setValue(freeSemester, null);
     }
-  }, [defaultSubjectLength, freeSemester, gradesInputMethod, setValue, subjectArray]);
+  }, [
+    defaultSubjectLength,
+    freeSemester,
+    gradesInputMethod,
+    handleAddSubjectClick,
+    setValue,
+    subjectArray,
+  ]);
 
   return (
     <div
