@@ -93,11 +93,6 @@ const MockCalculatePage = () => {
 
     const isFreeSemester = gradesInputMethod === 'freeSemester';
 
-    if (gradesInputMethod === 'freeGrade') {
-      data.achievement1_1 = null;
-      data.achievement1_2 = null;
-    }
-
     if (isFreeSemester && freeSemester !== null) {
       data[freeSemester] = null;
     }
@@ -145,7 +140,20 @@ const MockCalculatePage = () => {
     if (subjectArray.length <= defaultSubjectLength) {
       setValue('newSubjects', null);
     }
-  }, [defaultSubjectLength, setValue, subjectArray]);
+
+    if (gradesInputMethod === 'freeGrade') {
+      setValue('achievement1_1', null);
+      setValue('achievement1_2', null);
+    }
+
+    if (gradesInputMethod === 'freeSemester' && freeSemester !== 'achievement1_1') {
+      subjectArray.forEach((_, i) => setValue(`achievement1_1.${i}`, '선택'));
+    }
+
+    if (gradesInputMethod === 'freeSemester' && freeSemester !== 'achievement1_2') {
+      subjectArray.forEach((_, i) => setValue(`achievement1_2.${i}`, '선택'));
+    }
+  }, [defaultSubjectLength, freeSemester, gradesInputMethod, setValue, subjectArray]);
 
   return (
     <div
