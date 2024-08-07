@@ -31,6 +31,19 @@ const freeSemesterConvertor = {
   achievement3_1: '3-1',
 };
 
+const subjectDiv = [
+  'flex',
+  'w-[100px]',
+  'h-[37px]',
+  'rounded-[6px]',
+  'bg-[#19BAFF]',
+  'items-center',
+  'justify-center',
+  'font-[700]',
+  'text-[17px]/[24.62px]',
+  'text-[#F8F8F8]',
+];
+
 const MockCalculatePage = () => {
   const [gradesInputMethod, setGradeInputMethod] = useState<GradesInputMethodType>('freeGrade');
   const [freeSemester, setFreeSemester] = useState<SemesterIdType | null>(null);
@@ -76,19 +89,6 @@ const MockCalculatePage = () => {
     setValue('achievement2_2', score2_2 && score2_2.filter((_, i) => i !== idx));
     setValue('achievement3_1', score3_1 && score3_1.filter((_, i) => i !== idx));
   };
-
-  const subjectDiv = [
-    'flex',
-    'w-[100px]',
-    'h-[37px]',
-    'rounded-[6px]',
-    'bg-[#19BAFF]',
-    'items-center',
-    'justify-center',
-    'font-[700]',
-    'text-[17px]/[24.62px]',
-    'text-[#F8F8F8]',
-  ];
 
   const handleFormSubmit: SubmitHandler<ScoreFormType> = (data) => {
     if (gradesInputMethod === 'freeSemester' && !freeSemester) return;
