@@ -54,6 +54,7 @@ const FreeSemesterForm = ({
             </h1>
             <div className={cn('flex', 'flex-col', 'gap-[13px]')}>
               <button
+                type="button"
                 onClick={() => setFreeSemester(id)}
                 className={cn(
                   'flex',

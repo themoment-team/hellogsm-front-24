@@ -9,6 +9,7 @@
     "admin": "pnpm --filter admin",
     "shared": "pnpm --filter shared",
     "storybook": "pnpm --filter storybook",
+    "api": "pnpm --filter api",
     "lint": "pnpm --filter code-style-config"
   },
   "keywords": [],
