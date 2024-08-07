@@ -121,7 +121,18 @@ const TestCalculatePage = ({ data }: { data: GetMyOneseoType | null }) => {
 
   const handleFormSubmit: SubmitHandler<ScoreFormType> = (data) => {
     if (gradesInputMethod === 'freeSemester' && !freeSemester) return;
+
     const isFreeSemester = gradesInputMethod === 'freeSemester';
+
+    if (gradesInputMethod === 'freeGrade') {
+      data.achievement1_1 = null;
+      data.achievement1_2 = null;
+    }
+
+    if (isFreeSemester && freeSemester !== null) {
+      data[freeSemester] = null;
+    }
+
     const {
       achievement1_1,
       achievement1_2,
@@ -176,27 +187,7 @@ const TestCalculatePage = ({ data }: { data: GetMyOneseoType | null }) => {
     if (subjectArray.length <= defaultSubjectLength) {
       setValue('newSubjects', null);
     }
-
-    if (gradesInputMethod === 'freeGrade') {
-      setValue('achievement1_1', null);
-      setValue('achievement1_2', null);
-    }
-    if (gradesInputMethod === 'freeSemester' && freeSemester === null) {
-      subjectArray.forEach((_, i) => setValue(`achievement1_1.${i}`, '선택'));
-      subjectArray.forEach((_, i) => setValue(`achievement1_2.${i}`, '선택'));
-    }
-
-    if (gradesInputMethod === 'freeSemester' && freeSemester !== null) {
-      setValue(freeSemester, null);
-    }
-  }, [
-    defaultSubjectLength,
-    freeSemester,
-    gradesInputMethod,
-    handleAddSubjectClick,
-    setValue,
-    subjectArray,
-  ]);
+  }, [defaultSubjectLength, setValue, subjectArray]);
 
   return (
     <div
