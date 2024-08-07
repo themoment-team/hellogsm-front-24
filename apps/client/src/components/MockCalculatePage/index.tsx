@@ -14,14 +14,12 @@ import {
   FreeSemesterForm,
   NonSubjectForm,
 } from 'client/components';
-import { artPhysicalSubjectArray, defaultSubjectArray } from 'client/constants';
+import { artPhysicalSubjectArray, defaultSubjectArray, gradeArray } from 'client/constants';
 import { cn } from 'client/lib/utils';
 import { scoreFormSchema } from 'client/schemas';
 import type { GradesInputMethodType, ScoreFormType, SemesterIdType } from 'client/types';
 
 import { usePostMockScore } from 'api/hooks';
-
-const gradeArray = ['1학년', '2학년', '3학년'] as const;
 
 const freeSemesterConvertor = {
   achievement1_1: '1-1',
