@@ -1,12 +1,11 @@
-import { Button as BTN } from 'shared';
-
-import { Button } from 'client/components';
+import { Footer, Header } from 'client/components';
+import { cn } from 'client/lib/utils';
 
 export default function Home() {
   return (
-    <>
-      <BTN>button1</BTN>
-      <Button>button2</Button>
-    </>
+    <div className={cn('min-h-screen', 'flex', 'flex-col', 'justify-between')}>
+      <Header isLogin={true} name="사용자" />
+      <Footer />
+    </div>
   );
 }

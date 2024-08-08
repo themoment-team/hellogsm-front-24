@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "pnpm --filter client",
     "admin": "pnpm --filter admin",
+    "shared": "pnpm --filter shared",
     "storybook": "pnpm --filter storybook",
+    "api": "pnpm --filter api",
     "lint": "pnpm --filter code-style-config"
   },
   "keywords": [],
@@ -28,6 +30,7 @@
     "lucide-react": "^0.394.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.52.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7"
   },

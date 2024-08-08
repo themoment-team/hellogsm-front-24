@@ -91,7 +91,7 @@ const TableCaption = React.forwardRef<
 ));
 TableCaption.displayName = "TableCaption";
 
-const Example = () => (
+const TableExample = () => (
   <Table>
     <TableBody>
       <TableRow>
@@ -124,7 +124,7 @@ const Example = () => (
 );
 
 export {
-  Example,
+  TableExample,
   Table,
   TableHeader,
   TableBody,

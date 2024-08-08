@@ -8,11 +8,11 @@ import { cn } from 'client/lib/utils';
 import type { ScoreFormType, SemesterIdType, SemesterType } from 'client/types';
 
 const freeSemesterArray: SemesterType[] = [
-  { title: '1학년 1학기', id: 'score1_1' },
-  { title: '1학년 2학기', id: 'score1_2' },
-  { title: '2학년 1학기', id: 'score2_1' },
-  { title: '2학년 2학기', id: 'score2_2' },
-  { title: '3학년 1학기', id: 'score3_1' },
+  { title: '1학년 1학기', id: 'achievement1_1' },
+  { title: '1학년 2학기', id: 'achievement1_2' },
+  { title: '2학년 1학기', id: 'achievement2_1' },
+  { title: '2학년 2학기', id: 'achievement2_2' },
+  { title: '3학년 1학기', id: 'achievement3_1' },
 ] as const;
 
 interface FreeSemesterFormProps {
@@ -22,12 +22,12 @@ interface FreeSemesterFormProps {
   setFreeSemester: React.Dispatch<React.SetStateAction<SemesterIdType | null>>;
 }
 
-const FreeSemesterForm: React.FC<FreeSemesterFormProps> = ({
+const FreeSemesterForm = ({
   register,
   subjectArray,
   freeSemester,
   setFreeSemester,
-}) => {
+}: FreeSemesterFormProps) => {
   return (
     <>
       {freeSemesterArray.map(({ id, title }) => {
@@ -54,6 +54,7 @@ const FreeSemesterForm: React.FC<FreeSemesterFormProps> = ({
             </h1>
             <div className={cn('flex', 'flex-col', 'gap-[13px]')}>
               <button
+                type="button"
                 onClick={() => setFreeSemester(id)}
                 className={cn(
                   'flex',

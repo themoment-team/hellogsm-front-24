@@ -18,7 +18,8 @@
       "@/*": ["./src/*"],
       "shared/*": ["../../packages/shared/src/*"],
       "client/*": ["../client/src/*"],
-      "admin/*": ["../admin/src/*"]
+      "admin/*": ["../admin/src/*"],
+      "api/*": ["../../packages/api/src/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

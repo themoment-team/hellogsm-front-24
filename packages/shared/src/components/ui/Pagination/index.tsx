@@ -91,7 +91,7 @@ const PaginationEllipsis = ({ className, ...props }: React.ComponentProps<"span"
 );
 PaginationEllipsis.displayName = "PaginationEllipsis";
 
-const Example = () => {
+const PaginationExample = () => {
   return (
     <Pagination>
       <PaginationContent>
@@ -121,7 +121,7 @@ const Example = () => {
 };
 
 export {
-  Example,
+  PaginationExample,
   Pagination,
   PaginationContent,
   PaginationEllipsis,

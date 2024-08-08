@@ -1,14 +1,14 @@
-import { Example } from ".";
+import { TableExample } from ".";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
-const meta: Meta<typeof Example> = {
+const meta: Meta<typeof TableExample> = {
   title: "Shared/Table",
-  component: Example,
+  component: TableExample,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof Example>;
+type Story = StoryObj<typeof TableExample>;
 
 export const Primary: Story = {};

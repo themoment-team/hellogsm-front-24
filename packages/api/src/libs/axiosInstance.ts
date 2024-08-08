@@ -9,7 +9,7 @@ axiosInstance.interceptors.request.use(
   async (config) => {
     return config;
   },
-  async (error) => Promise.reject(error)
+  async (error) => Promise.reject(error),
 );
 
 axiosInstance.interceptors.response.use(
@@ -22,5 +22,5 @@ axiosInstance.interceptors.response.use(
   },
   async (error) => {
     return Promise.reject(error);
-  }
+  },
 );
