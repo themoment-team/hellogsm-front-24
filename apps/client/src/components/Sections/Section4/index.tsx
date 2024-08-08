@@ -27,6 +27,8 @@ interface DotProps {
   color: string;
 }
 
+const textStyle = ['text-[#0C4A6E]', 'text-[2rem]/[2.75rem]', 'font-[600]'];
+
 const Dot: React.FC<DotProps> = ({ color }) => (
   <div
     className={cn('w-[0.5rem]', 'h-[0.5rem]', 'rounded-full')}
@@ -89,15 +91,13 @@ const Section4: React.FC = () => {
       <div className={cn('flex', 'flex-col', 'items-center')}>
         <div className={cn('flex', 'items-end')}>
           <DotWithText color="#84CC16" text="인성" textColor="text-[#84CC16]" />
-          <p className={cn('text-[#0C4A6E]', 'text-[2rem]/[2.75rem]', 'font-[600]')}>과 &nbsp;</p>
+          <p className={cn(...textStyle)}>과 &nbsp;</p>
           <DotWithText color="#84CC16" text="감성" textColor="text-[#84CC16]" />
-          <p className={cn('text-[#0C4A6E]', 'text-[2rem]/[2.75rem]', 'font-[600]')}>으로 &nbsp;</p>
+          <p className={cn(...textStyle)}>으로 &nbsp;</p>
           <DotWithText color="#38BDF8" text="감동" textColor="text-[#38BDF8]" />
-          <p className={cn('text-[#0C4A6E]', 'text-[2rem]/[2.75rem]', 'font-[600]')}>을 만드는</p>
+          <p className={cn(...textStyle)}>을 만드는</p>
         </div>
-        <p className={cn('text-[#0C4A6E]', 'text-[2rem]/[2.75rem]', 'font-[600]')}>
-          광주소프트웨어마이스터고등학교
-        </p>
+        <p className={cn(...textStyle)}>광주소프트웨어마이스터고등학교</p>
       </div>
       <div className={cn('flex', 'items-center', 'gap-[0.75rem]')}>
         {TITLES.map(({ firstText, lastText, icon }) => (
