@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { checkIsPassedDate } from 'shared';
 
-import { TextFiled } from 'admin/components';
+import { TextField } from 'admin/components';
 
 import { CheckIcon } from 'shared/assets';
 import { Table, TableBody, TableCell, Toggle, TableRow, Badge, Button } from 'shared/components';
@@ -60,7 +60,7 @@ const ApplicantTR = () => {
                 <Controller
                   name="직무적성점수"
                   control={control}
-                  render={({ field }) => <TextFiled {...field} />}
+                  render={({ field }) => <TextField {...field} />}
                 />
                 <Button variant="subtitle">저장</Button>
               </div>
@@ -76,7 +76,7 @@ const ApplicantTR = () => {
                 <Controller
                   name="심층면접점수"
                   control={control}
-                  render={({ field }) => <TextFiled {...field} />}
+                  render={({ field }) => <TextField {...field} />}
                 />
                 <Button variant="subtitle">저장</Button>
               </div>
