@@ -1,4 +1,4 @@
-import { TextField } from '.';
+import { TextField } from 'admin/components';
 
 import type { Meta, StoryObj } from '@storybook/react';
 

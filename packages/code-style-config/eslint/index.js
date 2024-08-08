@@ -107,7 +107,6 @@ module.exports = {
     "unused-imports/no-unused-imports-ts": ["error"],
     "no-console": "error",
     "@typescript-eslint/no-unused-vars": ["error"],
-    "sort-exports/sort-exports": ["error"],
     "no-unused-vars": "off",
   },
   settings: {},
