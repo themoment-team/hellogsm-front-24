@@ -1,5 +1,3 @@
-import { BlueDot, GreenDot } from 'client/assets';
-
 import { cn } from 'shared/lib/utils';
 
 const TITLES = [
@@ -25,15 +23,29 @@ const TITLES = [
   },
 ] as const;
 
+interface DotProps {
+  color: string;
+}
+
+const Dot: React.FC<DotProps> = ({ color }) => (
+  <div
+    className={cn('w-[0.5rem]', 'h-[0.5rem]', 'rounded-full')}
+    style={{ backgroundColor: color }}
+  />
+);
+
 interface DotWithTextProps {
-  Dot: React.FC;
+  color: string;
   text: string;
   textColor: string;
 }
 
-const DotWithText: React.FC<DotWithTextProps> = ({ Dot, text, textColor }) => (
+const DotWithText: React.FC<DotWithTextProps> = ({ color, text, textColor }) => (
   <div className={cn('flex', 'flex-col', 'items-center')}>
-    <Dot />
+    <div className={cn('flex', 'w-full', 'justify-around')}>
+      <Dot color={color} />
+      <Dot color={color} />
+    </div>
     <p className={cn(textColor, 'text-[2rem]/[2.75rem]', 'font-[600]')}>{text}</p>
   </div>
 );
@@ -76,11 +88,11 @@ const Section4: React.FC = () => {
     <section className={cn('gap-[4.25rem]', 'flex', 'items-center', 'flex-col', 'bg-[#F5F9FB]')}>
       <div className={cn('flex', 'flex-col', 'items-center')}>
         <div className={cn('flex', 'items-end')}>
-          <DotWithText Dot={GreenDot} text="인성" textColor="text-[#84CC16]" />
+          <DotWithText color="#84CC16" text="인성" textColor="text-[#84CC16]" />
           <p className={cn('text-[#0C4A6E]', 'text-[2rem]/[2.75rem]', 'font-[600]')}>과 &nbsp;</p>
-          <DotWithText Dot={GreenDot} text="감성" textColor="text-[#84CC16]" />
+          <DotWithText color="#84CC16" text="감성" textColor="text-[#84CC16]" />
           <p className={cn('text-[#0C4A6E]', 'text-[2rem]/[2.75rem]', 'font-[600]')}>으로 &nbsp;</p>
-          <DotWithText Dot={BlueDot} text="감동" textColor="text-[#38BDF8]" />
+          <DotWithText color="#38BDF8" text="감동" textColor="text-[#38BDF8]" />
           <p className={cn('text-[#0C4A6E]', 'text-[2rem]/[2.75rem]', 'font-[600]')}>을 만드는</p>
         </div>
         <p className={cn('text-[#0C4A6E]', 'text-[2rem]/[2.75rem]', 'font-[600]')}>
