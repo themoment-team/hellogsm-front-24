@@ -29,7 +29,7 @@ interface DotProps {
 
 const textStyle = ['text-[#0C4A6E]', 'text-[2rem]/[2.75rem]', 'font-[600]'];
 
-const Dot: React.FC<DotProps> = ({ color }) => (
+const Dot = ({ color }: DotProps) => (
   <div
     className={cn('w-[0.5rem]', 'h-[0.5rem]', 'rounded-full')}
     style={{ backgroundColor: color }}
@@ -42,7 +42,7 @@ interface DotWithTextProps {
   textColor: string;
 }
 
-const DotWithText: React.FC<DotWithTextProps> = ({ color, text, textColor }) => (
+const DotWithText = ({ color, text, textColor }: DotWithTextProps) => (
   <div className={cn('flex', 'flex-col', 'items-center')}>
     <div className={cn('flex', 'w-full', 'justify-around')}>
       <Dot color={color} />
@@ -58,7 +58,7 @@ interface TitleCardProps {
   icon: string;
 }
 
-const TitleCard: React.FC<TitleCardProps> = ({ firstText, lastText, icon }) => (
+const TitleCard = ({ firstText, lastText, icon }: TitleCardProps) => (
   <div
     className={cn(
       'flex',
@@ -85,7 +85,7 @@ const TitleCard: React.FC<TitleCardProps> = ({ firstText, lastText, icon }) => (
   </div>
 );
 
-const Section4: React.FC = () => {
+const Section4 = () => {
   return (
     <section className={cn('gap-[4.25rem]', 'flex', 'items-center', 'flex-col', 'bg-[#F5F9FB]')}>
       <div className={cn('flex', 'flex-col', 'items-center')}>
