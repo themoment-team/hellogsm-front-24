@@ -1,9 +1,9 @@
-import { Example } from ".";
+import { Example } from '.';
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Example> = {
-  title: "Shared/Select",
+  title: 'Shared/Select',
   component: Example,
 };
 

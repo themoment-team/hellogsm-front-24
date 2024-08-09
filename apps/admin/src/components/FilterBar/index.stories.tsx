@@ -1,11 +1,11 @@
-import StoryTest from '.';
+import { FilterBar } from 'admin/components';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
-  title: 'Client/StoryTest',
-  component: StoryTest,
-} satisfies Meta<typeof StoryTest>;
+  title: 'Admin/FilterBar',
+  component: FilterBar,
+} satisfies Meta<typeof FilterBar>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
