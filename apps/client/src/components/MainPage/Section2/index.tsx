@@ -25,6 +25,23 @@ const Section2 = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const stepStyle = ['text-h4', 'font-semibold', 'text-gray-400'];
+  const activeStyle = ['text-h4', 'font-semibold', 'text-sky-700'];
+
+  const boxStyle = [
+    'border',
+    'rounded-lg',
+    'shadow-sm',
+    'w-[15.375rem]',
+    'h-[7.25rem]',
+    'flex',
+    'flex-col',
+    'py-[1.25rem]',
+    'px-[1rem]',
+  ];
+  const activeBoxStyle = ['border-sky-700'];
+  const inactiveBoxStyle = ['border-gray-400'];
+
   return (
     <div className={cn('w-full', 'bg-white', 'relative', 'h-[50.375rem]', 'py-[11.25rem]')}>
       <div className={cn('flex', 'flex-col', 'justify-between', 'items-center', 'h-[27.875rem]')}>
@@ -54,15 +71,7 @@ const Section2 = () => {
                 )}
               >
                 <div className={cn('mb-2')}>{step.icon}</div>
-                <p
-                  className={cn(
-                    'text-h4',
-                    'font-semibold',
-                    activeStep === index ? 'text-sky-700' : 'text-gray-400',
-                  )}
-                >
-                  {step.title}
-                </p>
+                <p className={cn(index === activeStep ? activeStyle : stepStyle)}>{step.title}</p>
               </div>
             ))}
           </div>
@@ -82,29 +91,13 @@ const Section2 = () => {
               <div
                 key={index}
                 className={cn(
-                  'border',
-                  'rounded-lg',
-                  'shadow-sm',
-                  'w-[15.375rem]',
-                  'h-[7.25rem]',
-                  'flex',
-                  'flex-col',
-                  'py-[1.25rem]',
-                  'px-[1rem]',
-                  activeStep === index ? 'border-sky-700' : 'border-gray-400',
+                  ...boxStyle,
+                  ...(index === activeStep ? activeBoxStyle : inactiveBoxStyle),
                 )}
               >
+                <p className={cn(index === activeStep ? activeStyle : stepStyle)}>{step.title}</p>
                 <p
-                  className={cn(
-                    'text-h4',
-                    'font-semibold',
-                    activeStep === index ? 'text-sky-700' : 'text-gray-400',
-                  )}
-                >
-                  {step.title}
-                </p>
-                <p
-                  className={cn('text-sm', activeStep === index ? 'text-sky-700' : 'text-gray-400')}
+                  className={cn('text-sm', index === activeStep ? 'text-sky-700' : 'text-gray-400')}
                 >
                   {step.date}
                 </p>
