@@ -1,5 +1,8 @@
+import { cn } from 'shared/lib/utils';
+
 const MouseIcon = () => (
   <svg
+    className={cn('w-[1rem]', 'h-[1rem]')}
     xmlns="http://www.w3.org/2000/svg"
     width="1rem"
     height="1.0625rem"
