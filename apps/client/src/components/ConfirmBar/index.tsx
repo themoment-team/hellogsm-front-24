@@ -1,5 +1,9 @@
-import { MouseIcon } from 'client/assets';
+'use client';
+
 import { Button } from 'shared';
+
+import { MouseIcon } from 'client/assets';
+
 import { cn } from 'shared/lib/utils';
 
 const ConfirmBar = () => {
@@ -48,7 +52,7 @@ const ConfirmBar = () => {
       </div>
 
       <div className={cn('flex', 'items-center', 'gap-[0.5rem]')}>
-        <Button variant="outline" children="임시 저장" />
+        <Button variant="outline">임시저장</Button>
         <SubmitButton />
       </div>
     </div>
