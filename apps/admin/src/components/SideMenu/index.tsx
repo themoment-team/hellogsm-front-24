@@ -90,7 +90,7 @@ const SideMenu = ({ isOpen, setIsOpen }: SideMenuProps) => {
         'flex',
         'flex-col',
         'justify-between',
-        'absolute',
+        'fixed',
         !isOpen && 'translate-x-[-200px]',
         'ease-in-out',
         'duration-150',
