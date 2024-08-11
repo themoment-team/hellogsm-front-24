@@ -71,8 +71,12 @@ const ManageTypeArray = [
   },
 ] as const;
 
-const SideMenu = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+interface SideMenuProps {
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const SideMenu = ({ isOpen, setIsOpen }: SideMenuProps) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
   return (
@@ -91,6 +95,8 @@ const SideMenu = () => {
         'ease-in-out',
         'duration-150',
         'transition-all',
+        'left-0',
+        'top-0',
       )}
     >
       <div className={cn('flex', 'flex-col', 'gap-10')}>
