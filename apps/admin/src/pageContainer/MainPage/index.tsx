@@ -7,7 +7,7 @@ import { SideMenu, FilterBar, ApplicantTH, ApplicantTR } from 'admin/components'
 import { PaginationExample } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
-const PER_PAGE = 10 as const;
+const PER_PAGE = 10;
 
 const MockApplicationList = Array.from({ length: 50 }, (_, index) => {
   return {
