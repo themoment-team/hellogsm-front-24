@@ -9,7 +9,7 @@ import { cn } from 'shared/lib/utils';
 
 const PER_PAGE = 10 as const;
 
-const MockApplicationList = new Array(50).fill(0).map((application, index) => {
+const MockApplicationList = Array.from({ length: 50 }, (_, index) => {
   return {
     applicantId: '0189' + index,
     applicantName: '신희성',
