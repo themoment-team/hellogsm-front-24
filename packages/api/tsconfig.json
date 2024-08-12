@@ -3,7 +3,7 @@
   "compilerOptions": {
     "paths": {
       "api/*": ["./src/*"],
-      "types": ["../types/src"]
+      "types/*": ["../../packages/types/src/*"]
     }
   }
 }
