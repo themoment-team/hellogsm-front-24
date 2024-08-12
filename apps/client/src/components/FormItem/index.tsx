@@ -13,7 +13,7 @@ interface FormItemProps extends PropsWithChildren {
 const gapClassNames = {
   small: 'gap-1',
   medium: 'gap-1.5',
-  large: 'gap-2',
+  large: 'gap-3',
 } as const;
 
 const FormItem = ({ children, text, gap, required }: FormItemProps) => {

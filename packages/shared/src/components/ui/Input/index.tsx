@@ -1,39 +1,85 @@
 import * as React from 'react';
 
+import { VariantProps, cva } from 'class-variance-authority';
+
 import { cn } from 'shared/lib/utils';
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+const inputVariants = cva(cn(''), {
+  variants: {
+    variant: {
+      default: cn('focus-visible:border-slate-900'),
+      blueOutline: cn('focus-visible:border-blue-500'),
+    },
+    width: {
+      full: cn('w-full'),
+      large: cn('w-[400px]'),
+      medium: cn('w-[200px]'),
+      small: cn('w-[100px]'),
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+    width: 'large',
+  },
+});
+
+interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement>,
+    VariantProps<typeof inputVariants> {
   width?: 'full' | 'large' | 'medium' | 'small';
   icon?: React.ReactNode;
   onIconClick?: () => void;
+  errorMessage?: string;
+  successMessage?: string;
 }
 
-const WIDTH_ENUM = {
-  full: 'w-full',
-  large: 'w-[400px]',
-  medium: 'w-[200px]', // TODO <- 미정
-  small: 'w-[100px]', // TODO <- 미정
-} as const;
-
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, width = 'full', icon, onIconClick, ...props }, ref) => {
+  (
+    {
+      errorMessage,
+      successMessage,
+      className,
+      type,
+      width = 'full',
+      icon,
+      onIconClick,
+      variant,
+      ...props
+    },
+    ref,
+  ) => {
     return (
-      <div className={cn(`relative ${WIDTH_ENUM[width]} flex items-center`, className)}>
-        <input
-          type={type}
-          className={cn(
-            `flex h-10 ${WIDTH_ENUM[width]} rounded-md border border-input bg-background px-3 py-2 pr-10 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50`,
+      <div className={cn('flex', 'flex-col', 'gap-1')}>
+        <div className={cn('relative flex items-center', className, inputVariants({ width }))}>
+          <input
+            type={type}
+            className={cn(
+              inputVariants({ variant }),
+              'lex m-0 h-10 w-full rounded-md border border-input bg-background px-3 py-2 pr-10 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+            )}
+            ref={ref}
+            {...props}
+          />
+          {icon && (
+            <div
+              onClick={onIconClick}
+              className="absolute flex items-center pointer-events-none right-3"
+            >
+              {icon}
+            </div>
           )}
-          ref={ref}
-          {...props}
-        />
-        {icon && (
-          <div
-            onClick={onIconClick}
-            className="absolute flex items-center pointer-events-none right-3"
+        </div>
+
+        {(errorMessage || successMessage) && (
+          <span
+            className={cn(
+              'text-xs',
+              'font-normal',
+              errorMessage ? 'text-red-600' : 'text-green-600',
+            )}
           >
-            {icon}
-          </div>
+            {errorMessage ?? successMessage}
+          </span>
         )}
       </div>
     );
