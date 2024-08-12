@@ -7,26 +7,25 @@ import { SideMenu, FilterBar, ApplicantTH, ApplicantTR } from 'admin/components'
 import { PaginationExample } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
+import { OneseoType } from 'types/oneseo';
+
 const PER_PAGE = 10;
 
-const MockApplicationList = Array.from({ length: 50 }, (_, index) => {
+const MockApplicationList: OneseoType[] = Array.from({ length: 50 }, (_, index) => {
   return {
-    applicantId: '0189' + index,
-    applicantName: '신희성',
-    graduation: 'CANDIDATE',
-    applicantPhoneNumber: '010 1234 5678',
-    guardianPhoneNumber: '010 1234 5678',
-    teacherName: '김선생',
-    teacherPhoneNumber: '010 1234 5678',
-    isFinalSubmitted: false,
-    isPrintsArrived: false,
-    firstEvaluation: '미정',
-    secondEvaluation: '미정',
-    screeningFirstEvaluationAt: 'GENERAL',
-    screeningSecondEvaluationAt: 'GENERAL',
-    registrationNumber: 100,
-    secondScore: 100.0,
-    interviewScore: 100.0,
+    memberId: index,
+    submitCode: 'A-1',
+    realOneseoArrivedYn: 'YES',
+    name: '신희성',
+    screening: 'GENERAL',
+    schoolName: 'SW중학교',
+    phoneNumber: '010 1234 1234',
+    guardianPhoneNumber: '010 1234 1234',
+    schoolTeacherPhoneNumber: '010 1234 1234',
+    firstTestPassYn: 'YES',
+    aptitudeEvaluationScore: 100,
+    interviewScore: 100,
+    secondTestPassYn: 'YES',
   };
 });
 
@@ -55,7 +54,7 @@ const LoginPage = () => {
             <ApplicantTH />
             <div className={cn('bg-zinc-200', 'w-full', 'h-[1px]')} />
             {MockApplicationList.slice(0, PER_PAGE).map((application) => (
-              <ApplicantTR key={application.applicantId} />
+              <ApplicantTR {...application} key={application.memberId} />
             ))}
           </div>
           <PaginationExample />
