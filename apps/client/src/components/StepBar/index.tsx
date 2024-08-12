@@ -94,7 +94,7 @@ const StepBar = () => {
           </Button>
         )}
         <Button variant="submit" onClick={handleNext}>
-          다음으로
+          {currentStep === Steps.FOUR ? '점수 확인하기' : '다음으로'}
         </Button>
       </div>
     </div>
