@@ -20,6 +20,8 @@ interface StepType {
 }
 
 const Step = ({ step, isActive, isCompleted }: StepType) => {
+  const isActiveOrCompleted = isActive || isCompleted;
+
   return (
     <div
       className={cn(
@@ -34,9 +36,7 @@ const Step = ({ step, isActive, isCompleted }: StepType) => {
         'transition-all',
         'duration-500',
         'transform',
-        isActive || isCompleted ? 'bg-blue-500' : '',
-        isActive || isCompleted ? 'text-white' : 'text-slate-300',
-        isActive || isCompleted ? '' : 'border-[1px]',
+        isActiveOrCompleted ? 'bg-blue-500 text-white' : 'border-[1px] text-slate-300',
       )}
     >
       {isCompleted ? <CheckIcon /> : step}
