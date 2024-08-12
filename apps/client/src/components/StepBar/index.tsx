@@ -93,7 +93,7 @@ const StepBar = () => {
             이전
           </Button>
         )}
-        <Button variant="subtitle" onClick={handleNext}>
+        <Button variant="submit" onClick={handleNext}>
           다음으로
         </Button>
       </div>
