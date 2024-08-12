@@ -1,3 +1,5 @@
+'use client';
+
 import { PropsWithChildren } from 'react';
 
 import { Input } from 'shared/components';
@@ -6,11 +8,11 @@ import { cn } from 'shared/lib/utils';
 const flexColStyle = ['flex', 'flex-col'] as const;
 
 interface ItemBoxProps extends PropsWithChildren {
-  title: string;
+  text: string;
   gap: 'medium' | 'small';
 }
 
-const ItemBox = ({ children, title, gap }: ItemBoxProps) => (
+const ItemBox = ({ children, text, gap }: ItemBoxProps) => (
   <div className={cn(...flexColStyle, 'w-[380px]', gap === 'small' ? 'gap-1' : 'gap-1.5')}>
     <span className={cn('text-gray-900', 'text-sm', 'font-medium')}>{title}</span>
 
@@ -32,6 +34,15 @@ const SignUpPage = () => {
       <div className={cn(...flexColStyle, 'gap-4')}>
         <ItemBox gap="small" title="이름">
           <Input placeholder="이름 입력" />
+        </ItemBox>
+        <ItemBox gap="small" title="성별">
+          <Input placeholder="성별 입력" />
+        </ItemBox>
+        <ItemBox gap="small" title="생년월일">
+          <Input placeholder="생년월일 입력" />
+        </ItemBox>
+        <ItemBox gap="small" title="전화번호">
+          <Input placeholder="전화번호 입력" />
         </ItemBox>
       </div>
     </main>
