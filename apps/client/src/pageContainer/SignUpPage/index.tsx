@@ -7,8 +7,17 @@ import { useForm } from 'react-hook-form';
 import { SexType } from 'types';
 import { z } from 'zod';
 
-import { FormItem } from 'client/components';
+import { FormItem as CustomFormItem } from 'client/components';
+import { signupFormSchema } from 'client/schemas';
 
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  SelectGroup,
+  SelectLabel,
+} from 'shared/components';
 import {
   Input,
   Select,
@@ -16,10 +25,10 @@ import {
   SelectContent,
   SelectValue,
   SelectItem,
-  SelectLabel,
-  SelectGroup,
 } from 'shared/components';
 import { cn } from 'shared/lib/utils';
+
+const PERMIT_YEAR = 50; // 50년 전까지의 연도만 허용함.
 
 interface SexToggleProps extends React.HTMLAttributes<HTMLDivElement> {
   isSelected: boolean;
@@ -54,28 +63,23 @@ const SignUpPage = () => {
 
   const [sex, setSex] = useState<SexType | ''>('');
 
-  const FormSchema = z.object({
-    email: z
-      .string({
-        required_error: 'Please select an email to display.',
-      })
-      .email(),
+  const form = useForm<z.infer<typeof signupFormSchema>>({
+    resolver: zodResolver(signupFormSchema),
+    defaultValues: {
+      name: '',
+      sex: '',
+      phoneNumber: '',
+      birth: {
+        month: '',
+        year: '',
+        day: '',
+      },
+    },
   });
 
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-  });
+  const onSubmit = (data: z.infer<typeof signupFormSchema>) => {};
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
-  }
+  const targetYear = new Date().getFullYear() - PERMIT_YEAR;
 
   return (
     <main className={cn(...flexColStyle, 'items-center', 'gap-10')}>
@@ -87,69 +91,129 @@ const SignUpPage = () => {
         </p>
       </div>
 
-      <form className={cn(...flexColStyle, 'gap-4')}>
-        <FormItem gap="small" text="이름">
-          <Input placeholder="이름 입력" />
-        </FormItem>
-        <FormItem gap="medium" text="성별">
-          <div className={cn('flex', 'gap-2')}>
-            <SexToggle isSelected={sex === 'MALE'} onClick={() => setSex('MALE')}>
-              남자
-            </SexToggle>
-            <SexToggle isSelected={sex === 'FEMALE'} onClick={() => setSex('FEMALE')}>
-              여자
-            </SexToggle>
-          </div>
-        </FormItem>
-        <FormItem gap="small" text="생년월일">
-          <div className={cn('flex', 'gap-2')}>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="전형 선택" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>월 선택</SelectLabel>
-                  {}
-                  <SelectItem value="일반전형">일반전형</SelectItem>
-                  <SelectItem value="특별전형">특별전형</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className={cn(...flexColStyle, 'gap-4')}>
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <CustomFormItem gap="small" text="이름">
+                  <FormControl>
+                    <Input {...field} value={field.value ?? ''} placeholder="이름 입력" />
+                  </FormControl>
+                </CustomFormItem>
+              </FormItem>
+            )}
+          />
 
-            <Select>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="전형 선택" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>월 선택</SelectLabel>
-                  {}
-                  <SelectItem value="일반전형">일반전형</SelectItem>
-                  <SelectItem value="특별전형">특별전형</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+          <CustomFormItem gap="medium" text="성별">
+            <div className={cn('flex', 'gap-2')}>
+              <SexToggle isSelected={sex === 'MALE'} onClick={() => setSex('MALE')}>
+                남자
+              </SexToggle>
+              <SexToggle isSelected={sex === 'FEMALE'} onClick={() => setSex('FEMALE')}>
+                여자
+              </SexToggle>
+            </div>
+          </CustomFormItem>
 
-            <Select>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="전형 선택" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>월 선택</SelectLabel>
-                  {}
-                  <SelectItem value="일반전형">일반전형</SelectItem>
-                  <SelectItem value="특별전형">특별전형</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-        </FormItem>
-        <FormItem gap="small" text="전화번호">
-          <Input placeholder="전화번호 입력" />
-        </FormItem>
-      </form>
+          <CustomFormItem gap="small" text="생년월일">
+            <div className={cn('flex', 'gap-2')}>
+              <FormField
+                control={form.control}
+                name="birth"
+                render={({ field }) => (
+                  <FormItem>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value ? field.value.year : ''}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="w-[121px]">
+                          <SelectValue placeholder="년도" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>년도 선택</SelectLabel>
+                          {Array.from(
+                            { length: PERMIT_YEAR },
+                            (_, index) => targetYear + index,
+                          ).map((year) => (
+                            <SelectItem key={year} value={year.toString()}>
+                              {year}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="birth"
+                render={({ field }) => (
+                  <FormItem>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value ? field.value.month : ''}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="w-[121px]">
+                          <SelectValue placeholder="월" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>월 선택</SelectLabel>
+                          {Array.from({ length: 12 }, (_, index) => index + 1).map((month) => (
+                            <SelectItem key={month} value={month.toString()}>
+                              {month}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="birth"
+                render={({ field }) => (
+                  <FormItem>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value ? field.value.day : ''}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="w-[121px]">
+                          <SelectValue placeholder="일" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>일 선택</SelectLabel>
+                          {Array.from({ length: 31 }, (_, index) => index + 1).map((day) => (
+                            <SelectItem key={day} value={day.toString()}>
+                              {day}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
+            </div>
+          </CustomFormItem>
+          <CustomFormItem gap="small" text="전화번호">
+            <Input placeholder="전화번호 입력" />
+          </CustomFormItem>
+        </form>
+      </Form>
     </main>
   );
 };
