@@ -1,5 +1,8 @@
-import { useState } from 'react';
+'use client';
 
+import { useState, useEffect } from 'react';
+
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from 'shared';
 
 import { CheckIcon, ProgressBar } from 'client/assets';
@@ -7,7 +10,7 @@ import { CheckIcon, ProgressBar } from 'client/assets';
 import { cn } from 'shared/lib/utils';
 
 export enum Steps {
-  ONE,
+  ONE = 1,
   TWO,
   THREE,
   FOUR,
@@ -49,14 +52,33 @@ const ProgressBars = ({ isCompleted }: { isCompleted: boolean }) => {
 };
 
 const StepBar = () => {
+  const router = useRouter();
+  const params = useSearchParams();
+
   const [currentStep, setCurrentStep] = useState(Steps.ONE);
 
+  useEffect(() => {
+    const queryStep = params.get('step');
+    const stepNumber = queryStep ? parseInt(queryStep, 10) : Steps.ONE;
+    if (stepNumber >= Steps.ONE && stepNumber <= Steps.FOUR) {
+      setCurrentStep(stepNumber);
+    }
+  }, []);
+
   const handleNext = () => {
-    setCurrentStep((prevStep) => (prevStep < Steps.FOUR ? prevStep + 1 : prevStep));
+    setCurrentStep((prevStep) => {
+      const nextStep = prevStep < Steps.FOUR ? prevStep + 1 : prevStep;
+      router.push(`/register?step=${nextStep}`);
+      return nextStep;
+    });
   };
 
   const handlePrevious = () => {
-    setCurrentStep((prevStep) => (prevStep > Steps.ONE ? prevStep - 1 : prevStep));
+    setCurrentStep((prevStep) => {
+      const prevStepNum = prevStep > Steps.ONE ? prevStep - 1 : prevStep;
+      router.push(`/register?step=${prevStepNum}`);
+      return prevStepNum;
+    });
   };
 
   return (
@@ -78,12 +100,8 @@ const StepBar = () => {
       <div className={cn('flex', 'items-center', 'gap-[0.5rem]')}>
         {[Steps.ONE, Steps.TWO, Steps.THREE, Steps.FOUR].map((step, index) => (
           <div key={step} className={cn('flex', 'items-center', 'gap-[0.5rem]')}>
-            <Step
-              step={step + 1}
-              isActive={currentStep === step}
-              isCompleted={currentStep > step}
-            />
-            {index < Steps.FOUR && <ProgressBars isCompleted={currentStep > step} />}
+            <Step step={step} isActive={currentStep === step} isCompleted={currentStep > step} />
+            {index < Steps.FOUR - 1 && <ProgressBars isCompleted={currentStep > step} />}
           </div>
         ))}
       </div>
