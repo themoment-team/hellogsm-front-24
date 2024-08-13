@@ -1,8 +1,11 @@
+'use client';
+
 import * as React from 'react';
 
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 
 import { ButtonProps, buttonVariants } from 'shared/components/ui/Button';
+
 import { cn } from 'shared/lib/utils';
 
 const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
@@ -62,7 +65,7 @@ const PaginationPrevious = ({
     {...props}
   >
     <ChevronLeft className="w-4 h-4" />
-    <span>Previous</span>
+    <div className="w-[84px]" />
   </PaginationLink>
 );
 PaginationPrevious.displayName = 'PaginationPrevious';
@@ -71,10 +74,10 @@ const PaginationNext = ({ className, ...props }: React.ComponentProps<typeof Pag
   <PaginationLink
     aria-label="Go to next page"
     size="default"
-    className={cn(buttonVariants({ variant: 'ghost', size: 'default' }), 'gap-1 pr-2.5', className)}
+    className={cn(buttonVariants({ variant: 'ghost' }), 'gap-1 pr-2.5', className)}
     {...props}
   >
-    <span>Next</span>
+    <div className="w-[48px]" />
     <ChevronRight className="w-4 h-4" />
   </PaginationLink>
 );

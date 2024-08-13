@@ -1,5 +1,4 @@
 import { QuestionMark } from 'admin/assets';
-import { ApplicantTR } from 'admin/components';
 
 import { Table, TableBody, TableCell, TableRow } from 'shared/components';
 import { cn } from 'shared/lib/utils';
@@ -30,7 +29,6 @@ const ApplicantTH = () => {
           </TableRow>
         </TableBody>
       </Table>
-      <ApplicantTR />
     </>
   );
 };

@@ -1,10 +1,5 @@
-import { Button as BTN, Test } from 'shared';
+import { MainPage } from 'admin/pageContainer';
 
 export default function Home() {
-  return (
-    <>
-      <BTN>button1</BTN>
-      <Test>Test</Test>
-    </>
-  );
+  return <MainPage />;
 }

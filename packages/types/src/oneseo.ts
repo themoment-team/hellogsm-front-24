@@ -8,7 +8,10 @@ export type FreeSemesterType = "1-1" | "1-2" | "2-1" | "2-2" | "3-1" | null;
 
 export type LiberalSystemType = "자유학년제" | "자유학기제";
 
+
 export type SexType = "MALE" | "FEMALE";
+
+export type YesNo = "YES" | "NO";
 
 export interface MiddleSchoolAchievementType {
   achievement1_1: number[] | null;
@@ -85,4 +88,20 @@ export interface GetMyOneseoType {
       generalSubjects: string[];
     };
   step: number | null;
+}
+
+export interface OneseoType {
+  memberId: number;
+  submitCode: string;
+  realOneseoArrivedYn: YesNo;
+  name: string;
+  screening: ScreeningType;
+  schoolName: string;
+  phoneNumber: string;
+  guardianPhoneNumber: string;
+  schoolTeacherPhoneNumber: string;
+  firstTestPassYn: YesNo;
+  aptitudeEvaluationScore: number;
+  interviewScore: number;
+  secondTestPassYn: YesNo;
 }
