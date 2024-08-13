@@ -170,7 +170,7 @@ const SignUpPage = () => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <CustomFormItem gap="small" text="이름">
+                <CustomFormItem className="gap-1" text="이름">
                   <FormControl>
                     <Input {...field} value={field.value ?? ''} placeholder="이름 입력" />
                   </FormControl>
@@ -179,7 +179,7 @@ const SignUpPage = () => {
             )}
           />
 
-          <CustomFormItem gap="medium" text="성별">
+          <CustomFormItem className="gap-1.5" text="성별">
             <div className={cn('flex', 'gap-2')}>
               <SexToggle
                 isSelected={formValues.sex === 'MALE'}
@@ -196,7 +196,7 @@ const SignUpPage = () => {
             </div>
           </CustomFormItem>
 
-          <CustomFormItem gap="small" text="생년월일">
+          <CustomFormItem className="gap-1" text="생년월일">
             <div className={cn('flex', 'gap-2')}>
               <FormField
                 control={control}
@@ -287,7 +287,7 @@ const SignUpPage = () => {
               />
             </div>
           </CustomFormItem>
-          <CustomFormItem gap="small" text="전화번호">
+          <CustomFormItem className="gap-1" text="전화번호">
             <div className={cn('flex', 'flex-col', 'gap-1.5')}>
               <div className={cn('flex', 'justify-between')}>
                 <div className="w-[18rem]">

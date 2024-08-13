@@ -6,21 +6,13 @@ import { cn } from 'client/lib/utils';
 
 interface FormItemProps extends PropsWithChildren {
   text: string;
-  gap: 'small' | 'medium' | 'large';
   required?: boolean;
+  className?: string;
 }
 
-const gapClassNames = {
-  small: 'gap-1',
-  medium: 'gap-1.5',
-  large: 'gap-3',
-} as const;
-
-const FormItem = ({ children, text, gap, required }: FormItemProps) => {
-  const gapPx = gapClassNames[gap];
-
+const FormItem = ({ children, text, className, required }: FormItemProps) => {
   return (
-    <div className={cn('flex', 'flex-col', 'w-[380px]', gapPx)}>
+    <div className={cn(className, 'flex', 'flex-col', 'w-[23.75rem]')}>
       <span className={cn('text-gray-900', 'text-sm', 'font-medium')}>
         {text} {required && <span className="text-red-600">*</span>}
       </span>

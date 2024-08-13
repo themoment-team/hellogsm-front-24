@@ -16,7 +16,7 @@ type Story = StoryObj<typeof FormItem>;
 export const Primary: Story = {
   args: {
     text: '이름',
-    gap: 'small',
+    className: 'gap-1',
     children: <Input placeholder="이름 입력" />,
   },
 };
@@ -24,7 +24,7 @@ export const Primary: Story = {
 export const Required: Story = {
   args: {
     text: '이름',
-    gap: 'small',
+    className: 'gap-1',
     required: true,
     children: <Input placeholder="이름 입력" />,
   },
