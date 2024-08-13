@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { FormItem as CustomFormItem } from 'client/components';
+import { FormItem as CustomFormItem, SexToggle } from 'client/components';
 import { signupFormSchema } from 'client/schemas';
 
 import {
@@ -28,34 +28,6 @@ import { cn } from 'shared/lib/utils';
 
 const PERMIT_YEAR = 50; // 50년 전까지의 연도만 허용함.
 // const phoneNumberRegexp = /^\d{10,11}$/;
-
-interface SexToggleProps extends React.HTMLAttributes<HTMLDivElement> {
-  isSelected: boolean;
-}
-
-const SexToggle = ({ children, isSelected, ...props }: SexToggleProps) => {
-  const textColor = isSelected ? 'text-blue-600' : 'text-gray-400';
-  const borderColor = isSelected ? 'border-blue-600' : 'border-gray-300';
-
-  return (
-    <div
-      className={cn(
-        borderColor,
-        'cursor-pointer',
-        'w-full',
-        'py-2',
-        'rounded-lg',
-        'border',
-        'border-solid',
-        'flex',
-        'justify-center',
-      )}
-      {...props}
-    >
-      <span className={cn(textColor, 'font-normal', 'text-sm')}>{children}</span>
-    </div>
-  );
-};
 
 const initialState = {
   phoneNumber: '',
