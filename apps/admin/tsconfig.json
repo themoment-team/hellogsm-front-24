@@ -20,7 +20,8 @@
     "paths": {
       "admin/*": ["./src/*"],
       "shared/*": ["../../packages/shared/src/*"],
-      "api/*": ["../../packages/api/src/*"]
+      "api/*": ["../../packages/api/src/*"],
+      "types/*": ["../../packages/types/src/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
