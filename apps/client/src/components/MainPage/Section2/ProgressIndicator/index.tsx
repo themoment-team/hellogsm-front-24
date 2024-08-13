@@ -1,5 +1,3 @@
-'use client';
-
 import { cn } from 'client/lib/utils';
 
 interface ProgressIndicatorProps {

@@ -12,7 +12,7 @@ const stepsData = [
   { icon: '✏️', title: '직무적성소양평가', date: '2024.10.25(금) 14:30~16:30' },
   { icon: '💬', title: '심층면접', date: '2024.10.25(금) 14:30~16:30' },
   { icon: '⛳', title: '최종 결과발표', date: '2024.10.25(금) 14:30~16:30' },
-];
+] as const;
 
 const Section2 = () => {
   const [activeStep, setActiveStep] = useState(0);
