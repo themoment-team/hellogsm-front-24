@@ -2,18 +2,30 @@
 
 import { useState } from 'react';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 import { SexType } from 'types';
+import { z } from 'zod';
 
 import { FormItem } from 'client/components';
 
-import { Input } from 'shared/components';
+import {
+  Input,
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectValue,
+  SelectItem,
+  SelectLabel,
+  SelectGroup,
+} from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
-interface SelectToggleProps extends React.HTMLAttributes<HTMLDivElement> {
+interface SexToggleProps extends React.HTMLAttributes<HTMLDivElement> {
   isSelected: boolean;
 }
 
-const SelectToggle = ({ children, isSelected, ...props }: SelectToggleProps) => {
+const SexToggle = ({ children, isSelected, ...props }: SexToggleProps) => {
   const textColor = isSelected ? 'text-blue-600' : 'text-gray-400';
   const borderColor = isSelected ? 'border-blue-600' : 'border-gray-300';
 
@@ -42,6 +54,29 @@ const SignUpPage = () => {
 
   const [sex, setSex] = useState<SexType | ''>('');
 
+  const FormSchema = z.object({
+    email: z
+      .string({
+        required_error: 'Please select an email to display.',
+      })
+      .email(),
+  });
+
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+  });
+
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    toast({
+      title: 'You submitted the following values:',
+      description: (
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
+    });
+  }
+
   return (
     <main className={cn(...flexColStyle, 'items-center', 'gap-10')}>
       <div className={cn(...flexColStyle, 'gap-3', 'items-center')}>
@@ -52,27 +87,69 @@ const SignUpPage = () => {
         </p>
       </div>
 
-      <div className={cn(...flexColStyle, 'gap-4')}>
+      <form className={cn(...flexColStyle, 'gap-4')}>
         <FormItem gap="small" text="이름">
           <Input placeholder="이름 입력" />
         </FormItem>
         <FormItem gap="medium" text="성별">
           <div className={cn('flex', 'gap-2')}>
-            <SelectToggle isSelected={sex === 'MALE'} onClick={() => setSex('MALE')}>
+            <SexToggle isSelected={sex === 'MALE'} onClick={() => setSex('MALE')}>
               남자
-            </SelectToggle>
-            <SelectToggle isSelected={sex === 'FEMALE'} onClick={() => setSex('FEMALE')}>
+            </SexToggle>
+            <SexToggle isSelected={sex === 'FEMALE'} onClick={() => setSex('FEMALE')}>
               여자
-            </SelectToggle>
+            </SexToggle>
           </div>
         </FormItem>
         <FormItem gap="small" text="생년월일">
-          <Input placeholder="생년월일 입력" />
+          <div className={cn('flex', 'gap-2')}>
+            <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="전형 선택" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>월 선택</SelectLabel>
+                  {}
+                  <SelectItem value="일반전형">일반전형</SelectItem>
+                  <SelectItem value="특별전형">특별전형</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+
+            <Select>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="전형 선택" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>월 선택</SelectLabel>
+                  {}
+                  <SelectItem value="일반전형">일반전형</SelectItem>
+                  <SelectItem value="특별전형">특별전형</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+
+            <Select>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="전형 선택" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>월 선택</SelectLabel>
+                  {}
+                  <SelectItem value="일반전형">일반전형</SelectItem>
+                  <SelectItem value="특별전형">특별전형</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </FormItem>
         <FormItem gap="small" text="전화번호">
           <Input placeholder="전화번호 입력" />
         </FormItem>
-      </div>
+      </form>
     </main>
   );
 };
