@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { SexType } from 'types';
 import { z } from 'zod';
 
 import { FormItem as CustomFormItem } from 'client/components';
@@ -17,8 +16,7 @@ import {
   FormItem,
   SelectGroup,
   SelectLabel,
-} from 'shared/components';
-import {
+  Button,
   Input,
   Select,
   SelectTrigger,
@@ -58,10 +56,18 @@ const SexToggle = ({ children, isSelected, ...props }: SexToggleProps) => {
   );
 };
 
+const phoneNumberRegexp = /^\d{10,11}$/;
+
 const SignUpPage = () => {
   const flexColStyle = ['flex', 'flex-col'] as const;
 
-  const [sex, setSex] = useState<SexType | ''>('');
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const [disableCertificationButton, setDisableCertificationButton] = useState<boolean>(true);
+  const [disableSubmitButton, setDisableSubmitButton] = useState<boolean>(true);
+  const [isSentCertificationNumber, setIsSentCertificationNumber] = useState<boolean>(false);
+  const [certificationNumber, setCertificationNumber] = useState<string>('');
+  const [isValidCertificationNumber, setIsValidCertificationNumber] = useState<boolean>(false);
+  const [isAgreed, setIsAgreed] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof signupFormSchema>>({
     resolver: zodResolver(signupFormSchema),
@@ -77,9 +83,42 @@ const SignUpPage = () => {
     },
   });
 
+  const { control, setValue, watch } = form;
+  const formValues = watch();
+
   const onSubmit = (data: z.infer<typeof signupFormSchema>) => {};
 
   const targetYear = new Date().getFullYear() - PERMIT_YEAR;
+
+  const handelPhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const currentValue = e.target.value;
+    setPhoneNumber(currentValue);
+
+    setDisableCertificationButton(!phoneNumberRegexp.test(currentValue));
+  };
+
+  const handleCertificationButtonClick = () => {
+    setIsSentCertificationNumber(true);
+  };
+
+  const checkCanSubmit = (isValidCertificationNumber: boolean, isAgreed: boolean) => {
+    setDisableSubmitButton(!(isValidCertificationNumber && isAgreed));
+  };
+
+  const handleCertificationNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const currentValue = e.target.value;
+    setCertificationNumber(currentValue);
+
+    const isValid = currentValue === '서버에서 보내준 인증번호';
+    setIsValidCertificationNumber(isValid);
+    checkCanSubmit(isValid, isAgreed);
+  };
+
+  const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const currentValue = e.target.checked;
+    setIsAgreed(currentValue);
+    checkCanSubmit(isValidCertificationNumber, currentValue);
+  };
 
   return (
     <main className={cn(...flexColStyle, 'items-center', 'gap-10')}>
@@ -94,7 +133,7 @@ const SignUpPage = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className={cn(...flexColStyle, 'gap-4')}>
           <FormField
-            control={form.control}
+            control={control}
             name="name"
             render={({ field }) => (
               <FormItem>
@@ -109,10 +148,16 @@ const SignUpPage = () => {
 
           <CustomFormItem gap="medium" text="성별">
             <div className={cn('flex', 'gap-2')}>
-              <SexToggle isSelected={sex === 'MALE'} onClick={() => setSex('MALE')}>
+              <SexToggle
+                isSelected={formValues.sex === 'MALE'}
+                onClick={() => setValue('sex', 'MALE')}
+              >
                 남자
               </SexToggle>
-              <SexToggle isSelected={sex === 'FEMALE'} onClick={() => setSex('FEMALE')}>
+              <SexToggle
+                isSelected={formValues.sex === 'FEMALE'}
+                onClick={() => setValue('sex', 'FEMALE')}
+              >
                 여자
               </SexToggle>
             </div>
@@ -121,7 +166,7 @@ const SignUpPage = () => {
           <CustomFormItem gap="small" text="생년월일">
             <div className={cn('flex', 'gap-2')}>
               <FormField
-                control={form.control}
+                control={control}
                 name="birth"
                 render={({ field }) => (
                   <FormItem>
@@ -152,7 +197,7 @@ const SignUpPage = () => {
                 )}
               />
               <FormField
-                control={form.control}
+                control={control}
                 name="birth"
                 render={({ field }) => (
                   <FormItem>
@@ -180,7 +225,7 @@ const SignUpPage = () => {
                 )}
               />
               <FormField
-                control={form.control}
+                control={control}
                 name="birth"
                 render={({ field }) => (
                   <FormItem>
@@ -210,8 +255,38 @@ const SignUpPage = () => {
             </div>
           </CustomFormItem>
           <CustomFormItem gap="small" text="전화번호">
-            <Input placeholder="전화번호 입력" />
+            <div className={cn(...flexColStyle, 'gap-1.5')}>
+              <div className={cn('flex', 'justify-between')}>
+                <div className="w-[288px]">
+                  <Input
+                    value={phoneNumber}
+                    onChange={handelPhoneNumberChange}
+                    placeholder="번호 입력"
+                  />
+                </div>
+                <Button
+                  type="button"
+                  variant="disabled"
+                  disabled={disableCertificationButton}
+                  onClick={handleCertificationButtonClick}
+                >
+                  번호 인증
+                </Button>
+              </div>
+              <Input
+                disabled={!isSentCertificationNumber}
+                value={certificationNumber}
+                onChange={handleCertificationNumberChange}
+                placeholder="인증번호 6자리 입력"
+              />
+            </div>
           </CustomFormItem>
+
+          <input type="checkbox" onChange={handleCheck} />
+
+          <Button variant="disabled" disabled={disableSubmitButton}>
+            회원가입 완료
+          </Button>
         </form>
       </Form>
     </main>

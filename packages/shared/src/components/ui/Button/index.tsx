@@ -45,8 +45,8 @@ const buttonVariants = cva(
         disabled: cn(
           'bg-slate-900',
           'text-white',
-          'disabled:bg-slate-100',
-          'disabled:text-slate-400',
+          'disabled:bg-slate-200',
+          'disabled:text-slate-500',
         ),
       },
       size: {
