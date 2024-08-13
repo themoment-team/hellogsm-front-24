@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 
@@ -48,6 +49,7 @@ const buttonVariants = cva(
           'disabled:bg-slate-200',
           'disabled:text-slate-500',
         ),
+        submit: cn('bg-slate-100', 'text-slate-400'),
       },
       size: {
         default: cn('h-10', 'px-4', 'py-2'),

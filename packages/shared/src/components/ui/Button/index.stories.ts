@@ -61,10 +61,17 @@ export const Ghost: Story = {
   },
 };
 
+
 export const Disabled: Story = {
   args: {
     variant: 'disabled',
     children: 'Disabled',
     disabled: true,
+
+    
+export const Submit: Story = {
+  args: {
+    variant: 'submit',
+    children: 'Submit',
   },
 };
