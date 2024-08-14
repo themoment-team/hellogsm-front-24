@@ -47,10 +47,6 @@ const Step = ({ step, isActive, isCompleted }: StepType) => {
   );
 };
 
-const ProgressBars = ({ isCompleted }: { isCompleted: boolean }) => {
-  return <ProgressBarIcon color={isCompleted ? '#2563eb' : '#CBD5E1'} />;
-};
-
 const StepBar = () => {
   const router = useRouter();
   const params = useSearchParams();
@@ -100,7 +96,9 @@ const StepBar = () => {
         {[Steps.ONE, Steps.TWO, Steps.THREE, Steps.FOUR].map((step, index) => (
           <div key={step} className={cn('flex', 'items-center', 'gap-[0.5rem]')}>
             <Step step={step} isActive={currentStep === step} isCompleted={currentStep > step} />
-            {index < Steps.FOUR - 1 && <ProgressBars isCompleted={currentStep > step} />}
+            {index < Steps.FOUR - 1 && (
+              <ProgressBarIcon color={currentStep > step ? '#2563eb' : '#CBD5E1'} />
+            )}
           </div>
         ))}
       </div>
