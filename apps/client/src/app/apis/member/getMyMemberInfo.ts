@@ -1,15 +1,17 @@
 import { redirect } from 'next/navigation';
 
-import type { MyMemberInfoType } from 'client/types';
-
 import { memberUrl } from 'api/libs';
+
+import type { MyMemberInfoType } from 'types';
 
 /**
  * 나의 멤버 정보를 가져옵니다.
  *
  * @returns 나의 멤버 정보를 반환합니다. 없다면 -> TODO 서버 문서 업데이트 중입니다.
  */
-export const getMyMemberInfo = async (redirectUrl: string): Promise<MyMemberInfoType | null> => {
+export const getMyMemberInfo = async (
+  redirectUrl: string,
+): Promise<MyMemberInfoType | undefined> => {
   const response = await fetch(
     new URL(`/api${memberUrl.getMyMemberInfo()}`, process.env.BASE_URL),
     {
@@ -22,7 +24,7 @@ export const getMyMemberInfo = async (redirectUrl: string): Promise<MyMemberInfo
   const isNotFound = response.status === 404;
 
   if (isNotFound || isUnauthorized) {
-    return null;
+    return undefined;
   }
 
   if (!response.ok) {

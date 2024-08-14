@@ -8,9 +8,11 @@
   },
   "dependencies": {
     "next": "14.2.3",
-    "shared": "workspace:^"
+    "shared": "workspace:^",
+    "eslint-config-custom": "workspace:^"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "prettier": "eslint-config-custom/prettier"
 }
