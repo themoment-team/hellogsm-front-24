@@ -58,27 +58,26 @@ const StepBar = () => {
   const [currentStep, setCurrentStep] = useState(Steps.ONE);
 
   useEffect(() => {
-    const queryStep = params.get('step');
-    const stepNumber = queryStep ? parseInt(queryStep, 10) : Steps.ONE;
+    const stepNumber = Number(params.get('step')) || Steps.ONE;
     if (stepNumber >= Steps.ONE && stepNumber <= Steps.FOUR) {
       setCurrentStep(stepNumber);
     }
-  }, []);
+  }, [params]);
+
+  const updateStep = (newStep: Steps) => {
+    if (newStep !== currentStep) {
+      router.push(`/register?step=${newStep}`);
+    }
+  };
 
   const handleNext = () => {
-    setCurrentStep((prevStep) => {
-      const nextStep = prevStep < Steps.FOUR ? prevStep + 1 : prevStep;
-      router.push(`/register?step=${nextStep}`);
-      return nextStep;
-    });
+    const nextStep = Math.min(currentStep + 1, Steps.FOUR);
+    updateStep(nextStep);
   };
 
   const handlePrevious = () => {
-    setCurrentStep((prevStep) => {
-      const prevStepNum = prevStep > Steps.ONE ? prevStep - 1 : prevStep;
-      router.push(`/register?step=${prevStepNum}`);
-      return prevStepNum;
-    });
+    const prevStep = Math.max(currentStep - 1, Steps.ONE);
+    updateStep(prevStep);
   };
 
   return (
