@@ -1,8 +1,8 @@
-interface Colors {
+interface ProgressBarProps {
   color: string;
 }
 
-const ProgressBar = ({ color }: Colors) => (
+const ProgressBar = ({ color }: ProgressBarProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="2.75rem"
