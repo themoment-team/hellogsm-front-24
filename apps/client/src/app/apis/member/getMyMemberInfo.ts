@@ -9,11 +9,7 @@ import { memberUrl } from 'api/libs';
  *
  * @returns 나의 멤버 정보를 반환합니다. 없다면 -> TODO 서버 문서 업데이트 중입니다.
  */
-export const getMyMemberInfo = async (
-  redirectUrl: string,
-  commentId: string,
-  boardId: string,
-): Promise<MyMemberInfoType | null> => {
+export const getMyMemberInfo = async (redirectUrl: string): Promise<MyMemberInfoType | null> => {
   const response = await fetch(
     new URL(`/api${memberUrl.getMyMemberInfo()}`, process.env.BASE_URL),
     {
@@ -21,7 +17,7 @@ export const getMyMemberInfo = async (
     },
   );
 
-  const commentDetail = await response.json();
+  const memberInfo = await response.json();
   const isUnauthorized = response.status === 401;
   const isNotFound = response.status === 404;
 
@@ -33,5 +29,5 @@ export const getMyMemberInfo = async (
     return redirect(redirectUrl);
   }
 
-  return commentDetail;
+  return memberInfo;
 };
