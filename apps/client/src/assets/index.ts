@@ -4,6 +4,6 @@ export { default as GreenDot } from './GreenDot';
 export { default as HeaderProfileIcon } from './HeaderProfileIcon';
 export { default as SelectIcon } from './SelectIcon';
 export { default as SquareIcon } from './SquareIcon';
-export { default as ProgressBar } from './ProgressBar';
+export { default as ProgressBarIcon } from './ProgressBarIcon';
 export { default as CheckIcon } from './CheckIcon';
 export { default as MouseIcon } from './MouseIcon';

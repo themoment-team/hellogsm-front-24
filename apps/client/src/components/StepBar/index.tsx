@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from 'shared';
 
-import { CheckIcon, ProgressBar } from 'client/assets';
+import { CheckIcon, ProgressBarIcon } from 'client/assets';
 
 import { cn } from 'shared/lib/utils';
 
@@ -48,7 +48,7 @@ const Step = ({ step, isActive, isCompleted }: StepType) => {
 };
 
 const ProgressBars = ({ isCompleted }: { isCompleted: boolean }) => {
-  return <ProgressBar color={isCompleted ? '#2563eb' : '#CBD5E1'} />;
+  return <ProgressBarIcon color={isCompleted ? '#2563eb' : '#CBD5E1'} />;
 };
 
 const StepBar = () => {
