@@ -383,7 +383,11 @@ importers:
 
   packages/tailwind-config: {}
 
-  packages/types: {}
+  packages/types:
+    dependencies:
+      types:
+        specifier: workspace:^
+        version: 'link:'
 
 packages:
 
