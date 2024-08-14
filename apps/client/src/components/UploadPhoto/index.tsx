@@ -60,7 +60,17 @@ const UploadPhoto = ({ required }: UploadPhotoProps) => {
           )}
           htmlFor="file-input"
         >
-          {imageSrc ? <Image src={imageSrc} alt="Uploaded" /> : <UploadIcon />}
+          {imageSrc ? (
+            <Image
+              src={imageSrc}
+              alt="Uploaded"
+              className={cn('w-[8.75rem]', 'h-[10rem]', 'object-cover', 'rounded-lg')}
+              height={160}
+              width={140}
+            />
+          ) : (
+            <UploadIcon />
+          )}
         </label>
       </div>
       <ul className={cn('text-slate-600', 'text-caption', 'font-[400]')}>
