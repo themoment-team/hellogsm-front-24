@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "next": "14.2.3",
-    "shared": "workspace:^"
+    "shared": "workspace:^",
+    "types": "workspace:^"
   },
   "keywords": [],
   "author": "",
