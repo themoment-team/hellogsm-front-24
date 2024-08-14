@@ -1,7 +1,9 @@
+import { useRef } from 'react';
+
 import Link from 'next/link';
 
 import * as I from 'client/assets';
-import { ActiveLink } from 'client/components';
+import { ActiveLink, LoginDialog } from 'client/components';
 import { cn } from 'client/lib/utils';
 
 import { useGetMyAuthInfo, useGetMyMemberInfo } from 'api/hooks';
@@ -32,6 +34,12 @@ const loginLinkStyle = [
 const Header = () => {
   const { data: authInfo } = useGetMyAuthInfo();
   const { data: memberInfo } = useGetMyMemberInfo();
+
+  const dialog = useRef<HTMLDialogElement>(null);
+
+  const showModal = () => {
+    dialog.current?.showModal();
+  };
 
   return (
     <header
@@ -75,10 +83,12 @@ const Header = () => {
           <I.HeaderProfileIcon /> {memberInfo.name} 님
         </Link>
       ) : (
-        <Link href="/" className={cn(...loginLinkStyle)}>
+        <Link href="/" onClick={showModal} className={cn(...loginLinkStyle)}>
           <I.HeaderProfileIcon /> 로그인
         </Link>
       )}
+
+      <LoginDialog forwardRef={dialog} />
     </header>
   );
 };

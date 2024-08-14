@@ -1,37 +1,37 @@
-"use client";
+'use client';
 
-import * as React from "react";
+import * as React from 'react';
 
-import { cva, type VariantProps } from "class-variance-authority";
+import { cva, type VariantProps } from 'class-variance-authority';
 
-import { Button } from "shared/components";
-import { GoogleIcon, KakaoIcon } from "shared/assets";
-import { cn } from "shared/lib/utils";
+import { GoogleIcon, KakaoIcon } from 'shared/assets';
+import { Button } from 'shared/components';
+import { cn } from 'shared/lib/utils';
 
-import { authUrl } from "api/libs";
+import { authUrl } from 'api/libs';
 
 const loginButtonVariants = cva(
   cn(
-    "text-gray-700",
-    "gap-4",
-    "py-4",
-    "h-auto",
-    "text-lg",
-    "border",
-    "rounded-lg",
-    "font-semibold",
-    "pl-7",
-    "pr-8",
+    'text-gray-700',
+    'gap-4',
+    'py-4',
+    'h-auto',
+    'text-lg',
+    'border',
+    'rounded-lg',
+    'font-semibold',
+    'pl-7',
+    'pr-8',
   ),
   {
     variants: {
       variant: {
-        google: cn("bg-white", "hover:bg-white", "border-gray-200"),
-        kakao: cn("bg-[#FEE404]", "hover:bg-[#FEE404]"),
+        google: cn('bg-white', 'hover:bg-white', 'border-gray-200'),
+        kakao: cn('bg-[#FEE404]', 'hover:bg-[#FEE404]'),
       },
     },
     defaultVariants: {
-      variant: "google",
+      variant: 'google',
     },
   },
 );
@@ -45,11 +45,11 @@ const LoginButton = React.forwardRef<HTMLButtonElement, LoginButtonProps>(
     const OAuthValues = {
       google: {
         icon: <GoogleIcon />,
-        href: authUrl.getLogin("google"),
+        href: authUrl.getLogin('google'),
       },
       kakao: {
         icon: <KakaoIcon />,
-        href: authUrl.getLogin("kakao"),
+        href: authUrl.getLogin('kakao'),
       },
     };
 
@@ -71,6 +71,6 @@ const LoginButton = React.forwardRef<HTMLButtonElement, LoginButtonProps>(
     );
   },
 );
-LoginButton.displayName = "LoginButton";
+LoginButton.displayName = 'LoginButton';
 
 export { LoginButton };
