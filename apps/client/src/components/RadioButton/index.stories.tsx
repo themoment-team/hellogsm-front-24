@@ -26,3 +26,11 @@ export const Required: Story = {
     required: true,
   },
 };
+
+export const Disabled: Story = {
+  args: {
+    required: true,
+    disabled: true,
+    disabledOption: '남자',
+  },
+};

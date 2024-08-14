@@ -5,10 +5,12 @@ import { cn } from 'shared/lib/utils';
 interface RadioButtonProps {
   title: string;
   options: string[];
-  required: boolean;
+  required?: boolean;
+  disabled?: boolean;
+  disabledOption?: string;
 }
 
-const RadioButton = ({ title, options, required }: RadioButtonProps) => {
+const RadioButton = ({ title, options, required, disabled, disabledOption }: RadioButtonProps) => {
   const textStyle = ['text-slate-900', 'text-body2', 'font-medium'];
   return (
     <div className={cn('w-full', 'flex', 'flex-col', 'items-start', 'gap-[0.75rem]')}>
@@ -22,6 +24,8 @@ const RadioButton = ({ title, options, required }: RadioButtonProps) => {
               type="radio"
               name="radioBtn"
               value={option}
+              checked={disabled && option === disabledOption}
+              disabled={disabled}
               className={cn(
                 'appearance-none',
                 'w-4',
@@ -37,13 +41,13 @@ const RadioButton = ({ title, options, required }: RadioButtonProps) => {
                 'after:w-2',
                 'after:h-2',
                 'after:rounded-full',
-                'after:bg-black',
                 'after:transform',
                 'after:-translate-x-1/2',
                 'after:-translate-y-1/2',
                 'checked:after:scale-100',
                 'after:scale-0',
                 'transition-transform',
+                disabled ? 'after:bg-slate-400' : 'after:bg-black',
               )}
             />
             <p className={cn(...textStyle)}>{option}</p>
