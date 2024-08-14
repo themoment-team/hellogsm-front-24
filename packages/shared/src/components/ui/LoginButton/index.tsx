@@ -27,7 +27,7 @@ const loginButtonVariants = cva(
     variants: {
       variant: {
         google: cn('bg-white', 'hover:bg-white', 'border-gray-200'),
-        kakao: cn('bg-[#FEE404]', 'hover:bg-[#FEE404]'),
+        kakao: cn('bg-[#FEE404]', 'hover:bg-[#FEE404]', 'w-full'),
       },
     },
     defaultVariants: {
