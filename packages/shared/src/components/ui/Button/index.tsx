@@ -43,6 +43,12 @@ const buttonVariants = cva(
         subtitle: cn('bg-slate-100', 'text-secondary-foreground', 'hover:bg-slate-200'),
         ghost: cn('hover:bg-accent', 'hover:bg-slate-100'),
         link: cn('text-primary', 'underline-offset-4', 'hover:underline'),
+        disabled: cn(
+          'bg-slate-900',
+          'text-white',
+          'disabled:bg-slate-200',
+          'disabled:text-slate-500',
+        ),
         submit: cn('bg-slate-100', 'text-slate-400'),
       },
       size: {

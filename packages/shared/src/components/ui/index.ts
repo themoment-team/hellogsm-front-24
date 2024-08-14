@@ -6,3 +6,5 @@ export * from './Badge';
 export * from './Input';
 export * from './LoginButton';
 export * from './Select';
+export * from './Form';
+export * from './Label';
