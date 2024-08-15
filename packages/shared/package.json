@@ -12,12 +12,13 @@
   "license": "ISC",
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.1",
+    "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toggle": "^1.1.0",
     "api": "workspace:^",
-    "tailwind-config": "workspace:^",
-    "eslint-config-custom": "workspace:^"
+    "eslint-config-custom": "workspace:^",
+    "tailwind-config": "workspace:^"
   },
   "devDependencies": {
     "eslint": "^8",
