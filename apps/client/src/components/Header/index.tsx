@@ -1,7 +1,5 @@
 'use client';
 
-import { useRef } from 'react';
-
 import Link from 'next/link';
 
 import * as I from 'client/assets';
@@ -36,12 +34,6 @@ const loginLinkStyle = [
 const Header = () => {
   const { data: authInfo } = useGetMyAuthInfo();
   const { data: memberInfo } = useGetMyMemberInfo();
-
-  const dialog = useRef<HTMLDialogElement>(null);
-
-  const showModal = () => {
-    dialog.current?.showModal();
-  };
 
   return (
     <header
@@ -85,12 +77,8 @@ const Header = () => {
           <I.HeaderProfileIcon /> {memberInfo.name} 님
         </Link>
       ) : (
-        <Link href="/" onClick={showModal} className={cn(...loginLinkStyle)}>
-          <I.HeaderProfileIcon /> 로그인
-        </Link>
+        <LoginDialog />
       )}
-
-      <LoginDialog forwardRef={dialog} />
     </header>
   );
 };
