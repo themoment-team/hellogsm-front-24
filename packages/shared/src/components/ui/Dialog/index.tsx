@@ -92,7 +92,7 @@ const DialogDescription = React.forwardRef<
 ));
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
-const Example = () => (
+const DialogExample = () => (
   <Dialog>
     <DialogTrigger asChild>
       <Button variant="outline">Share</Button>
@@ -124,7 +124,7 @@ const Example = () => (
 );
 
 export {
-  Example,
+  DialogExample,
   Dialog,
   DialogPortal,
   DialogOverlay,
