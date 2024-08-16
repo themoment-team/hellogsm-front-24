@@ -93,7 +93,7 @@ const NonSubjectForm = ({ register, liberalSystem }: NonSubjectFormProps) => (
           <h1 className={cn(...itemStyle, 'w-[3.75rem]')}>{grade}</h1>
         </div>
         <div className={cn('flex')}>
-          {registerIndexList.map((num, index) => (
+          {registerIndexList.map((registerIndex, index) => (
             <div
               key={index}
               className={cn(
@@ -109,10 +109,10 @@ const NonSubjectForm = ({ register, liberalSystem }: NonSubjectFormProps) => (
               <input
                 {...register(
                   index === 0
-                    ? `absentDays.${num}`
+                    ? `absentDays.${registerIndex}`
                     : index === 1 || index === 2 || index === 3
-                      ? `attendanceDays.${num}`
-                      : `volunteerTime.${num}`,
+                      ? `attendanceDays.${registerIndex}`
+                      : `volunteerTime.${registerIndex}`,
                 )}
                 type="number"
                 className={cn(
