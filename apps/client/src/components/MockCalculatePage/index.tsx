@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { FreeSemesterType, GetMyOneseoType, MiddleSchoolAchievementType } from 'types';
+import { FreeSemesterType, MiddleSchoolAchievementType } from 'types';
 
 import {
   ArtPhysicalForm,
@@ -32,14 +32,6 @@ const freeSemesterConvertor = {
   achievement3_1: '3-1',
 };
 
-const reversedFreeSemesterConvertor = {
-  '1-1': 'achievement1_1',
-  '1-2': 'achievement1_2',
-  '2-1': 'achievement2_1',
-  '2-2': 'achievement2_2',
-  '3-1': 'achievement3_1',
-};
-
 const formWrapper = [
   'flex',
   'flex-col',
@@ -51,35 +43,14 @@ const formWrapper = [
   'w-full',
 ];
 
-const MockCalculatePage = ({ data }: { data: GetMyOneseoType | null }) => {
+const MockCalculatePage = () => {
   const [liberalSystem, setLiberalSystem] = useState<GradesInputMethodType>('freeGrade');
   const [freeSemester, setFreeSemester] = useState<SemesterIdType | null>(null);
   const [subjectArray, setSubjectArray] = useState<string[]>([...defaultSubjectArray]);
   const defaultSubjectLength = defaultSubjectArray.length;
-  const defaultData = data?.middleSchoolAchievement;
 
   const { register, handleSubmit, setValue, unregister, watch, control } = useForm<ScoreFormType>({
     resolver: zodResolver(scoreFormSchema),
-    defaultValues: {
-      achievement1_1:
-        defaultData?.achievement1_1 && defaultData.achievement1_1.map((i) => String(i)),
-      achievement1_2:
-        defaultData?.achievement1_2 && defaultData.achievement1_2.map((i) => String(i)),
-      achievement2_1:
-        defaultData?.achievement2_1 && defaultData.achievement2_1.map((i) => String(i)),
-      achievement2_2:
-        defaultData?.achievement2_2 && defaultData.achievement2_2.map((i) => String(i)),
-      achievement3_1:
-        defaultData?.achievement3_1 && defaultData.achievement3_1.map((i) => String(i)),
-      artsPhysicalAchievement:
-        defaultData?.artsPhysicalAchievement &&
-        defaultData.artsPhysicalAchievement.map((i) => String(i)),
-      newSubjects: defaultData?.newSubjects && defaultData?.newSubjects,
-      absentDays: defaultData?.absentDays && defaultData.absentDays.map((i) => String(i)),
-      attendanceDays:
-        defaultData?.attendanceDays && defaultData.attendanceDays.map((i) => String(i)),
-      volunteerTime: defaultData?.volunteerTime && defaultData.volunteerTime.map((i) => String(i)),
-    },
   });
 
   const { mutate: mutatePostMockScore } = usePostMockScore('CANDIDATE', {
@@ -155,17 +126,6 @@ const MockCalculatePage = ({ data }: { data: GetMyOneseoType | null }) => {
     const newSubject = `추가과목 ${subjectArray.length - defaultSubjectLength}`;
     setSubjectArray((prev) => [...prev, newSubject]);
   };
-
-  useEffect(() => {
-    if (defaultData?.liberalSystem === '자유학기제') setLiberalSystem('freeSemester');
-    else setLiberalSystem('freeGrade');
-
-    if (defaultData?.newSubjects?.length)
-      Array(defaultData.newSubjects.length).forEach(() => handleAddSubjectClick);
-
-    if (defaultData?.freeSemester)
-      setFreeSemester(reversedFreeSemesterConvertor[defaultData.freeSemester] as SemesterIdType);
-  }, []);
 
   useEffect(() => {
     if (subjectArray.length <= defaultSubjectLength) {
