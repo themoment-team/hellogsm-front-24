@@ -48,7 +48,6 @@ const UploadPhoto = () => {
               'border-gray-200',
               'justify-center',
               'items-center',
-              'items-center',
               'gap-[0.625rem]',
               'cursor-pointer',
             )}
@@ -67,9 +66,7 @@ const UploadPhoto = () => {
                 className={cn('flex', 'w-[2.8125rem]', 'flex-col', 'items-center', 'gap-[0.25rem]')}
               >
                 <UploadIcon />
-                <p className={cn('text-gray-400', 'text-[0.75rem]/[1.125rem]', 'font-normal')}>
-                  사진 첨부
-                </p>
+                <p className={cn('text-gray-400', 'text-caption', 'font-normal')}>사진 첨부</p>
               </div>
             )}
           </label>
