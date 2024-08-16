@@ -14,8 +14,7 @@ const buttonStyle = (isMyLiberalSystem: boolean) => [
   'text-sm',
   'font-medium',
   'leading-5',
-  isMyLiberalSystem ? 'bg-white' : 'bg-slate-100',
-  isMyLiberalSystem ? 'text-slate-900' : 'text-slate-700',
+  ...(isMyLiberalSystem ? ['bg-white', 'text-slate-900'] : ['bg-slate-100', 'text-slate-700']),
 ];
 
 const LiberalSystemSwitch = ({ liberalSystem, setLiberalSystem }: LiberalSystemSwitchProps) => (
