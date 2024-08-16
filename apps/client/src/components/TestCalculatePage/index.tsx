@@ -32,7 +32,7 @@ const freeSemesterConvertor = {
   achievement3_1: '3-1',
 };
 
-const reversedFreeSemesterConvertor = {
+const reversedFreeSemesterConvertor: { [key: string]: SemesterIdType } = {
   '1-1': 'achievement1_1',
   '1-2': 'achievement1_2',
   '2-1': 'achievement2_1',
@@ -64,7 +64,9 @@ const TestCalculatePage = ({ data }: TestCalculatePageProps) => {
         : 'freeSemester'
       : 'freeGrade',
   );
-  const [freeSemester, setFreeSemester] = useState<SemesterIdType | null>(null);
+  const [freeSemester, setFreeSemester] = useState<SemesterIdType | null>(
+    defaultData?.freeSemester ? reversedFreeSemesterConvertor[defaultData.freeSemester] : null,
+  );
   const [subjectArray, setSubjectArray] = useState<string[]>([...defaultSubjectArray]);
   const defaultSubjectLength = defaultSubjectArray.length;
 
@@ -168,67 +170,6 @@ const TestCalculatePage = ({ data }: TestCalculatePageProps) => {
 
       setTimeout(() => setValue('newSubjects', defaultData.newSubjects), 0);
     }
-
-    // if (defaultData) {
-    //   if (defaultData.achievement1_1)
-    //     setValue(
-    //       'achievement1_1',
-    //       defaultData.achievement1_1.map((i) => String(i)),
-    //     );
-
-    //   if (defaultData.achievement1_2)
-    //     setValue(
-    //       'achievement1_2',
-    //       defaultData.achievement1_2.map((i) => String(i)),
-    //     );
-
-    //   if (defaultData.achievement2_1)
-    //     setValue(
-    //       'achievement2_1',
-    //       defaultData.achievement2_1.map((i) => String(i)),
-    //     );
-
-    //   if (defaultData.achievement2_2)
-    //     setValue(
-    //       'achievement2_2',
-    //       defaultData.achievement2_2.map((i) => String(i)),
-    //     );
-
-    //   if (defaultData.achievement3_1)
-    //     setValue(
-    //       'achievement3_1',
-    //       defaultData.achievement3_1.map((i) => String(i)),
-    //     );
-
-    //   if (defaultData.artsPhysicalAchievement)
-    //     setValue(
-    //       'artsPhysicalAchievement',
-    //       defaultData.artsPhysicalAchievement.map((i) => String(i)),
-    //     );
-
-    //   if (defaultData.newSubjects) setValue('newSubjects', [...defaultData.newSubjects]);
-
-    //   if (defaultData.absentDays)
-    //     setValue(
-    //       'absentDays',
-    //       defaultData.absentDays.map((i) => String(i)),
-    //     );
-
-    //   if (defaultData.attendanceDays)
-    //     setValue(
-    //       'attendanceDays',
-    //       defaultData.attendanceDays.map((i) => String(i)),
-    //     );
-
-    //   if (defaultData.volunteerTime)
-    //     setValue(
-    //       'volunteerTime',
-    //       defaultData.volunteerTime.map((i) => String(i)),
-    //     );
-    // }
-
-    if (defaultData?.freeSemester)
-      setFreeSemester(reversedFreeSemesterConvertor[defaultData.freeSemester] as SemesterIdType);
   }, []);
 
   useEffect(() => {
@@ -243,14 +184,6 @@ const TestCalculatePage = ({ data }: TestCalculatePageProps) => {
 
     if (freeSemester) {
       setValue(freeSemester, null);
-    }
-
-    if (liberalSystem === 'freeSemester' && freeSemester !== 'achievement1_1') {
-      subjectArray.forEach((_, i) => setValue(`achievement1_1.${i}`, '성적 선택'));
-    }
-
-    if (liberalSystem === 'freeSemester' && freeSemester !== 'achievement1_2') {
-      subjectArray.forEach((_, i) => setValue(`achievement1_2.${i}`, '성적 선택'));
     }
   }, [defaultSubjectLength, freeSemester, liberalSystem, setValue, subjectArray]);
 

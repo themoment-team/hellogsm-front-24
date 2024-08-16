@@ -7,7 +7,7 @@ import { XIcon } from 'lucide-react';
 import { Control, Controller, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared';
 
-import { PinOffIcon, PinOnIcon } from 'client/assets';
+import { PinIcon } from 'client/assets';
 import { defaultSubjectArray, scoreArray } from 'client/constants';
 import { cn } from 'client/lib/utils';
 import type { ScoreFormType, SemesterIdType, SemesterType } from 'client/types';
@@ -153,7 +153,7 @@ const FreeSemesterForm = ({
                   )}
                   type="button"
                 >
-                  <PinOnIcon />
+                  <PinIcon type="ON" />
                   on
                 </button>
               ) : (
@@ -162,7 +162,7 @@ const FreeSemesterForm = ({
                   type="button"
                   onClick={() => setFreeSemester(id)}
                 >
-                  <PinOffIcon />
+                  <PinIcon type="OFF" />
                   off
                 </button>
               )}
