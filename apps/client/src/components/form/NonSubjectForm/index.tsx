@@ -12,17 +12,17 @@ interface NonSubjectFormProps {
 const nonSubjectArray = [
   {
     grade: 1,
-    idx: [0, 0, 3, 6, 0],
+    registerIndexList: [0, 0, 3, 6, 0],
   },
   {
     grade: 2,
-    idx: [1, 1, 4, 7, 1],
+    registerIndexList: [1, 1, 4, 7, 1],
   },
   {
     grade: 3,
-    idx: [2, 2, 5, 8, 2],
+    registerIndexList: [2, 2, 5, 8, 2],
   },
-];
+] as const;
 
 const nonSubjectTitleArray = ['결석', '지각', '조퇴', '결과', '봉사활동(시간)'] as const;
 
@@ -79,7 +79,7 @@ const NonSubjectForm = ({ register, liberalSystem }: NonSubjectFormProps) => (
         ))}
       </div>
     </div>
-    {nonSubjectArray.map(({ grade, idx }, index) => (
+    {nonSubjectArray.map(({ grade, registerIndexList }, index) => (
       <div
         key={grade}
         className={cn(
@@ -93,7 +93,7 @@ const NonSubjectForm = ({ register, liberalSystem }: NonSubjectFormProps) => (
           <h1 className={cn(...itemStyle, 'w-[3.75rem]')}>{grade}</h1>
         </div>
         <div className={cn('flex')}>
-          {idx.map((num, index) => (
+          {registerIndexList.map((num, index) => (
             <div
               key={index}
               className={cn(
