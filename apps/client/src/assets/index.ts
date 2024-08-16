@@ -6,3 +6,6 @@ export { default as SelectIcon } from './SelectIcon';
 export { default as SquareIcon } from './SquareIcon';
 export { default as PinOnIcon } from './PinOnIcon';
 export { default as PinOffIcon } from './PinOffIcon';
+export { default as ProgressBarIcon } from './ProgressBarIcon';
+export { default as CheckIcon } from './CheckIcon';
+export { default as MouseIcon } from './MouseIcon';

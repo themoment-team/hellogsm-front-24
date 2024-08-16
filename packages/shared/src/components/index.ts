@@ -1,2 +1,2 @@
-export { default as Test } from "./Test";
-export * from "./ui";
+export { default as Test } from './Test';
+export * from './ui';
