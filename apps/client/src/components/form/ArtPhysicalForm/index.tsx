@@ -22,9 +22,9 @@ interface ScoreSelectProps {
 const artPhysicalSemesterArray = ['2학년 1학기', '2학년 2학기', '3학년 1학기'] as const;
 const scoreArray = ['A', 'B', 'C', '없음'] as const;
 const artPhysicalSemesterIndexArray = [
-  { subject: '체육', idx: [0, 3, 6] },
-  { subject: '음악', idx: [1, 4, 7] },
-  { subject: '미술', idx: [2, 5, 8] },
+  { subject: '체육', registerIndexList: [0, 3, 6] },
+  { subject: '음악', registerIndexList: [1, 4, 7] },
+  { subject: '미술', registerIndexList: [2, 5, 8] },
 ] as const;
 
 const itemStyle = [
@@ -109,7 +109,7 @@ const ArtPhysicalForm = ({ control, setValue, liberalSystem }: ArtPhysicalFormPr
           ))}
         </div>
       </div>
-      {artPhysicalSemesterIndexArray.map(({ subject, idx }, index) => (
+      {artPhysicalSemesterIndexArray.map(({ subject, registerIndexList }, index) => (
         <div
           key={subject}
           className={cn(
@@ -123,16 +123,16 @@ const ArtPhysicalForm = ({ control, setValue, liberalSystem }: ArtPhysicalFormPr
             <h1 className={cn(...itemStyle, 'w-full')}>{subject}</h1>
           </div>
           <div className={cn('flex')}>
-            {idx.map((num) => (
+            {registerIndexList.map((registerIndex) => (
               <div
-                key={num}
+                key={registerIndex}
                 className={cn(
                   ...itemStyle,
                   liberalSystem === 'freeGrade' ? 'w-[7.47917rem]' : 'w-[10.3125rem]',
                 )}
               >
                 <ScoreSelect
-                  name={`artsPhysicalAchievement.${num}`}
+                  name={`artsPhysicalAchievement.${registerIndex}`}
                   control={control}
                   setValue={setValue}
                   liberalSystem={liberalSystem}
