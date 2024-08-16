@@ -1,6 +1,6 @@
-/* eslint-disable no-console */ // TODO
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @rushstack/no-new-null */
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/naming-convention */
 'use client';
 
@@ -10,14 +10,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FreeSemesterType, GetMyOneseoType, MiddleSchoolAchievementType } from 'types';
 
-import { SquareIcon } from 'client/assets';
 import {
   ArtPhysicalForm,
   FreeGradeForm,
   FreeSemesterForm,
+  LiberalSystemSwitch,
   NonSubjectForm,
 } from 'client/components';
-import { artPhysicalSubjectArray, defaultSubjectArray, gradeArray } from 'client/constants';
+import { defaultSubjectArray } from 'client/constants';
 import { cn } from 'client/lib/utils';
 import { scoreFormSchema } from 'client/schemas';
 import type { GradesInputMethodType, ScoreFormType, SemesterIdType } from 'client/types';
@@ -40,27 +40,35 @@ const reversedFreeSemesterConvertor = {
   '3-1': 'achievement3_1',
 };
 
-const subjectDiv = [
+const formWrapper = [
   'flex',
-  'w-[100px]',
-  'h-[37px]',
-  'rounded-[6px]',
-  'bg-[#19BAFF]',
-  'items-center',
-  'justify-center',
-  'font-[700]',
-  'text-[17px]/[24.62px]',
-  'text-[#F8F8F8]',
+  'flex-col',
+  'gap-[0.75rem]',
+  'text-slate-900',
+  'text-lg',
+  'font-semibold',
+  'leading-7',
+  'w-full',
 ];
 
-const TestCalculatePage = ({ data }: { data: GetMyOneseoType | null }) => {
-  const [gradesInputMethod, setGradeInputMethod] = useState<GradesInputMethodType>('freeGrade');
+interface TestCalculatePageProps {
+  data: GetMyOneseoType | null;
+}
+
+const TestCalculatePage = ({ data }: TestCalculatePageProps) => {
+  const defaultData = data?.middleSchoolAchievement;
+  const [liberalSystem, setLiberalSystem] = useState<GradesInputMethodType>(
+    defaultData
+      ? defaultData.liberalSystem === '자유학년제'
+        ? 'freeGrade'
+        : 'freeSemester'
+      : 'freeGrade',
+  );
   const [freeSemester, setFreeSemester] = useState<SemesterIdType | null>(null);
   const [subjectArray, setSubjectArray] = useState<string[]>([...defaultSubjectArray]);
   const defaultSubjectLength = defaultSubjectArray.length;
-  const defaultData = data?.middleSchoolAchievement;
 
-  const { register, handleSubmit, setValue, unregister, watch } = useForm<ScoreFormType>({
+  const { register, handleSubmit, setValue, unregister, watch, control } = useForm<ScoreFormType>({
     resolver: zodResolver(scoreFormSchema),
     defaultValues: {
       achievement1_1:
@@ -76,7 +84,7 @@ const TestCalculatePage = ({ data }: { data: GetMyOneseoType | null }) => {
       artsPhysicalAchievement:
         defaultData?.artsPhysicalAchievement &&
         defaultData.artsPhysicalAchievement.map((i) => String(i)),
-      newSubjects: defaultData?.newSubjects && defaultData?.newSubjects,
+      newSubjects: defaultData?.newSubjects && [...defaultData?.newSubjects],
       absentDays: defaultData?.absentDays && defaultData.absentDays.map((i) => String(i)),
       attendanceDays:
         defaultData?.attendanceDays && defaultData.attendanceDays.map((i) => String(i)),
@@ -87,16 +95,6 @@ const TestCalculatePage = ({ data }: { data: GetMyOneseoType | null }) => {
   const { mutate: mutatePostMockScore } = usePostMockScore('CANDIDATE', {
     onSuccess: (data) => console.log(data),
   });
-
-  const gradesInputMethodButton = (type: GradesInputMethodType) => [
-    `${gradesInputMethod === type ? 'bg-[#19BAFF]' : 'bg-[#484453]'}`,
-    `${gradesInputMethod === type ? 'text-[#ffffff]' : 'text-[#ABA9B1]'}`,
-    'w-[140px]',
-    'h-[65px]',
-    'rounded-[6px]',
-    'text-[17px]/[24.62px]',
-    'font-[700]',
-  ];
 
   const handleDeleteSubjectClick = (idx: number) => {
     const filteredSubjects = subjectArray.filter((_, i) => i !== idx);
@@ -121,13 +119,9 @@ const TestCalculatePage = ({ data }: { data: GetMyOneseoType | null }) => {
   };
 
   const handleFormSubmit: SubmitHandler<ScoreFormType> = (data) => {
-    if (gradesInputMethod === 'freeSemester' && !freeSemester) return;
+    if (liberalSystem === 'freeSemester' && !freeSemester) return;
 
-    const isFreeSemester = gradesInputMethod === 'freeSemester';
-
-    if (isFreeSemester && freeSemester !== null) {
-      data[freeSemester] = null;
-    }
+    const isFreeSemester = liberalSystem === 'freeSemester';
 
     const {
       achievement1_1,
@@ -169,11 +163,69 @@ const TestCalculatePage = ({ data }: { data: GetMyOneseoType | null }) => {
   };
 
   useEffect(() => {
-    if (defaultData?.liberalSystem === '자유학기제') setGradeInputMethod('freeSemester');
-    else setGradeInputMethod('freeGrade');
+    if (defaultData?.newSubjects?.length) {
+      [...Array(defaultData.newSubjects.length)].forEach(() => handleAddSubjectClick());
 
-    if (defaultData?.newSubjects?.length)
-      Array(defaultData.newSubjects.length).forEach(() => handleAddSubjectClick);
+      setTimeout(() => setValue('newSubjects', defaultData.newSubjects), 0);
+    }
+
+    // if (defaultData) {
+    //   if (defaultData.achievement1_1)
+    //     setValue(
+    //       'achievement1_1',
+    //       defaultData.achievement1_1.map((i) => String(i)),
+    //     );
+
+    //   if (defaultData.achievement1_2)
+    //     setValue(
+    //       'achievement1_2',
+    //       defaultData.achievement1_2.map((i) => String(i)),
+    //     );
+
+    //   if (defaultData.achievement2_1)
+    //     setValue(
+    //       'achievement2_1',
+    //       defaultData.achievement2_1.map((i) => String(i)),
+    //     );
+
+    //   if (defaultData.achievement2_2)
+    //     setValue(
+    //       'achievement2_2',
+    //       defaultData.achievement2_2.map((i) => String(i)),
+    //     );
+
+    //   if (defaultData.achievement3_1)
+    //     setValue(
+    //       'achievement3_1',
+    //       defaultData.achievement3_1.map((i) => String(i)),
+    //     );
+
+    //   if (defaultData.artsPhysicalAchievement)
+    //     setValue(
+    //       'artsPhysicalAchievement',
+    //       defaultData.artsPhysicalAchievement.map((i) => String(i)),
+    //     );
+
+    //   if (defaultData.newSubjects) setValue('newSubjects', [...defaultData.newSubjects]);
+
+    //   if (defaultData.absentDays)
+    //     setValue(
+    //       'absentDays',
+    //       defaultData.absentDays.map((i) => String(i)),
+    //     );
+
+    //   if (defaultData.attendanceDays)
+    //     setValue(
+    //       'attendanceDays',
+    //       defaultData.attendanceDays.map((i) => String(i)),
+    //     );
+
+    //   if (defaultData.volunteerTime)
+    //     setValue(
+    //       'volunteerTime',
+    //       defaultData.volunteerTime.map((i) => String(i)),
+    //     );
+    // }
 
     if (defaultData?.freeSemester)
       setFreeSemester(reversedFreeSemesterConvertor[defaultData.freeSemester] as SemesterIdType);
@@ -184,19 +236,23 @@ const TestCalculatePage = ({ data }: { data: GetMyOneseoType | null }) => {
       setValue('newSubjects', null);
     }
 
-    if (gradesInputMethod === 'freeGrade') {
+    if (liberalSystem === 'freeGrade') {
       setValue('achievement1_1', null);
       setValue('achievement1_2', null);
     }
 
-    if (gradesInputMethod === 'freeSemester' && freeSemester !== 'achievement1_1') {
-      subjectArray.forEach((_, i) => setValue(`achievement1_1.${i}`, '선택'));
+    if (freeSemester) {
+      setValue(freeSemester, null);
     }
 
-    if (gradesInputMethod === 'freeSemester' && freeSemester !== 'achievement1_2') {
-      subjectArray.forEach((_, i) => setValue(`achievement1_2.${i}`, '선택'));
+    if (liberalSystem === 'freeSemester' && freeSemester !== 'achievement1_1') {
+      subjectArray.forEach((_, i) => setValue(`achievement1_1.${i}`, '성적 선택'));
     }
-  }, [defaultSubjectLength, freeSemester, gradesInputMethod, setValue, subjectArray]);
+
+    if (liberalSystem === 'freeSemester' && freeSemester !== 'achievement1_2') {
+      subjectArray.forEach((_, i) => setValue(`achievement1_2.${i}`, '성적 선택'));
+    }
+  }, [defaultSubjectLength, freeSemester, liberalSystem, setValue, subjectArray]);
 
   return (
     <div
@@ -204,155 +260,97 @@ const TestCalculatePage = ({ data }: { data: GetMyOneseoType | null }) => {
         'flex',
         'h-lvh',
         'justify-center',
-        'bg-[#0F0921]',
+        'bg-slate-50',
         'overflow-y-scroll',
         'pt-[120px]',
       )}
     >
       <form
         onSubmit={handleSubmit(handleFormSubmit)}
-        className={cn('flex', 'flex-col', 'items-center')}
+        className={cn('flex', 'flex-col', 'items-center', 'bg-white')}
       >
-        <div className={cn('flex', 'gap-6', 'mb-[30px]')}>
-          <button
-            type="button"
-            onClick={() => setGradeInputMethod('freeGrade')}
-            className={cn(...gradesInputMethodButton('freeGrade'))}
-          >
-            자유학년제
-          </button>
-          <button
-            type="button"
-            onClick={() => setGradeInputMethod('freeSemester')}
-            className={cn(...gradesInputMethodButton('freeSemester'))}
-          >
-            자유학기제
-          </button>
-        </div>
-        <div className={cn('flex', 'gap-6')}>
-          <div className={cn('flex', 'flex-col')}>
-            <SquareIcon />
-            <div className={cn('mt-[20px]', 'flex', 'flex-col', 'gap-[13px]')}>
-              {gradesInputMethod === 'freeSemester' && (
-                <div className={cn(...subjectDiv)}>자유학기제</div>
-              )}
-              {subjectArray.map((subject, idx) =>
-                idx < defaultSubjectLength ? (
-                  <div className={cn(...subjectDiv)} key={subject}>
-                    {subject}
-                  </div>
-                ) : (
-                  <div key={subject} className={cn('relative')}>
-                    <input
-                      {...register(`newSubjects.${idx - defaultSubjectLength}`)}
-                      className={cn(
-                        'bg-[#484453]',
-                        'w-[100px]',
-                        'h-[37px]',
-                        'rounded-[6px]',
-                        'text-[17px]/[24.62px]',
-                        'font-[500]',
-                        'text-[#FFFFFF8F]/[0.54]',
-                        'flex',
-                        'text-center',
-                      )}
-                      type="text"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => handleDeleteSubjectClick(idx)}
-                      className={cn(
-                        gradesInputMethod === 'freeGrade' ? 'left-[570px]' : 'left-[870px]',
-                        'absolute',
-                        'top-1/2',
-                        '-translate-y-1/2',
-                        'text-red-500',
-                        'flex',
-                        'w-[28px]',
-                      )}
-                    >
-                      삭제
-                    </button>
-                  </div>
-                ),
-              )}
-            </div>
-          </div>
-          {gradesInputMethod === 'freeGrade' && (
-            <FreeGradeForm register={register} subjectArray={subjectArray} />
-          )}
-
-          {gradesInputMethod === 'freeSemester' && (
-            <FreeSemesterForm
-              register={register}
-              subjectArray={subjectArray}
-              freeSemester={freeSemester}
-              setFreeSemester={setFreeSemester}
-            />
-          )}
-        </div>
-        <button
-          type="button"
-          onClick={handleAddSubjectClick}
+        <LiberalSystemSwitch liberalSystem={liberalSystem} setLiberalSystem={setLiberalSystem} />
+        <div
           className={cn(
-            'text-[#F8F8F8]',
-            'bg-[#0C4680]',
-            'mt-[12px]',
-            'rounded-[6px]',
-            'h-[37px]',
-            'min-h-[37px]',
-            gradesInputMethod === 'freeGrade' ? 'w-[553px]' : 'w-[855px]',
+            'flex',
+            'flex-col',
+            'gap-[2.5rem]',
+            'items-center',
+            liberalSystem === 'freeGrade' ? 'w-[35.4375rem]' : 'w-[43.4375rem]',
           )}
         >
-          +과목추가
-        </button>
-        <div className={cn('flex', 'gap-6', 'mt-[50px]')}>
-          <div className={cn('flex', 'flex-col')}>
-            <SquareIcon />
-            <div className={cn('mt-[20px]', 'flex', 'flex-col', 'gap-[13px]')}>
-              {artPhysicalSubjectArray.map((subject) => (
-                <div className={cn(...subjectDiv)} key={subject}>
-                  {subject}
-                </div>
-              ))}
-            </div>
+          <div className={cn(...formWrapper)}>
+            일반교과 성적
+            {liberalSystem === 'freeGrade' && (
+              <FreeGradeForm
+                register={register}
+                setValue={setValue}
+                subjectArray={subjectArray}
+                control={control}
+                handleDeleteSubjectClick={handleDeleteSubjectClick}
+              />
+            )}
+            {liberalSystem === 'freeSemester' && (
+              <FreeSemesterForm
+                register={register}
+                setValue={setValue}
+                subjectArray={subjectArray}
+                control={control}
+                handleDeleteSubjectClick={handleDeleteSubjectClick}
+                freeSemester={freeSemester}
+                setFreeSemester={setFreeSemester}
+              />
+            )}
+            <button
+              type="button"
+              onClick={handleAddSubjectClick}
+              className={cn(
+                'text-sm',
+                'font-semibold',
+                'leading-6',
+                'text-[#0F172A]',
+                'h-[2.5rem]',
+                'w-full',
+                'flex',
+                'items-center',
+                'justify-center',
+                'rounded-md',
+                'border-[0.0625rem]',
+                'border-slate-200',
+              )}
+            >
+              + 과목 추가하기
+            </button>
           </div>
-          <ArtPhysicalForm register={register} />
-        </div>
-
-        <div className={cn('flex', 'gap-6', 'mt-[50px]')}>
-          <div className={cn('flex', 'flex-col')}>
-            <div className={cn(...subjectDiv, 'h-[55px]')}>학년</div>
-            <div className={cn('mt-[20px]', 'flex', 'flex-col', 'gap-[13px]')}>
-              {gradeArray.map((subject) => (
-                <div className={cn(...subjectDiv)} key={subject}>
-                  {subject}
-                </div>
-              ))}
-            </div>
+          <div className={cn(...formWrapper)}>
+            예체능 교과 성적
+            <ArtPhysicalForm setValue={setValue} control={control} liberalSystem={liberalSystem} />
           </div>
-          <NonSubjectForm register={register} />
-        </div>
+          <div className={cn(...formWrapper)}>
+            비교과 내용
+            <NonSubjectForm register={register} liberalSystem={liberalSystem} />
+          </div>
 
-        <button
-          type="submit"
-          className={cn(
-            'pointer',
-            'mt-[100px]',
-            'select-none',
-            'rounded-[10px]',
-            'border',
-            'border-[#0F0921]',
-            'px-[87.5px]',
-            'py-[10px]',
-            'text-[28px]/[40.54px]',
-            'font-[700]',
-            'text-[#0F0921]',
-            'bg-white',
-          )}
-        >
-          저장
-        </button>
+          <button
+            type="submit"
+            className={cn(
+              'pointer',
+              'mt-[100px]',
+              'select-none',
+              'rounded-[10px]',
+              'border',
+              'border-[#0F0921]',
+              'px-[87.5px]',
+              'py-[10px]',
+              'text-[28px]/[40.54px]',
+              'font-[700]',
+              'text-[#0F0921]',
+              'bg-white',
+            )}
+          >
+            저장
+          </button>
+        </div>
       </form>
     </div>
   );
