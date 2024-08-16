@@ -24,9 +24,9 @@ const nonSubjectArray = [
   },
 ];
 
-export const nonSubjectTitleArray = ['결석', '지각', '조퇴', '결과', '봉사활동(시간)'] as const;
+const nonSubjectTitleArray = ['결석', '지각', '조퇴', '결과', '봉사활동(시간)'] as const;
 
-export const lastIdx = 4 as const;
+const volunteerTimeIndex = nonSubjectTitleArray.length - 1;
 
 const itemStyle = [
   'h-full',
@@ -67,7 +67,7 @@ const NonSubjectForm = ({ register, liberalSystem }: NonSubjectFormProps) => (
             key={title}
             className={cn(
               ...itemStyle,
-              idx === lastIdx
+              idx === volunteerTimeIndex
                 ? liberalSystem === 'freeGrade'
                   ? 'w-[9.1875rem]'
                   : 'w-[17.1875rem]'
@@ -99,7 +99,7 @@ const NonSubjectForm = ({ register, liberalSystem }: NonSubjectFormProps) => (
               className={cn(
                 ...itemStyle,
                 'px-[0.75rem]',
-                index === lastIdx
+                index === volunteerTimeIndex
                   ? liberalSystem === 'freeGrade'
                     ? 'w-[9.1875rem]'
                     : 'w-[17.1875rem]'
@@ -129,7 +129,7 @@ const NonSubjectForm = ({ register, liberalSystem }: NonSubjectFormProps) => (
                   'leading-[1.25rem]',
                   'appearance-none',
                 )}
-                placeholder={index === lastIdx ? '시간 입력' : '입력'}
+                placeholder={index === volunteerTimeIndex ? '시간 입력' : '입력'}
               />
             </div>
           ))}
