@@ -1,4 +1,5 @@
 export * from './Button';
+export * from './Dialog';
 export * from './Pagination';
 export * from './Toggle';
 export * from './Table';

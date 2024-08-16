@@ -1,3 +1,5 @@
+import { MainPage } from 'client/pageContainer';
+
 export default function Home() {
-  return <div />;
+  return <MainPage />;
 }
