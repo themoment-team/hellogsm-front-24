@@ -63,7 +63,14 @@ const UploadPhoto = () => {
                 width={140}
               />
             ) : (
-              <UploadIcon />
+              <div
+                className={cn('flex', 'w-[2.8125rem]', 'flex-col', 'items-center', 'gap-[0.25rem]')}
+              >
+                <UploadIcon />
+                <p className={cn('text-gray-400', 'text-[0.75rem]/[1.125rem]', 'font-normal')}>
+                  사진 첨부
+                </p>
+              </div>
             )}
           </label>
         </FormItem>
