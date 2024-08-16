@@ -1,8 +1,12 @@
+'use client';
+
 import Link from 'next/link';
 
 import * as I from 'client/assets';
-import { ActiveLink } from 'client/components';
+import { ActiveLink, LoginDialog } from 'client/components';
 import { cn } from 'client/lib/utils';
+
+import { useGetMyAuthInfo, useGetMyMemberInfo } from 'api/hooks';
 
 const activeStyle = [
   'text-gray-900',
@@ -27,12 +31,10 @@ const loginLinkStyle = [
   'items-center',
 ];
 
-interface HeaderProps {
-  isLogin: boolean;
-  name?: string;
-}
+const Header = () => {
+  const { data: authInfo } = useGetMyAuthInfo();
+  const { data: memberInfo } = useGetMyMemberInfo();
 
-const Header = ({ isLogin, name }: HeaderProps) => {
   return (
     <header
       className={cn(
@@ -70,14 +72,12 @@ const Header = ({ isLogin, name }: HeaderProps) => {
         </ActiveLink>
       </nav>
 
-      {isLogin && name ? (
+      {authInfo && memberInfo ? (
         <Link href="/" className={cn(...loginLinkStyle)}>
-          <I.HeaderProfileIcon /> {name} 님
+          <I.HeaderProfileIcon /> {memberInfo.name} 님
         </Link>
       ) : (
-        <Link href="/" className={cn(...loginLinkStyle)}>
-          <I.HeaderProfileIcon /> 로그인
-        </Link>
+        <LoginDialog />
       )}
     </header>
   );
