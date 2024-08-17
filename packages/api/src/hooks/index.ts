@@ -1,2 +1,2 @@
-export * from "./useGetExampleData";
-export * from "./api";
+export * from './useGetExampleData';
+export * from './api';

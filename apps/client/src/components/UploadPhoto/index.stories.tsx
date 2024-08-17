@@ -13,8 +13,4 @@ type Story = StoryObj<typeof UploadPhoto>;
 
 export const Primary: Story = {};
 
-export const Required: Story = {
-  args: {
-    required: true,
-  },
-};
+export const Required: Story = {};
