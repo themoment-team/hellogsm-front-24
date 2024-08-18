@@ -6,3 +6,4 @@ export { default as SelectIcon } from './SelectIcon';
 export { default as SquareIcon } from './SquareIcon';
 export { default as StarIcon } from './StarIcon';
 export { default as Star2Icon } from './Star2Icon';
+export { default as Star3Icon } from './Star3Icon';

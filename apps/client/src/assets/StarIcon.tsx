@@ -1,4 +1,4 @@
-const StartIcon = () => (
+const StarIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="100"
@@ -13,4 +13,4 @@ const StartIcon = () => (
   </svg>
 );
 
-export default StartIcon;
+export default StarIcon;
