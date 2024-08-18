@@ -9,13 +9,23 @@ import { FormItem, RadioButton, UploadPhoto } from 'client/components';
 
 import { cn } from 'shared/lib/utils';
 
-const BasicRegister = () => {
+interface BasicInfoType {
+  name: string;
+  birth: string;
+  sex: string;
+}
+
+const BasicRegister = ({ name, birth, sex }: BasicInfoType) => {
   const [address, setAddress] = useState<string>('');
   const [zonecode, setZoncode] = useState<string>('');
 
   const daumPostCode = useDaumPostcodePopup();
 
   const userAddress = address && zonecode ? `${address} ${zonecode}` : '주소를 입력해 주세요';
+
+  const birthYear = String(birth).slice(0, 4);
+  const birthMonth = String(birth).slice(4, 6);
+  const birthDay = String(birth).slice(6, 8);
 
   const handleDaumPostCodePopupComplete = ({ address, zonecode }: Address) => {
     setAddress(address);
@@ -53,23 +63,23 @@ const BasicRegister = () => {
           <div className={cn('flex', 'w-[29.75rem]', 'flex-col', 'items-start', 'gap-[2rem]')}>
             <UploadPhoto />
             <FormItem text={'이름'} className="gap-1" required={true} fullWidth={true}>
-              <Input placeholder="김재균" disabled={true} />
+              <Input placeholder={name} disabled={true} />
             </FormItem>
             <FormItem text={'생년월일'} className="gap-1" required={true} fullWidth={true}>
               <div className={cn('flex', 'w-full', 'justify-between')}>
                 <Select>
                   <SelectTrigger className="w-[9.3785rem]" disabled={true}>
-                    <SelectValue placeholder="2007" />
+                    <SelectValue placeholder={birthYear} />
                   </SelectTrigger>
                 </Select>
                 <Select>
                   <SelectTrigger className="w-[9.3785rem]" disabled={true}>
-                    <SelectValue placeholder="12" />
+                    <SelectValue placeholder={birthMonth} />
                   </SelectTrigger>
                 </Select>
                 <Select>
                   <SelectTrigger className="w-[9.3785rem]" disabled={true}>
-                    <SelectValue placeholder="08" />
+                    <SelectValue placeholder={birthDay} />
                   </SelectTrigger>
                 </Select>
               </div>
@@ -81,7 +91,7 @@ const BasicRegister = () => {
               title={'성별'}
               options={['남자', '여자']}
               disabled={true}
-              disabledOption="남자"
+              disabledOption={sex}
             />
 
             <div className={cn('flex', 'flex-col', 'items-start', 'gap-[0.375rem]', 'w-full')}>
