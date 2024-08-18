@@ -7,3 +7,7 @@ export { default as SquareIcon } from './SquareIcon';
 export { default as StarIcon } from './StarIcon';
 export { default as Star2Icon } from './Star2Icon';
 export { default as Star3Icon } from './Star3Icon';
+export { default as ProgressBarIcon } from './ProgressBarIcon';
+export { default as CheckIcon } from './CheckIcon';
+export { default as MouseIcon } from './MouseIcon';
+export { default as UploadIcon } from './UploadIcon';

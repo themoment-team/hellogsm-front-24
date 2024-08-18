@@ -1,3 +1,5 @@
+'use client';
+
 import { SearchIcon, PrintIcon, FileIcon } from 'admin/assets';
 
 import {

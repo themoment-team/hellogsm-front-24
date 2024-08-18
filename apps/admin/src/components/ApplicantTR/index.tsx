@@ -13,7 +13,9 @@ import { useDebounce } from 'shared/hooks';
 import { cn } from 'shared/lib/utils';
 import { formatScore } from 'shared/utils';
 
-const ApplicantTR = () => {
+import { OneseoType } from 'types/oneseo';
+
+const ApplicantTR = ({}: OneseoType) => {
   const example직무적성처리시작일자 = new Date('2024-07-31');
   const example심층면접처리시작일자 = new Date('2024-08-30');
 

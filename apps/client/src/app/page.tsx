@@ -1,11 +1,5 @@
-import { Footer, Header } from 'client/components';
-import { cn } from 'client/lib/utils';
+import { MainPage } from 'client/pageContainer';
 
 export default function Home() {
-  return (
-    <div className={cn('min-h-screen', 'flex', 'flex-col', 'justify-between')}>
-      <Header isLogin={true} name="사용자" />
-      <Footer />
-    </div>
-  );
+  return <MainPage />;
 }
