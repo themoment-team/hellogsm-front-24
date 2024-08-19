@@ -1,9 +1,9 @@
 const StarIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="100"
-    height="100"
-    viewBox="0 0 100 100"
+    width="6.25rem"
+    height="6.25rem"
+    viewBox="0 0 6.25rem 6.25rem"
     fill="none"
   >
     <path

@@ -3,11 +3,12 @@
 import Link from 'next/link';
 
 import * as I from 'client/assets';
+import { RECRUITMENT_PERIOD } from 'client/constants';
 import { cn } from 'client/lib/utils';
 
 const Section3 = () => {
   const buttonStyle = [
-    'rounded-3xl border border-white px-[1.125rem] py-[0.375rem] font-[600] text-white',
+    'font-semibold rounded-3xl border border-white px-[1.125rem] py-[0.375rem] text-white',
   ] as const;
 
   return (
@@ -20,17 +21,11 @@ const Section3 = () => {
             2025 신입생 모집
           </h1>
           <p className={cn('mb-[2rem] mt-[1rem] text-gray-500')}>
-            접수기간: 2024.10.10. (월) 오전 9시 ~ 오후 4시까지
+            접수기간: {RECRUITMENT_PERIOD.startDate} {RECRUITMENT_PERIOD.endDate}
           </p>
           <Link
             href="/"
-            className={cn(
-              ...buttonStyle,
-              'text-sky-900',
-              'border-sky-900',
-              'px-[16px]',
-              'py-[9px]',
-            )}
+            className={cn(...buttonStyle, 'text-sky-900', 'border-sky-900', 'px-4', 'py-[9px]')}
           >
             원서접수 바로가기
           </Link>
@@ -79,9 +74,7 @@ const Section3 = () => {
               )}
               style={{
                 // eslint-disable-next-line quotes
-                backgroundImage: "url('/images/Pattern.png')",
-                backgroundSize: '150%',
-                backgroundPosition: 'center',
+                background: "url('/images/Pattern.png') center / 150% no-repeat",
               }}
             >
               <div>
