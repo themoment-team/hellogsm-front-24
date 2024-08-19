@@ -40,7 +40,7 @@
   }
 
   .toggle-icon-hover:hover path,
-  .toggle-icon-active[data-state="on"] path {
+  .toggle-icon-active[data-state='on'] path {
     stroke: #10b981; /* emerald-500 color */
   }
 
@@ -82,4 +82,10 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
