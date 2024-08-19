@@ -7,7 +7,7 @@ const meta: Meta<typeof BasicRegister> = {
   component: BasicRegister,
   args: {
     name: '김재균',
-    birth: '20071208',
+    birth: '2007-12-08',
     sex: '남자',
   },
 };

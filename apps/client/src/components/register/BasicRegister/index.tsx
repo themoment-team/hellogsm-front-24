@@ -23,9 +23,10 @@ const BasicRegister = ({ name, birth, sex }: BasicInfoType) => {
 
   const userAddress = address && zonecode ? `${address} ${zonecode}` : '주소를 입력해 주세요';
 
-  const birthYear = String(birth).slice(0, 4);
-  const birthMonth = String(birth).slice(4, 6);
-  const birthDay = String(birth).slice(6, 8);
+  const birthDate = new Date(birth);
+  const birthYear = birthDate.getFullYear();
+  const birthMonth = String(birthDate.getMonth() + 1).padStart(2, '0');
+  const birthDay = String(birthDate.getDate()).padStart(2, '0');
 
   const handleDaumPostCodePopupComplete = ({ address, zonecode }: Address) => {
     setAddress(address);
