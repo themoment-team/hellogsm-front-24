@@ -87,7 +87,7 @@ const BasicRegister = ({ name, birth, sex }: BasicInfoType) => {
             </FormItem>
           </div>
 
-          <div className={cn('flex', 'w-[29.75rem]', 'flex-col', 'items-start', 'gap-[2.5rem]')}>
+          <div className={cn('flex', 'w-[29.75rem]', 'flex-col', 'items-start', 'gap-10')}>
             <RadioButton
               title={'성별'}
               options={['남자', '여자']}
@@ -97,7 +97,7 @@ const BasicRegister = ({ name, birth, sex }: BasicInfoType) => {
 
             <div className={cn('flex', 'flex-col', 'items-start', 'gap-[0.375rem]', 'w-full')}>
               <FormItem text={'주소지'} className="gap-1" required={true} fullWidth={true}>
-                <div className={cn('w-full', 'flex', 'gap-[0.5rem]')}>
+                <div className={cn('w-full', 'flex', 'gap-2')}>
                   <Input placeholder={userAddress} width="full" disabled={true} />
                   <Button onClick={handleZipCodeButtonClick}>주소 찾기</Button>
                 </div>
