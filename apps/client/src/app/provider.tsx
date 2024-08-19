@@ -4,10 +4,21 @@ import { PropsWithChildren } from 'react';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+import { Footer, Header } from 'client/components';
+import { cn } from 'client/lib/utils';
+
 const Provider = ({ children }: PropsWithChildren) => {
   const queryClient = new QueryClient();
 
-  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <div className={cn('min-h-screen', 'flex', 'flex-col', 'justify-between')}>
+        <Header />
+        {children}
+        <Footer />
+      </div>
+    </QueryClientProvider>
+  );
 };
 
 export default Provider;

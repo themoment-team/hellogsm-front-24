@@ -15,3 +15,8 @@ export const oneseoUrl = {
   postTempStorage: () => "/oneseo/v3/temp-storage",
   postMyOneseo: () => "/oneseo/v3/oneseo/me",
 } as const;
+
+export const memberUrl = {
+  getMyMemberInfo: () => `/member/v3/member/me`,
+  getMyAuthInfo: () => `/member/v3/auth-info/me`,
+};

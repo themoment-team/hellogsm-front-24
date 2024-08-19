@@ -6,6 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "dependencies": {
+    "types": "workspace:^"
+  },
+  "types": "workspace:^",
   "keywords": [],
   "author": "",
   "license": "ISC"

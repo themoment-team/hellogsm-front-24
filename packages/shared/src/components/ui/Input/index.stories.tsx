@@ -55,3 +55,29 @@ export const Search: Story = {
     ),
   },
 };
+
+export const Blue: Story = {
+  args: {
+    width: 'large',
+    placeholder: '검색어를 입력하세요.',
+    variant: 'blueOutline',
+  },
+};
+
+export const Error: Story = {
+  args: {
+    width: 'large',
+    placeholder: '검색어를 입력하세요.',
+    variant: 'blueOutline',
+    errorMessage: '인증번호를 확인해 주세요.',
+  },
+};
+
+export const Success: Story = {
+  args: {
+    width: 'large',
+    placeholder: '검색어를 입력하세요.',
+    variant: 'blueOutline',
+    successMessage: '번호 인증이 완료되었습니다.',
+  },
+};
