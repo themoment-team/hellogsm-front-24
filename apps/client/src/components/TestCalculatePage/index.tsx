@@ -159,14 +159,25 @@ const TestCalculatePage = ({ data }: TestCalculatePageProps) => {
     mutatePostMockScore(body);
   };
 
-  const handleAddSubjectClick = () => {
-    const newSubject = `추가과목 ${subjectArray.length - defaultSubjectLength}`;
+  const handleAddSubjectClick = (defaultSubject?: string) => {
+    const newSubject = defaultSubject
+      ? defaultSubject
+      : `추가과목 ${subjectArray.length - defaultSubjectLength}`;
     setSubjectArray((prev) => [...prev, newSubject]);
   };
 
+  // const handleAddSubjectClick = (newSubjectsLength: number) => {
+  //   const newSubject = Array.from(
+  //     { length: newSubjectsLength },
+  //     (_, index) => `추가과목 ${subjectArray.length - defaultSubjectLength + index}`,
+  //   );
+  //   setSubjectArray((prev) => [...prev, ...newSubject]);
+  // };
+
   useEffect(() => {
     if (defaultData?.newSubjects?.length) {
-      [...Array(defaultData.newSubjects.length)].forEach(() => handleAddSubjectClick());
+      [...defaultData.newSubjects].forEach((subject) => handleAddSubjectClick(subject));
+      // handleAddSubjectClick(defaultData.newSubjects.length);
 
       setTimeout(() => setValue('newSubjects', defaultData.newSubjects), 0);
     }
@@ -236,7 +247,7 @@ const TestCalculatePage = ({ data }: TestCalculatePageProps) => {
             )}
             <button
               type="button"
-              onClick={handleAddSubjectClick}
+              onClick={() => handleAddSubjectClick()}
               className={cn(
                 'text-sm',
                 'font-semibold',
