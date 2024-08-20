@@ -27,7 +27,7 @@ const UploadPhoto = () => {
   return (
     <div className={cn('flex', 'items-end', 'gap-[0.5rem]')}>
       <div className={cn('flex', 'w-[8.75rem]', 'flex-col', 'items-start', 'gap-[0.25rem]')}>
-        <FormItem text={'증명사진'} required={true}>
+        <FormItem text={'증명사진'} required={true} className="gap-1">
           <input
             className={cn('hidden')}
             type="file"

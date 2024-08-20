@@ -49,8 +49,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     ref,
   ) => {
     return (
-      <div className={cn('flex', 'flex-col', 'gap-1')}>
-        <div className={cn('relative flex items-center', className, inputVariants({ width }))}>
+      <div className={cn('flex', 'flex-col', 'gap-1', inputVariants({ width }))}>
+        <div className={cn('relative flex items-center', className)}>
           <input
             type={type}
             className={cn(
@@ -63,7 +63,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           {icon && (
             <div
               onClick={onIconClick}
-              className="absolute flex items-center pointer-events-none right-3"
+              className="pointer-events-none absolute right-3 flex items-center"
             >
               {icon}
             </div>

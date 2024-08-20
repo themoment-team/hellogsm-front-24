@@ -12,5 +12,3 @@ export default meta;
 type Story = StoryObj<typeof UploadPhoto>;
 
 export const Primary: Story = {};
-
-export const Required: Story = {};
