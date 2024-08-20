@@ -9,3 +9,5 @@ export { default as CheckIcon } from './CheckIcon';
 export { default as MouseIcon } from './MouseIcon';
 export { default as PinIcon } from './FreeSemesterForm/PinIcon';
 export { default as UploadIcon } from './UploadIcon';
+export { default as CloverIcon } from './CloverIcon';
+export { default as StarIcon } from './StarIcon';
