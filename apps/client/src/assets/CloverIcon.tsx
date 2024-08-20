@@ -1,8 +1,8 @@
 const Clover = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="208"
-    height="170"
+    width="13rem"
+    height="10.625rem"
     viewBox="0 0 208 170"
     fill="none"
   >
