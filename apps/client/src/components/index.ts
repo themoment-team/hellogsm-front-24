@@ -12,3 +12,4 @@ export { default as SexToggle } from './SexToggle';
 export { default as UploadPhoto } from './UploadPhoto';
 export { default as LoginDialog } from './LoginDialog';
 export { default as RadioButton } from './RadioButton';
+export { default as SearchDialog } from './SearchDialog';
