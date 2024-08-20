@@ -21,8 +21,7 @@ const Elements: ElementType[] = [
     title: '원서 및 성적 입력',
     description: (
       <>
-        절차를 읽고 원서와 성적을 작성한 후{' '}
-        <span className={cn('font-semibold')}>마이페이지에서 최종 제출 버튼</span>을 눌러야 입학
+        절차를 읽고 원서와 성적을 작성한 후 <span>마이페이지에서 최종 제출 버튼</span>을 눌러야 입학
         신청이 완료됩니다.
       </>
     ),
@@ -32,8 +31,7 @@ const Elements: ElementType[] = [
     title: '입학 원서 제출',
     description: (
       <>
-        작성하신 입학 원서와 추가 서류는{' '}
-        <span className={cn('font-semibold')}>마이페이지에서 출력</span> 가능합니다.
+        작성하신 입학 원서와 추가 서류는 <span>마이페이지에서 출력</span> 가능합니다.
       </>
     ),
     subDescription: (
@@ -49,8 +47,7 @@ const Elements: ElementType[] = [
     title: '1차 전형',
     description: (
       <>
-        내신과 봉사시간, 출결현황을 점수로 환산하여{' '}
-        <span className={cn('font-semibold')}>정원의 1.3배 인원</span>을 발표합니다.
+        내신과 봉사시간, 출결현황을 점수로 환산하여 <span>정원의 1.3배 인원</span>을 발표합니다.
       </>
     ),
   },
@@ -60,7 +57,7 @@ const Elements: ElementType[] = [
     description: (
       <>
         소프트웨어마이스터고등학교 학업수행에 필요한 기본 자질과 능력을 중심으로{' '}
-        <span className={cn('font-semibold')}>직무적성 소양평가</span>를 진행합니다.
+        <span>직무적성 소양평가</span>를 진행합니다.
       </>
     ),
     subDescription: <>소양평가 이후 면접을 통해 지원자의 역량을 확인 후 2차 전형은 마무리됩니다.</>,
@@ -70,8 +67,7 @@ const Elements: ElementType[] = [
     title: '결과 발표',
     description: (
       <>
-        <span className={cn('font-semibold')}>1차 서류심사(50%)와 2차 직무적성 소양평가(50%)</span>
-        를 통해 최종 합격자를 선발합니다.
+        <span>1차 서류심사(50%)와 2차 직무적성 소양평가(50%)</span>를 통해 최종 합격자를 선발합니다.
       </>
     ),
   },
@@ -127,7 +123,7 @@ const List = ({
           </p>
           <p className={cn(...textStyle, 'text-gray-900')}>{title}</p>
         </div>
-        <ul className={cn('pl-2')}>
+        <ul className={cn('pl-2', '[&>span]:font-semibold')}>
           <li className={cn(...descriptionStyle, 'text-gray-900')}>&middot; {description}</li>
           {subDescription && (
             <li className={cn(...descriptionStyle, 'text-gray-900')}>&middot; {subDescription}</li>
@@ -198,7 +194,7 @@ const GuidePage = () => {
 
           <div className={cn('w-full', 'flex', 'flex-col', 'gap-5')}>
             <p className={cn(...textStyle, 'text-gray-900')}>원서 접수 전 꼭 읽어주세요!</p>
-            <div className={cn(...descriptionStyle)}>
+            <div className={cn(...descriptionStyle, '[&>span]:font-semibold')}>
               <p className={cn('text-red-600')}>
                 본교 최종 합격자는 당해 학년도에는 다른 고등학교 입학전형에 지원할 수 없습니다.
               </p>
