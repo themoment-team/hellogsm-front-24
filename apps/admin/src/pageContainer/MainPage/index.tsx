@@ -11,8 +11,6 @@ import { useGetSearchedOneseoList } from 'api/hooks';
 
 import { OneseoType } from 'types/oneseo';
 
-const PER_PAGE = 10;
-
 const MockApplicationList: OneseoType[] = Array.from({ length: 50 }, (_, index) => {
   return {
     memberId: index,
@@ -31,15 +29,29 @@ const MockApplicationList: OneseoType[] = Array.from({ length: 50 }, (_, index) 
   };
 });
 
+interface MainPageProps {
+  initialData: OneseoType[] | undefined;
+}
+
 const flexColStyle = ['flex', 'flex-col'] as const;
 
-const DEFAULT_LIST_SIZE = 10;
+const PER_PAGE = 10;
 const DEFAULT_TEST_RESULT_TAG = 'ALL';
 
-const LoginPage = () => {
+const MainPage = ({ initialData }: MainPageProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
-  const { data } = useGetSearchedOneseoList(0, DEFAULT_LIST_SIZE, DEFAULT_TEST_RESULT_TAG);
+  const { data } = useGetSearchedOneseoList(
+    0,
+    PER_PAGE,
+    DEFAULT_TEST_RESULT_TAG,
+    undefined,
+    undefined,
+    undefined,
+    {
+      initialData: initialData,
+    },
+  );
 
   useEffect(() => {
     console.log(data);
@@ -75,4 +87,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default MainPage;

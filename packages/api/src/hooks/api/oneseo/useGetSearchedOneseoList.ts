@@ -1,14 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import type { UseQueryOptions } from '@tanstack/react-query';
 
-import { minutesToMs } from 'shared';
+import { OneseoType } from 'types';
+
+import { minutesToMs } from 'shared/utils';
 
 import { get, oneseoQueryKeys, oneseoUrl } from 'api/libs';
-
-interface ExampleDataType {
-  id: string;
-  data: string;
-}
 
 export const useGetSearchedOneseoList = (
   page: number,
@@ -17,7 +14,7 @@ export const useGetSearchedOneseoList = (
   screeningTag?: string,
   isSubmitted?: string,
   keyword?: string,
-  options?: Omit<UseQueryOptions<ExampleDataType>, 'queryKey'>,
+  options?: Omit<UseQueryOptions<OneseoType[]>, 'queryKey'>,
 ) =>
   useQuery({
     queryKey: oneseoQueryKeys.getSearchedOneseoList(
@@ -29,7 +26,7 @@ export const useGetSearchedOneseoList = (
       keyword,
     ),
     queryFn: () =>
-      get<ExampleDataType>(
+      get<OneseoType[]>(
         oneseoUrl.getSearchedOneseoList(
           page,
           size,
