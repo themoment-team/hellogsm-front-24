@@ -50,9 +50,11 @@ const ApplyRegister = () => {
   };
 
   const handleChoiceChange = (value: string, index: number) => {
-    const updatedChoices = [...choices];
-    updatedChoices[index] = value;
-    setChoices(updatedChoices);
+    setChoices((prevChoices) => {
+      const updatedChoices = [...prevChoices];
+      updatedChoices[index] = value;
+      return updatedChoices;
+    });
   };
 
   return (
