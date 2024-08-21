@@ -214,7 +214,6 @@ const GuidePage = () => {
       >
         원서 작성하기
       </Button>
-      <div></div>
     </div>
   );
 };
