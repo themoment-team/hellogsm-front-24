@@ -14,7 +14,7 @@ const DEFAULT_TEST_RESULT_TAG = 'ALL';
 export const getOneseoList = async (redirectUrl: string): Promise<OneseoType[] | undefined> => {
   const response = await fetch(
     new URL(
-      `/api${oneseoUrl.getSearchedOneseoList(0, DEFAULT_LIST_SIZE, DEFAULT_TEST_RESULT_TAG)}`,
+      `${oneseoUrl.getSearchedOneseoList(0, DEFAULT_LIST_SIZE, DEFAULT_TEST_RESULT_TAG)}`,
       process.env.NEXT_PUBLIC_API_BASE_URL,
     ),
     {
@@ -23,6 +23,8 @@ export const getOneseoList = async (redirectUrl: string): Promise<OneseoType[] |
   );
 
   const oneseoList = await response.json();
+
+  console.log(oneseoList);
 
   // const isUnauthorized = response.status === 401;
   // const isNotFound = response.status === 404;

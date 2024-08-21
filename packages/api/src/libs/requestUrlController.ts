@@ -31,7 +31,7 @@ export const oneseoUrl = {
     isSubmitted?: string,
     keyword?: string,
   ) =>
-    `/oneseo/v3/oneseo/search?page=${page}${addParameters('size', size)}${addParameters('testResultTag', testResultTag)}${addParameters('screeningTag', screeningTag)}${addParameters('isSubmitted', isSubmitted)}${addParameters('keyword', keyword)}`,
+    `/oneseo/v3/oneseo/search?page=${page}&size=${size}&testResultTag=${testResultTag}${addParameters('screeningTag', screeningTag)}${addParameters('isSubmitted', isSubmitted)}${addParameters('keyword', keyword)}`,
 } as const;
 
 export const memberUrl = {
