@@ -87,7 +87,16 @@ const TitleCard = ({ firstText, lastText, icon }: TitleCardProps) => (
 
 const Section4 = () => {
   return (
-    <section className={cn('gap-[4.25rem]', 'flex', 'items-center', 'flex-col', 'bg-[#F5F9FB]')}>
+    <section
+      className={cn(
+        'gap-[4.25rem]',
+        'flex',
+        'items-center',
+        'flex-col',
+        'bg-[#F5F9FB]',
+        'py-[11.25rem]',
+      )}
+    >
       <div className={cn('flex', 'flex-col', 'items-center')}>
         <div className={cn('flex', 'items-end')}>
           <DotWithText color="#84CC16" text="인성" textColor="text-[#84CC16]" />

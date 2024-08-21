@@ -16,23 +16,15 @@ const Section1 = () => {
   };
 
   return (
-    <div
-      className={cn(
-        'w-full',
-        'h-dvh',
-        'relative',
-        'top-0',
-        'z-0',
-        'flex',
-        'justify-center',
-        'bg-black',
-      )}
+    <section
+      style={{ height: 'calc(100dvh - 4.625rem)' }}
+      className={cn('w-full', 'relative', 'top-0', 'z-0', 'flex', 'justify-center', 'bg-black')}
     >
       <Video />
       <div
         className={cn(
           'w-full',
-          'h-dvh',
+          'h-full',
           'bg-[rgba(0, 0, 0, 0.40)]',
           'absolute',
           'top-0',
@@ -107,7 +99,7 @@ const Section1 = () => {
           <BottomArrow />
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
