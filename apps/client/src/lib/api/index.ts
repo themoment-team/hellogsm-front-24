@@ -1,1 +1,1 @@
-export * from './querykeys';
+export * from './queryKeys';
