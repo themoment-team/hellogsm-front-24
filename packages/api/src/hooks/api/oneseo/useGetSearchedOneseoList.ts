@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import type { UseQueryOptions } from '@tanstack/react-query';
 
-import { OneseoType } from 'types';
+import { SearchedOneseoListType } from 'types';
 
 import { minutesToMs } from 'shared/utils';
 
@@ -14,7 +14,7 @@ export const useGetSearchedOneseoList = (
   screeningTag?: string,
   isSubmitted?: string,
   keyword?: string,
-  options?: Omit<UseQueryOptions<OneseoType[]>, 'queryKey'>,
+  options?: Omit<UseQueryOptions<SearchedOneseoListType>, 'queryKey'>,
 ) =>
   useQuery({
     queryKey: oneseoQueryKeys.getSearchedOneseoList(
@@ -26,7 +26,7 @@ export const useGetSearchedOneseoList = (
       keyword,
     ),
     queryFn: () =>
-      get<OneseoType[]>(
+      get<SearchedOneseoListType>(
         oneseoUrl.getSearchedOneseoList(
           page,
           size,

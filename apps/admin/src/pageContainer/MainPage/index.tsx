@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { SideMenu, FilterBar, ApplicantTH, ApplicantTR } from 'admin/components';
 
@@ -9,10 +9,10 @@ import { cn } from 'shared/lib/utils';
 
 import { useGetSearchedOneseoList } from 'api/hooks';
 
-import { OneseoType } from 'types/oneseo';
+import { SearchedOneseoListType } from 'types/oneseo';
 
 interface MainPageProps {
-  initialData: OneseoType[] | undefined;
+  initialData: SearchedOneseoListType | undefined;
 }
 
 const flexColStyle = ['flex', 'flex-col'] as const;
@@ -23,7 +23,7 @@ const DEFAULT_TEST_RESULT_TAG = 'ALL';
 const MainPage = ({ initialData }: MainPageProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
-  const { data: oneseoList } = useGetSearchedOneseoList(
+  const { data } = useGetSearchedOneseoList(
     0,
     PER_PAGE,
     DEFAULT_TEST_RESULT_TAG,
@@ -34,12 +34,6 @@ const MainPage = ({ initialData }: MainPageProps) => {
       initialData: initialData,
     },
   );
-
-  useEffect(() => {
-    // 테스트용입니다.
-    // eslint-disable-next-line no-console
-    console.log(oneseoList);
-  }, [oneseoList]);
 
   return (
     <main className={cn(isOpen && 'ml-60', isOpen ? 'px-10' : 'pl-20 pr-10', 'pt-[60px]', 'pb-8')}>
@@ -60,10 +54,8 @@ const MainPage = ({ initialData }: MainPageProps) => {
           >
             <ApplicantTH />
             <div className={cn('bg-zinc-200', 'w-full', 'h-[1px]')} />
-            {oneseoList &&
-              oneseoList.map((application) => (
-                <ApplicantTR {...application} key={application.memberId} />
-              ))}
+            {data?.oneseos &&
+              data.oneseos.map((oneseo) => <ApplicantTR {...oneseo} key={oneseo.memberId} />)}
           </div>
           <PaginationExample />
         </div>

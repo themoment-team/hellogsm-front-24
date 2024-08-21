@@ -1,7 +1,9 @@
+import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { OneseoType } from 'types';
 
 import { oneseoUrl } from 'api/libs';
+
+import { SearchedOneseoListType } from 'types/oneseo';
 
 const DEFAULT_LIST_SIZE = 10;
 const DEFAULT_TEST_RESULT_TAG = 'ALL';
@@ -11,7 +13,11 @@ const DEFAULT_TEST_RESULT_TAG = 'ALL';
  *
  * @returns 초기 리스트를 반환합니다. 리스트가 없다면 로그인 페이지로 리다이렉트 합니다.
  */
-export const getOneseoList = async (redirectUrl: string): Promise<OneseoType[] | undefined> => {
+export const getOneseoList = async (
+  redirectUrl: string,
+): Promise<SearchedOneseoListType | undefined> => {
+  const session = cookies().get('SESSION')?.value;
+
   const response = await fetch(
     new URL(
       `${oneseoUrl.getSearchedOneseoList(0, DEFAULT_LIST_SIZE, DEFAULT_TEST_RESULT_TAG)}`,
@@ -19,19 +25,21 @@ export const getOneseoList = async (redirectUrl: string): Promise<OneseoType[] |
     ),
     {
       method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        Cookie: `SESSION=${session}`,
+      },
     },
   );
 
   const oneseoList = await response.json();
 
-  // console.log(oneseoList);
+  const isNotFound = response.status === 404;
 
-  // const isUnauthorized = response.status === 401;
-  // const isNotFound = response.status === 404;
-
-  // if (isNotFound || isUnauthorized) {
-  //   return undefined;
-  // }
+  if (isNotFound) {
+    return undefined;
+  }
 
   if (!response.ok) {
     return redirect(redirectUrl);

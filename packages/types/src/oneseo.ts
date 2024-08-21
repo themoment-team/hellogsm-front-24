@@ -8,7 +8,6 @@ export type FreeSemesterType = "1-1" | "1-2" | "2-1" | "2-2" | "3-1" | null;
 
 export type LiberalSystemType = "자유학년제" | "자유학기제";
 
-
 export type SexType = "MALE" | "FEMALE";
 
 export type YesNo = "YES" | "NO";
@@ -104,4 +103,9 @@ export interface OneseoType {
   aptitudeEvaluationScore: number;
   interviewScore: number;
   secondTestPassYn: YesNo;
+}
+
+export interface SearchedOneseoListType {
+  info: { totalPages: number; totalElements: number };
+  oneseos: OneseoType[];
 }
