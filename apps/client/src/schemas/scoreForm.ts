@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const DEFAULT_VALUE = '선택';
+const DEFAULT_VALUE = '성적 선택';
 
 export const scoreFormSchema = z.object({
   achievement1_1: z.nullable(
