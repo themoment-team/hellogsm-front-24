@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { SideMenu, FilterBar, ApplicantTH, ApplicantTR } from 'admin/components';
 
@@ -54,29 +54,25 @@ const MainPage = ({ initialData }: MainPageProps) => {
     },
   );
 
-  const startPage = useMemo(() => {
-    if (data?.info?.totalPages) {
-      return Math.max(0, Math.min(page, data.info.totalPages - 3));
-    }
-    return 0;
-  }, [page, data]);
+  const startPage = data?.info?.totalPages
+    ? Math.max(0, Math.min(page, data.info.totalPages - 3))
+    : 0;
 
-  const pageNumbers = useMemo(() => {
-    if (data?.info?.totalPages) {
-      return Array.from(
+  const pageNumbers = data?.info?.totalPages
+    ? Array.from(
         { length: Math.min(3, data.info.totalPages - startPage) },
         (_, i) => startPage + i + 1,
-      );
-    }
-    return [];
-  }, [startPage, data]);
+      )
+    : [];
 
   useEffect(() => {
+    // 테스트 로그입니다.
+    // eslint-disable-next-line no-console
     console.log(data);
   }, [data]);
 
   useEffect(() => {
-    console.log(debouncedKeyword, page, testResultTag, isSubmitted, screeningTag);
+    refetch();
   }, [debouncedKeyword, page, testResultTag, isSubmitted, screeningTag]);
 
   return (
