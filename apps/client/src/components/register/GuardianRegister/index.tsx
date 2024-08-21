@@ -8,11 +8,15 @@ import { FormItem, RadioButton } from 'client/components';
 
 import { cn } from 'shared/lib/utils';
 
+type RelationshipType = '부' | '모' | '기타 (직접입력)';
+
 const GuardianRegister = () => {
-  const [selectedRelationship, setSelectedRelationship] = useState<string>('');
+  const [selectedRelationship, setSelectedRelationship] = useState<RelationshipType>();
 
   const handleRadioChange = (value: string) => {
-    setSelectedRelationship(value);
+    if (value === '부' || value === '모' || value === '기타 (직접입력)') {
+      setSelectedRelationship(value);
+    }
   };
 
   return (
