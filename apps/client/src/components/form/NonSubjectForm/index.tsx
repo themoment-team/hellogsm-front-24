@@ -1,3 +1,5 @@
+'use client';
+
 import { UseFormRegister } from 'react-hook-form';
 
 import { GradesInputMethodType, ScoreFormType } from 'client/types';
