@@ -15,6 +15,16 @@ interface MyInfoProps {
 }
 
 const MyPage = ({ name, number, admission, departments }: MyInfoProps) => {
+  const relatedDocuments = [
+    { icon: <ParticleIcon />, text: '입학원서 다운로드' },
+    { icon: <DocumentIcon />, text: '제출서류 다운로드' },
+  ];
+
+  const infoItems = [
+    { label: '접수번호', value: number },
+    { label: '', value: admission },
+  ];
+
   return (
     <div className={cn('flex', 'w-full', 'h-[100vh]', 'justify-center', 'bg-white')}>
       <div className="mt-20">
@@ -38,36 +48,24 @@ const MyPage = ({ name, number, admission, departments }: MyInfoProps) => {
             <div className={cn('flex', 'flex-col', 'gap-3', 'items-center')}>
               <p className={cn('text-slate-800', 'text-h3', 'font-semibold')}>{name} 님</p>
               <div className={cn('flex', 'items-center', 'gap-2')}>
-                <div
-                  className={cn(
-                    'flex',
-                    'px-3',
-                    'py-1',
-                    'items-center',
-                    'justify-center',
-                    'rounded-[3.5rem]',
-                    'bg-slate-100',
-                  )}
-                >
-                  <p className={cn('text-slate-500', 'text-[0.875rem]/[1.25rem]', 'font-normal')}>
-                    접수번호 {number}
-                  </p>
-                </div>
-                <div
-                  className={cn(
-                    'flex',
-                    'px-3',
-                    'py-1',
-                    'items-center',
-                    'justify-center',
-                    'rounded-[3.5rem]',
-                    'bg-slate-100',
-                  )}
-                >
-                  <p className={cn('text-slate-500', 'text-[0.875rem]/[1.25rem]', 'font-normal')}>
-                    {admission}
-                  </p>
-                </div>
+                {infoItems.map((item, index) => (
+                  <div
+                    key={index}
+                    className={cn(
+                      'flex',
+                      'px-3',
+                      'py-1',
+                      'items-center',
+                      'justify-center',
+                      'rounded-[3.5rem]',
+                      'bg-slate-100',
+                    )}
+                  >
+                    <p className={cn('text-slate-500', 'text-[0.875rem]/[1.25rem]', 'font-normal')}>
+                      {item.label} {item.value}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -100,48 +98,30 @@ const MyPage = ({ name, number, admission, departments }: MyInfoProps) => {
           <div className={cn('w-full', 'flex', 'flex-col', 'gap-3')}>
             <FormItem text={'관련서류 다운로드'} className="gap-2" fullWidth={true}>
               <div className={cn('flex', 'flex-col', 'gap-2')}>
-                <div
-                  className={cn(
-                    'flex',
-                    'p-4',
-                    'items-center',
-                    'justify-between',
-                    'rounded-[0.375rem]',
-                    'border',
-                    'border-solid',
-                    'border-slate-300',
-                  )}
-                >
-                  <div className={cn('flex', 'items-center', 'gap-3')}>
-                    <ParticleIcon />
-                    <p className={cn('text-slate-900', 'text-[1rem]/[1.75rem]', 'font-normal')}>
-                      입학원서 다운로드
-                    </p>
-                  </div>
+                {relatedDocuments.map((doc, index) => (
+                  <div
+                    key={index}
+                    className={cn(
+                      'flex',
+                      'p-4',
+                      'items-center',
+                      'justify-between',
+                      'rounded-[0.375rem]',
+                      'border',
+                      'border-solid',
+                      'border-slate-300',
+                    )}
+                  >
+                    <div className={cn('flex', 'items-center', 'gap-3')}>
+                      {doc.icon}
+                      <p className={cn('text-slate-900', 'text-[1rem]/[1.75rem]', 'font-normal')}>
+                        {doc.text}
+                      </p>
+                    </div>
 
-                  <Button variant="download">다운로드</Button>
-                </div>
-                <div
-                  className={cn(
-                    'flex',
-                    'p-4',
-                    'items-center',
-                    'justify-between',
-                    'rounded-[0.375rem]',
-                    'border',
-                    'border-solid',
-                    'border-slate-300',
-                  )}
-                >
-                  <div className={cn('flex', 'items-center', 'gap-3')}>
-                    <DocumentIcon />
-                    <p className={cn('text-slate-900', 'text-[1rem]/[1.75rem]', 'font-normal')}>
-                      제출서류 다운로드
-                    </p>
+                    <Button variant="download">다운로드</Button>
                   </div>
-
-                  <Button variant="download">다운로드</Button>
-                </div>
+                ))}
               </div>
             </FormItem>
             <div
