@@ -6,16 +6,16 @@ import * as I from 'client/assets';
 import { RECRUITMENT_PERIOD } from 'client/constants';
 import { cn } from 'client/lib/utils';
 
-const Section3 = () => {
-  const buttonStyle = [
-    'font-semibold',
-    ' rounded-3xl',
-    ' border',
-    ' border-white px-[1.125rem]',
-    ' py-[0.375rem]',
-    ' text-white',
-  ] as const;
+const buttonStyle = [
+  'font-semibold',
+  'rounded-3xl',
+  'border',
+  'border-white px-[1.125rem]',
+  'py-[0.375rem]',
+  'text-white',
+] as const;
 
+const Section3 = () => {
   return (
     <div className={cn('w-full', 'bg-white', 'relative', 'py-[11.25rem]')}>
       <div className={cn('container', 'mx-auto', 'flex', 'justify-between', 'px-32')}>
