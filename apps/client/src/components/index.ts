@@ -7,6 +7,7 @@ export { default as Footer } from './Footer';
 export { default as Header } from './Header';
 export { default as MockCalculatePage } from './MockCalculatePage';
 export { default as TestCalculatePage } from './TestCalculatePage';
+export { default as Section3 } from './MainPage/Section3';
 export { default as LiberalSystemSwitch } from './LiberalSystemSwitch';
 export { default as FormItem } from './FormItem';
 export { default as SexToggle } from './SexToggle';
