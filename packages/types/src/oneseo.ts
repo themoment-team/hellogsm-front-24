@@ -2,6 +2,8 @@ export type ScreeningType = "GENERAL" | "SPECIAL" | "EXTRA_VETERANS" | "EXTRA_AD
 
 export type MajorType = "SW" | "AI" | "IOT";
 
+export type TestResultType = "ALL" | "FIRST_PASS" | "FINAL_PASS" | "FALL";
+
 export type GraduationType = "CANDIDATE" | "GRADUATE" | "GED";
 
 export type FreeSemesterType = "1-1" | "1-2" | "2-1" | "2-2" | "3-1" | null;

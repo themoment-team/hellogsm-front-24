@@ -1,15 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { SideMenu, FilterBar, ApplicantTH, ApplicantTR } from 'admin/components';
 
-import { PaginationExample } from 'shared/components';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from 'shared/components';
+import { useDebounce } from 'shared/hooks';
 import { cn } from 'shared/lib/utils';
 
 import { useGetOneseoList } from 'api/hooks';
 
 import { OneseoListType } from 'types/oneseo';
+import { YesNo, ScreeningType, TestResultType } from 'types/oneseo';
 
 interface MainPageProps {
   initialData: OneseoListType | undefined;
@@ -23,17 +32,48 @@ const DEFAULT_TEST_RESULT_TAG = 'ALL';
 const MainPage = ({ initialData }: MainPageProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
-  const { data } = useGetOneseoList(
-    0,
-    PER_PAGE,
-    DEFAULT_TEST_RESULT_TAG,
-    undefined,
-    undefined,
-    undefined,
+  const [keyword, setKeyword] = useState<string>('');
+  const [testResultTag, setTestResultTag] = useState<TestResultType>(DEFAULT_TEST_RESULT_TAG);
+  const [isSubmitted, setIsSubmitted] = useState<YesNo | undefined>();
+  const [screeningTag, setScreeningTag] = useState<ScreeningType | undefined>();
+  const [page, setPage] = useState<number>(0);
+
+  const debouncedKeyword = useDebounce(keyword, 1000);
+
+  const { data, refetch } = useGetOneseoList(
+    {
+      page: page,
+      size: PER_PAGE,
+      testResultTag: testResultTag,
+      screeningTag: screeningTag,
+      isSubmitted: isSubmitted,
+      keyword: keyword,
+    },
     {
       initialData: initialData,
     },
   );
+
+  const startPage = useMemo(() => {
+    if (data?.info?.totalPages) {
+      return Math.max(0, Math.min(page, data.info.totalPages - 3));
+    }
+    return 0;
+  }, [page, data]);
+
+  const pageNumbers = useMemo(() => {
+    if (data?.info?.totalPages) {
+      return Array.from(
+        { length: Math.min(3, data.info.totalPages - startPage) },
+        (_, i) => startPage + i + 1,
+      );
+    }
+    return [];
+  }, [startPage, data]);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <main className={cn(isOpen && 'ml-60', isOpen ? 'px-10' : 'pl-20 pr-10', 'pt-[60px]', 'pb-8')}>
@@ -41,7 +81,14 @@ const MainPage = ({ initialData }: MainPageProps) => {
       <div className={cn(...flexColStyle, 'gap-8')}>
         <h1 className={cn('text-gray-900', 'text-3xl', 'font-semibold')}>전체 지원자 관리</h1>
         <div className={cn(...flexColStyle, 'gap-5')}>
-          <FilterBar />
+          <FilterBar
+            screeningTag={screeningTag}
+            setScreeningTag={setScreeningTag}
+            keyword={keyword}
+            setKeyword={setKeyword}
+            isSubmitted={isSubmitted}
+            setIsSubmitted={setIsSubmitted}
+          />
           <div
             className={cn(
               'border',
@@ -57,7 +104,39 @@ const MainPage = ({ initialData }: MainPageProps) => {
             {data?.oneseos &&
               data.oneseos.map((oneseo) => <ApplicantTR {...oneseo} key={oneseo.memberId} />)}
           </div>
-          <PaginationExample />
+
+          {data?.info?.totalPages ? (
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    onClick={() => setPage((prev) => (prev > 0 ? prev - 1 : 0))}
+                  />
+                </PaginationItem>
+                {pageNumbers.map((pageNumber: number) => (
+                  <PaginationItem key={pageNumber}>
+                    <PaginationLink
+                      isActive={pageNumber - 1 === page}
+                      onClick={() => setPage(pageNumber - 1)}
+                    >
+                      {pageNumber}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+                <PaginationItem>
+                  <PaginationNext
+                    onClick={() =>
+                      setPage((prev) =>
+                        prev < data.info.totalPages - 1 ? prev + 1 : data.info.totalPages - 1,
+                      )
+                    }
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          ) : (
+            <span className={cn('text-red-500')}>조회된 지원자 데이터가 없습니다.</span>
+          )}
         </div>
       </div>
     </main>
