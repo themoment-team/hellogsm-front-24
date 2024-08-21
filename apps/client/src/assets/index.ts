@@ -7,5 +7,4 @@ export { default as SquareIcon } from './SquareIcon';
 export { default as ProgressBarIcon } from './ProgressBarIcon';
 export { default as CheckIcon } from './CheckIcon';
 export { default as MouseIcon } from './MouseIcon';
-export { default as PinIcon } from './FreeSemesterForm/PinIcon';
 export { default as UploadIcon } from './UploadIcon';

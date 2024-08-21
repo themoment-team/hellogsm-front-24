@@ -14,11 +14,14 @@ const ConfirmBar = () => {
         'h-[5rem]',
         'bg-white',
         'border-t-solid',
-        'border-t-2',
+        'border-t-[0.0625rem]',
+        'border-gray-100',
         'px-[20rem]',
         'flex',
         'justify-between',
         'items-center',
+        'fixed',
+        'bottom-0',
       )}
     >
       <div>

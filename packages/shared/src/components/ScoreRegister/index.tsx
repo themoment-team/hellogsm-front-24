@@ -12,15 +12,22 @@ import { FreeSemesterType, GetMyOneseoType, MiddleSchoolAchievementType } from '
 
 import {
   ArtPhysicalForm,
+  // ArtPhysicalForm,
+  // ConfirmBar,
+  FormController,
   FreeGradeForm,
   FreeSemesterForm,
+  // FreeGradeForm,
+  // FreeSemesterForm,
   LiberalSystemSwitch,
   NonSubjectForm,
-} from 'client/components';
-import { defaultSubjectArray } from 'client/constants';
-import { cn } from 'client/lib/utils';
-import { scoreFormSchema } from 'client/schemas';
-import type { GradesInputMethodType, ScoreFormType, SemesterIdType } from 'client/types';
+  // NonSubjectForm,
+  // StepBar,
+} from 'shared/components';
+import { defaultSubjectArray } from 'shared/constants';
+import { cn } from 'shared/lib/utils';
+import { scoreFormSchema } from 'shared/schemas';
+import type { GradesInputMethodType, ScoreFormType, SemesterIdType } from 'types';
 
 import { usePostMockScore } from 'api/hooks';
 
@@ -51,11 +58,12 @@ const formWrapper = [
   'w-full',
 ];
 
-interface TestCalculatePageProps {
+interface ScoreRegisterProps {
   data: GetMyOneseoType | null;
+  type: 'client' | 'admin';
 }
 
-const TestCalculatePage = ({ data }: TestCalculatePageProps) => {
+const ScoreRegister = ({ data, type }: ScoreRegisterProps) => {
   const defaultData = data?.middleSchoolAchievement;
   const [liberalSystem, setLiberalSystem] = useState<GradesInputMethodType>(
     defaultData
@@ -199,105 +207,159 @@ const TestCalculatePage = ({ data }: TestCalculatePageProps) => {
   }, [defaultSubjectLength, freeSemester, liberalSystem, setValue, subjectArray]);
 
   return (
-    <div
-      className={cn(
-        'flex',
-        'h-lvh',
-        'justify-center',
-        'bg-slate-50',
-        'overflow-y-scroll',
-        'pt-[120px]',
-      )}
-    >
-      <form
-        onSubmit={handleSubmit(handleFormSubmit)}
-        className={cn('flex', 'flex-col', 'items-center', 'bg-white')}
+    <>
+      <div
+        className={cn([
+          'w-full',
+          'bg-slate-50',
+          'pt-[3.56rem]',
+          'pb-[5rem]',
+          'flex',
+          'justify-center',
+        ])}
       >
-        <LiberalSystemSwitch liberalSystem={liberalSystem} setLiberalSystem={setLiberalSystem} />
-        <div
-          className={cn(
-            'flex',
-            'flex-col',
-            'gap-[2.5rem]',
-            'items-center',
-            liberalSystem === 'freeGrade' ? 'w-[35.4375rem]' : 'w-[43.4375rem]',
-          )}
-        >
-          <div className={cn(...formWrapper)}>
-            일반교과 성적
-            {liberalSystem === 'freeGrade' && (
-              <FreeGradeForm
-                register={register}
-                setValue={setValue}
-                subjectArray={subjectArray}
-                control={control}
-                handleDeleteSubjectClick={handleDeleteSubjectClick}
-              />
-            )}
-            {liberalSystem === 'freeSemester' && (
-              <FreeSemesterForm
-                register={register}
-                setValue={setValue}
-                subjectArray={subjectArray}
-                control={control}
-                handleDeleteSubjectClick={handleDeleteSubjectClick}
-                freeSemester={freeSemester}
-                setFreeSemester={setFreeSemester}
-              />
-            )}
-            <button
-              type="button"
-              onClick={() => handleAddSubjectClick()}
+        <div className={cn(['w-[66.5rem]', 'flex', 'flex-col'])}>
+          {/* <StepBar /> */}
+          <div className={cn(['w-full', 'px-[2rem]', 'py-[1.5rem]', 'bg-white'])}>
+            <h1
+              className={cn([
+                'text-[1.25rem]',
+                'font-normal',
+                'font-semibold',
+                'leading-[1.75rem]',
+                'tracking-[-0.00625rem]',
+                'text-gray-900',
+              ])}
+            >
+              성적을 입력해 주세요.
+            </h1>
+            <p
               className={cn(
                 'text-sm',
-                'font-semibold',
-                'leading-6',
-                'text-[#0F172A]',
-                'h-[2.5rem]',
-                'w-full',
-                'flex',
-                'items-center',
-                'justify-center',
-                'rounded-md',
-                'border-[0.0625rem]',
-                'border-slate-200',
+                'font-normal',
+                'eading-5',
+                'text-gray-600',
+                'mt-[0.125rem]',
+                'mb-[2rem]',
               )}
             >
-              + 과목 추가하기
-            </button>
-          </div>
-          <div className={cn(...formWrapper)}>
-            예체능 교과 성적
-            <ArtPhysicalForm setValue={setValue} control={control} liberalSystem={liberalSystem} />
-          </div>
-          <div className={cn(...formWrapper)}>
-            비교과 내용
-            <NonSubjectForm register={register} liberalSystem={liberalSystem} />
-          </div>
+              회원가입 시 입력한 기본 정보가 노출됩니다.
+            </p>
+            <div
+              className={cn(
+                'flex',
+                'h-lvh',
+                'justify-center',
+                'bg-slate-50',
+                'w-full',
+                'bg-white',
+                'h-fit',
+                'gap-[2.5rem]',
+              )}
+            >
+              <FormController className={cn(['mt-[5.625rem]'])} />
+              <form
+                onSubmit={handleSubmit(handleFormSubmit)}
+                className={cn('flex', 'flex-col', 'items-center')}
+              >
+                <LiberalSystemSwitch
+                  liberalSystem={liberalSystem}
+                  setLiberalSystem={setLiberalSystem}
+                  className={cn('mb-[3rem]')}
+                />
+                <div
+                  className={cn(
+                    'flex',
+                    'flex-col',
+                    'gap-[2.5rem]',
+                    'items-center',
+                    liberalSystem === 'freeGrade' ? 'w-[35.4375rem]' : 'w-[43.4375rem]',
+                  )}
+                >
+                  <div className={cn(...formWrapper)}>
+                    일반교과 성적
+                    {liberalSystem === 'freeGrade' && (
+                      <FreeGradeForm
+                        register={register}
+                        setValue={setValue}
+                        subjectArray={subjectArray}
+                        control={control}
+                        handleDeleteSubjectClick={handleDeleteSubjectClick}
+                      />
+                    )}
+                    {liberalSystem === 'freeSemester' && (
+                      <FreeSemesterForm
+                        register={register}
+                        setValue={setValue}
+                        subjectArray={subjectArray}
+                        control={control}
+                        handleDeleteSubjectClick={handleDeleteSubjectClick}
+                        freeSemester={freeSemester}
+                        setFreeSemester={setFreeSemester}
+                      />
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => handleAddSubjectClick()}
+                      className={cn(
+                        'text-sm',
+                        'font-semibold',
+                        'leading-6',
+                        'text-[#0F172A]',
+                        'h-[2.5rem]',
+                        'w-full',
+                        'flex',
+                        'items-center',
+                        'justify-center',
+                        'rounded-md',
+                        'border-[0.0625rem]',
+                        'border-slate-200',
+                      )}
+                    >
+                      + 과목 추가하기
+                    </button>
+                  </div>
+                  <div className={cn(...formWrapper)}>
+                    예체능 교과 성적
+                    <ArtPhysicalForm
+                      setValue={setValue}
+                      control={control}
+                      liberalSystem={liberalSystem}
+                    />
+                  </div>
+                  <div className={cn(...formWrapper)}>
+                    비교과 내용
+                    <NonSubjectForm register={register} liberalSystem={liberalSystem} />
+                  </div>
 
-          <button
-            type="submit"
-            className={cn(
-              'pointer',
-              'mt-[100px]',
-              'select-none',
-              'rounded-[10px]',
-              'border',
-              'border-[#0F0921]',
-              'px-[87.5px]',
-              'py-[10px]',
-              'text-[28px]/[40.54px]',
-              'font-[700]',
-              'text-[#0F0921]',
-              'bg-white',
-            )}
-          >
-            저장
-          </button>
+                  {/* <button
+          type="submit"
+          className={cn(
+            'pointer',
+            'mt-[100px]',
+            'select-none',
+            'rounded-[10px]',
+            'border',
+            'border-[#0F0921]',
+            'px-[87.5px]',
+            'py-[10px]',
+            'text-[28px]/[40.54px]',
+            'font-[700]',
+            'text-[#0F0921]',
+            'bg-white',
+          )}
+        >
+          저장
+        </button> */}
+                </div>
+              </form>
+              {/* {type === 'client' && <ConfirmBar />} */}
+            </div>
+          </div>
         </div>
-      </form>
-    </div>
+      </div>
+    </>
   );
 };
 
-export default TestCalculatePage;
+export default ScoreRegister;

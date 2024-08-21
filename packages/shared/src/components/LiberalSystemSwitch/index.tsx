@@ -1,10 +1,11 @@
-import { GradesInputMethodType } from 'client/types';
+import { GradesInputMethodType } from 'types';
 
 import { cn } from 'shared/lib/utils';
 
 interface LiberalSystemSwitchProps {
   liberalSystem: GradesInputMethodType;
   setLiberalSystem: React.Dispatch<React.SetStateAction<GradesInputMethodType>>;
+  className?: string;
 }
 
 const buttonStyle = (isMyLiberalSystem: boolean) => [
@@ -17,9 +18,21 @@ const buttonStyle = (isMyLiberalSystem: boolean) => [
   ...(isMyLiberalSystem ? ['bg-white', 'text-slate-900'] : ['bg-slate-100', 'text-slate-700']),
 ];
 
-const LiberalSystemSwitch = ({ liberalSystem, setLiberalSystem }: LiberalSystemSwitchProps) => (
+const LiberalSystemSwitch = ({
+  liberalSystem,
+  setLiberalSystem,
+  className,
+}: LiberalSystemSwitchProps) => (
   <div
-    className={cn('bg-slate-100', 'subtle-medium', 'p-[0.3125rem]', 'flex', 'rounded-md', 'w-fit')}
+    className={cn(
+      'bg-slate-100',
+      'subtle-medium',
+      'p-[0.3125rem]',
+      'flex',
+      'rounded-md',
+      'w-fit',
+      className,
+    )}
   >
     <button
       type="button"
