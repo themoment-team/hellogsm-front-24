@@ -18,16 +18,16 @@ import { useDebounce } from 'shared/hooks';
 import { cn } from 'shared/lib/utils';
 
 interface SearchDialogProps {
-  keyword: string;
-  setKeyword: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedSchool: React.Dispatch<React.SetStateAction<string>>;
 }
 
 interface SchoolType {
   SCHUL_NM: string;
 }
 
-const SearchDialog = ({ keyword, setKeyword }: SearchDialogProps) => {
+const SearchDialog = ({ setSelectedSchool }: SearchDialogProps) => {
   const [schools, setSchools] = useState<SchoolType[]>([]);
+  const [keyword, setKeyword] = useState<string>('');
   const [isSelecting, setIsSelecting] = useState<boolean>(false);
 
   const debouncedKeyword = useDebounce(keyword, 400);
@@ -112,7 +112,7 @@ const SearchDialog = ({ keyword, setKeyword }: SearchDialogProps) => {
               <Button variant="submit">확인</Button>
             ) : (
               <DialogClose asChild>
-                <Button onClick={() => setKeyword(keyword)}>확인</Button>
+                <Button onClick={() => setSelectedSchool(keyword)}>확인</Button>
               </DialogClose>
             )}
           </div>

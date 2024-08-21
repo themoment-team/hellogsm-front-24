@@ -22,11 +22,9 @@ const PERMIT_YEAR = 3;
 
 const ApplyRegister = () => {
   const [choices, setChoices] = useState<string[]>(['', '', '']);
-  const [keyword, setKeyword] = useState<string>('');
+  const [selectedSchool, setSelectedSchool] = useState<string>('');
 
   const targetYear = new Date().getFullYear() + 1;
-
-  const schoolName = keyword || '내 중학교 찾기';
 
   const departments = ['소프트웨어개발과', '스마트IOT과', '인공지능과'];
 
@@ -84,8 +82,13 @@ const ApplyRegister = () => {
               fullWidth={true}
             >
               <div className={cn('flex', 'gap-2')}>
-                <Input placeholder={schoolName} width="full" disabled={true} />
-                <SearchDialog keyword={keyword} setKeyword={setKeyword} />
+                <Input
+                  placeholder="내 중학교 찾기"
+                  width="full"
+                  disabled={true}
+                  value={selectedSchool}
+                />
+                <SearchDialog setSelectedSchool={setSelectedSchool} />
               </div>
               <div className={cn('flex', 'w-full', 'justify-between')}>
                 <Select>
