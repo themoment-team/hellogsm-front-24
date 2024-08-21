@@ -18,7 +18,7 @@ interface SchoolType {
   SCHUL_NM: string;
 }
 
-const SearchDialog = ({ keyword, setKeyword }: Props) => {
+const SearchDialog = ({ keyword, setKeyword }: SearchDialogProps) => {
   const [schools, setSchools] = useState<SchoolType[]>([]);
   const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
   const [isSelecting, setIsSelecting] = useState<boolean>(false);
@@ -104,9 +104,9 @@ const SearchDialog = ({ keyword, setKeyword }: Props) => {
               placeholder="학교명 검색"
               icon={<SearchIcon />}
               value={keyword}
-              onChange={handleInputChange}
+              onChange={handleKeywordChange}
             />
-            <SearchElements schools={schools} onSelectSchool={handleSelectSchool} />
+            <SearchElements schools={schools} onSelectSchool={handleSchoolSelect} />
           </div>
           <div className={cn('flex', 'w-full', 'justify-end', 'items-center')}>
             {keyword.length === 0 ? (
