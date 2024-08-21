@@ -5,8 +5,16 @@ import { useState, useEffect } from 'react';
 import { SearchIcon } from 'client/assets';
 import { SearchElements } from 'client/components';
 
-import { Button, Input } from 'shared/components';
-import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogClose } from 'shared/components';
+import {
+  Button,
+  Input,
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  DialogTitle,
+  DialogClose,
+} from 'shared/components';
+import { useDebounce } from 'shared/hooks';
 import { cn } from 'shared/lib/utils';
 
 interface SearchDialogProps {
@@ -20,11 +28,12 @@ interface SchoolType {
 
 const SearchDialog = ({ keyword, setKeyword }: SearchDialogProps) => {
   const [schools, setSchools] = useState<SchoolType[]>([]);
-  const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
   const [isSelecting, setIsSelecting] = useState<boolean>(false);
 
+  const debouncedKeyword = useDebounce(keyword, 400);
+
   const getSchools = async () => {
-    if (keyword.trim() === '') {
+    if (debouncedKeyword.trim() === '') {
       setSchools([]);
       return;
     }
@@ -51,21 +60,11 @@ const SearchDialog = ({ keyword, setKeyword }: SearchDialogProps) => {
       return;
     }
 
-    if (debounceTimeout) {
-      clearTimeout(debounceTimeout);
-    }
-
-    const timeout = setTimeout(() => {
+    if (debouncedKeyword) {
       // eslint-disable-next-line no-void
       void getSchools();
-    }, 400);
-
-    setDebounceTimeout(timeout);
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [keyword]);
+    }
+  }, [debouncedKeyword]);
 
   const handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
