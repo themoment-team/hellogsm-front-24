@@ -67,7 +67,7 @@ const SearchDialog = ({ keyword, setKeyword }: Props) => {
     };
   }, [keyword]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
   };
 
