@@ -1,15 +1,14 @@
 const StarIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="13.6875rem"
-    height="11.25rem"
-    viewBox="0 0 219 180"
+    width="6.25rem"
+    height="6.25rem"
+    viewBox="0 0 6.25rem 6.25rem"
     fill="none"
   >
     <path
-      d="M109.5 -39L135.671 44.3293L219 70.5L135.671 96.6707L109.5 180L83.3293 96.6707L0 70.5L83.3293 44.3293L109.5 -39Z"
+      d="M50 0L61.9501 38.0499L100 50L61.9501 61.9501L50 100L38.0499 61.9501L0 50L38.0499 38.0499L50 0Z"
       fill="white"
-      fillOpacity="0.2"
     />
   </svg>
 );

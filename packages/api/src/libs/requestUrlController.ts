@@ -36,4 +36,5 @@ export const oneseoUrl = {
 export const memberUrl = {
   getMyMemberInfo: () => '/member/v3/member/me',
   getMyAuthInfo: () => '/member/v3/auth-info/me',
+  postMemberRegister: () => '/member/v3/member/me',
 };

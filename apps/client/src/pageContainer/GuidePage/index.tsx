@@ -1,6 +1,6 @@
 import { Button } from 'shared';
 
-import { CloverIcon, StarIcon } from 'client/assets';
+import { BlueStarIcon, CloverIcon } from 'client/assets';
 
 import { cn } from 'shared/lib/utils';
 
@@ -153,7 +153,7 @@ const GuidePage = () => {
         )}
       >
         <div className={cn('absolute', 'top-0', 'left-[15%]')}>
-          <StarIcon />
+          <BlueStarIcon />
         </div>
         <div className={cn('absolute', 'bottom-0', 'right-[15%]')}>
           <CloverIcon />
