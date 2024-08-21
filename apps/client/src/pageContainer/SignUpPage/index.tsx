@@ -1,10 +1,15 @@
 'use client';
 
+import { useState } from 'react';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, FormProvider } from 'react-hook-form';
+import { MemberRegisterType, SexType } from 'types';
 import { z } from 'zod';
 
+import * as I from 'client/assets';
 import { FormItem as CustomFormItem, SexToggle } from 'client/components';
+import { usePostMemberRegister } from 'client/hooks';
 import { signupFormSchema } from 'client/schemas';
 
 import {
@@ -58,11 +63,26 @@ const SignUpPage = () => {
 
   const targetYear = new Date().getFullYear() - PERMIT_YEAR;
 
+  const { mutate: mutateMemberRegister } = usePostMemberRegister({
+    onError: () => alert('멘토 등록에 실패하였습니다.'),
+    onSuccess: () => '',
+  });
+
   const onSubmit = (data: z.infer<typeof signupFormSchema>) => {
+    const body: MemberRegisterType = {
+      code: data.certificationNumber ?? '',
+      name: data.name,
+      sex: data.sex as SexType,
+      phoneNumber: data.phoneNumber,
+      birth: `${data.birth.year}-${data.birth.month}-${data.birth.day}`,
+    };
+    mutateMemberRegister(body);
+
     // TODO 회원가입 처리 로직 작성
     // eslint-disable-next-line no-console
     console.log(data);
   };
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
 
   return (
     <main className={cn('flex', 'flex-col', 'items-center', 'gap-10', 'pb-40', 'pt-[3.75rem]')}>
@@ -86,7 +106,6 @@ const SignUpPage = () => {
               </FormControl>
             </CustomFormItem>
           </FormItem>
-
           <CustomFormItem className="gap-1.5" text="성별">
             <div className={cn('flex', 'gap-2')}>
               <SexToggle
@@ -103,7 +122,6 @@ const SignUpPage = () => {
               </SexToggle>
             </div>
           </CustomFormItem>
-
           <CustomFormItem className="gap-1" text="생년월일">
             <div className={cn('flex', 'gap-2')}>
               <FormItem>
@@ -176,7 +194,6 @@ const SignUpPage = () => {
               </FormItem>
             </div>
           </CustomFormItem>
-
           <CustomFormItem className="gap-1" text="전화번호">
             <div className={cn('flex', 'flex-col', 'gap-1.5')}>
               <div className={cn('flex', 'justify-between')}>
@@ -199,9 +216,27 @@ const SignUpPage = () => {
               />
             </div>
           </CustomFormItem>
-
-          <input type="checkbox" {...formMethods.register('isAgreed')} />
-
+          <FormItem className={cn('text-gray-900', 'text-sm', 'font-medium')}>
+            <div className={cn('flex', 'items-center', 'gap-1')}>
+              <input type="checkbox" {...formMethods.register('isAgreed')} />
+              [필수] 개인정보 수집 및 이용에 동의합니다.
+              <button
+                type="button"
+                onClick={() => setShowPrivacyPolicy(!showPrivacyPolicy)}
+                className={cn(
+                  'transition-transform duration-300',
+                  showPrivacyPolicy ? 'rotate-0' : 'rotate-180',
+                )}
+              >
+                <I.ChevronIcon />
+              </button>
+            </div>
+            {showPrivacyPolicy && (
+              <p className="mt-2 rounded-md bg-slate-100 p-4">
+                개인정보 보호법 1조. 이승제 학교로 돌아와라
+              </p>
+            )}
+          </FormItem>
           <Button
             type="submit"
             variant="disabled"

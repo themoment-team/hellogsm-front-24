@@ -11,3 +11,4 @@ export { default as ProgressBarIcon } from './ProgressBarIcon';
 export { default as CheckIcon } from './CheckIcon';
 export { default as MouseIcon } from './MouseIcon';
 export { default as UploadIcon } from './UploadIcon';
+export { default as ChevronIcon } from './ChevronIcon';
