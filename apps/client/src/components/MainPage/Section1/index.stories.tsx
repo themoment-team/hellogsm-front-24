@@ -9,4 +9,4 @@ export default {
 
 type Story = StoryObj<typeof Section1>;
 
-export const DarkBackground: Story = {};
+export const Primary: Story = {};
