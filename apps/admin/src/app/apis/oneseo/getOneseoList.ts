@@ -24,7 +24,7 @@ export const getOneseoList = async (redirectUrl: string): Promise<OneseoType[] |
 
   const oneseoList = await response.json();
 
-  console.log(oneseoList);
+  // console.log(oneseoList);
 
   // const isUnauthorized = response.status === 401;
   // const isNotFound = response.status === 404;
