@@ -7,32 +7,33 @@ import { SideMenu, FilterBar, ApplicantTH, ApplicantTR } from 'admin/components'
 import { PaginationExample } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
-import { OneseoType } from 'types/oneseo';
+import { useGetOneseoList } from 'api/hooks';
+
+import { OneseoListType } from 'types/oneseo';
+
+interface MainPageProps {
+  initialData: OneseoListType | undefined;
+}
+
+const flexColStyle = ['flex', 'flex-col'] as const;
 
 const PER_PAGE = 10;
+const DEFAULT_TEST_RESULT_TAG = 'ALL';
 
-const MockApplicationList: OneseoType[] = Array.from({ length: 50 }, (_, index) => {
-  return {
-    memberId: index,
-    submitCode: 'A-1',
-    realOneseoArrivedYn: 'YES',
-    name: '신희성',
-    screening: 'GENERAL',
-    schoolName: 'SW중학교',
-    phoneNumber: '010 1234 1234',
-    guardianPhoneNumber: '010 1234 1234',
-    schoolTeacherPhoneNumber: '010 1234 1234',
-    firstTestPassYn: 'YES',
-    aptitudeEvaluationScore: 100,
-    interviewScore: 100,
-    secondTestPassYn: 'YES',
-  };
-});
-
-const LoginPage = () => {
-  const flexColStyle = ['flex', 'flex-col'] as const;
-
+const MainPage = ({ initialData }: MainPageProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
+
+  const { data } = useGetOneseoList(
+    0,
+    PER_PAGE,
+    DEFAULT_TEST_RESULT_TAG,
+    undefined,
+    undefined,
+    undefined,
+    {
+      initialData: initialData,
+    },
+  );
 
   return (
     <main className={cn(isOpen && 'ml-60', isOpen ? 'px-10' : 'pl-20 pr-10', 'pt-[60px]', 'pb-8')}>
@@ -53,9 +54,8 @@ const LoginPage = () => {
           >
             <ApplicantTH />
             <div className={cn('bg-zinc-200', 'w-full', 'h-[1px]')} />
-            {MockApplicationList.slice(0, PER_PAGE).map((application) => (
-              <ApplicantTR {...application} key={application.memberId} />
-            ))}
+            {data?.oneseos &&
+              data.oneseos.map((oneseo) => <ApplicantTR {...oneseo} key={oneseo.memberId} />)}
           </div>
           <PaginationExample />
         </div>
@@ -64,4 +64,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default MainPage;

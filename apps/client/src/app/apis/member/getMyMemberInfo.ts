@@ -12,12 +12,9 @@ import type { MyMemberInfoType } from 'types';
 export const getMyMemberInfo = async (
   redirectUrl: string,
 ): Promise<MyMemberInfoType | undefined> => {
-  const response = await fetch(
-    new URL(`/api${memberUrl.getMyMemberInfo()}`, process.env.BASE_URL),
-    {
-      method: 'GET',
-    },
-  );
+  const response = await fetch(new URL(`${memberUrl.getMyMemberInfo()}`, process.env.BASE_URL), {
+    method: 'GET',
+  });
 
   const memberInfo = await response.json();
   const isUnauthorized = response.status === 401;
