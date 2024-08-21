@@ -1,11 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { SideMenu, FilterBar, ApplicantTH, ApplicantTR } from 'admin/components';
 
 import { PaginationExample } from 'shared/components';
 import { cn } from 'shared/lib/utils';
+
+import { useGetSearchedOneseoList } from 'api/hooks';
 
 import { OneseoType } from 'types/oneseo';
 
@@ -29,10 +31,19 @@ const MockApplicationList: OneseoType[] = Array.from({ length: 50 }, (_, index) 
   };
 });
 
-const LoginPage = () => {
-  const flexColStyle = ['flex', 'flex-col'] as const;
+const flexColStyle = ['flex', 'flex-col'] as const;
 
+const DEFAULT_LIST_SIZE = 10;
+const DEFAULT_TEST_RESULT_TAG = 'ALL';
+
+const LoginPage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
+
+  const { data } = useGetSearchedOneseoList(0, DEFAULT_LIST_SIZE, DEFAULT_TEST_RESULT_TAG);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <main className={cn(isOpen && 'ml-60', isOpen ? 'px-10' : 'pl-20 pr-10', 'pt-[60px]', 'pb-8')}>
