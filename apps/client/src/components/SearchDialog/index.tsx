@@ -1,6 +1,9 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 
 import { SearchIcon } from 'client/assets';
+import { SearchElements } from 'client/components';
 
 import { Button, Input } from 'shared/components';
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogClose } from 'shared/components';
@@ -13,54 +16,7 @@ interface Props {
 
 interface SchoolType {
   SCHUL_NM: string;
-  ORG_RDNMA: string;
-  LCTN_SC_NM: string;
 }
-
-const searchElements = (schools: SchoolType[], onSelectSchool: (school: SchoolType) => void) => {
-  if (schools.length === 0) return;
-
-  return (
-    <div
-      className={cn(
-        'absolute',
-        'top-full',
-        'left-0',
-        'right-0',
-        'mt-1',
-        'flex',
-        'flex-col',
-        'items-start',
-        'rounded-md',
-        'border',
-        'border-solid',
-        'border-zinc-200',
-        'bg-white',
-        'shadow-md',
-        'overflow-y-auto',
-        'max-h-32',
-      )}
-    >
-      {schools.map((school, index) => (
-        <div
-          key={index}
-          className={cn(
-            'flex',
-            'w-full',
-            'py-2',
-            'px-2.5',
-            'items-center',
-            'cursor-pointer',
-            'hover:bg-zinc-100',
-          )}
-          onClick={() => onSelectSchool(school)}
-        >
-          <p className={cn('text-zinc-950', 'text-body1', 'font-normal')}>{school.SCHUL_NM}</p>
-        </div>
-      ))}
-    </div>
-  );
-};
 
 const SearchDialog = ({ keyword, setKeyword }: Props) => {
   const [schools, setSchools] = useState<SchoolType[]>([]);
@@ -150,7 +106,7 @@ const SearchDialog = ({ keyword, setKeyword }: Props) => {
               value={keyword}
               onChange={handleInputChange}
             />
-            {searchElements(schools, handleSelectSchool)}
+            <SearchElements schools={schools} onSelectSchool={handleSelectSchool} />
           </div>
           <div className={cn('flex', 'w-full', 'justify-end', 'items-center')}>
             {keyword.length === 0 ? (
