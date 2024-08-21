@@ -22,7 +22,7 @@ const RadioButton = ({ title, options, required, disabled, disabledOption }: Rad
           <div key={index} className={cn('flex', 'items-center', 'gap-[0.5rem]')}>
             <input
               type="radio"
-              name="radioBtn"
+              name={title}
               value={option}
               checked={disabled && option === disabledOption}
               disabled={disabled}
