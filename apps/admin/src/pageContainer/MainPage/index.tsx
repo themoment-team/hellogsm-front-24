@@ -75,9 +75,18 @@ const MainPage = ({ initialData }: MainPageProps) => {
     console.log(data);
   }, [data]);
 
+  useEffect(() => {
+    console.log(debouncedKeyword, page, testResultTag, isSubmitted, screeningTag);
+  }, [debouncedKeyword, page, testResultTag, isSubmitted, screeningTag]);
+
   return (
     <main className={cn(isOpen && 'ml-60', isOpen ? 'px-10' : 'pl-20 pr-10', 'pt-[60px]', 'pb-8')}>
-      <SideMenu isOpen={isOpen} setIsOpen={setIsOpen} />
+      <SideMenu
+        testResultTag={testResultTag}
+        setTestResultTag={setTestResultTag}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
       <div className={cn(...flexColStyle, 'gap-8')}>
         <h1 className={cn('text-gray-900', 'text-3xl', 'font-semibold')}>전체 지원자 관리</h1>
         <div className={cn(...flexColStyle, 'gap-5')}>
