@@ -5,8 +5,7 @@ const addParameters = (key: string, value: number | string | undefined) => {
     return '';
   }
 
-  value = String(value);
-  return `&${key}=${value}`;
+  return `&${key}=${String(value)}`;
 };
 
 export const exampleUrl = {
