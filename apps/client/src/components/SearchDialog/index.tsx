@@ -71,7 +71,7 @@ const SearchDialog = ({ keyword, setKeyword }: Props) => {
     setKeyword(e.target.value);
   };
 
-  const handleSelectSchool = (school: SchoolType) => {
+  const handleSchoolSelect = (school: SchoolType) => {
     setKeyword(school.SCHUL_NM);
     setSchools([]);
     setIsSelecting(true);
