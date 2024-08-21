@@ -10,7 +10,7 @@ import type { MyAuthInfoType } from 'types';
  * @returns 나의 인증 정보를 반환합니다. 없다면 -> TODO 서버 문서 업데이트 중입니다.
  */
 export const getMyAuthInfo = async (redirectUrl: string): Promise<MyAuthInfoType | undefined> => {
-  const response = await fetch(new URL(`/api${memberUrl.getMyAuthInfo()}`, process.env.BASE_URL), {
+  const response = await fetch(new URL(`${memberUrl.getMyAuthInfo()}`, process.env.BASE_URL), {
     method: 'GET',
   });
 

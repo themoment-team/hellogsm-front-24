@@ -12,4 +12,5 @@ export { default as CheckIcon } from './CheckIcon';
 export { default as MouseIcon } from './MouseIcon';
 export { default as UploadIcon } from './UploadIcon';
 export { default as ChevronIcon } from './ChevronIcon';
+export { default as SearchIcon } from './SearchIcon';
 export { default as PinIcon } from './FreeSemesterForm/PinIcon';
