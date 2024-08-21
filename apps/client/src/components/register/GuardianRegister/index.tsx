@@ -20,9 +20,9 @@ const GuardianRegister = () => {
   };
 
   return (
-    <div className={cn('flex', 'px-[2rem]', 'pt-[1.5rem]', 'pb-[2.5rem]')}>
+    <div className={cn('flex', 'px-8', 'pt-6', 'pb-10')}>
       <div className={cn('flex', 'w-full', 'flex-col', 'items-start', 'gap-10')}>
-        <div className={cn('flex', 'flex-col', 'items-start', 'gap-[0.125rem]')}>
+        <div className={cn('flex', 'flex-col', 'items-start', 'gap-0.5')}>
           <h1 className={cn('text-gray-900', 'text-[1.25rem]/[1.75rem]', 'font-semibold')}>
             보호자 / 담임선생님 정보를 입력해 주세요.
           </h1>
