@@ -8,14 +8,18 @@ import { SearchedOneseoListType } from 'types/oneseo';
 const DEFAULT_LIST_SIZE = 10;
 const DEFAULT_TEST_RESULT_TAG = 'ALL';
 
+interface GetOneseoListParams {
+  redirectUrl: string;
+}
+
 /**
  * 초기 원서 리스트를 가져옵니다.
  *
  * @returns 초기 리스트를 반환합니다. 리스트가 없다면 로그인 페이지로 리다이렉트 합니다.
  */
-export const getOneseoList = async (
-  redirectUrl: string,
-): Promise<SearchedOneseoListType | undefined> => {
+export const getOneseoList = async ({
+  redirectUrl,
+}: GetOneseoListParams): Promise<SearchedOneseoListType | undefined> => {
   const session = cookies().get('SESSION')?.value;
 
   const response = await fetch(
