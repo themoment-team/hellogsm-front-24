@@ -1,5 +1,12 @@
+import { Footer } from 'client/components';
+
 const MainPage = () => {
-  return <div />;
+  return (
+    <>
+      <div></div>
+      <Footer />
+    </>
+  );
 };
 
 export default MainPage;
