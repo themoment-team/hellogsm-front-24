@@ -9,7 +9,7 @@ import { Button, Input } from 'shared/components';
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogClose } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
-interface Props {
+interface SearchDialogProps {
   keyword: string;
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
 }
