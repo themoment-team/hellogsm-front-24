@@ -11,24 +11,6 @@ import { useGetSearchedOneseoList } from 'api/hooks';
 
 import { OneseoType } from 'types/oneseo';
 
-const MockApplicationList: OneseoType[] = Array.from({ length: 50 }, (_, index) => {
-  return {
-    memberId: index,
-    submitCode: 'A-1',
-    realOneseoArrivedYn: 'YES',
-    name: '신희성',
-    screening: 'GENERAL',
-    schoolName: 'SW중학교',
-    phoneNumber: '010 1234 1234',
-    guardianPhoneNumber: '010 1234 1234',
-    schoolTeacherPhoneNumber: '010 1234 1234',
-    firstTestPassYn: 'YES',
-    aptitudeEvaluationScore: 100,
-    interviewScore: 100,
-    secondTestPassYn: 'YES',
-  };
-});
-
 interface MainPageProps {
   initialData: OneseoType[] | undefined;
 }
@@ -41,7 +23,7 @@ const DEFAULT_TEST_RESULT_TAG = 'ALL';
 const MainPage = ({ initialData }: MainPageProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
-  const { data } = useGetSearchedOneseoList(
+  const { data: oneseoList } = useGetSearchedOneseoList(
     0,
     PER_PAGE,
     DEFAULT_TEST_RESULT_TAG,
@@ -54,8 +36,10 @@ const MainPage = ({ initialData }: MainPageProps) => {
   );
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    // 테스트용입니다.
+    // eslint-disable-next-line no-console
+    console.log(oneseoList);
+  }, [oneseoList]);
 
   return (
     <main className={cn(isOpen && 'ml-60', isOpen ? 'px-10' : 'pl-20 pr-10', 'pt-[60px]', 'pb-8')}>
@@ -76,9 +60,10 @@ const MainPage = ({ initialData }: MainPageProps) => {
           >
             <ApplicantTH />
             <div className={cn('bg-zinc-200', 'w-full', 'h-[1px]')} />
-            {MockApplicationList.slice(0, PER_PAGE).map((application) => (
-              <ApplicantTR {...application} key={application.memberId} />
-            ))}
+            {oneseoList &&
+              oneseoList.map((application) => (
+                <ApplicantTR {...application} key={application.memberId} />
+              ))}
           </div>
           <PaginationExample />
         </div>
