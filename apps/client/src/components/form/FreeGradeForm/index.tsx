@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { XIcon } from 'lucide-react';
 import { Control, Controller, UseFormRegister, UseFormSetValue } from 'react-hook-form';
