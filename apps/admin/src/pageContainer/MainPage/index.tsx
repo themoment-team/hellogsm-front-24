@@ -7,12 +7,12 @@ import { SideMenu, FilterBar, ApplicantTH, ApplicantTR } from 'admin/components'
 import { PaginationExample } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
-import { useGetSearchedOneseoList } from 'api/hooks';
+import { useGetOneseoList } from 'api/hooks';
 
-import { SearchedOneseoListType } from 'types/oneseo';
+import { OneseoListType } from 'types/oneseo';
 
 interface MainPageProps {
-  initialData: SearchedOneseoListType | undefined;
+  initialData: OneseoListType | undefined;
 }
 
 const flexColStyle = ['flex', 'flex-col'] as const;
@@ -23,7 +23,7 @@ const DEFAULT_TEST_RESULT_TAG = 'ALL';
 const MainPage = ({ initialData }: MainPageProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
-  const { data } = useGetSearchedOneseoList(
+  const { data } = useGetOneseoList(
     0,
     PER_PAGE,
     DEFAULT_TEST_RESULT_TAG,

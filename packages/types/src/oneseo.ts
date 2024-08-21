@@ -105,7 +105,7 @@ export interface OneseoType {
   secondTestPassYn: YesNo;
 }
 
-export interface SearchedOneseoListType {
+export interface OneseoListType {
   info: { totalPages: number; totalElements: number };
   oneseos: OneseoType[];
 }

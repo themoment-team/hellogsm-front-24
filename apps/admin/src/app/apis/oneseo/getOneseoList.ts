@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 
 import { oneseoUrl } from 'api/libs';
 
-import { SearchedOneseoListType } from 'types/oneseo';
+import { OneseoListType } from 'types/oneseo';
 
 const DEFAULT_LIST_SIZE = 10;
 const DEFAULT_TEST_RESULT_TAG = 'ALL';
@@ -19,7 +19,7 @@ interface GetOneseoListParams {
  */
 export const getOneseoList = async ({
   redirectUrl,
-}: GetOneseoListParams): Promise<SearchedOneseoListType | undefined> => {
+}: GetOneseoListParams): Promise<OneseoListType | undefined> => {
   const session = cookies().get('SESSION')?.value;
 
   const response = await fetch(

@@ -1,4 +1,4 @@
 export * from './usePostMockScore';
 export * from './usePostMyOneseo';
 export * from './usePostTempStorage';
-export * from './useGetSearchedOneseoList';
+export * from './useGetOneseoList';
