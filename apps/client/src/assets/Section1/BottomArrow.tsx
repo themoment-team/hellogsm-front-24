@@ -8,7 +8,6 @@ const BottomArrow = () => (
   >
     <mask
       id="mask0_393_6514"
-      className={''}
       style={{ maskType: 'alpha' }}
       maskUnits="userSpaceOnUse"
       x="0"
