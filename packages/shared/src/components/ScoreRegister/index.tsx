@@ -27,9 +27,10 @@ import {
 import { defaultSubjectArray } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
 import { scoreFormSchema } from 'shared/schemas';
-import type { GradesInputMethodType, ScoreFormType, SemesterIdType } from 'types';
 
 import { usePostMockScore } from 'api/hooks';
+
+import type { GradesInputMethodType, ScoreFormType, SemesterIdType } from 'types';
 
 const freeSemesterConvertor = {
   achievement1_1: '1-1',
@@ -59,7 +60,7 @@ const formWrapper = [
 ];
 
 interface ScoreRegisterProps {
-  data: GetMyOneseoType | null;
+  data: GetMyOneseoType | undefined;
   type: 'client' | 'admin';
 }
 
