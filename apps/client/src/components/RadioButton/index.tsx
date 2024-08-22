@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 import { cn } from 'shared/lib/utils';
 
 interface RadioButtonProps {
@@ -8,9 +10,27 @@ interface RadioButtonProps {
   required?: boolean;
   disabled?: boolean;
   disabledOption?: string;
+  onChange?: (value: string) => void;
 }
 
-const RadioButton = ({ title, options, required, disabled, disabledOption }: RadioButtonProps) => {
+const RadioButton = ({
+  title,
+  options,
+  required,
+  disabled,
+  disabledOption,
+  onChange,
+}: RadioButtonProps) => {
+  const [selectedOption, setSelectedOption] = useState<string>('');
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setSelectedOption(value);
+    if (onChange) {
+      onChange(value);
+    }
+  };
+
   const textStyle = ['text-slate-900', 'text-body2', 'font-medium'];
   return (
     <div className={cn('w-full', 'flex', 'flex-col', 'items-start', 'gap-[0.75rem]')}>
@@ -24,8 +44,9 @@ const RadioButton = ({ title, options, required, disabled, disabledOption }: Rad
               type="radio"
               name={title}
               value={option}
-              checked={disabled && option === disabledOption}
-              disabled={disabled}
+              checked={selectedOption === option || option === disabledOption}
+              disabled={disabled && option === disabledOption}
+              onChange={handleChange}
               className={cn(
                 'appearance-none',
                 'w-4',
