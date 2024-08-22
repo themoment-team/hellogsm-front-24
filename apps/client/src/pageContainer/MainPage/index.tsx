@@ -1,11 +1,5 @@
-import { ChannelTalk } from 'client/components';
-
 const MainPage = () => {
-  return (
-    <>
-      <ChannelTalk />
-    </>
-  );
+  return <div />;
 };
 
 export default MainPage;
