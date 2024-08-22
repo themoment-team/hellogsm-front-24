@@ -2,9 +2,11 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, FormProvider } from 'react-hook-form';
+import { MemberRegisterType, SexType } from 'types';
 import { z } from 'zod';
 
 import { FormItem as CustomFormItem, Footer, SexToggle } from 'client/components';
+import { usePostMemberRegister } from 'client/hooks';
 import { signupFormSchema } from 'client/schemas';
 
 import {
@@ -58,11 +60,26 @@ const SignUpPage = () => {
 
   const targetYear = new Date().getFullYear() - PERMIT_YEAR;
 
+  const { mutate: mutateMemberRegister } = usePostMemberRegister({
+    onError: () => alert('멘토 등록에 실패하였습니다.'),
+    onSuccess: () => '',
+  });
+
   const onSubmit = (data: z.infer<typeof signupFormSchema>) => {
+    const body: MemberRegisterType = {
+      code: data.certificationNumber ?? '',
+      name: data.name,
+      sex: data.sex as SexType,
+      phoneNumber: data.phoneNumber,
+      birth: `${data.birth.year}-${data.birth.month}-${data.birth.day}`,
+    };
+    mutateMemberRegister(body);
+
     // TODO 회원가입 처리 로직 작성
     // eslint-disable-next-line no-console
     console.log(data);
   };
+  // const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
 
   return (
     <>
