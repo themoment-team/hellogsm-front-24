@@ -17,8 +17,16 @@ const Section1 = () => {
 
   return (
     <section
-      style={{ height: 'calc(100dvh - 4.625rem)' }}
-      className={cn('w-full', 'relative', 'top-0', 'z-0', 'flex', 'justify-center', 'bg-black')}
+      className={cn(
+        'h-[calc(100vh-4.625rem)]',
+        'w-full',
+        'relative',
+        'top-0',
+        'z-0',
+        'flex',
+        'justify-center',
+        'bg-black',
+      )}
     >
       <Video />
       <div
