@@ -25,7 +25,7 @@ const Section1 = () => {
         className={cn(
           'w-full',
           'h-full',
-          'bg-[rgba(0, 0, 0, 0.40)]',
+          'bg-[rgb(0_0_0_/_0.40)]',
           'absolute',
           'top-0',
           'z-[2]',
