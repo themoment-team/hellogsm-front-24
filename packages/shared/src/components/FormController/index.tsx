@@ -13,10 +13,10 @@ interface FormControllerProps {
 }
 
 const FormController = ({ className }: FormControllerProps) => {
-  const [seletedForm, setSeletedForm] = useState<FormType | null>(null);
+  const [isSelected, setIsSelected] = useState<FormType | null>(null);
 
   const handleButtonClick = (formName: FormType) => {
-    setSeletedForm(formName);
+    setIsSelected(formName);
     window.scrollTo({
       top: formName === '일반교과' ? 300 : 700,
       behavior: 'smooth',
@@ -39,7 +39,7 @@ const FormController = ({ className }: FormControllerProps) => {
               'px-[0.75rem]',
               'py-[0.5rem]',
               'items-center',
-              seletedForm === formName
+              isSelected === formName
                 ? ['font-medium', 'bg-blue-50', 'text-blue-600']
                 : ['font-normal', 'bg-transparent', 'text-slate-400'],
             ])}
@@ -50,7 +50,7 @@ const FormController = ({ className }: FormControllerProps) => {
                 'w-[0.5rem]',
                 'h-[0.5rem]',
                 'rounded-full',
-                seletedForm === formName ? 'bg-blue-500' : 'bg-slate-200',
+                isSelected === formName ? 'bg-blue-500' : 'bg-slate-200',
               ])}
             ></div>
             {formName}
