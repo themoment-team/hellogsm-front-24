@@ -2,9 +2,9 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Control, Controller, UseFormSetValue } from 'react-hook-form';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared/components';
 
-import { GradesInputMethodType, ScoreFormType } from 'client/types';
+import { GradesInputMethodType, ScoreFormType } from 'types';
 
 import { cn } from 'shared/lib/utils';
 

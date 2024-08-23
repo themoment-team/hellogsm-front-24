@@ -7,12 +7,12 @@ import { Dispatch, SetStateAction } from 'react';
 
 import { XIcon } from 'lucide-react';
 import { Control, Controller, UseFormRegister, UseFormSetValue } from 'react-hook-form';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared/components';
 
-import { PinIcon } from 'client/assets';
-import { defaultSubjectArray, scoreArray } from 'client/constants';
-import { cn } from 'client/lib/utils';
-import type { ScoreFormType, SemesterIdType, SemesterType } from 'client/types';
+import { PinIcon } from 'shared/assets';
+import { defaultSubjectArray, scoreArray } from 'shared/constants';
+import { cn } from 'shared/lib/utils';
+import type { ScoreFormType, SemesterIdType, SemesterType } from 'types';
 
 const freeSemesterArray: SemesterType[] = [
   { title: '1학년 1학기', id: 'achievement1_1' },

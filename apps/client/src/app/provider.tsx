@@ -12,7 +12,7 @@ const Provider = ({ children }: PropsWithChildren) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className={cn('min-h-screen', 'flex', 'flex-col', 'justify-between')}>
+      <div className={cn('min-h-screen', 'flex', 'flex-col')}>
         <Header />
         {children}
         <ChannelTalk />

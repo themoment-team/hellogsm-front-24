@@ -2,7 +2,7 @@
 
 import { UseFormRegister } from 'react-hook-form';
 
-import { GradesInputMethodType, ScoreFormType } from 'client/types';
+import { GradesInputMethodType, ScoreFormType } from 'types';
 
 import { cn } from 'shared/lib/utils';
 

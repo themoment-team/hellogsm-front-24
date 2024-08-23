@@ -2,9 +2,9 @@
 
 import { BottomArrow } from 'client/assets';
 import { RECRUITMENT_PERIOD } from 'client/constants';
-import { scrollToElement } from 'client/lib';
 
 import { cn } from 'shared/lib/utils';
+import { scrollToElement } from 'shared/utils';
 
 import Video from './Video';
 

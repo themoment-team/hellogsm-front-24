@@ -48,6 +48,10 @@ const Header = () => {
         'top-0',
         'w-full',
         'bg-white',
+        'z-10',
+        'border-t-solid',
+        'border-b-[0.0625rem]',
+        'border-gray-100',
       )}
     >
       <div className={cn('text-2xl', 'font-bold')}>Hello, GSM </div>
