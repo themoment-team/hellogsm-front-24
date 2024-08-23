@@ -1,5 +1,6 @@
 export * from './ui';
 export * from './register';
+export * from './MainPage';
 export { default as ActiveLink } from './ActiveLink';
 export { default as Footer } from './Footer';
 export { default as Header } from './Header';
