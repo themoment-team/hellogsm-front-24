@@ -5,7 +5,6 @@ import * as React from 'react';
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 
 import { ButtonProps, buttonVariants } from 'shared/components/ui/Button';
-
 import { cn } from 'shared/lib/utils';
 
 const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
@@ -30,7 +29,9 @@ const PaginationContent = React.forwardRef<HTMLUListElement, React.ComponentProp
 PaginationContent.displayName = 'PaginationContent';
 
 const PaginationItem = React.forwardRef<HTMLLIElement, React.ComponentProps<'li'>>(
-  ({ className, ...props }, ref) => <li ref={ref} className={cn(className)} {...props} />,
+  ({ className, ...props }, ref) => (
+    <li ref={ref} className={cn(className, 'cursor-pointer')} {...props} />
+  ),
 );
 PaginationItem.displayName = 'PaginationItem';
 

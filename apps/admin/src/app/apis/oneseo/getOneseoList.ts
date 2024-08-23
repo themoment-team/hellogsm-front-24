@@ -49,5 +49,5 @@ export const getOneseoList = async ({
     return redirect(redirectUrl);
   }
 
-  return oneseoList;
+  return oneseoList.data;
 };

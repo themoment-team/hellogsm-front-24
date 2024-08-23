@@ -2,6 +2,8 @@ export type ScreeningType = "GENERAL" | "SPECIAL" | "EXTRA_VETERANS" | "EXTRA_AD
 
 export type MajorType = "SW" | "AI" | "IOT";
 
+export type TestResultType = "ALL" | "FIRST_PASS" | "FINAL_PASS" | "FALL";
+
 export type GraduationType = "CANDIDATE" | "GRADUATE" | "GED";
 
 export type FreeSemesterType = "1-1" | "1-2" | "2-1" | "2-2" | "3-1" | null;
@@ -11,6 +13,13 @@ export type LiberalSystemType = "자유학년제" | "자유학기제";
 export type SexType = "MALE" | "FEMALE";
 
 export type YesNo = "YES" | "NO";
+
+export enum ScreeningEnum {
+  GENERAL = "일반전형",
+  SPECIAL = "특별전형",
+  EXTRA_VETERANS = "국가보훈",
+  EXTRA_ADMISSION = "특례입학",
+}
 
 export interface MiddleSchoolAchievementType {
   achievement1_1: number[] | null;

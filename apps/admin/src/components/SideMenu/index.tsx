@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
 import { PropsWithChildren } from 'react';
 
 import { ChevronsLeft, Puzzle, Exit } from 'admin/assets';
 
 import { cn } from 'shared/lib/utils';
+
+import { TestResultType } from 'types/oneseo';
 
 const Item = ({ children }: PropsWithChildren) => (
   <div
@@ -27,10 +28,17 @@ const Item = ({ children }: PropsWithChildren) => (
 interface SubItemProps extends PropsWithChildren {
   isSelected: boolean;
   circleClassName: string;
+  textClassName: string;
   onClick: () => void;
 }
 
-const SubItem = ({ children, onClick, isSelected, circleClassName }: SubItemProps) => (
+const SubItem = ({
+  children,
+  onClick,
+  isSelected,
+  circleClassName,
+  textClassName,
+}: SubItemProps) => (
   <div
     onClick={onClick}
     className={cn('flex', 'gap-2', 'py-2', 'px-3', 'items-center', 'pl-10', 'cursor-pointer')}
@@ -44,7 +52,7 @@ const SubItem = ({ children, onClick, isSelected, circleClassName }: SubItemProp
         'text-sm',
         'leading-5',
         'text-gray-400',
-        isSelected && 'text-blue-900',
+        isSelected && textClassName,
       )}
     >
       {children}
@@ -55,30 +63,38 @@ const SubItem = ({ children, onClick, isSelected, circleClassName }: SubItemProp
 const ManageTypeArray = [
   {
     borderStyle: 'border-blue-600',
+    textStyle: 'text-blue-900',
     type: '전체 지원자 관리',
+    value: 'ALL',
   },
   {
     borderStyle: 'border-amber-300',
+    textStyle: 'text-amber-600',
     type: '1차 전형 합격자 관리',
+    value: 'FIRST_PASS',
   },
   {
     borderStyle: 'border-green-500',
+    textStyle: 'text-green-800',
     type: '최종 합격자 관리',
+    value: 'FINAL_PASS',
   },
   {
     borderStyle: 'border-rose-500',
+    textStyle: 'text-rose-800',
     type: '불합격자 관리',
+    value: 'FALL',
   },
 ] as const;
 
 interface SideMenuProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  testResultTag: TestResultType;
+  setTestResultTag: React.Dispatch<React.SetStateAction<TestResultType>>;
 }
 
-const SideMenu = ({ isOpen, setIsOpen }: SideMenuProps) => {
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
-
+const SideMenu = ({ isOpen, setIsOpen, testResultTag, setTestResultTag }: SideMenuProps) => {
   return (
     <aside
       className={cn(
@@ -118,12 +134,13 @@ const SideMenu = ({ isOpen, setIsOpen }: SideMenuProps) => {
             지원자관리
           </Item>
           <div>
-            {ManageTypeArray.map(({ borderStyle, type }, index) => (
+            {ManageTypeArray.map(({ borderStyle, type, value, textStyle }) => (
               <SubItem
                 key={type}
-                isSelected={index === selectedIndex}
-                onClick={() => setSelectedIndex(index)}
+                isSelected={testResultTag === value}
+                onClick={() => setTestResultTag(value)}
                 circleClassName={borderStyle}
+                textClassName={textStyle}
               >
                 {type}
               </SubItem>
