@@ -34,14 +34,14 @@ const FilterBar = ({
   setScreeningTag,
   screeningTag,
 }: FilterBarProps) => {
-  const onSubmittedChange = (value: string) => {
+  const handleSubmittedChange = (value: string) => {
     if (value === 'YES' || value === 'NO') {
       setIsSubmitted(value);
       return;
     }
   };
 
-  const onScreeningTagChange = (value: string) => {
+  const handleScreeningTagChange = (value: string) => {
     if (value === 'GENERAL' || value === 'SPECIAL') {
       setScreeningTag(value);
     }
@@ -67,7 +67,7 @@ const FilterBar = ({
         <div className={cn('w-px', 'h-6', 'bg-slate-200', 'mx-5')} />
 
         <div className={cn('flex', 'gap-2')}>
-          <Select value={screeningTag} onValueChange={onScreeningTagChange}>
+          <Select value={screeningTag} onValueChange={handleScreeningTagChange}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="전형 선택" />
             </SelectTrigger>
@@ -80,7 +80,7 @@ const FilterBar = ({
             </SelectContent>
           </Select>
 
-          <Select value={isSubmitted} onValueChange={onSubmittedChange}>
+          <Select value={isSubmitted} onValueChange={handleSubmittedChange}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="서류 제출 여부" />
             </SelectTrigger>
