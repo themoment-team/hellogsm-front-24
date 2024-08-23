@@ -14,6 +14,13 @@ export type SexType = "MALE" | "FEMALE";
 
 export type YesNo = "YES" | "NO";
 
+export const ScreeningEnum = {
+  GENERAL: "일반전형",
+  SPECIAL: "특별전형",
+  EXTRA_VETERANS: "국가보훈",
+  EXTRA_ADMISSION: "특례입학",
+} as const;
+
 export interface MiddleSchoolAchievementType {
   achievement1_1: number[] | null;
   achievement1_2: number[] | null;

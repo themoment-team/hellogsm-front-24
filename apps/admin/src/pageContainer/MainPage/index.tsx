@@ -54,11 +54,11 @@ const MainPage = ({ initialData }: MainPageProps) => {
     },
   );
 
-  const startPage = data?.info?.totalPages
-    ? Math.max(0, Math.min(page, data.info.totalPages - 3))
-    : 0;
+  const totalPages = data?.info.totalPages;
 
-  const pageNumbers = data?.info?.totalPages
+  const startPage = totalPages ? Math.max(0, Math.min(page, data.info.totalPages - 3)) : 0;
+
+  const pageNumbers = totalPages
     ? Array.from(
         { length: Math.min(3, data.info.totalPages - startPage) },
         (_, i) => startPage + i + 1,
@@ -110,7 +110,7 @@ const MainPage = ({ initialData }: MainPageProps) => {
               data.oneseos.map((oneseo) => <ApplicantTR {...oneseo} key={oneseo.memberId} />)}
           </div>
 
-          {data?.info?.totalPages ? (
+          {totalPages ? (
             <Pagination>
               <PaginationContent>
                 <PaginationItem>

@@ -29,7 +29,9 @@ const PaginationContent = React.forwardRef<HTMLUListElement, React.ComponentProp
 PaginationContent.displayName = 'PaginationContent';
 
 const PaginationItem = React.forwardRef<HTMLLIElement, React.ComponentProps<'li'>>(
-  ({ className, ...props }, ref) => <li ref={ref} className={cn(className)} {...props} />,
+  ({ className, ...props }, ref) => (
+    <li ref={ref} className={cn(className, 'cursor-pointer')} {...props} />
+  ),
 );
 PaginationItem.displayName = 'PaginationItem';
 
@@ -63,7 +65,7 @@ const PaginationPrevious = ({
     className={cn(buttonVariants({ variant: 'ghost', size: 'default' }), 'gap-1 pl-2.5', className)}
     {...props}
   >
-    <ChevronLeft className="h-4 w-4" />
+    <ChevronLeft className="w-4 h-4" />
     <div className="w-[84px]" />
   </PaginationLink>
 );
@@ -77,7 +79,7 @@ const PaginationNext = ({ className, ...props }: React.ComponentProps<typeof Pag
     {...props}
   >
     <div className="w-[48px]" />
-    <ChevronRight className="h-4 w-4" />
+    <ChevronRight className="w-4 h-4" />
   </PaginationLink>
 );
 PaginationNext.displayName = 'PaginationNext';
