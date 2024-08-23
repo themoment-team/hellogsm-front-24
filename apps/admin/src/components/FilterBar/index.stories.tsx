@@ -10,4 +10,13 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {};
+export const Primary: Story = {
+  args: {
+    keyword: '',
+    setKeyword: () => {},
+    isSubmitted: 'NO',
+    setIsSubmitted: () => {},
+    screeningTag: 'GENERAL',
+    setScreeningTag: () => {},
+  },
+};

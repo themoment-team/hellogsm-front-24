@@ -14,5 +14,7 @@ export const Primary: Story = {
   args: {
     isOpen: true,
     setIsOpen: () => {},
+    testResultTag: 'ALL',
+    setTestResultTag: () => {},
   },
 };
