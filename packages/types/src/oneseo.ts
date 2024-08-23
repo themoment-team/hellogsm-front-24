@@ -109,8 +109,8 @@ export interface OneseoType {
   guardianPhoneNumber: string;
   schoolTeacherPhoneNumber: string;
   firstTestPassYn: YesNo;
-  aptitudeEvaluationScore: number;
-  interviewScore: number;
+  aptitudeEvaluationScore: number | null;
+  interviewScore: number | null;
   secondTestPassYn: YesNo;
 }
 

@@ -37,13 +37,21 @@ const ApplicantTR = ({
     realOneseoArrivedYn === 'YES',
   );
 
+  const firstTestResult =
+    firstTestPassYn === 'YES' ? '합격' : firstTestPassYn === 'NO' ? '불합격' : '미정';
+  const secondTestResult =
+    secondTestPassYn === 'YES' ? '합격' : secondTestPassYn === 'NO' ? '불합격' : '미정';
+
   const is직무적성처리기간 = checkIsPassedDate(example직무적성처리시작일자);
   const is심층면접처리기간 = checkIsPassedDate(example심층면접처리시작일자);
 
+  const formatted직무적성점수 = formatScore(String(aptitudeEvaluationScore ?? ''));
+  const formatted심층면접점수 = formatScore(String(interviewScore ?? ''));
+
   const { control, watch, setValue } = useForm({
     defaultValues: {
-      직무적성점수: '',
-      심층면접점수: '',
+      직무적성점수: formatted직무적성점수,
+      심층면접점수: formatted심층면접점수,
     },
   });
 
@@ -85,36 +93,62 @@ const ApplicantTR = ({
           <TableCell className="w-[154px] text-zinc-600">{schoolName}</TableCell>
           <TableCell className="max-w-full text-zinc-900">{ScreeningEnum[screening]}</TableCell>
           <TableCell className="w-[96px]">
+            <Badge variant={firstTestResult}>{firstTestResult}</Badge>
+          </TableCell>
+          <TableCell className="w-[180px] text-zinc-400">
             {is직무적성처리기간 ? (
               <div className={cn('flex', 'gap-1.5')}>
                 <Controller
                   name="직무적성점수"
                   control={control}
-                  render={({ field }) => <TextField {...field} />}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      className={cn('text-zian-900')}
+                      disabled={!!secondTestPassYn}
+                    />
+                  )}
                 />
-                <Button variant="subtitle">저장</Button>
+                <Button
+                  variant={
+                    watch('직무적성점수') && formatted직무적성점수 !== watch('직무적성점수')
+                      ? 'default'
+                      : 'subtitle'
+                  }
+                  disabled={!!secondTestPassYn}
+                >
+                  저장
+                </Button>
               </div>
             ) : (
-              <Badge variant="미정">미정</Badge>
+              '진행 전'
             )}
           </TableCell>
           <TableCell className="w-[180px] text-zinc-400">
-            {aptitudeEvaluationScore ?? '진행 전'}
-          </TableCell>
-          <TableCell className="w-[180px] text-zinc-400">{interviewScore ?? '진행 전'}</TableCell>
-          <TableCell className="w-[96px]">
             {is심층면접처리기간 ? (
               <div className={cn('flex', 'gap-1.5')}>
                 <Controller
                   name="심층면접점수"
                   control={control}
-                  render={({ field }) => <TextField {...field} />}
+                  render={({ field }) => <TextField {...field} disabled={!!secondTestPassYn} />}
                 />
-                <Button variant="subtitle">저장</Button>
+                <Button
+                  variant={
+                    watch('직무적성점수') && formatted심층면접점수 !== watch('심층면접점수')
+                      ? 'default'
+                      : 'subtitle'
+                  }
+                  disabled={!!secondTestPassYn}
+                >
+                  저장
+                </Button>
               </div>
             ) : (
-              <Badge variant="미정">미정</Badge>
+              '진행 전'
             )}
+          </TableCell>
+          <TableCell className="w-[96px]">
+            <Badge variant={secondTestResult}>{secondTestResult}</Badge>
           </TableCell>
           <TableCell className="w-[149px]">
             <Button className="ml-[33.24px]" variant="outline">
