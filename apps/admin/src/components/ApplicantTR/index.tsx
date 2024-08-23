@@ -101,13 +101,7 @@ const ApplicantTR = ({
                 <Controller
                   name="직무적성점수"
                   control={control}
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      className={cn('text-zian-900')}
-                      disabled={!!secondTestPassYn}
-                    />
-                  )}
+                  render={({ field }) => <TextField {...field} disabled={!!secondTestPassYn} />}
                 />
                 <Button
                   variant={
