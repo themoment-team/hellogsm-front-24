@@ -3,7 +3,6 @@
 import { Button } from 'shared';
 
 import { AlertIcon, DocumentIcon, ParticleIcon, ProfileIcon } from 'client/assets';
-import { FormItem } from 'client/components';
 
 import { cn } from 'shared/lib/utils';
 
@@ -69,7 +68,8 @@ const MyPage = ({ name, number, admission, departments }: MyInfoProps) => {
               </div>
             </div>
           </div>
-          <FormItem text={'지원학과 조회'} className="gap-2" fullWidth={true}>
+          <div className={cn('flex', 'flex-col', 'w-full', 'gap-2')}>
+            <p className={cn('text-slate-600', 'text-body1', 'font-semibold')}>지원학과 조회</p>
             <div className={cn('w-full', 'flex', 'items-center', 'justify-between', 'gap-2')}>
               {departments.map((dept, index) => (
                 <div
@@ -85,6 +85,7 @@ const MyPage = ({ name, number, admission, departments }: MyInfoProps) => {
                     'border',
                     'border-solid',
                     'border-slate-300',
+                    'w-[10.75rem]',
                   )}
                 >
                   <p className={cn('text-slate-600', 'text-[1rem]/[1.75rem]', 'font-normal')}>
@@ -93,10 +94,13 @@ const MyPage = ({ name, number, admission, departments }: MyInfoProps) => {
                 </div>
               ))}
             </div>
-          </FormItem>
+          </div>
 
           <div className={cn('w-full', 'flex', 'flex-col', 'gap-3')}>
-            <FormItem text={'관련서류 다운로드'} className="gap-2" fullWidth={true}>
+            <div className={cn('flex', 'flex-col', 'w-full', 'gap-2')}>
+              <p className={cn('text-slate-600', 'text-body1', 'font-semibold')}>
+                관련서류 다운로드
+              </p>
               <div className={cn('flex', 'flex-col', 'gap-2')}>
                 {relatedDocuments.map((doc, index) => (
                   <div
@@ -123,7 +127,7 @@ const MyPage = ({ name, number, admission, departments }: MyInfoProps) => {
                   </div>
                 ))}
               </div>
-            </FormItem>
+            </div>
             <div
               className={cn(
                 'flex',
