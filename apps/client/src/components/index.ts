@@ -18,3 +18,4 @@ export { default as LoginDialog } from './LoginDialog';
 export { default as RadioButton } from './RadioButton';
 export { default as SearchDialog } from './SearchDialog';
 export { default as SearchElements } from './SearchElements';
+export { default as ChannelTalk } from './ChannelTalk';
