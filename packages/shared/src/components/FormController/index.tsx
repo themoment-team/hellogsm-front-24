@@ -2,9 +2,8 @@
 
 import { useState } from 'react';
 
-import { scrollToLocation } from 'client/lib';
-
 import { cn } from 'shared/lib/utils';
+import { scrollToLocation } from 'shared/utils';
 
 const formArray = ['일반교과', '예체능 교과', '비교과'] as const;
 
