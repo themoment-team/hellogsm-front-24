@@ -6,7 +6,7 @@ import { cn } from 'shared/lib/utils';
 
 const Elements = [
   {
-    Img: '/images/SectionImg1.png',
+    Img: '/images/SoftwareImg.png',
     department: '소프트웨어개발과',
     textColor: 'text-sky-500',
     tagColor: 'bg-sky-50',
@@ -17,7 +17,7 @@ const Elements = [
     인재 양성`,
   },
   {
-    Img: '/images/SectionImg2.png',
+    Img: '/images/IOTImg.png',
     department: '스마트 IOT(Internet Of Things)과',
     textColor: 'text-lime-700',
     tagColor: 'bg-lime-50',
@@ -28,7 +28,7 @@ const Elements = [
     전문 인재를 양성`,
   },
   {
-    Img: '/images/SectionImg3.png',
+    Img: '/images/AIImg.png',
     department: '인공지능(AI)과',
     textColor: 'text-sky-900',
     tagColor: 'bg-slate-200',
