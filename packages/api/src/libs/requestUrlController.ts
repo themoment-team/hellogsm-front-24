@@ -31,6 +31,7 @@ export const oneseoUrl = {
     keyword?: string,
   ) =>
     `/oneseo/v3/oneseo/search?page=${page}&size=${size}&testResultTag=${testResultTag}${addParameters('screeningTag', screeningTag)}${addParameters('isSubmitted', isSubmitted)}${addParameters('keyword', keyword)}`,
+  getExcel: () => '/oneseo/v3/excel',
 } as const;
 
 export const memberUrl = {

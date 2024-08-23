@@ -15,6 +15,8 @@ import {
 } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
+import { oneseoUrl } from 'api/libs';
+
 import { YesNo, ScreeningType } from 'types/oneseo';
 
 interface FilterBarProps {
@@ -51,6 +53,10 @@ const FilterBar = ({
     setIsSubmitted(undefined);
     setScreeningTag(undefined);
     setKeyword('');
+  };
+
+  const printExcel = () => {
+    window.open(`/api${oneseoUrl.getExcel()}`);
   };
 
   return (
@@ -104,7 +110,11 @@ const FilterBar = ({
           <PrintIcon />
           수험표 출력
         </Button>
-        <Button variant="outline" className={cn('border-slate-900', 'gap-2', 'hover:bg-slate-200')}>
+        <Button
+          onClick={printExcel}
+          variant="outline"
+          className={cn('border-slate-900', 'gap-2', 'hover:bg-slate-200')}
+        >
           <FileIcon />
           Excel 다운
         </Button>
