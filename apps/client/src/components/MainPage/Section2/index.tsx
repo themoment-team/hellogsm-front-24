@@ -43,7 +43,10 @@ const Section2 = () => {
   const inactiveBoxStyle = ['border-gray-400'];
 
   return (
-    <div className={cn('w-full', 'bg-white', 'relative', 'h-[50.375rem]', 'py-[11.25rem]')}>
+    <div
+      id="section2"
+      className={cn('w-full', 'bg-white', 'relative', 'h-[50.375rem]', 'py-[11.25rem]')}
+    >
       <div className={cn('flex', 'flex-col', 'justify-between', 'items-center', 'h-[27.875rem]')}>
         <div className={cn('flex', 'justify-between', 'items-center', 'w-[80rem]')}>
           <h1 className={cn('text-2xl', 'font-bold')}>

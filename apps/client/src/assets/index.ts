@@ -14,3 +14,4 @@ export { default as UploadIcon } from './UploadIcon';
 export { default as ChevronIcon } from './ChevronIcon';
 export { default as SearchIcon } from './SearchIcon';
 export { default as PinIcon } from './FreeSemesterForm/PinIcon';
+export { default as BottomArrow } from './Section1/BottomArrow';
