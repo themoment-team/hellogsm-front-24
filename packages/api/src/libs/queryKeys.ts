@@ -16,6 +16,9 @@ export const oneseoQueryKeys = {
     isSubmitted?: string,
     keyword?: string,
   ) => ['oneseo', 'list', page, size, testResultTag, screeningTag, isSubmitted, keyword],
+  patchArrivedStatus: (memberId: number) => ['patch', 'arrivedStatus', memberId],
+  patchAptitudeScore: (memberId: number) => ['patch', 'aptitudeScore', memberId],
+  patchInterviewScore: (memberId: number) => ['patch', 'interviewScore', memberId],
 } as const;
 
 export const memberQueryKeys = {
