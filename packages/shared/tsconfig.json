@@ -3,8 +3,7 @@
   "compilerOptions": {
     "paths": {
       "shared/*": ["./src/*"],
-      "api/*": ["../api/src/*"],
-      "client/*": ["../../apps/client/src/*"]
+      "api/*": ["../api/src/*"]
     }
   }
 }

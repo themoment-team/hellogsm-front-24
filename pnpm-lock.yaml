@@ -370,9 +370,6 @@ importers:
       api:
         specifier: workspace:^
         version: link:../api
-      client:
-        specifier: workspace:^
-        version: link:../../apps/client
       eslint-config-custom:
         specifier: workspace:^
         version: link:../code-style-config
