@@ -4,7 +4,7 @@ import { PropsWithChildren } from 'react';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { ChannelTalk, Footer, Header } from 'client/components';
+import { ChannelTalk, Header } from 'client/components';
 import { cn } from 'client/lib/utils';
 
 const Provider = ({ children }: PropsWithChildren) => {
@@ -16,7 +16,6 @@ const Provider = ({ children }: PropsWithChildren) => {
         <Header />
         {children}
         <ChannelTalk />
-        <Footer />
       </div>
     </QueryClientProvider>
   );
