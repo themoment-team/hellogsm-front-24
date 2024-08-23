@@ -19,11 +19,6 @@ const MyPage = ({ name, number, admission, departments }: MyInfoProps) => {
     { icon: <DocumentIcon />, text: '제출서류 다운로드' },
   ];
 
-  const infoItems = [
-    { label: '접수번호', value: number },
-    { label: '', value: admission },
-  ];
-
   return (
     <div className={cn('flex', 'w-full', 'h-[100vh]', 'justify-center', 'bg-white')}>
       <div className="mt-20">
@@ -47,24 +42,36 @@ const MyPage = ({ name, number, admission, departments }: MyInfoProps) => {
             <div className={cn('flex', 'flex-col', 'gap-3', 'items-center')}>
               <p className={cn('text-slate-800', 'text-h3', 'font-semibold')}>{name} 님</p>
               <div className={cn('flex', 'items-center', 'gap-2')}>
-                {infoItems.map((item, index) => (
-                  <div
-                    key={index}
-                    className={cn(
-                      'flex',
-                      'px-3',
-                      'py-1',
-                      'items-center',
-                      'justify-center',
-                      'rounded-[3.5rem]',
-                      'bg-slate-100',
-                    )}
-                  >
-                    <p className={cn('text-slate-500', 'text-[0.875rem]/[1.25rem]', 'font-normal')}>
-                      {item.label} {item.value}
-                    </p>
-                  </div>
-                ))}
+                <div
+                  className={cn(
+                    'flex',
+                    'px-3',
+                    'py-1',
+                    'items-center',
+                    'justify-center',
+                    'rounded-[3.5rem]',
+                    'bg-slate-100',
+                  )}
+                >
+                  <p className={cn('text-slate-500', 'text-[0.875rem]/[1.25rem]', 'font-normal')}>
+                    접수번호 {number}
+                  </p>
+                </div>
+                <div
+                  className={cn(
+                    'flex',
+                    'px-3',
+                    'py-1',
+                    'items-center',
+                    'justify-center',
+                    'rounded-[3.5rem]',
+                    'bg-slate-100',
+                  )}
+                >
+                  <p className={cn('text-slate-500', 'text-[0.875rem]/[1.25rem]', 'font-normal')}>
+                    {admission}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
