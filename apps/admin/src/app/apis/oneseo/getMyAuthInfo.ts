@@ -37,5 +37,5 @@ export const getMyAuthInfo = async ({
     return redirect(redirectUrl);
   }
 
-  return authInfo;
+  return authInfo.data;
 };

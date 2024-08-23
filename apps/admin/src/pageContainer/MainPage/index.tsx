@@ -34,8 +34,8 @@ const MainPage = ({ initialData }: MainPageProps) => {
 
   const [keyword, setKeyword] = useState<string>('');
   const [testResultTag, setTestResultTag] = useState<TestResultType>(DEFAULT_TEST_RESULT_TAG);
-  const [isSubmitted, setIsSubmitted] = useState<YesNo | undefined>();
-  const [screeningTag, setScreeningTag] = useState<ScreeningType | undefined>();
+  const [isSubmitted, setIsSubmitted] = useState<YesNo | undefined>(undefined);
+  const [screeningTag, setScreeningTag] = useState<ScreeningType | undefined>(undefined);
   const [page, setPage] = useState<number>(0);
 
   const debouncedKeyword = useDebounce(keyword, 1000);
