@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { scrollToLocation } from 'client/lib';
+
 import { cn } from 'shared/lib/utils';
 
 const formArray = ['일반교과', '예체능 교과', '비교과'] as const;
@@ -17,10 +19,8 @@ const FormController = ({ className }: FormControllerProps) => {
 
   const handleButtonClick = (formName: FormType) => {
     setIsSelected(formName);
-    window.scrollTo({
-      top: formName === '일반교과' ? 300 : 700,
-      behavior: 'smooth',
-    });
+
+    scrollToLocation(formName === '일반교과' ? 300 : 700, 'smooth');
   };
 
   return (
