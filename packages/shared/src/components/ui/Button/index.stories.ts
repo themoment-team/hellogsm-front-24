@@ -75,3 +75,10 @@ export const Submit: Story = {
     children: 'Submit',
   },
 };
+
+export const Download: Story = {
+  args: {
+    variant: 'download',
+    children: 'download',
+  },
+};
