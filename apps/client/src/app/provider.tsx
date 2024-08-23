@@ -4,7 +4,7 @@ import { PropsWithChildren } from 'react';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { Footer, Header } from 'client/components';
+import { ChannelTalk, Footer, Header } from 'client/components';
 import { cn } from 'client/lib/utils';
 
 const Provider = ({ children }: PropsWithChildren) => {
@@ -15,6 +15,7 @@ const Provider = ({ children }: PropsWithChildren) => {
       <div className={cn('min-h-screen', 'flex', 'flex-col', 'justify-between')}>
         <Header />
         {children}
+        <ChannelTalk />
         <Footer />
       </div>
     </QueryClientProvider>

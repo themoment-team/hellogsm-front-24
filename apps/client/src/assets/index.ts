@@ -16,3 +16,4 @@ export { default as SearchIcon } from './SearchIcon';
 export { default as PinIcon } from './FreeSemesterForm/PinIcon';
 export { default as CloverIcon } from './CloverIcon';
 export { default as BlueStarIcon } from './BlueStarIcon';
+export { default as BottomArrow } from './Section1/BottomArrow';
