@@ -22,6 +22,8 @@ export const oneseoUrl = {
   getMyOneseo: () => '/oneseo/v3/oneseo/me',
   postTempStorage: () => '/oneseo/v3/temp-storage',
   postMyOneseo: () => '/oneseo/v3/oneseo/me',
+  getOneseoById: (id: number) => `/oneseo/v3/oneseo/${id}`,
+  putOneseoById: (id: number) => `/oneseo/v3/oneseo/${id}}`,
   getSearchedOneseoList: (
     page: number,
     size: number,
