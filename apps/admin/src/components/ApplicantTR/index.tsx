@@ -15,7 +15,7 @@ import { useDebounce } from 'shared/hooks';
 import { cn } from 'shared/lib/utils';
 import { formatScore } from 'shared/utils';
 
-import { usePatchArrivedStatus } from 'api/hooks';
+import { usePatchArrivedStatus, usePatchAptitudeScore, usePatchInterviewScore } from 'api/hooks';
 
 import { OneseoListType, OneseoType, ScreeningEnum } from 'types/oneseo';
 
@@ -57,6 +57,9 @@ const ApplicantTR = ({
     },
   });
 
+  const { mutate: patchAptitudeScore } = usePatchAptitudeScore(memberId);
+  const { mutate: patchInterviewScore } = usePatchInterviewScore(memberId);
+
   const firstTestResult =
     firstTestPassYn === 'YES' ? '합격' : firstTestPassYn === 'NO' ? '불합격' : '미정';
   const secondTestResult =
@@ -91,6 +94,14 @@ const ApplicantTR = ({
   const handleRealOneseoArrived = () => {
     patchArrivedStatus();
     setIsRealOneseoArrived((prev) => !prev);
+  };
+
+  const handleAptitudeScore = () => {
+    patchAptitudeScore({ score: parseInt(watch('직무적성점수')) });
+  };
+
+  const handleInterviewScore = () => {
+    patchInterviewScore({ score: parseInt(watch('심층면접점수')) });
   };
 
   return (
@@ -130,6 +141,7 @@ const ApplicantTR = ({
                       ? 'default'
                       : 'subtitle'
                   }
+                  onClick={handleAptitudeScore}
                   disabled={!!secondTestPassYn}
                 >
                   저장
@@ -153,6 +165,7 @@ const ApplicantTR = ({
                       ? 'default'
                       : 'subtitle'
                   }
+                  onClick={handleInterviewScore}
                   disabled={!!secondTestPassYn}
                 >
                   저장
