@@ -20,7 +20,7 @@ export const getAdmissionTickets = async ({
   const session = cookies().get('SESSION')?.value;
 
   const response = await fetch(
-    new URL(`${oneseoUrl.getAdmissionTickets()}`, process.env.NEXT_PUBLIC_API_BASE_URL),
+    new URL(oneseoUrl.getAdmissionTickets(), process.env.NEXT_PUBLIC_API_BASE_URL),
     {
       method: 'GET',
       credentials: 'include',
