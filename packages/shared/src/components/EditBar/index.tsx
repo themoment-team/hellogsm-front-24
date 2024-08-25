@@ -9,10 +9,10 @@ const EditBar = ({ id }: EditBarProps) => (
   <div
     className={cn([
       'w-full',
-      'h-[5rem]',
+      'h-20',
       'flex',
       'justify-end',
-      'px-[20rem]',
+      'px-80',
       'bg-white',
       'fixed',
       'bottom-0',
@@ -23,19 +23,19 @@ const EditBar = ({ id }: EditBarProps) => (
   >
     <button
       className={cn([
-        'px-[1rem]',
-        'py-[0.5rem]',
+        'px-4',
+        'py-2',
         'flex',
-        'gap-[0.5rem]',
-        'text-[0.875rem]',
+        'gap-2',
+        'text-sm',
         'font-normal',
         'font-semibold',
-        'leading-[1.5rem]',
+        'leading-3',
         'bg-blue-600',
         'text-white',
-        'rounded-[0.375rem]',
+        'rounded-md',
         'items-center',
-        'h-[2.5rem]',
+        'h-10',
       ])}
       type="submit"
       form={id}
