@@ -3,12 +3,12 @@ import { GetMyOneseoType } from 'types';
 import { EditStep4Page } from 'admin/pageContainer/Edit';
 
 interface EditProps {
-  params: { userId: string };
+  params: { memberId: string };
   searchParams?: { [key: string]: string | undefined };
 }
 
-export default async function Edit({ params: { userId }, searchParams }: EditProps) {
-  // const data = await getOneseoById(userId);
+export default async function Edit({ params: { memberId }, searchParams }: EditProps) {
+  // const data = await getOneseoById(memberId);
   const data = {} as GetMyOneseoType;
   const step = searchParams?.step;
 
@@ -23,7 +23,7 @@ export default async function Edit({ params: { userId }, searchParams }: EditPro
       return <div></div>;
 
     case '4':
-      return <EditStep4Page data={data} userId={Number(userId)} />;
+      return <EditStep4Page data={data} memberId={Number(memberId)} />;
 
     default:
       return <div></div>;

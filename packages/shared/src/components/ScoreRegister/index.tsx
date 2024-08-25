@@ -64,10 +64,10 @@ const formWrapper = [
 interface ScoreRegisterProps {
   data: GetMyOneseoType | undefined;
   type: 'client' | 'admin';
-  userId?: number;
+  memberId?: number;
 }
 
-const ScoreRegister = ({ data, type, userId }: ScoreRegisterProps) => {
+const ScoreRegister = ({ data, type, memberId }: ScoreRegisterProps) => {
   const defaultData = data?.middleSchoolAchievement;
   const [liberalSystem, setLiberalSystem] = useState<GradesInputMethodType>(
     defaultData
@@ -111,7 +111,7 @@ const ScoreRegister = ({ data, type, userId }: ScoreRegisterProps) => {
   //   onError: () => {},
   // });
 
-  // const { mutate: mutatePostOneseo } = usePutOneseo(userId ?? 0, {
+  // const { mutate: mutatePostOneseo } = usePutOneseo(memberId ?? 0, {
   //   onSuccess: () => {},
   //   onError: () => {},
   // });

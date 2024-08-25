@@ -8,7 +8,7 @@ export const oneseoQueryKeys = {
   postTempStorage: () => ['post', 'temp', 'oneseo', 'storage'],
   postMyOneseo: () => ['post', 'my', 'oneseo'],
   postMockScore: (type: GraduationType) => ['mock', 'oneseo', 'score', type],
-  putOneseoById: (id: number) => ['put', 'oneseo', id],
+  putOneseoByMemberId: (memberId: number) => ['put', 'oneseo', memberId],
   getSearchedOneseoList: (
     page: number,
     size: number,
