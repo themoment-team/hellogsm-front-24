@@ -17,7 +17,7 @@ import {
 import { useGetAdmissionTickets } from 'api/hooks';
 
 interface TicketPageProps {
-  initialData: TicketType[] | undefined;
+  initialData: TicketType[];
 }
 
 const TicketPage = ({ initialData }: TicketPageProps) => {
