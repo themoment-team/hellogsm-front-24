@@ -5,3 +5,4 @@ export { default as QuestionMark } from './ApplicationTH/QuestionMark';
 export { default as SearchIcon } from './FilterBar/SearchIcon';
 export { default as FileIcon } from './FilterBar/FileIcon';
 export { default as PrintIcon } from './FilterBar/PrintIcon';
+export { default as TicketsPrintIcon } from './TicketPage/TicketsPrintIcon';
