@@ -2,9 +2,8 @@
 
 import { useState, useEffect } from 'react';
 
-import { SearchIcon } from 'client/assets';
-import { SearchElements } from 'client/components';
-
+import { SearchIcon } from 'shared/assets';
+import { SearchElements } from 'shared/components';
 import {
   Button,
   Input,

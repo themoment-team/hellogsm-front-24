@@ -2,10 +2,8 @@
 
 import { useState } from 'react';
 
-import { Input } from 'shared';
-
-import { FormItem, RadioButton } from 'client/components';
-
+import { CustomFormItem, RadioButton } from 'shared/components';
+import { Input } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
 type RelationshipType = '부' | '모' | '기타 (직접입력)';
@@ -33,7 +31,7 @@ const GuardianRegister = () => {
 
         <div className={cn('flex', 'items-start', 'gap-12')}>
           <div className={cn('flex', 'w-[29.75rem]', 'flex-col', 'items-start', 'gap-8')}>
-            <FormItem
+            <CustomFormItem
               text={'보호자 이름 / 연락처'}
               className="gap-1"
               required={true}
@@ -41,7 +39,7 @@ const GuardianRegister = () => {
             >
               <Input placeholder="보호자 이름 입력" width="full" />
               <Input placeholder="보호자 연락처 입력" width="full" />
-            </FormItem>
+            </CustomFormItem>
             <div className={cn('flex', 'flex-col', 'gap-3')}>
               <RadioButton
                 title={'보호자 관계'}
@@ -53,7 +51,7 @@ const GuardianRegister = () => {
             </div>
           </div>
           <div className={cn('flex', 'w-[29.75rem]', 'flex-col', 'items-start', 'gap-8')}>
-            <FormItem
+            <CustomFormItem
               text={'담임선생님 이름 / 연락처'}
               className="gap-1"
               required={true}
@@ -61,7 +59,7 @@ const GuardianRegister = () => {
             >
               <Input placeholder="담임선생님 이름 입력" width="full" />
               <Input placeholder="담임선생님 연락처 입력" width="full" />
-            </FormItem>
+            </CustomFormItem>
           </div>
         </div>
       </div>

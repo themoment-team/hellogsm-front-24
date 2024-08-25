@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from 'react';
 
-import { useRouter, useSearchParams } from 'next/navigation';
-import { Button } from 'shared';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-import { CheckIcon, ProgressBarIcon } from 'client/assets';
-
+import { StepCheckIcon, ProgressBarIcon } from 'shared/assets';
 import { cn } from 'shared/lib/utils';
+
+import { Button } from '..';
 
 export enum Steps {
   ONE = 1,
@@ -42,7 +42,7 @@ const Step = ({ step, isActive, isCompleted }: StepType) => {
         isActiveOrCompleted ? 'bg-blue-500 text-white' : 'border-[1px] text-slate-300',
       )}
     >
-      {isCompleted ? <CheckIcon /> : step}
+      {isCompleted ? <StepCheckIcon /> : step}
     </div>
   );
 };
@@ -50,6 +50,7 @@ const Step = ({ step, isActive, isCompleted }: StepType) => {
 const StepBar = () => {
   const router = useRouter();
   const params = useSearchParams();
+  const path = usePathname();
 
   const [currentStep, setCurrentStep] = useState(Steps.ONE);
 
@@ -62,7 +63,7 @@ const StepBar = () => {
 
   const updateStep = (newStep: Steps) => {
     if (newStep !== currentStep) {
-      router.push(`/register?step=${newStep}`);
+      router.push(`${path}?step=${newStep}`);
     }
   };
 

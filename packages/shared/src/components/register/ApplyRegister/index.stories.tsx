@@ -3,7 +3,7 @@ import ApplyRegister from '.';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof ApplyRegister> = {
-  title: 'Client/ApplyRegister',
+  title: 'Shared/Register/ApplyRegister',
   component: ApplyRegister,
   args: {
     name: '김재균',

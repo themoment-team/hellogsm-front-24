@@ -3,7 +3,7 @@ import StepBar from '.';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof StepBar> = {
-  title: 'Client/StepBar',
+  title: 'Shared/StepBar',
   component: StepBar,
 };
 

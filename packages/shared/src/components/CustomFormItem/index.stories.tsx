@@ -5,7 +5,7 @@ import FormItem from '.';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof FormItem> = {
-  title: 'Client/FormItem',
+  title: 'Shared/CustomFormItem',
   component: FormItem,
 };
 

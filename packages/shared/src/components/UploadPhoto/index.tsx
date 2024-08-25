@@ -4,9 +4,8 @@ import { useState } from 'react';
 
 import Image from 'next/image';
 
-import { UploadIcon } from 'client/assets';
-import { FormItem } from 'client/components';
-
+import { UploadIcon } from 'shared/assets';
+import { CustomFormItem } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
 const UploadPhoto = () => {
@@ -27,7 +26,7 @@ const UploadPhoto = () => {
   return (
     <div className={cn('flex', 'items-end', 'gap-[0.5rem]')}>
       <div className={cn('flex', 'w-[8.75rem]', 'flex-col', 'items-start', 'gap-[0.25rem]')}>
-        <FormItem text={'증명사진'} required={true} className="gap-1">
+        <CustomFormItem text={'증명사진'} required={true} className="gap-1">
           <input
             className={cn('hidden')}
             type="file"
@@ -70,7 +69,7 @@ const UploadPhoto = () => {
               </div>
             )}
           </label>
-        </FormItem>
+        </CustomFormItem>
       </div>
       <ul className={cn('text-slate-600', 'text-caption', 'font-[400]')}>
         <li>&middot; 20MB 이하</li>

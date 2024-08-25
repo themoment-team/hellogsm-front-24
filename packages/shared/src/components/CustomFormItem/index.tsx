@@ -2,7 +2,7 @@
 
 import { PropsWithChildren } from 'react';
 
-import { cn } from 'client/lib/utils';
+import { cn } from 'shared/lib/utils';
 
 interface FormItemProps extends PropsWithChildren {
   text: string;
@@ -11,7 +11,7 @@ interface FormItemProps extends PropsWithChildren {
   fullWidth?: boolean;
 }
 
-const FormItem = ({ children, text, className, required, fullWidth }: FormItemProps) => {
+const CustomFormItem = ({ children, text, className, required, fullWidth }: FormItemProps) => {
   return (
     <div className={cn(className, 'flex', 'flex-col', fullWidth ? 'w-full' : 'w-[23.75rem]')}>
       <span className={cn('text-gray-900', 'text-sm', 'font-medium')}>
@@ -22,4 +22,4 @@ const FormItem = ({ children, text, className, required, fullWidth }: FormItemPr
   );
 };
 
-export default FormItem;
+export default CustomFormItem;

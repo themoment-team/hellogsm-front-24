@@ -3,7 +3,7 @@ import UploadPhoto from '.';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof UploadPhoto> = {
-  title: 'Client/UploadPhoto',
+  title: 'Shared/UploadPhoto',
   component: UploadPhoto,
 };
 

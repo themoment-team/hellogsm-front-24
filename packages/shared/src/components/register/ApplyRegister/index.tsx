@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 
+import { RadioButton, SearchDialog } from 'shared/components';
 import {
   Input,
+  CustomFormItem,
   Select,
   SelectContent,
   SelectGroup,
@@ -11,11 +13,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from 'shared';
-
-import { FormItem, RadioButton } from 'client/components';
-import { SearchDialog } from 'client/components';
-
+} from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
 const PERMIT_YEAR = 3;
@@ -75,7 +73,7 @@ const ApplyRegister = () => {
               required={true}
             />
 
-            <FormItem
+            <CustomFormItem
               text={'출신 중학교 & 졸업일'}
               className="gap-1"
               required={true}
@@ -125,7 +123,7 @@ const ApplyRegister = () => {
                   </SelectContent>
                 </Select>
               </div>
-            </FormItem>
+            </CustomFormItem>
           </div>
           <div className={cn('flex', 'w-[29.75rem]', 'flex-col', 'items-start', 'gap-10')}>
             <RadioButton
@@ -135,7 +133,12 @@ const ApplyRegister = () => {
             />
             <div className={cn('flex', 'flex-col', 'gap-3', 'w-full')}>
               <div className={cn('flex', 'flex-col', 'items-start', 'gap-1.5', 'w-full')}>
-                <FormItem text={'지원학과'} className="gap-1" required={true} fullWidth={true}>
+                <CustomFormItem
+                  text={'지원학과'}
+                  className="gap-1"
+                  required={true}
+                  fullWidth={true}
+                >
                   <div className={cn('flex', 'w-full', 'justify-between')}>
                     {choices.map((choice, index) => (
                       <Select
@@ -160,7 +163,7 @@ const ApplyRegister = () => {
                       </Select>
                     ))}
                   </div>
-                </FormItem>
+                </CustomFormItem>
               </div>
               <div
                 className={cn(
