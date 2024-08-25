@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
+import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
+
 import { useForm, Controller } from 'react-hook-form';
 import { checkIsPassedDate } from 'shared';
 
@@ -13,9 +15,18 @@ import { useDebounce } from 'shared/hooks';
 import { cn } from 'shared/lib/utils';
 import { formatScore } from 'shared/utils';
 
-import { OneseoType, ScreeningEnum } from 'types/oneseo';
+import { usePatchArrivedStatus } from 'api/hooks';
+
+import { OneseoListType, OneseoType, ScreeningEnum } from 'types/oneseo';
+
+interface ApplicationTRProps extends OneseoType {
+  refetch: (
+    options?: RefetchOptions | undefined,
+  ) => Promise<QueryObserverResult<OneseoListType, Error>>;
+}
 
 const ApplicantTR = ({
+  refetch,
   aptitudeEvaluationScore,
   firstTestPassYn,
   guardianPhoneNumber,
@@ -29,13 +40,22 @@ const ApplicantTR = ({
   screening,
   secondTestPassYn,
   submitCode,
-}: OneseoType) => {
+}: ApplicationTRProps) => {
   const example직무적성처리시작일자 = new Date('2024-07-31');
   const example심층면접처리시작일자 = new Date('2024-08-30');
 
   const [isRealOneseoArrived, setIsRealOneseoArrived] = useState<boolean>(
     realOneseoArrivedYn === 'YES',
   );
+
+  const { mutate: patchArrivedStatus } = usePatchArrivedStatus(memberId, {
+    onSuccess: () => {
+      refetch();
+    },
+    onError: () => {
+      setIsRealOneseoArrived((prev) => !prev);
+    },
+  });
 
   const firstTestResult =
     firstTestPassYn === 'YES' ? '합격' : firstTestPassYn === 'NO' ? '불합격' : '미정';
@@ -69,6 +89,7 @@ const ApplicantTR = ({
   }, [debounced직무적성점수, debounced심층면접점수, setValue]);
 
   const handleRealOneseoArrived = () => {
+    patchArrivedStatus();
     setIsRealOneseoArrived((prev) => !prev);
   };
 

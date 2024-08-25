@@ -2,3 +2,6 @@ export * from './usePostMockScore';
 export * from './usePostMyOneseo';
 export * from './usePostTempStorage';
 export * from './useGetOneseoList';
+export * from './usePatchAptitudeScore';
+export * from './usePatchArrivedStatus';
+export * from './usePatchInterviewScore';
