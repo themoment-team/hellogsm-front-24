@@ -3,7 +3,7 @@
 import { ScreeningEnum } from 'types';
 import { TicketType } from 'types';
 
-import { TicketsPrintIcon } from 'admin/assets';
+import { PrintIcon } from 'admin/assets';
 
 import { Button } from 'shared/components';
 import {
@@ -178,8 +178,11 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
           </table>
         </div>
       ))}
-      <Button onClick={handlePrint}>
-        <TicketsPrintIcon />
+      <Button
+        className="fixed items-center gap-2 bottom-10 right-10 print:hidden"
+        onClick={handlePrint}
+      >
+        <PrintIcon />
         <p className="text-[2.1vh] font-bold hover:text-white">인쇄하기</p>
       </Button>
     </div>
