@@ -1,5 +1,7 @@
 'use client';
 
+import { YesNo, ScreeningType } from 'types';
+
 import { SearchIcon, PrintIcon, FileIcon } from 'admin/assets';
 
 import {
@@ -14,8 +16,6 @@ import {
   SelectGroup,
 } from 'shared/components';
 import { cn } from 'shared/lib/utils';
-
-import { YesNo, ScreeningType } from 'types/oneseo';
 
 interface FilterBarProps {
   keyword: string;

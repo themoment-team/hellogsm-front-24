@@ -2,11 +2,11 @@
 
 import { PropsWithChildren } from 'react';
 
+import { TestResultType } from 'types';
+
 import { ChevronsLeft, Puzzle, Exit } from 'admin/assets';
 
 import { cn } from 'shared/lib/utils';
-
-import { TestResultType } from 'types/oneseo';
 
 const Item = ({ children }: PropsWithChildren) => (
   <div
