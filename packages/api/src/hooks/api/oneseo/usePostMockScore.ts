@@ -1,7 +1,10 @@
-import { useMutation, UseMutationOptions } from "@tanstack/react-query";
-import { oneseoQueryKeys, oneseoUrl, post } from "api/libs";
-import { AxiosError } from "axios";
-import { GraduationType, MiddleSchoolAchievementType } from "types";
+import { useMutation, UseMutationOptions } from '@tanstack/react-query';
+
+import { AxiosError } from 'axios';
+
+import { GraduationType, MiddleSchoolAchievementType } from 'types';
+
+import { oneseoQueryKeys, oneseoUrl, post } from 'api/libs';
 
 interface ReturnDataType {
   status: string;

@@ -11,6 +11,7 @@ import { TextField } from 'admin/components';
 
 import { CheckIcon } from 'shared/assets';
 import { Table, TableBody, TableCell, Toggle, TableRow, Badge, Button } from 'shared/components';
+import { 심층면접일자, 직무적성일자 } from 'shared/constants';
 import { useDebounce } from 'shared/hooks';
 import { cn } from 'shared/lib/utils';
 import { formatScore } from 'shared/utils';
@@ -41,8 +42,8 @@ const ApplicantTR = ({
   secondTestPassYn,
   submitCode,
 }: ApplicationTRProps) => {
-  const example직무적성처리시작일자 = new Date('2024-07-31');
-  const example심층면접처리시작일자 = new Date('2024-08-30');
+  const 직무적성처리시작일자 = new Date(직무적성일자);
+  const 심층면접처리시작일자 = new Date(심층면접일자);
 
   const [isRealOneseoArrived, setIsRealOneseoArrived] = useState<boolean>(
     realOneseoArrivedYn === 'YES',
@@ -65,8 +66,8 @@ const ApplicantTR = ({
   const secondTestResult =
     secondTestPassYn === 'YES' ? '합격' : secondTestPassYn === 'NO' ? '불합격' : '미정';
 
-  const is직무적성처리기간 = checkIsPassedDate(example직무적성처리시작일자);
-  const is심층면접처리기간 = checkIsPassedDate(example심층면접처리시작일자);
+  const is직무적성처리기간 = checkIsPassedDate(직무적성처리시작일자);
+  const is심층면접처리기간 = checkIsPassedDate(심층면접처리시작일자);
 
   const formatted직무적성점수 = formatScore(String(aptitudeEvaluationScore ?? ''));
   const formatted심층면접점수 = formatScore(String(interviewScore ?? ''));
