@@ -162,7 +162,7 @@ const ApplicantTR = ({
                 />
                 <Button
                   variant={
-                    watch('직무적성점수') && formatted심층면접점수 !== watch('심층면접점수')
+                    watch('심층면접점수') && formatted심층면접점수 !== watch('심층면접점수')
                       ? 'default'
                       : 'subtitle'
                   }
