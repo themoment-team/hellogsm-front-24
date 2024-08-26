@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from 'react';
 
+import { UseFormSetValue } from 'react-hook-form';
+import { basicRegisterType } from 'types';
+
 import { SearchIcon } from 'shared/assets';
 import { SearchElements } from 'shared/components';
 import {
@@ -18,13 +21,14 @@ import { cn } from 'shared/lib/utils';
 
 interface SearchDialogProps {
   setSelectedSchool: React.Dispatch<React.SetStateAction<string>>;
+  setValue: UseFormSetValue<basicRegisterType>;
 }
 
 interface SchoolType {
   SCHUL_NM: string;
 }
 
-const SearchDialog = ({ setSelectedSchool }: SearchDialogProps) => {
+const SearchDialog = ({ setSelectedSchool, setValue }: SearchDialogProps) => {
   const [schools, setSchools] = useState<SchoolType[]>([]);
   const [keyword, setKeyword] = useState<string>('');
   const [isSelecting, setIsSelecting] = useState<boolean>(false);
@@ -73,6 +77,7 @@ const SearchDialog = ({ setSelectedSchool }: SearchDialogProps) => {
     setKeyword(school.SCHUL_NM);
     setSchools([]);
     setIsSelecting(true);
+    setValue('middleSchool', 'school.SCHUL_NM');
   };
 
   return (

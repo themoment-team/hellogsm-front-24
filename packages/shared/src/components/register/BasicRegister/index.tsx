@@ -3,18 +3,31 @@
 import { useState } from 'react';
 
 import { Address, useDaumPostcodePopup } from 'react-daum-postcode';
+import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
 
-import { CustomFormItem, RadioButton, UploadPhoto } from 'shared/components';
-import { Button, Input, Select, SelectTrigger, SelectValue } from 'shared/components';
+import {
+  CustomFormItem,
+  RadioButton,
+  UploadPhoto,
+  Button,
+  Input,
+  Select,
+  SelectTrigger,
+  SelectValue,
+} from 'shared/components';
 import { cn } from 'shared/lib/utils';
+
+import type { basicRegisterType } from 'types';
 
 interface BasicInfoType {
   name: string;
   birth: string;
   sex: string;
+  register: UseFormRegister<basicRegisterType>;
+  setValue: UseFormSetValue<basicRegisterType>;
 }
 
-const BasicRegister = ({ name, birth, sex }: BasicInfoType) => {
+const BasicRegister = ({ name, birth, sex, register, setValue }: BasicInfoType) => {
   const [address, setAddress] = useState<string>('');
   const [zonecode, setZoncode] = useState<string>('');
 
@@ -30,6 +43,7 @@ const BasicRegister = ({ name, birth, sex }: BasicInfoType) => {
   const handleDaumPostCodePopupComplete = ({ address, zonecode }: Address) => {
     setAddress(address);
     setZoncode(zonecode);
+    setValue('address', `${address} ${zonecode}`);
   };
 
   const handleZipCodeButtonClick = () =>
@@ -61,7 +75,7 @@ const BasicRegister = ({ name, birth, sex }: BasicInfoType) => {
 
         <div className={cn('flex', 'items-end', 'gap-[3rem]')}>
           <div className={cn('flex', 'w-[29.75rem]', 'flex-col', 'items-start', 'gap-[2rem]')}>
-            <UploadPhoto />
+            <UploadPhoto setValue={setValue} />
             <CustomFormItem text={'이름'} className="gap-1" required={true} fullWidth={true}>
               <Input placeholder={name} disabled={true} />
             </CustomFormItem>
@@ -97,15 +111,16 @@ const BasicRegister = ({ name, birth, sex }: BasicInfoType) => {
             <div className={cn('flex', 'flex-col', 'items-start', 'gap-[0.375rem]', 'w-full')}>
               <CustomFormItem text={'주소지'} className="gap-1" required={true} fullWidth={true}>
                 <div className={cn('w-full', 'flex', 'gap-2')}>
-                  <Input placeholder={userAddress} width="full" disabled={true} />
+                  <Input placeholder={userAddress} width="full" />
+
                   <Button onClick={handleZipCodeButtonClick}>주소 찾기</Button>
                 </div>
               </CustomFormItem>
-              <Input placeholder="상세주소" width="full" />
+              <Input placeholder="상세주소" width="full" {...register('detailAddress')} />
             </div>
 
             <CustomFormItem text={'휴대폰 번호'} className="gap-1" required={true} fullWidth={true}>
-              <Input placeholder="010 1234 5678" width="full" />
+              <Input placeholder="010 1234 5678" width="full" {...register('phoneNumber')} />
             </CustomFormItem>
           </div>
         </div>

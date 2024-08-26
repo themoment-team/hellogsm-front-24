@@ -3,6 +3,13 @@
 import { useState, useEffect } from 'react';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import {
+  SubmitErrorHandler,
+  SubmitHandler,
+  UseFormHandleSubmit,
+  UseFormWatch,
+} from 'react-hook-form';
+import { basicRegisterType } from 'types';
 
 import { StepCheckIcon, ProgressBarIcon } from 'shared/assets';
 import { cn } from 'shared/lib/utils';
@@ -47,7 +54,13 @@ const Step = ({ step, isActive, isCompleted }: StepType) => {
   );
 };
 
-const StepBar = () => {
+interface StepBarType {
+  param: string;
+  handleSubmit: UseFormHandleSubmit<basicRegisterType>;
+  watch: UseFormWatch<basicRegisterType>;
+}
+
+const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
   const router = useRouter();
   const params = useSearchParams();
   const path = usePathname();
@@ -67,9 +80,52 @@ const StepBar = () => {
     }
   };
 
-  const handleNext = () => {
+  const onSubmit: SubmitHandler<basicRegisterType> = (data) => {
+    // eslint-disable-next-line no-console
+    console.log(data);
     const nextStep = Math.min(currentStep + 1, Steps.FOUR);
     updateStep(nextStep);
+  };
+
+  const onError: SubmitErrorHandler<basicRegisterType> = (errors) => {
+    const {
+      img,
+      address,
+      detailAddress,
+      phoneNumber,
+      category,
+      middleSchool,
+      year,
+      month,
+      screening,
+      choice,
+      parentsName,
+      parentsNumber,
+      relationship,
+      teacherName,
+      teacherNumber,
+    } = watch();
+    // eslint-disable-next-line no-console
+    console.log(errors);
+    const nextStep = Math.min(currentStep + 1, Steps.FOUR);
+    if (param === '1' && img && address && detailAddress && phoneNumber) {
+      updateStep(nextStep);
+    } else if (param === '2' && category && middleSchool && year && month && screening && choice) {
+      updateStep(nextStep);
+    } else if (
+      param === '3' &&
+      parentsName &&
+      parentsNumber &&
+      relationship &&
+      teacherName &&
+      teacherNumber
+    ) {
+      updateStep(nextStep);
+    }
+  };
+
+  const handleNext = () => {
+    handleSubmit(onSubmit, onError)();
   };
 
   const handlePrevious = () => {

@@ -3,12 +3,18 @@
 import { useState } from 'react';
 
 import Image from 'next/image';
+import { UseFormSetValue } from 'react-hook-form';
+import { basicRegisterType } from 'types';
 
 import { UploadIcon } from 'shared/assets';
 import { CustomFormItem } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
-const UploadPhoto = () => {
+interface UploadPhotoProps {
+  setValue: UseFormSetValue<basicRegisterType>;
+}
+
+const UploadPhoto = ({ setValue }: UploadPhotoProps) => {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
 
   const PhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,6 +24,7 @@ const UploadPhoto = () => {
       reader.onload = () => {
         if (typeof reader.result === 'string') {
           setImageSrc(reader.result);
+          setValue('img', reader.result);
         }
       };
     }

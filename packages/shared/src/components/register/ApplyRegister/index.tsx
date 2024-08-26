@@ -2,6 +2,9 @@
 
 import { useState } from 'react';
 
+import { UseFormSetValue } from 'react-hook-form';
+import { basicRegisterType } from 'types';
+
 import { RadioButton, SearchDialog } from 'shared/components';
 import {
   Input,
@@ -18,7 +21,11 @@ import { cn } from 'shared/lib/utils';
 
 const PERMIT_YEAR = 3;
 
-const ApplyRegister = () => {
+interface ApplyRegisterType {
+  setValue: UseFormSetValue<basicRegisterType>;
+}
+
+const ApplyRegister = ({ setValue }: ApplyRegisterType) => {
   const [choices, setChoices] = useState<string[]>(['', '', '']);
   const [selectedSchool, setSelectedSchool] = useState<string>('');
 
@@ -49,13 +56,30 @@ const ApplyRegister = () => {
     setChoices((prevChoices) => {
       const updatedChoices = [...prevChoices];
       updatedChoices[index] = value;
+      setValue('choice', updatedChoices);
       return updatedChoices;
     });
   };
 
+  const handleRadioChange = (value: string) => {
+    if (value === '졸업자' || value === '졸업예정' || value === '검정고시') {
+      setValue('category', value);
+    } else if (value === '일반전형' || value === '사회통합전형' || value === '정원 외 특별전형') {
+      setValue('screening', value);
+    }
+  };
+
+  const handleSelectChange = (value: string) => {
+    if (value.length === 4) {
+      setValue('year', value);
+    } else {
+      setValue('month', value);
+    }
+  };
+
   return (
     <div className={cn('flex', 'px-[2rem]', 'pt-[1.5rem]', 'pb-[2.5rem]')}>
-      <div className={cn('flex', 'w-full', 'h-[28.75rem]', 'flex-col', 'items-start', 'gap-10')}>
+      <div className={cn('flex', 'w-full', 'flex-col', 'items-start', 'gap-10')}>
         <div className={cn('flex', 'flex-col', 'items-start', 'gap-[0.125rem]')}>
           <h1 className={cn('text-gray-900', 'text-[1.25rem]/[1.75rem]', 'font-semibold')}>
             지원 정보를 입력해 주세요.
@@ -71,6 +95,7 @@ const ApplyRegister = () => {
               title={'지원자 유형'}
               options={['졸업자', '졸업예정', '검정고시']}
               required={true}
+              onChange={handleRadioChange}
             />
 
             <CustomFormItem
@@ -86,10 +111,10 @@ const ApplyRegister = () => {
                   disabled={true}
                   value={selectedSchool}
                 />
-                <SearchDialog setSelectedSchool={setSelectedSchool} />
+                <SearchDialog setSelectedSchool={setSelectedSchool} setValue={setValue} />
               </div>
               <div className={cn('flex', 'w-full', 'justify-between')}>
-                <Select>
+                <Select onValueChange={handleSelectChange}>
                   <SelectTrigger className="w-[14.6785rem]">
                     <SelectValue placeholder="년도 선택" />
                   </SelectTrigger>
@@ -107,7 +132,7 @@ const ApplyRegister = () => {
                     </SelectGroup>
                   </SelectContent>
                 </Select>
-                <Select>
+                <Select onValueChange={handleSelectChange}>
                   <SelectTrigger className="w-[14.6785rem]">
                     <SelectValue placeholder="월 선택" />
                   </SelectTrigger>
@@ -130,6 +155,7 @@ const ApplyRegister = () => {
               title={'전형'}
               options={['일반전형', '사회통합전형', '정원 외 특별전형']}
               required={true}
+              onChange={handleRadioChange}
             />
             <div className={cn('flex', 'flex-col', 'gap-3', 'w-full')}>
               <div className={cn('flex', 'flex-col', 'items-start', 'gap-1.5', 'w-full')}>

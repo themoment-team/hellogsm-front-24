@@ -2,18 +2,27 @@
 
 import { useState } from 'react';
 
+import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import { basicRegisterType } from 'types';
+
 import { CustomFormItem, RadioButton } from 'shared/components';
 import { Input } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
 type RelationshipType = '부' | '모' | '기타 (직접입력)';
 
-const GuardianRegister = () => {
+interface GuardianType {
+  register: UseFormRegister<basicRegisterType>;
+  setValue: UseFormSetValue<basicRegisterType>;
+}
+
+const GuardianRegister = ({ register, setValue }: GuardianType) => {
   const [selectedRelationship, setSelectedRelationship] = useState<RelationshipType>();
 
   const handleRadioChange = (value: string) => {
     if (value === '부' || value === '모' || value === '기타 (직접입력)') {
       setSelectedRelationship(value);
+      setValue('relationship', value);
     }
   };
 
@@ -37,8 +46,8 @@ const GuardianRegister = () => {
               required={true}
               fullWidth={true}
             >
-              <Input placeholder="보호자 이름 입력" width="full" />
-              <Input placeholder="보호자 연락처 입력" width="full" />
+              <Input placeholder="보호자 이름 입력" width="full" {...register('parentsName')} />
+              <Input placeholder="보호자 연락처 입력" width="full" {...register('parentsNumber')} />
             </CustomFormItem>
             <div className={cn('flex', 'flex-col', 'gap-3')}>
               <RadioButton
@@ -47,7 +56,9 @@ const GuardianRegister = () => {
                 required={true}
                 onChange={handleRadioChange}
               />
-              {selectedRelationship === '기타 (직접입력)' && <Input placeholder="직접 입력" />}
+              {selectedRelationship === '기타 (직접입력)' && (
+                <Input placeholder="직접 입력" {...register('otherRelationship')} />
+              )}
             </div>
           </div>
           <div className={cn('flex', 'w-[29.75rem]', 'flex-col', 'items-start', 'gap-8')}>
@@ -57,8 +68,12 @@ const GuardianRegister = () => {
               required={true}
               fullWidth={true}
             >
-              <Input placeholder="담임선생님 이름 입력" width="full" />
-              <Input placeholder="담임선생님 연락처 입력" width="full" />
+              <Input placeholder="담임선생님 이름 입력" width="full" {...register('teacherName')} />
+              <Input
+                placeholder="담임선생님 연락처 입력"
+                width="full"
+                {...register('teacherNumber')}
+              />
             </CustomFormItem>
           </div>
         </div>
