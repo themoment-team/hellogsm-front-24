@@ -77,7 +77,7 @@ const SearchDialog = ({ setSelectedSchool, setValue }: SearchDialogProps) => {
     setKeyword(school.SCHUL_NM);
     setSchools([]);
     setIsSelecting(true);
-    setValue('schoolName', 'school.SCHUL_NM');
+    setValue('schoolName', school.SCHUL_NM);
   };
 
   return (
