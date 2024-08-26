@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 import { Address, useDaumPostcodePopup } from 'react-daum-postcode';
-import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import { UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 
 import {
   CustomFormItem,
@@ -20,14 +20,15 @@ import { cn } from 'shared/lib/utils';
 import type { basicRegisterType } from 'types';
 
 interface BasicInfoType {
-  name: string;
-  birth: string;
+  name: string | undefined;
+  birth: string | undefined;
   sex: string;
   register: UseFormRegister<basicRegisterType>;
   setValue: UseFormSetValue<basicRegisterType>;
+  watch: UseFormWatch<basicRegisterType>;
 }
 
-const BasicRegister = ({ name, birth, sex, register, setValue }: BasicInfoType) => {
+const BasicRegister = ({ name, birth, sex, register, setValue, watch }: BasicInfoType) => {
   const [address, setAddress] = useState<string>('');
   const [zonecode, setZoncode] = useState<string>('');
 
@@ -35,10 +36,10 @@ const BasicRegister = ({ name, birth, sex, register, setValue }: BasicInfoType) 
 
   const userAddress = address && zonecode ? `${address} ${zonecode}` : '주소를 입력해 주세요';
 
-  const birthDate = new Date(birth);
-  const birthYear = birthDate.getFullYear();
-  const birthMonth = String(birthDate.getMonth() + 1).padStart(2, '0');
-  const birthDay = String(birthDate.getDate()).padStart(2, '0');
+  const birthDate = birth ? new Date(birth) : null;
+  const birthYear = birthDate ? birthDate.getFullYear() : '';
+  const birthMonth = birthDate ? String(birthDate.getMonth() + 1).padStart(2, '0') : '';
+  const birthDay = birthDate ? String(birthDate.getDate()).padStart(2, '0') : '';
 
   const handleDaumPostCodePopupComplete = ({ address, zonecode }: Address) => {
     setAddress(address);
@@ -111,16 +112,26 @@ const BasicRegister = ({ name, birth, sex, register, setValue }: BasicInfoType) 
             <div className={cn('flex', 'flex-col', 'items-start', 'gap-[0.375rem]', 'w-full')}>
               <CustomFormItem text={'주소지'} className="gap-1" required={true} fullWidth={true}>
                 <div className={cn('w-full', 'flex', 'gap-2')}>
-                  <Input placeholder={userAddress} width="full" />
+                  <Input placeholder={userAddress} width="full" value={watch('address')} />
 
                   <Button onClick={handleZipCodeButtonClick}>주소 찾기</Button>
                 </div>
               </CustomFormItem>
-              <Input placeholder="상세주소" width="full" {...register('detailAddress')} />
+              <Input
+                placeholder="상세주소"
+                width="full"
+                {...register('detailAddress')}
+                value={watch('detailAddress')}
+              />
             </div>
 
             <CustomFormItem text={'휴대폰 번호'} className="gap-1" required={true} fullWidth={true}>
-              <Input placeholder="010 1234 5678" width="full" {...register('phoneNumber')} />
+              <Input
+                placeholder="010 1234 5678"
+                width="full"
+                {...register('phoneNumber')}
+                value={watch('phoneNumber')}
+              />
             </CustomFormItem>
           </div>
         </div>

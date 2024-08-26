@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import { UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { basicRegisterType } from 'types';
 
 import { CustomFormItem, RadioButton } from 'shared/components';
@@ -14,9 +14,10 @@ type RelationshipType = '부' | '모' | '기타 (직접입력)';
 interface GuardianType {
   register: UseFormRegister<basicRegisterType>;
   setValue: UseFormSetValue<basicRegisterType>;
+  watch: UseFormWatch<basicRegisterType>;
 }
 
-const GuardianRegister = ({ register, setValue }: GuardianType) => {
+const GuardianRegister = ({ register, setValue, watch }: GuardianType) => {
   const [selectedRelationship, setSelectedRelationship] = useState<RelationshipType>();
 
   const handleRadioChange = (value: string) => {
@@ -46,8 +47,13 @@ const GuardianRegister = ({ register, setValue }: GuardianType) => {
               required={true}
               fullWidth={true}
             >
-              <Input placeholder="보호자 이름 입력" width="full" {...register('parentsName')} />
-              <Input placeholder="보호자 연락처 입력" width="full" {...register('parentsNumber')} />
+              <Input placeholder="보호자 이름 입력" width="full" {...register('guardianName')} />
+              <Input
+                placeholder="보호자 연락처 입력"
+                width="full"
+                {...register('guardianPhoneNumber')}
+                value={watch('guardianPhoneNumber')}
+              />
             </CustomFormItem>
             <div className={cn('flex', 'flex-col', 'gap-3')}>
               <RadioButton
@@ -55,9 +61,15 @@ const GuardianRegister = ({ register, setValue }: GuardianType) => {
                 options={['부', '모', '기타 (직접입력)']}
                 required={true}
                 onChange={handleRadioChange}
+                watch={watch}
+                watchContent="relationship"
               />
               {selectedRelationship === '기타 (직접입력)' && (
-                <Input placeholder="직접 입력" {...register('otherRelationship')} />
+                <Input
+                  placeholder="직접 입력"
+                  {...register('otherRelationship')}
+                  value={watch('otherRelationship')}
+                />
               )}
             </div>
           </div>
@@ -68,11 +80,17 @@ const GuardianRegister = ({ register, setValue }: GuardianType) => {
               required={true}
               fullWidth={true}
             >
-              <Input placeholder="담임선생님 이름 입력" width="full" {...register('teacherName')} />
+              <Input
+                placeholder="담임선생님 이름 입력"
+                width="full"
+                {...register('schoolTeacherName')}
+                value={watch('schoolTeacherName')}
+              />
               <Input
                 placeholder="담임선생님 연락처 입력"
                 width="full"
-                {...register('teacherNumber')}
+                {...register('schoolTeacherPhoneNumber')}
+                value={watch('schoolTeacherPhoneNumber')}
               />
             </CustomFormItem>
           </div>

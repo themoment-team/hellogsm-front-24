@@ -1,8 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import { UseFormWatch } from 'react-hook-form';
+import { basicRegisterType } from 'types';
 
 import { cn } from 'shared/lib/utils';
+
+type FormField = keyof basicRegisterType;
 
 interface RadioButtonProps {
   title: string;
@@ -11,6 +16,8 @@ interface RadioButtonProps {
   disabled?: boolean;
   disabledOption?: string;
   onChange?: (value: string) => void;
+  watch?: UseFormWatch<basicRegisterType>;
+  watchContent?: FormField;
 }
 
 const RadioButton = ({
@@ -20,8 +27,28 @@ const RadioButton = ({
   disabled,
   disabledOption,
   onChange,
+  watch,
+  watchContent,
 }: RadioButtonProps) => {
   const [selectedOption, setSelectedOption] = useState<string>('');
+
+  useEffect(() => {
+    if (watch && watchContent) {
+      const watchValue = watch(watchContent);
+
+      if (typeof watchValue === 'string' && options.includes(watchValue)) {
+        setSelectedOption(watchValue);
+      } else if (
+        Array.isArray(watchValue) &&
+        watchValue.length > 0 &&
+        options.includes(watchValue[0])
+      ) {
+        setSelectedOption(watchValue[0]);
+      } else {
+        setSelectedOption('');
+      }
+    }
+  }, [watch, watchContent, options]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;

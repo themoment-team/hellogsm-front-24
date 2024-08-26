@@ -1,9 +1,13 @@
 import { StepsContainer } from 'shared';
+import { GetMyOneseoType } from 'types';
 
-interface Props {
+interface RegisterStepsPageProps {
+  data: GetMyOneseoType | undefined;
   param: string;
 }
 
-const StepsPage = ({ param }: Props) => <StepsContainer param={param} />;
+const RegisterStepsPage = ({ data, param }: RegisterStepsPageProps) => (
+  <StepsContainer data={data} param={param} />
+);
 
-export default StepsPage;
+export default RegisterStepsPage;

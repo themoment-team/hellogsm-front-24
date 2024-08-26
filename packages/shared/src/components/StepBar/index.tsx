@@ -94,31 +94,31 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
       detailAddress,
       phoneNumber,
       category,
-      middleSchool,
+      schoolName,
       year,
       month,
       screening,
       choice,
-      parentsName,
-      parentsNumber,
+      guardianName,
+      guardianPhoneNumber,
       relationship,
-      teacherName,
-      teacherNumber,
+      schoolTeacherName,
+      schoolTeacherPhoneNumber,
     } = watch();
     // eslint-disable-next-line no-console
     console.log(errors);
     const nextStep = Math.min(currentStep + 1, Steps.FOUR);
     if (param === '1' && img && address && detailAddress && phoneNumber) {
       updateStep(nextStep);
-    } else if (param === '2' && category && middleSchool && year && month && screening && choice) {
+    } else if (param === '2' && category && schoolName && year && month && screening && choice) {
       updateStep(nextStep);
     } else if (
       param === '3' &&
-      parentsName &&
-      parentsNumber &&
+      guardianName &&
+      guardianPhoneNumber &&
       relationship &&
-      teacherName &&
-      teacherNumber
+      schoolTeacherName &&
+      schoolTeacherPhoneNumber
     ) {
       updateStep(nextStep);
     }

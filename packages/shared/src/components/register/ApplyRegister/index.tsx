@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { UseFormSetValue } from 'react-hook-form';
+import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { basicRegisterType } from 'types';
 
 import { RadioButton, SearchDialog } from 'shared/components';
@@ -23,9 +23,10 @@ const PERMIT_YEAR = 3;
 
 interface ApplyRegisterType {
   setValue: UseFormSetValue<basicRegisterType>;
+  watch: UseFormWatch<basicRegisterType>;
 }
 
-const ApplyRegister = ({ setValue }: ApplyRegisterType) => {
+const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
   const [choices, setChoices] = useState<string[]>(['', '', '']);
   const [selectedSchool, setSelectedSchool] = useState<string>('');
 
@@ -96,6 +97,8 @@ const ApplyRegister = ({ setValue }: ApplyRegisterType) => {
               options={['졸업자', '졸업예정', '검정고시']}
               required={true}
               onChange={handleRadioChange}
+              watch={watch}
+              watchContent="category"
             />
 
             <CustomFormItem
@@ -109,12 +112,12 @@ const ApplyRegister = ({ setValue }: ApplyRegisterType) => {
                   placeholder="내 중학교 찾기"
                   width="full"
                   disabled={true}
-                  value={selectedSchool}
+                  value={watch('schoolName') ? watch('schoolName') : selectedSchool}
                 />
                 <SearchDialog setSelectedSchool={setSelectedSchool} setValue={setValue} />
               </div>
               <div className={cn('flex', 'w-full', 'justify-between')}>
-                <Select onValueChange={handleSelectChange}>
+                <Select onValueChange={handleSelectChange} value={watch('year')}>
                   <SelectTrigger className="w-[14.6785rem]">
                     <SelectValue placeholder="년도 선택" />
                   </SelectTrigger>
@@ -132,7 +135,7 @@ const ApplyRegister = ({ setValue }: ApplyRegisterType) => {
                     </SelectGroup>
                   </SelectContent>
                 </Select>
-                <Select onValueChange={handleSelectChange}>
+                <Select onValueChange={handleSelectChange} value={watch('month')}>
                   <SelectTrigger className="w-[14.6785rem]">
                     <SelectValue placeholder="월 선택" />
                   </SelectTrigger>
@@ -156,6 +159,8 @@ const ApplyRegister = ({ setValue }: ApplyRegisterType) => {
               options={['일반전형', '사회통합전형', '정원 외 특별전형']}
               required={true}
               onChange={handleRadioChange}
+              watch={watch}
+              watchContent="screening"
             />
             <div className={cn('flex', 'flex-col', 'gap-3', 'w-full')}>
               <div className={cn('flex', 'flex-col', 'items-start', 'gap-1.5', 'w-full')}>
@@ -169,7 +174,7 @@ const ApplyRegister = ({ setValue }: ApplyRegisterType) => {
                     {choices.map((choice, index) => (
                       <Select
                         key={index}
-                        value={choice}
+                        value={watch('choice')[index] || choice}
                         onValueChange={(value) => handleChoiceChange(value, index)}
                         disabled={index > 0 && !choices[index - 1]}
                       >
