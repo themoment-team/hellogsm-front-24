@@ -137,7 +137,7 @@ const ApplicantTR = ({
             <Badge variant={firstTestResult}>{firstTestResult}</Badge>
           </TableCell>
           <TableCell className="w-[180px] text-zinc-400">
-            {is직무적성처리기간 ? (
+            {firstTestPassYn === 'YES' && is직무적성처리기간 ? (
               <div className={cn('flex', 'gap-1.5')}>
                 <Controller
                   name="직무적성점수"
@@ -161,7 +161,7 @@ const ApplicantTR = ({
             )}
           </TableCell>
           <TableCell className="w-[180px] text-zinc-400">
-            {is심층면접처리기간 ? (
+            {firstTestPassYn === 'YES' && is심층면접처리기간 ? (
               <div className={cn('flex', 'gap-1.5')}>
                 <Controller
                   name="심층면접점수"
