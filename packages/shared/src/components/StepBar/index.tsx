@@ -60,7 +60,7 @@ interface StepBarType {
 }
 
 const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
-  const router = useRouter();
+  const { push } = useRouter();
   const params = useSearchParams();
   const path = usePathname();
 
@@ -75,7 +75,7 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
 
   const updateStep = (newStep: Steps) => {
     if (newStep !== currentStep) {
-      router.push(`${path}?step=${newStep}`);
+      push(`${path}?step=${newStep}`);
     }
   };
 
