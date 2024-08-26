@@ -5,3 +5,5 @@ export * from './useGetOneseoList';
 export * from './usePatchAptitudeScore';
 export * from './usePatchArrivedStatus';
 export * from './usePatchInterviewScore';
+export * from './useGetAdmissionTickets';
+export * from './usePutOneseoById';

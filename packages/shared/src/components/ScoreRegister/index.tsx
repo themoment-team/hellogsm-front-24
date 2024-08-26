@@ -7,11 +7,13 @@
 import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+// import { usePostMyOneseo, usePutOneseo } from 'api';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FreeSemesterType, GetMyOneseoType, MiddleSchoolAchievementType } from 'types';
 
 import {
   ArtPhysicalForm,
+  EditBar,
   // ArtPhysicalForm,
   // ConfirmBar,
   FormController,
@@ -28,9 +30,9 @@ import { defaultSubjectArray } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
 import { scoreFormSchema } from 'shared/schemas';
 
-import { usePostMockScore } from 'api/hooks';
-
 import type { GradesInputMethodType, ScoreFormType, SemesterIdType } from 'types';
+
+const formId = 'scoreForm';
 
 const freeSemesterConvertor = {
   achievement1_1: '1-1',
@@ -62,9 +64,10 @@ const formWrapper = [
 interface ScoreRegisterProps {
   data: GetMyOneseoType | undefined;
   type: 'client' | 'admin';
+  memberId?: number;
 }
 
-const ScoreRegister = ({ data, type }: ScoreRegisterProps) => {
+const ScoreRegister = ({ data, type, memberId }: ScoreRegisterProps) => {
   const defaultData = data?.middleSchoolAchievement;
   const [liberalSystem, setLiberalSystem] = useState<GradesInputMethodType>(
     defaultData
@@ -103,9 +106,15 @@ const ScoreRegister = ({ data, type }: ScoreRegisterProps) => {
     },
   });
 
-  const { mutate: mutatePostMockScore } = usePostMockScore('CANDIDATE', {
-    onSuccess: (data) => console.log(data),
-  });
+  // const { mutate: mutatePostMyOneseo } = usePostMyOneseo({
+  //   onSuccess: () => {},
+  //   onError: () => {},
+  // });
+
+  // const { mutate: mutatePostOneseo } = usePutOneseo(memberId ?? 0, {
+  //   onSuccess: () => {},
+  //   onError: () => {},
+  // });
 
   const handleDeleteSubjectClick = (idx: number) => {
     const filteredSubjects = subjectArray.filter((_, i) => i !== idx);
@@ -147,6 +156,7 @@ const ScoreRegister = ({ data, type }: ScoreRegisterProps) => {
       newSubjects,
     } = data;
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const body: MiddleSchoolAchievementType = {
       achievement1_1: achievement1_1 ? achievement1_1.map((i) => Number(i)) : null,
       achievement1_2: achievement1_2 ? achievement1_2.map((i) => Number(i)) : null,
@@ -164,8 +174,9 @@ const ScoreRegister = ({ data, type }: ScoreRegisterProps) => {
         : null) as FreeSemesterType,
     };
 
-    console.log(body);
-    mutatePostMockScore(body);
+    // if (type === 'client') return mutatePostMyOneseo(body);
+
+    // if (type === 'admin') return mutatePostOneseo(body);
   };
 
   const handleAddSubjectClick = (defaultSubject?: string) => {
@@ -213,10 +224,10 @@ const ScoreRegister = ({ data, type }: ScoreRegisterProps) => {
         className={cn([
           'w-full',
           'bg-slate-50',
-          'pt-[3.56rem]',
           'pb-[5rem]',
           'flex',
           'justify-center',
+          type === 'client' ? 'pt-[3.56rem]' : 'pt-[8.15rem]',
         ])}
       >
         <div className={cn(['w-[66.5rem]', 'flex', 'flex-col'])}>
@@ -238,7 +249,7 @@ const ScoreRegister = ({ data, type }: ScoreRegisterProps) => {
               className={cn(
                 'text-sm',
                 'font-normal',
-                'eading-5',
+                'leading-5',
                 'text-gray-600',
                 'mt-[0.125rem]',
                 'mb-[2rem]',
@@ -260,6 +271,7 @@ const ScoreRegister = ({ data, type }: ScoreRegisterProps) => {
             >
               <FormController className={cn(['mt-[5.625rem]'])} />
               <form
+                id={formId}
                 onSubmit={handleSubmit(handleFormSubmit)}
                 className={cn('flex', 'flex-col', 'items-center')}
               >
@@ -355,6 +367,7 @@ const ScoreRegister = ({ data, type }: ScoreRegisterProps) => {
                 </div>
               </form>
               {/* {type === 'client' && <ConfirmBar />} */}
+              {type === 'admin' && <EditBar id={formId} />}
             </div>
           </div>
         </div>

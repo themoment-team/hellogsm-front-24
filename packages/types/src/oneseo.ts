@@ -118,3 +118,12 @@ export interface OneseoListType {
   info: { totalPages: number; totalElements: number };
   oneseos: OneseoType[];
 }
+
+export interface TicketType {
+  memberName: string;
+  memberBirth: string;
+  profileImg: string;
+  schoolName: string;
+  appliedScreening: ScreeningType;
+  oneseoSubmitCode: string;
+}
