@@ -17,6 +17,7 @@ export const oneseoQueryKeys = {
     isSubmitted?: string,
     keyword?: string,
   ) => ['oneseo', 'list', page, size, testResultTag, screeningTag, isSubmitted, keyword],
+  getAdmissionTickets: () => ['tickets'],
 } as const;
 
 export const memberQueryKeys = {
