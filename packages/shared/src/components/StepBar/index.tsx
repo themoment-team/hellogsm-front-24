@@ -79,6 +79,39 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
     }
   };
 
+  const handleStep1Errors = () => {
+    const { img, address, detailAddress, phoneNumber } = watch();
+    if (img && address && detailAddress && phoneNumber) {
+      updateStep(Math.min(currentStep + 1, Steps.FOUR));
+    }
+  };
+
+  const handleStep2Errors = () => {
+    const { category, schoolName, year, month, screening, choice } = watch();
+    if (category && schoolName && year && month && screening && choice) {
+      updateStep(Math.min(currentStep + 1, Steps.FOUR));
+    }
+  };
+
+  const handleStep3Errors = () => {
+    const {
+      guardianName,
+      guardianPhoneNumber,
+      relationship,
+      schoolTeacherName,
+      schoolTeacherPhoneNumber,
+    } = watch();
+    if (
+      guardianName &&
+      guardianPhoneNumber &&
+      relationship &&
+      schoolTeacherName &&
+      schoolTeacherPhoneNumber
+    ) {
+      updateStep(Math.min(currentStep + 1, Steps.FOUR));
+    }
+  };
+
   const onSubmit: SubmitHandler<basicRegisterType> = (data) => {
     // eslint-disable-next-line no-console
     console.log(data);
@@ -87,39 +120,20 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
   };
 
   const onError: SubmitErrorHandler<basicRegisterType> = (errors) => {
-    const {
-      img,
-      address,
-      detailAddress,
-      phoneNumber,
-      category,
-      schoolName,
-      year,
-      month,
-      screening,
-      choice,
-      guardianName,
-      guardianPhoneNumber,
-      relationship,
-      schoolTeacherName,
-      schoolTeacherPhoneNumber,
-    } = watch();
     // eslint-disable-next-line no-console
     console.log(errors);
-    const nextStep = Math.min(currentStep + 1, Steps.FOUR);
-    if (param === '1' && img && address && detailAddress && phoneNumber) {
-      updateStep(nextStep);
-    } else if (param === '2' && category && schoolName && year && month && screening && choice) {
-      updateStep(nextStep);
-    } else if (
-      param === '3' &&
-      guardianName &&
-      guardianPhoneNumber &&
-      relationship &&
-      schoolTeacherName &&
-      schoolTeacherPhoneNumber
-    ) {
-      updateStep(nextStep);
+    switch (param) {
+      case '1':
+        handleStep1Errors();
+        break;
+      case '2':
+        handleStep2Errors();
+        break;
+      case '3':
+        handleStep3Errors();
+        break;
+      default:
+        break;
     }
   };
 
