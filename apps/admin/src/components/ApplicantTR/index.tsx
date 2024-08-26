@@ -58,8 +58,16 @@ const ApplicantTR = ({
     },
   });
 
-  const { mutate: patchAptitudeScore } = usePatchAptitudeScore(memberId);
-  const { mutate: patchInterviewScore } = usePatchInterviewScore(memberId);
+  const { mutate: patchAptitudeScore } = usePatchAptitudeScore(memberId, {
+    onSuccess: () => {
+      refetch();
+    },
+  });
+  const { mutate: patchInterviewScore } = usePatchInterviewScore(memberId, {
+    onSuccess: () => {
+      refetch();
+    },
+  });
 
   const firstTestResult =
     firstTestPassYn === 'YES' ? '합격' : firstTestPassYn === 'NO' ? '불합격' : '미정';
@@ -98,11 +106,11 @@ const ApplicantTR = ({
   };
 
   const handleAptitudeScore = () => {
-    patchAptitudeScore({ score: parseInt(watch('직무적성점수')) });
+    patchAptitudeScore({ aptitudeEvaluationScore: parseInt(watch('직무적성점수')) });
   };
 
   const handleInterviewScore = () => {
-    patchInterviewScore({ score: parseInt(watch('심층면접점수')) });
+    patchInterviewScore({ interviewScore: parseInt(watch('심층면접점수')) });
   };
 
   return (

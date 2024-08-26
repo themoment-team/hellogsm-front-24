@@ -6,10 +6,10 @@ import { oneseoQueryKeys, oneseoUrl, patch } from 'api/libs';
 
 export const usePatchInterviewScore = (
   memberId: number,
-  options?: UseMutationOptions<unknown, AxiosError, { score: number }>,
+  options?: UseMutationOptions<unknown, AxiosError, { interviewScore: number }>,
 ) =>
   useMutation({
     mutationKey: oneseoQueryKeys.patchInterviewScore(memberId),
-    mutationFn: (score) => patch(oneseoUrl.patchInterviewScore(memberId), score),
+    mutationFn: (interviewScore) => patch(oneseoUrl.patchInterviewScore(memberId), interviewScore),
     ...options,
   });
