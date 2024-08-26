@@ -7,3 +7,4 @@ export { default as ProgressBarIcon } from './icon/Step/ProgressBarIcon';
 export { default as SearchIcon } from './icon/SearchDialog/SearchIcon';
 export { default as UploadIcon } from './icon/UploadPhoto/UploadIcon';
 export { default as MouseIcon } from './icon/Confirm/MouseIcon';
+export { default as EditCheckIcon } from './icon/EditBar/EditCheckIcon';

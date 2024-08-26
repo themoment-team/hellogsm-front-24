@@ -3,11 +3,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { XIcon } from 'lucide-react';
 import { Control, Controller, UseFormRegister, UseFormSetValue } from 'react-hook-form';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared/components';
-
-import { defaultSubjectArray, scoreArray } from 'shared/constants';
 import { ScoreFormType, SemesterIdType, SemesterType } from 'types';
 
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared/components';
+import { defaultSubjectArray, scoreArray } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
 
 const defaultSubjectLength = defaultSubjectArray.length;

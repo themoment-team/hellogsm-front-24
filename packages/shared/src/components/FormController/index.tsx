@@ -30,13 +30,13 @@ const FormController = ({ className }: FormControllerProps) => {
             onClick={() => handleButtonClick(formName)}
             className={cn([
               'flex',
-              'w-[7.5rem]',
+              'w-30',
               'text-sm',
               'leading-5',
-              'gap-[0.5rem]',
-              'rounded-[0.375rem]',
-              'px-[0.75rem]',
-              'py-[0.5rem]',
+              'gap-2',
+              'rounded-md',
+              'px-3',
+              'py-2',
               'items-center',
               isSelected === formName
                 ? ['font-medium', 'bg-blue-50', 'text-blue-600']
@@ -46,8 +46,8 @@ const FormController = ({ className }: FormControllerProps) => {
           >
             <div
               className={cn([
-                'w-[0.5rem]',
-                'h-[0.5rem]',
+                'w-2',
+                'h-2',
                 'rounded-full',
                 isSelected === formName ? 'bg-blue-500' : 'bg-slate-200',
               ])}

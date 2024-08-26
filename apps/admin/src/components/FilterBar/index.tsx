@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { YesNo, ScreeningType } from 'types';
 
 import { SearchIcon, PrintIcon, FileIcon } from 'admin/assets';
@@ -34,6 +35,8 @@ const FilterBar = ({
   setScreeningTag,
   screeningTag,
 }: FilterBarProps) => {
+  const { push } = useRouter();
+
   const handleSubmittedChange = (value: string) => {
     if (value === 'YES' || value === 'NO') {
       setIsSubmitted(value);
@@ -51,6 +54,10 @@ const FilterBar = ({
     setIsSubmitted(undefined);
     setScreeningTag(undefined);
     setKeyword('');
+  };
+
+  const handlePrintButtonClick = () => {
+    push('/print');
   };
 
   return (
@@ -100,7 +107,10 @@ const FilterBar = ({
       </div>
 
       <div className={cn('flex', 'gap-2')}>
-        <Button className={cn('gap-2', 'bg-slate-900', 'hover:bg-slate-700')}>
+        <Button
+          onClick={handlePrintButtonClick}
+          className={cn('gap-2', 'bg-slate-900', 'hover:bg-slate-700')}
+        >
           <PrintIcon />
           수험표 출력
         </Button>

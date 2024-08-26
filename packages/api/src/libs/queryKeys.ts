@@ -8,6 +8,7 @@ export const oneseoQueryKeys = {
   postTempStorage: () => ['post', 'temp', 'oneseo', 'storage'],
   postMyOneseo: () => ['post', 'my', 'oneseo'],
   postMockScore: (type: GraduationType) => ['mock', 'oneseo', 'score', type],
+  putOneseoByMemberId: (memberId: number) => ['put', 'oneseo', memberId],
   getSearchedOneseoList: (
     page: number,
     size: number,
@@ -16,6 +17,7 @@ export const oneseoQueryKeys = {
     isSubmitted?: string,
     keyword?: string,
   ) => ['oneseo', 'list', page, size, testResultTag, screeningTag, isSubmitted, keyword],
+  getAdmissionTickets: () => ['tickets'],
 } as const;
 
 export const memberQueryKeys = {
