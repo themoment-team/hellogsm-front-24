@@ -1,9 +1,7 @@
 'use client';
 
-import { Button } from 'shared';
-
-import { MouseIcon } from 'client/assets';
-
+import { MouseIcon } from 'shared/assets';
+import { Button } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
 const ConfirmBar = () => {

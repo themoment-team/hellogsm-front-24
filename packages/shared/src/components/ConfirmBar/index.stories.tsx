@@ -3,7 +3,7 @@ import ConfirmBar from '.';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof ConfirmBar> = {
-  title: 'Client/ConfirmBar',
+  title: 'Shared/ConfirmBar',
   component: ConfirmBar,
 };
 

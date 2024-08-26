@@ -10,5 +10,4 @@ export { default as Section4 } from './MainPage/Section4';
 export { default as MockCalculatePage } from './MockCalculatePage';
 export { default as SexToggle } from './SexToggle';
 export { default as LoginDialog } from './LoginDialog';
-export { default as ConfirmBar } from './ConfirmBar';
 export { default as ChannelTalk } from './ChannelTalk';

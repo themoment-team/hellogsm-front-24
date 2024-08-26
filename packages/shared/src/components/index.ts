@@ -12,3 +12,4 @@ export { default as SearchElements } from './SearchElements';
 export { default as UploadPhoto } from './UploadPhoto';
 export { default as RadioButton } from './RadioButton';
 export { default as CustomFormItem } from './CustomFormItem';
+export { default as ConfirmBar } from './ConfirmBar';
