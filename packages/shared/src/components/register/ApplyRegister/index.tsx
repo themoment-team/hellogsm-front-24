@@ -67,14 +67,12 @@ const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
   const handlCategoryChange = (value: string) => {
     if (categoryValues.includes(value)) {
       setValue('category', value);
-      return;
     }
   };
 
   const handleScreeningChange = (value: string) => {
     if (screeningValues.includes(value)) {
       setValue('screening', value);
-      return;
     }
   };
 
