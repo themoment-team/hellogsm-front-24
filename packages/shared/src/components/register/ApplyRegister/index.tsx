@@ -33,6 +33,8 @@ const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
   const targetYear = new Date().getFullYear() + 1;
 
   const departments = ['소프트웨어개발과', '스마트IOT과', '인공지능과'];
+  const categoryValues = ['졸업자', '졸업예정', '검정고시'];
+  const screeningValues = ['일반전형', '사회통합전형', '정원 외 특별전형'];
 
   const departmentDetails = [
     {
@@ -62,20 +64,26 @@ const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
     });
   };
 
-  const handleRadioChange = (value: string) => {
-    if (value === '졸업자' || value === '졸업예정' || value === '검정고시') {
+  const handlCategoryChange = (value: string) => {
+    if (categoryValues.includes(value)) {
       setValue('category', value);
-    } else if (value === '일반전형' || value === '사회통합전형' || value === '정원 외 특별전형') {
-      setValue('screening', value);
+      return;
     }
   };
 
-  const handleSelectChange = (value: string) => {
-    if (value.length === 4) {
-      setValue('year', value);
-    } else {
-      setValue('month', value);
+  const handleScreeningChange = (value: string) => {
+    if (screeningValues.includes(value)) {
+      setValue('screening', value);
+      return;
     }
+  };
+
+  const handleYearChange = (value: string) => {
+    setValue('year', value);
+  };
+
+  const handleMonthChange = (value: string) => {
+    setValue('month', value);
   };
 
   return (
@@ -96,7 +104,7 @@ const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
               title={'지원자 유형'}
               options={['졸업자', '졸업예정', '검정고시']}
               required={true}
-              onChange={handleRadioChange}
+              onChange={handlCategoryChange}
               watch={watch}
               watchContent="category"
             />
@@ -117,7 +125,7 @@ const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
                 <SearchDialog setSelectedSchool={setSelectedSchool} setValue={setValue} />
               </div>
               <div className={cn('flex', 'w-full', 'justify-between')}>
-                <Select onValueChange={handleSelectChange} value={watch('year')}>
+                <Select onValueChange={handleYearChange} value={watch('year')}>
                   <SelectTrigger className="w-[14.6785rem]">
                     <SelectValue placeholder="년도 선택" />
                   </SelectTrigger>
@@ -135,7 +143,7 @@ const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
                     </SelectGroup>
                   </SelectContent>
                 </Select>
-                <Select onValueChange={handleSelectChange} value={watch('month')}>
+                <Select onValueChange={handleMonthChange} value={watch('month')}>
                   <SelectTrigger className="w-[14.6785rem]">
                     <SelectValue placeholder="월 선택" />
                   </SelectTrigger>
@@ -158,7 +166,7 @@ const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
               title={'전형'}
               options={['일반전형', '사회통합전형', '정원 외 특별전형']}
               required={true}
-              onChange={handleRadioChange}
+              onChange={handleScreeningChange}
               watch={watch}
               watchContent="screening"
             />
