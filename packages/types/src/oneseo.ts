@@ -21,6 +21,12 @@ export enum ScreeningEnum {
   EXTRA_ADMISSION = "특례입학",
 }
 
+export enum GraduationEnum {
+  CANDIDATE = "졸업",
+  GRADUATE = "졸업예정",
+  GED = "검정고시",
+}
+
 export interface MiddleSchoolAchievementType {
   achievement1_1: number[] | null;
   achievement1_2: number[] | null;
