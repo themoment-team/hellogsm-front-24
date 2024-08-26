@@ -154,9 +154,6 @@ importers:
       eslint-config-custom:
         specifier: workspace:^
         version: link:../../packages/code-style-config
-      next:
-        specifier: 14.2.3
-        version: 14.2.3(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react:
         specifier: ^18
         version: 18.3.1
@@ -178,9 +175,6 @@ importers:
       types:
         specifier: workspace:^
         version: link:../../packages/types
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
     devDependencies:
       '@types/node':
         specifier: ^20
@@ -288,9 +282,6 @@ importers:
       eslint-config-custom:
         specifier: workspace:^
         version: link:../code-style-config
-      next:
-        specifier: 14.2.3
-        version: 14.2.3(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       shared:
         specifier: workspace:^
         version: link:../shared
@@ -406,9 +397,6 @@ importers:
       types:
         specifier: workspace:^
         version: 'link:'
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
 
 packages:
 
