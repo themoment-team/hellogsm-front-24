@@ -71,8 +71,8 @@ const RadioButton = ({
               type="radio"
               name={title}
               value={option}
-              checked={selectedOption === option || option === disabledOption}
-              disabled={disabled && option === disabledOption}
+              checked={selectedOption === option}
+              disabled={disabled || option === disabledOption}
               onChange={handleChange}
               className={cn(
                 'appearance-none',
