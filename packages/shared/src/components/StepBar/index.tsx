@@ -12,9 +12,8 @@ import {
 import { basicRegisterType } from 'types';
 
 import { StepCheckIcon, ProgressBarIcon } from 'shared/assets';
+import { Button } from 'shared/components';
 import { cn } from 'shared/lib/utils';
-
-import { Button } from '..';
 
 export enum Steps {
   ONE = 1,

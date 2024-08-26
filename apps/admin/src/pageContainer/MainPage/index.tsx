@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { OneseoListType } from 'types';
-import { YesNo, ScreeningType, TestResultType } from 'types';
+import { YesNo, ScreeningType, TestResultType, OneseoListType } from 'types';
 
 import { SideMenu, FilterBar, ApplicantTH, ApplicantTR } from 'admin/components';
 
