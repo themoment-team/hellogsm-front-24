@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 import { Address, useDaumPostcodePopup } from 'react-daum-postcode';
 import { UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 
@@ -29,12 +27,9 @@ interface BasicInfoType {
 }
 
 const BasicRegister = ({ name, birth, sex, register, setValue, watch }: BasicInfoType) => {
-  const [address, setAddress] = useState<string>('');
-  const [zonecode, setZoncode] = useState<string>('');
-
   const daumPostCode = useDaumPostcodePopup();
 
-  const userAddress = address && zonecode ? `${address} ${zonecode}` : '주소를 입력해 주세요';
+  const userAddress = watch('address') ? watch('address') : '주소를 입력해 주세요';
 
   const birthDate = birth ? new Date(birth) : null;
   const birthYear = birthDate ? birthDate.getFullYear() : '';
@@ -42,8 +37,6 @@ const BasicRegister = ({ name, birth, sex, register, setValue, watch }: BasicInf
   const birthDay = birthDate ? String(birthDate.getDate()).padStart(2, '0') : '';
 
   const handleDaumPostCodePopupComplete = ({ address, zonecode }: Address) => {
-    setAddress(address);
-    setZoncode(zonecode);
     setValue('address', `${address} ${zonecode}`);
   };
 
