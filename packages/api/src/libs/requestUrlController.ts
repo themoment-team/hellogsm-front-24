@@ -40,4 +40,6 @@ export const memberUrl = {
   getMyMemberInfo: () => '/member/v3/member/me',
   getMyAuthInfo: () => '/member/v3/auth-info/me',
   postMemberRegister: () => '/member/v3/member/me',
+  postNumberRegister: () => '/member/v3/member/me/send-code',
+  postCodeRegister: () => '/member/v3/member/me/auth-code',
 };
