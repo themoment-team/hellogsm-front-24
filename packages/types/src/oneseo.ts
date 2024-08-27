@@ -27,6 +27,27 @@ export enum GraduationEnum {
   GED = "검정고시",
 }
 
+export enum MajorEnum {
+  SW = "소프트웨어개발과",
+  IOT = "스마트 IoT과",
+  AI = "인공지능과",
+}
+
+export type AchievementGradeType =
+  | "achievement1_1"
+  | "achievement1_2"
+  | "achievement2_1"
+  | "achievement2_2"
+  | "achievement3_1";
+
+export const achievementGradeValues = [
+  "achievement1_1",
+  "achievement1_2",
+  "achievement2_1",
+  "achievement2_2",
+  "achievement3_1",
+] as const;
+
 export interface MiddleSchoolAchievementType {
   achievement1_1: number[] | null;
   achievement1_2: number[] | null;
