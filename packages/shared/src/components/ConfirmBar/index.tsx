@@ -4,7 +4,11 @@ import { MouseIcon } from 'shared/assets';
 import { Button } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
-const ConfirmBar = () => {
+interface ConfirmBarProps {
+  id: string;
+}
+
+const ConfirmBar = ({ id }: ConfirmBarProps) => {
   return (
     <div
       className={cn(
@@ -31,7 +35,7 @@ const ConfirmBar = () => {
 
       <div className={cn('flex', 'items-center', 'gap-[0.5rem]')}>
         <Button variant="outline">임시저장</Button>
-        <Button variant="submit">
+        <Button variant="submit" type="submit" form={id}>
           <MouseIcon />
           <p>원서 최종</p>
         </Button>
