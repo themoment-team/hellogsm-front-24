@@ -1,63 +1,30 @@
-import { useEffect, useState } from 'react';
+// import { plusAll } from 'shared';
+import { GetMyOneseoType, SexEnum } from 'types';
 
-import dayjs from 'dayjs';
-import toStringArray from 'utils/Array/toStringArray';
-import { formatGender } from 'utils/Format';
+import { OneseoStatus } from 'client/components';
 
-import { ApplicantsStatus } from 'client/components';
+import { PrintIcon } from 'shared/assets';
+import { Button } from 'shared/components';
 
-import { ApplicationDataType } from 'types/application';
-import { isGED } from 'types/ged';
-import { LocalScoreType } from 'types/score';
+import { useGetMyOneseo } from 'api/hooks';
 
-const ApplicationPage = ({ data }: ApplicationDataType) => {
-  const [score1_1, setScore1_1] = useState<string[] | undefined>([]);
-  const [score1_2, setScore1_2] = useState<string[] | undefined>([]);
-  const [score2_1, setScore2_1] = useState<string[] | undefined>([]);
-  const [score2_2, setScore2_2] = useState<string[] | undefined>([]);
-  const [score3_1, setScore3_1] = useState<string[] | undefined>([]);
-  const [artSportsScore, setArtSportsScore] = useState<string[]>([]);
-  const [absentScore, setAbsentScore] = useState<number[]>([]);
-  const [attendanceScore, setAttendanceScore] = useState<number[]>([]);
-  const [volunteerScore, setVolunteerScore] = useState<number[]>([]);
-  const [subjects, setSubjects] = useState<string[]>([]);
-  const [newSubjects, setNewSubjects] = useState<string[]>([]);
-  const [nonSubjects, setNonSubjects] = useState<string[]>([]);
+interface PrintPageProps {
+  initialData: GetMyOneseoType;
+}
 
-  const { admissionGrade, middleSchoolGrade, admissionInfo } = data || {};
+const ApplicationPage = ({ initialData }: PrintPageProps) => {
+  const { data: oneseo } = useGetMyOneseo({ initialData: initialData });
 
-  useEffect(() => {
-    const scoreData: LocalScoreType | null = middleSchoolGrade
-      ? JSON.parse(middleSchoolGrade)
-      : null;
-    setScore1_1(toStringArray(scoreData?.score1_1));
-    setScore1_2(toStringArray(scoreData?.score1_2));
-    setScore2_1(toStringArray(scoreData?.score2_1));
-    setScore2_2(toStringArray(scoreData?.score2_2));
-    setScore3_1(toStringArray(scoreData?.score3_1));
-    setArtSportsScore(toStringArray(scoreData?.artSportsScore) || []);
-    setAbsentScore(scoreData?.absentScore || []);
-    setAttendanceScore(scoreData?.attendanceScore || []);
-    setVolunteerScore(scoreData?.volunteerScore || []);
-    setSubjects(scoreData?.subjects || []);
-    setNewSubjects(scoreData?.newSubjects || []);
-    setNonSubjects(scoreData?.nonSubjects || []);
-  }, [middleSchoolGrade]);
+  if (!oneseo) return <>원서 정보가 없습니다</>;
 
-  const isGEDScore = isGED(admissionGrade);
+  // const isGEDScore = !!oneseo.middleSchoolAchievement.gedTotalScore;
 
-  const conversionDays = !isGEDScore && admissionGrade && 30 - admissionGrade?.attendanceScore / 3;
+  // const conversionDays =
+  //   !isGEDScore &&
+  //   oneseo.middleSchoolAchievement &&
+  //   30 - plusAll(oneseo.middleSchoolAchievement.attendanceDays) / 3;
 
-  const userBirth = admissionInfo && new Date(admissionInfo?.applicantBirth);
-  const Formatbirth =
-    userBirth &&
-    dayjs()
-      .set('year', userBirth.getFullYear())
-      .set('month', userBirth.getMonth())
-      .set('date', userBirth.getDate())
-      .format('YYYY-MM-DD');
-
-  const TryPrint = () => {
+  const handlePrint = () => {
     window.print();
   };
 
@@ -74,6 +41,13 @@ const ApplicationPage = ({ data }: ApplicationDataType) => {
         }
       `}</style>
       {/* 입학원서 */}
+      <Button
+        className="fixed items-center gap-2 bottom-10 right-10 print:hidden"
+        onClick={handlePrint}
+      >
+        <PrintIcon />
+        <p className="text-[2.1vh] font-bold hover:text-white">인쇄하기</p>
+      </Button>
       <div className="flex h-screen justify-center overflow-hidden bg-white p-2 text-[1vh]">
         <div className="relative z-[1] w-[63vh]">
           <div className="absolute z-[-1] rotate-[-30deg] select-none text-center text-[40vh] text-gray-200">
@@ -101,16 +75,16 @@ const ApplicationPage = ({ data }: ApplicationDataType) => {
                     지원자
                   </th>
                   <th>성 명</th>
-                  <td>{admissionInfo?.applicantName}</td>
+                  <td>{oneseo.privacyDetail.name}</td>
                   <th className="w-[3%]">성별</th>
-                  <td>{formatGender(admissionInfo?.applicantGender)}</td>
+                  <td>{SexEnum[oneseo.privacyDetail.sex ?? 'MALE']}</td>
                   <th>생년월일</th>
-                  <td>{Formatbirth}</td>
+                  <td>{oneseo.privacyDetail.birth}</td>
                   <td
                     rowSpan={6}
                     className="h-[25vh] w-[18vh]"
                     style={{
-                      backgroundImage: `url(${admissionInfo?.applicantImageUri})`,
+                      backgroundImage: `url(${oneseo.privacyDetail.profileImg})`,
                       backgroundSize: '18vh 25vh',
                       backgroundRepeat: 'no-repeat',
                     }}
@@ -118,53 +92,53 @@ const ApplicationPage = ({ data }: ApplicationDataType) => {
                 </tr>
                 <tr>
                   <th>주 소</th>
-                  <td colSpan={5}>{admissionInfo?.address}</td>
+                  <td colSpan={5}>{oneseo.privacyDetail.address}</td>
                 </tr>
                 <tr>
                   <th>연락처</th>
-                  <th>집전화</th>
-                  {admissionInfo?.telephone ? (
-                    <td colSpan={2}>{admissionInfo?.telephone}</td>
+                  {/* <th>집전화</th>
+                  {oneseo.privacyDetail.phoneNumber ? (
+                    <td colSpan={1}>{oneseo.privacyDetail.phoneNumber}</td>
                   ) : (
                     <td colSpan={2} className="line-through"></td>
-                  )}
+                  )} */}
                   <th>핸드폰</th>
-                  <td>{admissionInfo?.applicantPhoneNumber}</td>
+                  <td>{oneseo.privacyDetail.phoneNumber}</td>
                 </tr>
                 <tr>
                   <th className="w-[3%]" rowSpan={2}>
                     보호자
                   </th>
                   <th>성 명</th>
-                  <td colSpan={2}>{admissionInfo?.guardianName}</td>
+                  <td colSpan={2}>{oneseo.privacyDetail.guardianName}</td>
                   <th>지원자와의 관계</th>
-                  <td colSpan={2}>{admissionInfo?.relationWithApplicant}</td>
+                  <td colSpan={2}>{oneseo.privacyDetail.relationshipWithGuardian}</td>
                 </tr>
                 <tr>
                   <th>핸드폰</th>
-                  <td colSpan={5}>{admissionInfo?.guardianPhoneNumber}</td>
+                  <td colSpan={5}>{oneseo.privacyDetail.guardianPhoneNumber}</td>
                 </tr>
                 <tr>
                   <th colSpan={3}>
                     원서작성자(담임) <br /> 성명
                   </th>
-                  {admissionInfo?.teacherName ? (
+                  {oneseo.privacyDetail.schoolTeacherName ? (
                     <td colSpan={2} className="text-end">
-                      {admissionInfo?.teacherName}(인)
+                      {oneseo.privacyDetail.schoolTeacherName}(인)
                     </td>
                   ) : (
                     <td colSpan={2} className="line-through"></td>
                   )}
                   <th>핸드폰</th>
-                  {admissionInfo?.teacherPhoneNumber ? (
-                    <td>{admissionInfo?.teacherPhoneNumber}</td>
+                  {oneseo.privacyDetail.schoolTeacherPhoneNumber ? (
+                    <td>{oneseo.privacyDetail.schoolTeacherPhoneNumber}</td>
                   ) : (
                     <td className="line-through"></td>
                   )}
                 </tr>
               </thead>
             </table>
-            <ApplicantsStatus data={data} />
+            <OneseoStatus oneseo={oneseo} />
             <div className="p-2">
               <div className="mb-4">
                 위 학생은 2024학년도 귀교 제1학년에 입학하고자 소정의 서류를 갖추어 지원하며, &nbsp;
@@ -192,7 +166,7 @@ const ApplicationPage = ({ data }: ApplicationDataType) => {
           <div className="my-4 text-center">2차 전형 응시 준비물 : 신분증[학생증], 필기구 등</div>
         </div>
       </div>
-      {!isGEDScore && (
+      {/* {!isGEDScore && (
         <div className="flex h-screen justify-center overflow-hidden bg-white p-2 text-[1vh]">
           <div className="relative z-[1] w-[63vh]">
             <div className="absolute z-[-1] rotate-[-30deg] select-none text-center text-[40vh] text-gray-200">
@@ -219,11 +193,13 @@ const ApplicationPage = ({ data }: ApplicationDataType) => {
               <tbody>
                 <tr>
                   <th rowSpan={2}>교과성적</th>
-                  {[score1_1, score1_2, score2_1, score2_2, score3_1].map((score, index) => (
-                    <td key={index} className="text-[2.5vh] font-bold">
-                      {score?.[0] || '-'}
-                    </td>
-                  ))}
+                  {achievementGradeValues
+                    .map((gradeKey) => oneseo.middleSchoolAchievement[gradeKey])
+                    .map((score, index) => (
+                      <td key={index} className="text-[2.5vh] font-bold">
+                        {score?.[0] || '-'}
+                      </td>
+                    ))}
                   <td className="text-[2.5vh] font-bold">{score1_1?.[1] || '-'}</td>
                 </tr>
                 <tr>
@@ -255,7 +231,7 @@ const ApplicationPage = ({ data }: ApplicationDataType) => {
             </table>
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 };

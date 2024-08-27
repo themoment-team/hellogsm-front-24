@@ -33,6 +33,11 @@ export enum MajorEnum {
   AI = "인공지능과",
 }
 
+export enum SexEnum {
+  MALE = "남자",
+  FEMALE = "여자",
+}
+
 export type AchievementGradeType =
   | "achievement1_1"
   | "achievement1_2"
@@ -75,7 +80,7 @@ export interface DesireMajorsType {
 
 export interface PrivacyDetailType {
   name: string;
-  sex: string;
+  sex: SexType;
   birth: string;
   phoneNumber: string;
   graduationType: GraduationType;

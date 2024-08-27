@@ -19,3 +19,4 @@ export { default as ConfirmBar } from './ConfirmBar';
 export { default as SearchDialog } from './SearchDialog';
 export { default as SearchElements } from './SearchElements';
 export { default as ChannelTalk } from './ChannelTalk';
+export { default as OneseoStatus } from './OneseoStatus';
