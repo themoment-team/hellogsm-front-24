@@ -56,15 +56,14 @@ const SignUpPage = () => {
   });
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-
     if (btnClick && timeLeft > 0) {
+      let timer: NodeJS.Timeout;
+
       timer = setInterval(() => {
         setTimeLeft((prevTime) => prevTime - 1);
       }, 1000);
+      return () => clearInterval(timer);
     }
-
-    return () => clearInterval(timer);
   }, [btnClick, timeLeft]);
 
   const formatTime = (seconds: number) => {
