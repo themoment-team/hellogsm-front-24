@@ -34,6 +34,7 @@ export interface MiddleSchoolAchievementType {
   volunteerTime: number[];
   liberalSystem: LiberalSystemType;
   freeSemester: FreeSemesterType;
+  artsPhysicalSubjects: string[];
 }
 
 export interface GEDAchievementType {
@@ -77,8 +78,7 @@ export interface PostOneseoType {
   firstDesiredMajor: MajorType;
   secondDesiredMajor: MajorType;
   thirdDesiredMajor: MajorType;
-  middleSchoolAchievement: MiddleSchoolAchievementType &
-    GEDAchievementType & { artsPhysicalSubjects: string[] };
+  middleSchoolAchievement: MiddleSchoolAchievementType | GEDAchievementType;
   schoolName: string;
   schoolAddress: string;
   screening: ScreeningType;
