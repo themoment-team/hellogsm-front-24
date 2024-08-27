@@ -26,6 +26,7 @@ interface SearchDialogProps {
 
 interface SchoolType {
   SCHUL_NM: string;
+  ORG_RDNMA: string;
 }
 
 const SearchDialog = ({ setSelectedSchool, setValue }: SearchDialogProps) => {
@@ -78,6 +79,7 @@ const SearchDialog = ({ setSelectedSchool, setValue }: SearchDialogProps) => {
     setSchools([]);
     setIsSelecting(true);
     setValue('schoolName', school.SCHUL_NM);
+    setValue('schoolAddress', school.ORG_RDNMA);
   };
 
   return (

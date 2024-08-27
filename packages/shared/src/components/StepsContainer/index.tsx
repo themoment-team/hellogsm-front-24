@@ -72,6 +72,7 @@ const StepsContianer = ({ data, param }: Props) => {
       phoneNumber: defaultDetailData?.phoneNumber || '',
       category: getCategoryFromGraduationType(defaultDetailData?.graduationType || ''),
       schoolName: defaultDetailData?.schoolName || '',
+      schoolAddress: defaultDetailData?.schoolAddress || '',
       year: '',
       month: '',
       screening: getScreeningTypeText(defaultScreening || ''),

@@ -10,6 +10,7 @@ export const basicRegisterSchema = z.object({
     .max(11, { message: '전화번호를 제대로 입력해주세요.' }),
   category: z.string().min(1, '유형을 선택해주세요'),
   schoolName: z.string().min(1, '중학교를 입력해주세요'),
+  schoolAddress: z.string().min(1, '중학교위치를 입력해주세요'),
   year: z.string().min(1, '년도를 선택해주세요'),
   month: z.string().min(1, '달을 선택해주세요'),
   screening: z.string().min(1, '전형을 선택해주세요'),

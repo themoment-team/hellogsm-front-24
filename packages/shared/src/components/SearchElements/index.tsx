@@ -2,6 +2,7 @@ import { cn } from 'shared/lib/utils';
 
 interface SchoolType {
   SCHUL_NM: string;
+  ORG_RDNMA: string;
 }
 
 interface SearchElementsProps {
