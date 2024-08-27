@@ -1,10 +1,13 @@
 'use client';
 
+import { useState } from 'react';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, FormProvider } from 'react-hook-form';
 import { MemberRegisterType, SexType } from 'types';
 import { z } from 'zod';
 
+import * as I from 'client/assets';
 import { FormItem as CustomFormItem, Footer, SexToggle } from 'client/components';
 import { usePostMemberRegister } from 'client/hooks';
 import { signupFormSchema } from 'client/schemas';
@@ -79,7 +82,7 @@ const SignUpPage = () => {
     // eslint-disable-next-line no-console
     console.log(data);
   };
-  // const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
 
   return (
     <>
@@ -218,8 +221,25 @@ const SignUpPage = () => {
               </div>
             </CustomFormItem>
 
-            <input type="checkbox" {...formMethods.register('isAgreed')} />
-
+            <FormItem className={cn('text-gray-900', 'text-sm', 'font-medium')}>
+              <div className={cn('flex', 'items-center', 'gap-1')}>
+                <input type="checkbox" {...formMethods.register('isAgreed')} />
+                [필수] 개인정보 수집 및 이용에 동의합니다.
+                <button
+                  type="button"
+                  onClick={() => setShowPrivacyPolicy(!showPrivacyPolicy)}
+                  className={cn(
+                    'transition-transform duration-300',
+                    showPrivacyPolicy ? 'rotate-180' : 'rotate-0',
+                  )}
+                >
+                  <I.ChevronIcon />
+                </button>
+              </div>
+              {showPrivacyPolicy && (
+                <p className="mt-2 rounded-md bg-slate-100 p-4">개인정보 보호법 1조.</p>
+              )}
+            </FormItem>
             <Button
               type="submit"
               variant="disabled"
