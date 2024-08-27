@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, FormProvider } from 'react-hook-form';
-import { MemberRegisterType, SexType, CodeRegisterType } from 'types';
+import { MemberRegisterType, SexType, SendCodeType } from 'types';
 import { z } from 'zod';
 
 import { ChevronIcon } from 'client/assets';
@@ -138,7 +138,7 @@ const SignUpPage = () => {
   };
 
   const sendCodeNumber = (number: string) => {
-    const body: CodeRegisterType = {
+    const body: SendCodeType = {
       phoneNumber: number,
     };
     mutateSendCode(body);
