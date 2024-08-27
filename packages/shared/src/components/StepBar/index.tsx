@@ -9,11 +9,12 @@ import {
   UseFormHandleSubmit,
   UseFormWatch,
 } from 'react-hook-form';
-import { basicRegisterType } from 'types';
+import { basicRegisterType, GraduationType, MajorType, ScreeningType } from 'types';
 
 import { StepCheckIcon, ProgressBarIcon } from 'shared/assets';
 import { Button } from 'shared/components';
 import { cn } from 'shared/lib/utils';
+import { useStore } from 'shared/stores';
 
 export enum Steps {
   ONE = 1,
@@ -54,7 +55,7 @@ const Step = ({ step, isActive, isCompleted }: StepType) => {
 };
 
 interface StepBarType {
-  param: string;
+  param?: string;
   handleSubmit: UseFormHandleSubmit<basicRegisterType>;
   watch: UseFormWatch<basicRegisterType>;
 }
@@ -63,6 +64,7 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
   const { push } = useRouter();
   const params = useSearchParams();
   const path = usePathname();
+  const store = useStore();
 
   const [currentStep, setCurrentStep] = useState(Steps.ONE);
 
@@ -82,13 +84,56 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
   const handleStep1Errors = () => {
     const { img, address, detailAddress, phoneNumber } = watch();
     if (img && address && detailAddress && phoneNumber) {
+      const { setProfileImg, setAddress, setDetailAddress } = store;
+
+      setProfileImg(img);
+      setAddress(address);
+      setDetailAddress(detailAddress);
+
       updateStep(Math.min(currentStep + 1, Steps.FOUR));
     }
   };
 
   const handleStep2Errors = () => {
-    const { category, schoolName, year, month, screening, choice } = watch();
-    if (category && schoolName && year && month && screening && choice) {
+    const { category, schoolName, year, month, screening, choice, schoolAddress } = watch();
+    if (category && schoolName && year && month && screening && choice && schoolAddress) {
+      const {
+        setScreening,
+        setFirstDesiredMajor,
+        setSecondDesiredMajor,
+        setThirdDesiredMajor,
+        setGraduationType,
+        setSchoolName,
+        setSchoolAddress,
+      } = store;
+      console.log(category);
+
+      const categoryConvertor: { [key: string]: GraduationType } = {
+        졸업자: 'GRADUATE',
+        졸업예정: 'CANDIDATE',
+        검정고시: 'GED',
+      };
+
+      const screeningConvertor: { [key: string]: ScreeningType } = {
+        일반전형: 'GENERAL',
+        사회통합전형: 'SPECIAL',
+        '정원 외 특별전형': 'EXTRA_ADMISSION',
+      };
+
+      const majorConvertor: { [key: string]: MajorType } = {
+        소프트웨어개발과: 'SW',
+        스마트IOT과: 'IOT',
+        인공지능과: 'AI',
+      };
+
+      setScreening(screeningConvertor[screening]);
+      setFirstDesiredMajor(majorConvertor[choice[0]]);
+      setSecondDesiredMajor(majorConvertor[choice[1]]);
+      setThirdDesiredMajor(majorConvertor[choice[2]]);
+      setGraduationType(categoryConvertor[category]);
+      setSchoolName(schoolName);
+      setSchoolAddress(schoolAddress);
+
       updateStep(Math.min(currentStep + 1, Steps.FOUR));
     }
   };
@@ -108,13 +153,26 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
       schoolTeacherName &&
       schoolTeacherPhoneNumber
     ) {
+      const {
+        setGuardianName,
+        setGuardianPhoneNumber,
+        setRelationshipWithGuardian,
+        setSchoolTeacherName,
+        setSchoolTeacherPhoneNumber,
+      } = store;
+
+      setGuardianName(guardianName);
+      setGuardianPhoneNumber(guardianPhoneNumber);
+      setRelationshipWithGuardian(relationship);
+      setSchoolTeacherName(schoolTeacherName);
+      setSchoolTeacherPhoneNumber(schoolTeacherPhoneNumber);
+
       updateStep(Math.min(currentStep + 1, Steps.FOUR));
     }
   };
 
   const onSubmit: SubmitHandler<basicRegisterType> = (data) => {
     // eslint-disable-next-line no-console
-    console.log(data);
     const nextStep = Math.min(currentStep + 1, Steps.FOUR);
     updateStep(nextStep);
   };
@@ -138,6 +196,7 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
   };
 
   const handleNext = () => {
+    console.log(store);
     handleSubmit(onSubmit, onError)();
   };
 
