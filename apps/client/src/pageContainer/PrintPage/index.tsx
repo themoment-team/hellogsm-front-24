@@ -9,7 +9,7 @@ import { Button } from 'shared/components';
 import { useGetMyOneseo } from 'api/hooks';
 
 interface PrintPageProps {
-  initialData: GetMyOneseoType;
+  initialData: GetMyOneseoType | undefined;
 }
 
 const ApplicationPage = ({ initialData }: PrintPageProps) => {
