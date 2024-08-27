@@ -68,7 +68,7 @@ const Header = () => {
         <ActiveLink href="/" className={cn('relative')} activeClassName={cn(...activeStyle)}>
           홈
         </ActiveLink>
-        <ActiveLink href="/" className={cn('relative')} activeClassName={cn(...activeStyle)}>
+        <ActiveLink href="/guide" className={cn('relative')} activeClassName={cn(...activeStyle)}>
           원서접수
         </ActiveLink>
         <ActiveLink href="/faq" className={cn('relative')} activeClassName={cn(...activeStyle)}>
