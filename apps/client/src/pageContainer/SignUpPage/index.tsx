@@ -57,9 +57,7 @@ const SignUpPage = () => {
 
   useEffect(() => {
     if (btnClick && timeLeft > 0) {
-      let timer: NodeJS.Timeout;
-
-      timer = setInterval(() => {
+      const timer = setInterval(() => {
         setTimeLeft((prevTime) => prevTime - 1);
       }, 1000);
       return () => clearInterval(timer);
