@@ -64,9 +64,6 @@ const SignUpPage = () => {
       }, 1000);
     }
 
-    if (btnClick && timeLeft === 0) {
-    }
-
     return () => clearInterval(timer);
   }, [btnClick, timeLeft]);
 
