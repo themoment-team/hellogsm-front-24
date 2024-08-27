@@ -7,7 +7,7 @@ import { memberQueryKeys } from 'client/lib';
 
 import { memberUrl, post } from 'api/libs';
 
-import type { CodeRegisterType } from 'types';
+import type { SendCodeType } from 'types';
 
 interface ReturnDataType {
   status: string;
@@ -15,12 +15,12 @@ interface ReturnDataType {
   message: string;
 }
 
-export const usePostNumber = (
-  options?: UseMutationOptions<ReturnDataType, AxiosError, CodeRegisterType>,
+export const useSendCode = (
+  options?: UseMutationOptions<ReturnDataType, AxiosError, SendCodeType>,
 ) =>
   useMutation({
     mutationKey: memberQueryKeys.postPhoneNumber(),
-    mutationFn: (phoneNumber: CodeRegisterType) =>
-      post<ReturnDataType>(memberUrl.postNumberRegister(), phoneNumber),
+    mutationFn: (phoneNumber: SendCodeType) =>
+      post<ReturnDataType>(memberUrl.postSendCode(), phoneNumber),
     ...options,
   });

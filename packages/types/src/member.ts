@@ -25,6 +25,6 @@ export interface MemberRegisterType extends MemberInfoType {
   code: string;
 }
 
-export interface CodeRegisterType {
+export interface SendCodeType {
   phoneNumber: string;
 }

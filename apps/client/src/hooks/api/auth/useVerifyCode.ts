@@ -13,13 +13,15 @@ interface ReturnDataType {
   message: string;
 }
 
-interface CodeType {
+interface VerifyCodeType {
   code: string;
 }
 
-export const usePostCode = (options?: UseMutationOptions<ReturnDataType, AxiosError, CodeType>) =>
+export const useVerifyCode = (
+  options?: UseMutationOptions<ReturnDataType, AxiosError, VerifyCodeType>,
+) =>
   useMutation({
     mutationKey: memberQueryKeys.postCode(),
-    mutationFn: (code: CodeType) => post<ReturnDataType>(memberUrl.postCodeRegister(), code),
+    mutationFn: (code: VerifyCodeType) => post<ReturnDataType>(memberUrl.postVerifyCode(), code),
     ...options,
   });

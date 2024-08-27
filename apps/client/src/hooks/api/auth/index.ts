@@ -1,3 +1,3 @@
 export * from './usePostMember';
-export * from './usePostNumber';
-export * from './usePostCode';
+export * from './useSendCode';
+export * from './useVerifyCode';

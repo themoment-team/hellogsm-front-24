@@ -9,7 +9,7 @@ import { z } from 'zod';
 
 import { ChevronIcon } from 'client/assets';
 import { FormItem as CustomFormItem, Footer, SexToggle } from 'client/components';
-import { usePostCode, usePostMemberRegister, usePostNumber } from 'client/hooks';
+import { useVerifyCode, usePostMemberRegister, useSendCode } from 'client/hooks';
 import { signupFormSchema } from 'client/schemas';
 
 import {
@@ -92,7 +92,7 @@ const SignUpPage = () => {
     onSuccess: () => '',
   });
 
-  const { mutate: mutateNumberPost } = usePostNumber({
+  const { mutate: mutateSendCode } = useSendCode({
     onSuccess: () => {
       setBtnClick(true);
       formMethods.setValue('isSentCertificationNumber', true);
@@ -100,7 +100,7 @@ const SignUpPage = () => {
     onError: () => console.log('코드 전송에 실패하였습니다.'),
   });
 
-  const { mutate: mutateCodePost } = usePostCode({
+  const { mutate: mutateVerifyCode } = useVerifyCode({
     onSuccess: () => setIsSuccess(true),
     onError: () => setIsSuccess(false),
   });
@@ -113,7 +113,7 @@ const SignUpPage = () => {
         code: codeDebounce,
       };
 
-      mutateCodePost(payload);
+      mutateVerifyCode(payload);
 
       setLastSubmittedCode(codeDebounce);
     }
@@ -137,11 +137,11 @@ const SignUpPage = () => {
     console.log(data);
   };
 
-  const onPostNumber = (number: string) => {
+  const sendCodeNumber = (number: string) => {
     const body: CodeRegisterType = {
       phoneNumber: number,
     };
-    mutateNumberPost(body);
+    mutateSendCode(body);
   };
 
   return (
@@ -287,7 +287,7 @@ const SignUpPage = () => {
                     variant="disabled"
                     disabled={isCertificationButtonDisabled || btnClick === true}
                     onClick={() => {
-                      onPostNumber(phoneNumber);
+                      sendCodeNumber(phoneNumber);
                     }}
                   >
                     번호 인증
