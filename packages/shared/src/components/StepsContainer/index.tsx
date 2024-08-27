@@ -9,6 +9,7 @@ import {
   BasicRegister,
   ConfirmBar,
   GuardianRegister,
+  ScoreRegister,
   StepBar,
 } from 'shared/components';
 import { cn } from 'shared/lib/utils';
@@ -102,9 +103,10 @@ const StepsContianer = ({ data, param }: Props) => {
           'pt-[3.56rem]',
           'flex',
           'justify-center',
+          'pb-[5rem]',
         ])}
       >
-        <div className={cn(['w-[66.5rem]', 'flex', 'flex-col', 'bg-white'])}>
+        <div className={cn(['w-[66.5rem]', 'flex', 'flex-col', 'bg-white', 'rounded-[1.25rem]'])}>
           <StepBar param={param} handleSubmit={handleSubmit} watch={watch} />
           <div
             className={cn([
@@ -131,10 +133,11 @@ const StepsContianer = ({ data, param }: Props) => {
             {param === '3' && (
               <GuardianRegister register={register} setValue={setValue} watch={watch} />
             )}
+            {param === '4' && <ScoreRegister data={data} />}
           </div>
         </div>
       </div>
-      <ConfirmBar />
+      <ConfirmBar id="scoreForm" />
     </>
   );
 };
