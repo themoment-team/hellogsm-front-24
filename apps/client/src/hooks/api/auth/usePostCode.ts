@@ -3,7 +3,7 @@ import type { UseMutationOptions } from '@tanstack/react-query';
 
 import type { AxiosError } from 'axios';
 
-import { codeQueryKeys } from 'client/lib';
+import { memberQueryKeys } from 'client/lib';
 
 import { memberUrl, post } from 'api/libs';
 
@@ -19,7 +19,7 @@ interface CodeType {
 
 export const usePostCode = (options?: UseMutationOptions<ReturnDataType, AxiosError, CodeType>) =>
   useMutation({
-    mutationKey: codeQueryKeys.postCode(),
+    mutationKey: memberQueryKeys.postCode(),
     mutationFn: (code: CodeType) => post<ReturnDataType>(memberUrl.postCodeRegister(), code),
     ...options,
   });
