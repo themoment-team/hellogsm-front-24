@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Button } from 'shared';
 
 import { BlueStarIcon, CloverIcon } from 'client/assets';
@@ -209,12 +210,14 @@ const GuidePage = () => {
           </div>
         </div>
       </div>
-      <Button
-        variant="fill"
-        className={cn('sticky', 'bottom-10', 'w-[21.25rem]', 'z-10', 'mb-[10rem]')}
-      >
-        원서 작성하기
-      </Button>
+      <Link href={'/register?step=1'}>
+        <Button
+          variant="fill"
+          className={cn('sticky', 'bottom-10', 'w-[21.25rem]', 'z-10', 'mb-[10rem]')}
+        >
+          원서 작성하기
+        </Button>
+      </Link>
     </div>
   );
 };
