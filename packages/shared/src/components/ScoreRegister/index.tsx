@@ -58,6 +58,7 @@ const formWrapper = [
 interface ScoreRegisterProps {
   data: GetMyOneseoType | undefined;
   memberId?: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setScoreWatch: Dispatch<any>;
 }
 
@@ -98,14 +99,13 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
 
   useEffect(() => {
     setScoreWatch(watch);
-  }, [watch]);
+  }, [setScoreWatch, watch]);
 
   useEffect(() => {
     setFreeSemester(
       defaultData?.freeSemester ? reversedFreeSemesterConvertor[defaultData.freeSemester] : null,
     );
-    setLiberalSystem;
-  }, [defaultData]);
+  }, [defaultData, setFreeSemester]);
 
   const { mutate: mutatePostMyOneseo } = usePostMyOneseo({
     onSuccess: () => {
@@ -118,7 +118,6 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
     onSuccess: (data) => {
       if (oneseoBody) {
         const body: PostOneseoType = { ...oneseoBody, profileImg: data.url };
-        console.log(body);
 
         mutatePostMyOneseo(body);
       }
@@ -279,6 +278,7 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
 
       setTimeout(() => setValue('newSubjects', defaultData.newSubjects), 0);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

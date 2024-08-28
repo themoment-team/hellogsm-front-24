@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useState } from 'react';
@@ -17,8 +18,9 @@ import {
 import { cn } from 'shared/lib/utils';
 import { basicRegisterSchema } from 'shared/schemas';
 import { useStore } from 'shared/stores';
+import { dataUrltoFile } from 'shared/utils';
 
-import { usePostTempStorage } from 'api/hooks';
+import { usePostImage, usePostTempStorage } from 'api/hooks';
 
 interface Props {
   data: GetMyOneseoType | undefined;
@@ -78,10 +80,24 @@ const getMajorTypeText = (majorTpe: string) => {
   }
 };
 
+const getMajorType = (majorTpe: string) => {
+  switch (majorTpe) {
+    case 'SW':
+      return '소프트웨어개발과';
+    case 'AI':
+      return '인공지능과';
+    case 'IOT':
+      return '스마트IOT과';
+    default:
+      return '';
+  }
+};
+
 const StepsContainer = ({ data, param, info }: Props) => {
   const store = useStore();
 
   const [scoreWatch, setScoreWatch] = useState<any>(null);
+  const [tempBody, setTempBody] = useState<PostOneseoType | null>(null);
 
   const defaultDetailData = data?.privacyDetail;
   const defaultMajors = data?.desiredMajors;
@@ -93,9 +109,9 @@ const StepsContainer = ({ data, param, info }: Props) => {
   const sex = info.sex === 'MALE' ? '남자' : '여자';
 
   const choice = [
-    defaultMajors?.firstDesiredMajor || '',
-    defaultMajors?.secondDesiredMajor || '',
-    defaultMajors?.thirdDesiredMajor || '',
+    getMajorType(defaultMajors?.firstDesiredMajor || ''),
+    getMajorType(defaultMajors?.secondDesiredMajor || ''),
+    getMajorType(defaultMajors?.thirdDesiredMajor || ''),
   ];
 
   const { register, handleSubmit, setValue, watch } = useForm<basicRegisterType>({
@@ -127,10 +143,25 @@ const StepsContainer = ({ data, param, info }: Props) => {
     sex: sex,
   };
 
-  const { mutate: postTempStorage } = usePostTempStorage();
+  const { mutate: postTempStorage } = usePostTempStorage({
+    onSuccess: () => {
+      alert('원서 제출 완료');
+    },
+    onError: () => {},
+  });
+
+  const { mutate: mutatePostImage } = usePostImage({
+    onSuccess: (data) => {
+      if (tempBody) {
+        const body: PostOneseoType = { ...tempBody, profileImg: data.url };
+
+        postTempStorage(body);
+      }
+    },
+    onError: () => {},
+  });
 
   const temporarySave = () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const middleSchoolAchievement: { [key: string]: any } = {
       liberalSystem: store.liberalSystem ?? null,
       freeSemester: store.freeSemester ?? null,
@@ -155,7 +186,6 @@ const StepsContainer = ({ data, param, info }: Props) => {
       guardianName: watch('guardianName') ? watch('guardianName') : null,
       guardianPhoneNumber: watch('guardianPhoneNumber') ? watch('guardianPhoneNumber') : null,
       relationshipWithGuardian: watch('relationship') ? watch('relationship') : null,
-      profileImg: watch('img') ? watch('img') : null,
       address: watch('address') ? watch('address') : null,
       detailAddress: watch('detailAddress') ? watch('detailAddress') : null,
       graduationType: getCategoryFromGraduationType(watch('category'))
@@ -180,7 +210,18 @@ const StepsContainer = ({ data, param, info }: Props) => {
       screening: getScreeningTypeText(watch('screening'))
         ? getScreeningTypeText(watch('screening'))
         : null,
+      step: Number(param),
     } as PostOneseoType;
+
+    if (watch('img')) {
+      const formData = new FormData();
+      formData.append('file', dataUrltoFile(watch('img'), 'img.png'));
+
+      setTempBody(tempOneseo);
+      mutatePostImage(formData);
+
+      return;
+    }
 
     postTempStorage(tempOneseo);
   };
