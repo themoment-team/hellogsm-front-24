@@ -24,3 +24,7 @@ export interface MyAuthInfoType {
 export interface MemberRegisterType extends MemberInfoType {
   code: string;
 }
+
+export interface SendCodeType {
+  phoneNumber: string;
+}
