@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { memberUrl } from 'api/libs';
@@ -12,9 +13,19 @@ import type { MyMemberInfoType } from 'types';
 export const getMyMemberInfo = async (
   redirectUrl: string,
 ): Promise<MyMemberInfoType | undefined> => {
-  const response = await fetch(new URL(`${memberUrl.getMyMemberInfo()}`, process.env.BASE_URL), {
-    method: 'GET',
-  });
+  const session = cookies().get('SESSION')?.value;
+
+  const response = await fetch(
+    new URL(memberUrl.getMyMemberInfo(), process.env.NEXT_PUBLIC_API_BASE_URL),
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        Cookie: `SESSION=${session}`,
+      },
+    },
+  );
 
   const memberInfo = await response.json();
   const isUnauthorized = response.status === 401;
@@ -28,5 +39,5 @@ export const getMyMemberInfo = async (
     return redirect(redirectUrl);
   }
 
-  return memberInfo;
+  return memberInfo.data;
 };
