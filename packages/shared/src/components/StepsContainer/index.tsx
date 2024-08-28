@@ -169,6 +169,8 @@ const StepsContainer = ({ data, param, info }: Props) => {
     };
 
     if (param === '4') {
+      if (scoreWatch) return;
+
       middleSchoolAchievement.achievement1_1 = scoreWatch('achievement1_1') ?? null;
       middleSchoolAchievement.achievement1_2 = scoreWatch('achievement1_2') ?? null;
       middleSchoolAchievement.achievement2_1 = scoreWatch('achievement2_1') ?? null;

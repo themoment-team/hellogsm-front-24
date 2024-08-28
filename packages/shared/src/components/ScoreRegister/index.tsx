@@ -104,7 +104,7 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
 
   useEffect(() => {
     setScoreWatch(watch);
-  }, [watch]);
+  }, [setScoreWatch, watch]);
 
   useEffect(() => {
     setFreeSemester(
