@@ -12,8 +12,9 @@ import {
   DialogDescription,
   DialogTitle,
   DialogTrigger,
+  Button,
+  DialogHeader,
 } from 'shared/components';
-import { Button, DialogHeader } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
 interface ConfirmBarProps {
