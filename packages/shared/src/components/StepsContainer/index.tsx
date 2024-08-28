@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { basicRegisterType, GetMyOneseoType } from 'types';
+import { basicRegisterType, GetMyOneseoType, MyMemberInfoType } from 'types';
 
 import {
   ApplyRegister,
@@ -17,6 +17,7 @@ import { basicRegisterSchema } from 'shared/schemas';
 
 interface Props {
   data: GetMyOneseoType | undefined;
+  info: MyMemberInfoType;
   param: string;
 }
 
@@ -47,7 +48,7 @@ const getScreeningTypeText = (screeningType: string) => {
   }
 };
 
-const StepsContianer = ({ data, param }: Props) => {
+const StepsContianer = ({ data, param, info }: Props) => {
   const defaultDetailData = data?.privacyDetail;
   const defaultMajors = data?.desiredMajors;
   const defaultScreening = data?.wantedScreening;
@@ -55,8 +56,7 @@ const StepsContianer = ({ data, param }: Props) => {
   const relationshipWithGuardian = defaultDetailData?.relationshipWithGuardian || '';
   const isPrimaryRelationship = ['부', '모'].includes(relationshipWithGuardian);
 
-  const sex =
-    defaultDetailData?.sex === 'MALE' ? '남자' : defaultDetailData?.sex === 'FEMALE' ? '여자' : '';
+  const sex = info.sex === 'MALE' ? '남자' : '여자';
 
   const choice = [
     defaultMajors?.firstDesiredMajor || '',
@@ -88,8 +88,8 @@ const StepsContianer = ({ data, param }: Props) => {
   });
 
   const userBasicInfo = {
-    name: defaultDetailData?.name,
-    birth: defaultDetailData?.birth,
+    name: info.name,
+    birth: info.birth,
     sex: sex,
   };
 
@@ -137,7 +137,7 @@ const StepsContianer = ({ data, param }: Props) => {
           </div>
         </div>
       </div>
-      <ConfirmBar id="scoreForm" />
+      <ConfirmBar watch={watch} id="scoreForm" />
     </>
   );
 };

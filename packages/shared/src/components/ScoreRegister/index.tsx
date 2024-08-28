@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 // import { usePostMyOneseo, usePutOneseo } from 'api';
+import { usePostImage, usePostMyOneseo } from 'api';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FreeSemesterType, GetMyOneseoType, MiddleSchoolAchievementType } from 'types';
 
@@ -22,18 +23,10 @@ import {
 import { defaultSubjectArray } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
 import { scoreFormSchema } from 'shared/schemas';
-
-import type {
-  GradesInputMethodType,
-  OneseoType,
-  PostOneseoType,
-  ScoreFormType,
-  SemesterIdType,
-} from 'types';
 import { useStore } from 'shared/stores';
-import { usePostImage, usePostMyOneseo, usePutOneseoByMemberId } from 'api';
-
 import { dataUrltoFile } from 'shared/utils';
+
+import type { GradesInputMethodType, PostOneseoType, ScoreFormType, SemesterIdType } from 'types';
 
 const formId = 'scoreForm';
 
@@ -122,7 +115,9 @@ const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
   const { mutate: mutatePostImage } = usePostImage({
     onSuccess: (data) => {
       if (oneseoBody) {
-        const body: PostOneseoType = { ...oneseoBody, profileImg: data.data.url };
+        const body: PostOneseoType = { ...oneseoBody, profileImg: data.url };
+        console.log(body);
+
         mutatePostMyOneseo(body);
       }
     },
@@ -251,7 +246,7 @@ const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
     setOneseoBody(body);
 
     const formData = new FormData();
-    formData.append('file', dataUrltoFile(profileImg, 'img'));
+    formData.append('file', dataUrltoFile(profileImg, 'img.png'));
 
     mutatePostImage(formData);
 
