@@ -78,7 +78,7 @@ const SearchDialog = ({ setSelectedSchool }: SearchDialogProps) => {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger>
         <Button>학교 찾기</Button>
       </DialogTrigger>
       <DialogContent className={cn('w-fit', 'p-0', 'rounded-lg')} showCloseIcon={false}>

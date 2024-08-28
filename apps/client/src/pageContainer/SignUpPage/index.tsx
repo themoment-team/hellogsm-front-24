@@ -24,6 +24,12 @@ import {
   SelectContent,
   SelectValue,
   SelectItem,
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
 } from 'shared/components';
 import { useDebounce } from 'shared/hooks';
 import { cn } from 'shared/lib/utils';
@@ -36,6 +42,7 @@ const SignUpPage = () => {
   const [timeLeft, setTimeLeft] = useState<number>(180);
   const [lastSubmittedCode, setLastSubmittedCode] = useState<string>('');
   const [isSuccess, setIsSuccess] = useState<boolean | undefined>(undefined);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const formMethods = useForm({
     resolver: zodResolver(signupFormSchema),
@@ -95,8 +102,7 @@ const SignUpPage = () => {
       setBtnClick(true);
       formMethods.setValue('isSentCertificationNumber', true);
     },
-    // eslint-disable-next-line no-console
-    onError: () => console.log('코드 전송에 실패하였습니다.'),
+    onError: () => setShowModal(true),
   });
 
   const { mutate: mutateVerifyCode } = useVerifyCode({
@@ -130,10 +136,6 @@ const SignUpPage = () => {
       birth: `${data.birth.year}-${month}-${day}`,
     };
     mutateMemberRegister(body);
-
-    // TODO 회원가입 처리 로직 작성
-    // eslint-disable-next-line no-console
-    console.log(data);
   };
 
   const sendCodeNumber = (number: string) => {
@@ -294,7 +296,7 @@ const SignUpPage = () => {
                 </div>
                 <Input
                   {...formMethods.register('certificationNumber')}
-                  disabled={!isSentCertificationNumber || timeLeft === 0}
+                  // disabled={!isSentCertificationNumber || timeLeft === 0}
                   placeholder="인증번호 6자리 입력"
                   successMessage={isSuccess === true ? '번호 인증이 완료되었습니다' : undefined}
                   errorMessage={isSuccess === false ? '인증번호를 확인해 주세요.' : undefined}
@@ -358,6 +360,17 @@ const SignUpPage = () => {
       </main>
 
       <Footer />
+
+      <AlertDialog open={showModal}>
+        <AlertDialogContent className="w-[400px]">
+          <AlertDialogHeader>
+            <AlertDialogTitle>인증번호 전송에 실패하였습니다.</AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction onClick={() => setShowModal(false)}>확인</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };
