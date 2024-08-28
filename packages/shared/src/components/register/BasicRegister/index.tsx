@@ -18,8 +18,8 @@ import { cn } from 'shared/lib/utils';
 import type { basicRegisterType } from 'types';
 
 interface BasicInfoType {
-  name: string | undefined;
-  birth: string | undefined;
+  name: string;
+  birth: string;
   sex: string;
   register: UseFormRegister<basicRegisterType>;
   setValue: UseFormSetValue<basicRegisterType>;
@@ -100,6 +100,7 @@ const BasicRegister = ({ name, birth, sex, register, setValue, watch }: BasicInf
               options={['남자', '여자']}
               disabled={true}
               disabledOption={sex}
+              defaultValue={sex}
             />
 
             <div className={cn('flex', 'flex-col', 'items-start', 'gap-[0.375rem]', 'w-full')}>

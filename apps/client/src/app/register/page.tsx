@@ -1,5 +1,7 @@
-import { getMyOneseo } from 'client/app/apis';
-import { RegisterStep4Page, RegisterStepsPage } from 'client/pageContainer';
+import { redirect } from 'next/navigation';
+
+import { getMyMemberInfo, getMyOneseo } from 'client/app/apis';
+import { RegisterStepsPage } from 'client/pageContainer';
 
 interface RegisterProps {
   searchParams?: { [key: string]: string | undefined };
@@ -7,22 +9,12 @@ interface RegisterProps {
 
 export default async function Register({ searchParams }: RegisterProps) {
   const step = searchParams?.step;
-  const data = await getMyOneseo();
 
-  switch (step) {
-    case '1':
-      return <RegisterStepsPage data={data} param="1" />;
+  const [data, info] = await Promise.all([getMyOneseo(), getMyMemberInfo('/')]);
 
-    case '2':
-      return <RegisterStepsPage data={data} param="2" />;
+  if (!step) redirect('/register?step=1');
 
-    case '3':
-      return <RegisterStepsPage data={data} param="3" />;
+  if (info === undefined) redirect('/');
 
-    case '4':
-      return <RegisterStep4Page data={data} />;
-
-    default:
-      return <div></div>;
-  }
+  return <RegisterStepsPage data={data} info={info} param={step} />;
 }

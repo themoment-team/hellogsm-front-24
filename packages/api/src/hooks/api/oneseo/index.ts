@@ -4,3 +4,4 @@ export * from './usePostTempStorage';
 export * from './useGetOneseoList';
 export * from './useGetAdmissionTickets';
 export * from './usePutOneseoById';
+export * from './usePostImage';

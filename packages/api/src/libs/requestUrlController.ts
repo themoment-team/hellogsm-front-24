@@ -22,6 +22,7 @@ export const oneseoUrl = {
   getMyOneseo: () => '/oneseo/v3/oneseo/me',
   postTempStorage: () => '/oneseo/v3/temp-storage',
   postMyOneseo: () => '/oneseo/v3/oneseo/me',
+  postImage: () => '/oneseo/v3/image',
   getOneseoByMemberId: (memberId: number) => `/oneseo/v3/oneseo/${memberId}`,
   putOneseoByMemberId: (memberId: number) => `/oneseo/v3/oneseo/${memberId}}`,
   getSearchedOneseoList: (
@@ -42,4 +43,4 @@ export const memberUrl = {
   postMemberRegister: () => '/member/v3/member/me',
   postSendCode: () => '/member/v3/member/me/send-code',
   postVerifyCode: () => '/member/v3/member/me/auth-code',
-};
+} as const;

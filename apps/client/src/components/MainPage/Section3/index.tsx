@@ -96,7 +96,7 @@ const Section3 = () => {
                 'flex-col',
                 'justify-between',
                 'rounded-3xl',
-                'bg-[#3A4959] p-6',
+                'p-6',
               )}
               style={{
                 // eslint-disable-next-line quotes
