@@ -103,7 +103,7 @@ const AlertDialogCancel = React.forwardRef<
 ));
 AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName;
 
-const Example = () => (
+const AlertDialogExample = () => (
   <AlertDialog>
     <AlertDialogTrigger>Open</AlertDialogTrigger>
     <AlertDialogContent className="w-[400px]">
@@ -130,5 +130,5 @@ export {
   AlertDialogPortal,
   AlertDialogTitle,
   AlertDialogTrigger,
-  Example,
+  AlertDialogExample,
 };
