@@ -104,13 +104,7 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
     setFreeSemester(
       defaultData?.freeSemester ? reversedFreeSemesterConvertor[defaultData.freeSemester] : null,
     );
-    setLiberalSystem(
-      defaultData
-        ? defaultData.liberalSystem === '자유학년제'
-          ? 'freeGrade'
-          : 'freeSemester'
-        : 'freeGrade',
-    );
+    setLiberalSystem;
   }, [defaultData]);
 
   const { mutate: mutatePostMyOneseo } = usePostMyOneseo({

@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { basicRegisterType, GetMyOneseoType } from 'types';
+import { basicRegisterType, GetMyOneseoType, PostOneseoType } from 'types';
 
 import {
   ApplyRegister,
@@ -163,7 +163,7 @@ const StepsContainer = ({ data, param }: Props) => {
       schoolName: watch('schoolName') ?? null,
       schoolAddress: watch('schoolAddress') ?? null,
       screening: getScreeningTypeText(watch('screening')) ?? null,
-    };
+    } as PostOneseoType;
 
     postTempStorage(tempOneseo);
   };
