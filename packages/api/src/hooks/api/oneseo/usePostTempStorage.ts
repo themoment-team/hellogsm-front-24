@@ -10,7 +10,7 @@ export const usePostTempStorage = (
   options?: UseMutationOptions<unknown, AxiosError, PostOneseoType>,
 ) =>
   useMutation({
-    mutationKey: oneseoQueryKeys.postMyOneseo(),
-    mutationFn: (data: PostOneseoType) => post(oneseoUrl.postMyOneseo(), data),
+    mutationKey: oneseoQueryKeys.postTempStorage(),
+    mutationFn: (data: PostOneseoType) => post(oneseoUrl.postTempStorage(), data),
     ...options,
   });
