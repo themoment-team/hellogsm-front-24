@@ -64,7 +64,7 @@ interface ScoreRegisterProps {
   data: GetMyOneseoType | undefined;
   memberId?: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setScoreWatch: Dispatch<() => void>;
+  setScoreWatch: Dispatch<any>;
 }
 
 const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) => {
@@ -104,7 +104,7 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
 
   useEffect(() => {
     setScoreWatch(watch);
-  }, []);
+  }, [watch]);
 
   useEffect(() => {
     setFreeSemester(
