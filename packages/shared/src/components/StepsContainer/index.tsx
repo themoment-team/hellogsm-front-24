@@ -21,6 +21,11 @@ interface Props {
   param: string;
 }
 
+enum SexEnum {
+  MALE = '남자',
+  FEMALE = '여자',
+}
+
 const getCategoryFromGraduationType = (graduationType: string) => {
   switch (graduationType) {
     case 'CANDIDATE':
@@ -56,7 +61,7 @@ const StepsContianer = ({ data, param, info }: Props) => {
   const relationshipWithGuardian = defaultDetailData?.relationshipWithGuardian || '';
   const isPrimaryRelationship = ['부', '모'].includes(relationshipWithGuardian);
 
-  const sex = info.sex === 'MALE' ? '남자' : '여자';
+  const sex = SexEnum[info.sex];
 
   const choice = [
     defaultMajors?.firstDesiredMajor || '',
