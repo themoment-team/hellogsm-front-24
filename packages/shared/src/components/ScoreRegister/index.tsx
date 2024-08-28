@@ -64,7 +64,7 @@ interface ScoreRegisterProps {
   data: GetMyOneseoType | undefined;
   memberId?: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setScoreWatch: Dispatch<any>;
+  setScoreWatch?: Dispatch<any>;
 }
 
 const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) => {
@@ -94,7 +94,7 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
       artsPhysicalAchievement:
         defaultData?.artsPhysicalAchievement &&
         defaultData.artsPhysicalAchievement.map((i) => String(i)),
-      newSubjects: defaultData?.newSubjects && [...defaultData?.newSubjects],
+      newSubjects: defaultData?.newSubjects && [...defaultData.newSubjects],
       absentDays: defaultData?.absentDays && defaultData.absentDays.map((i) => String(i)),
       attendanceDays:
         defaultData?.attendanceDays && defaultData.attendanceDays.map((i) => String(i)),
@@ -103,7 +103,10 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
   });
 
   useEffect(() => {
-    setScoreWatch(watch);
+    if (setScoreWatch) {
+      console.log('setScoreWatch');
+      setScoreWatch(watch);
+    }
   }, [setScoreWatch, watch]);
 
   useEffect(() => {

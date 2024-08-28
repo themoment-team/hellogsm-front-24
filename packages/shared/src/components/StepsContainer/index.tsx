@@ -169,19 +169,18 @@ const StepsContainer = ({ data, param, info }: Props) => {
     };
 
     if (param === '4') {
-      if (scoreWatch) return;
+      if (!scoreWatch) return;
 
-      middleSchoolAchievement.achievement1_1 = scoreWatch('achievement1_1') ?? null;
-      middleSchoolAchievement.achievement1_2 = scoreWatch('achievement1_2') ?? null;
-      middleSchoolAchievement.achievement2_1 = scoreWatch('achievement2_1') ?? null;
-      middleSchoolAchievement.achievement2_2 = scoreWatch('achievement2_2') ?? null;
-      middleSchoolAchievement.achievement3_1 = scoreWatch('achievement3_1') ?? null;
-      middleSchoolAchievement.newSubjects = scoreWatch('achievement3_1') ?? null;
-      middleSchoolAchievement.artsPhysicalAchievement =
-        scoreWatch('artsPhysicalAchievement') ?? null;
-      middleSchoolAchievement.absentDays = scoreWatch('absentDays') ?? null;
-      middleSchoolAchievement.attendanceDays = scoreWatch('attendanceDays') ?? null;
-      middleSchoolAchievement.volunteerTime = scoreWatch('volunteerTime') ?? null;
+      middleSchoolAchievement.achievement1_1 = scoreWatch.achievement1_1 ?? null;
+      middleSchoolAchievement.achievement1_2 = scoreWatch.achievement1_2 ?? null;
+      middleSchoolAchievement.achievement2_1 = scoreWatch.achievement2_1 ?? null;
+      middleSchoolAchievement.achievement2_2 = scoreWatch.achievement2_2 ?? null;
+      middleSchoolAchievement.achievement3_1 = scoreWatch.achievement3_1 ?? null;
+      middleSchoolAchievement.newSubjects = scoreWatch.achievement3_1 ?? null;
+      middleSchoolAchievement.artsPhysicalAchievement = scoreWatch.artsPhysicalAchievement ?? null;
+      middleSchoolAchievement.absentDays = scoreWatch.absentDays ?? null;
+      middleSchoolAchievement.attendanceDays = scoreWatch.attendanceDays ?? null;
+      middleSchoolAchievement.volunteerTime = scoreWatch.volunteerTime ?? null;
     }
 
     const tempOneseo = {
