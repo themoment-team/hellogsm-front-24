@@ -62,7 +62,7 @@ const FilterBar = ({
   const printExcel = () => {
     window.open(`/api${oneseoUrl.getExcel()}`);
   };
-    
+
   const handlePrintButtonClick = () => {
     push('/print');
   };

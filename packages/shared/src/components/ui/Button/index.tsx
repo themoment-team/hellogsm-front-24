@@ -51,6 +51,7 @@ const buttonVariants = cva(
         ),
         submit: cn('bg-slate-100', 'text-slate-400'),
         download: cn('bg-slate-100', 'text-slate-800'),
+        next: cn('bg-blue-50', 'text-blue-600'),
       },
       size: {
         default: cn('h-10', 'px-4', 'py-2'),
