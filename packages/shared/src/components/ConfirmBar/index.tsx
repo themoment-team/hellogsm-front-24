@@ -6,9 +6,10 @@ import { cn } from 'shared/lib/utils';
 
 interface ConfirmBarProps {
   id: string;
+  temporarySave: () => void;
 }
 
-const ConfirmBar = ({ id }: ConfirmBarProps) => {
+const ConfirmBar = ({ id, temporarySave }: ConfirmBarProps) => {
   return (
     <div
       className={cn(
@@ -34,7 +35,9 @@ const ConfirmBar = ({ id }: ConfirmBarProps) => {
       </div>
 
       <div className={cn('flex', 'items-center', 'gap-[0.5rem]')}>
-        <Button variant="outline">임시저장</Button>
+        <Button onClick={temporarySave} variant="outline">
+          임시저장
+        </Button>
         <Button variant="submit" type="submit" form={id}>
           <MouseIcon />
           <p>원서 최종</p>

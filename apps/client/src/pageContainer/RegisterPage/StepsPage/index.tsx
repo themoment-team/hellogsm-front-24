@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+
 import { StepsContainer } from 'shared';
 import { GetMyOneseoType } from 'types';
 
@@ -24,11 +25,7 @@ const RegisterStepsPage = ({ data, param }: RegisterStepsPageProps) => {
     };
   }, []);
 
-  return (
-    <>
-      <StepsContainer data={data} param={param} />
-    </>
-  );
+  return <StepsContainer data={data} param={param} />;
 };
 
 export default RegisterStepsPage;

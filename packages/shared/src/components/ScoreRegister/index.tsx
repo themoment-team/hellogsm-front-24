@@ -1,13 +1,12 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @rushstack/no-new-null */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/naming-convention */
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Dispatch, useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 // import { usePostMyOneseo, usePutOneseo } from 'api';
+import { usePostImage, usePostMyOneseo } from 'api';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FreeSemesterType, GetMyOneseoType, MiddleSchoolAchievementType } from 'types';
 
@@ -22,18 +21,10 @@ import {
 import { defaultSubjectArray } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
 import { scoreFormSchema } from 'shared/schemas';
-
-import type {
-  GradesInputMethodType,
-  OneseoType,
-  PostOneseoType,
-  ScoreFormType,
-  SemesterIdType,
-} from 'types';
 import { useStore } from 'shared/stores';
-import { usePostImage, usePostMyOneseo, usePutOneseoByMemberId } from 'api';
-
 import { dataUrltoFile } from 'shared/utils';
+
+import type { PostOneseoType, ScoreFormType, SemesterIdType } from 'types';
 
 const formId = 'scoreForm';
 
@@ -43,7 +34,7 @@ const freeSemesterConvertor = {
   achievement2_1: '2-1',
   achievement2_2: '2-2',
   achievement3_1: '3-1',
-};
+} as const;
 
 const reversedFreeSemesterConvertor: { [key: string]: SemesterIdType } = {
   '1-1': 'achievement1_1',
@@ -51,7 +42,7 @@ const reversedFreeSemesterConvertor: { [key: string]: SemesterIdType } = {
   '2-1': 'achievement2_1',
   '2-2': 'achievement2_2',
   '3-1': 'achievement3_1',
-};
+} as const;
 
 const formWrapper = [
   'flex',
@@ -67,24 +58,17 @@ const formWrapper = [
 interface ScoreRegisterProps {
   data: GetMyOneseoType | undefined;
   memberId?: number;
+  setScoreWatch: Dispatch<any>;
 }
 
-const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
+const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) => {
   const store = useStore();
+  const { setLiberalSystem, setFreeSemester, freeSemester, liberalSystem } = store;
+
   const defaultData = data?.middleSchoolAchievement;
-  const [liberalSystem, setLiberalSystem] = useState<GradesInputMethodType>(
-    defaultData
-      ? defaultData.liberalSystem === '자유학년제'
-        ? 'freeGrade'
-        : 'freeSemester'
-      : 'freeGrade',
-  );
 
   const [oneseoBody, setOneseoBody] = useState<Omit<PostOneseoType, 'profileImg'> | null>(null);
 
-  const [freeSemester, setFreeSemester] = useState<SemesterIdType | null>(
-    defaultData?.freeSemester ? reversedFreeSemesterConvertor[defaultData.freeSemester] : null,
-  );
   const [subjectArray, setSubjectArray] = useState<string[]>([...defaultSubjectArray]);
   const defaultSubjectLength = defaultSubjectArray.length;
 
@@ -111,6 +95,23 @@ const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
       volunteerTime: defaultData?.volunteerTime && defaultData.volunteerTime.map((i) => String(i)),
     },
   });
+
+  useEffect(() => {
+    setScoreWatch(watch);
+  }, [watch]);
+
+  useEffect(() => {
+    setFreeSemester(
+      defaultData?.freeSemester ? reversedFreeSemesterConvertor[defaultData.freeSemester] : null,
+    );
+    setLiberalSystem(
+      defaultData
+        ? defaultData.liberalSystem === '자유학년제'
+          ? 'freeGrade'
+          : 'freeSemester'
+        : 'freeGrade',
+    );
+  }, [defaultData]);
 
   const { mutate: mutatePostMyOneseo } = usePostMyOneseo({
     onSuccess: () => {

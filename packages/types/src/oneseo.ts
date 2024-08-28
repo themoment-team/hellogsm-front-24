@@ -21,6 +21,12 @@ export enum ScreeningEnum {
   EXTRA_ADMISSION = "특례입학",
 }
 
+export enum MajorEnum {
+  소프트웨어개발과 = "SW",
+  인공지능과 = "AI",
+  스마트IOT과 = "AI",
+}
+
 export interface MiddleSchoolAchievementType {
   achievement1_1: number[] | null;
   achievement1_2: number[] | null;
