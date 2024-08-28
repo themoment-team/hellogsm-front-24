@@ -15,6 +15,7 @@ import {
   FormController,
   FreeGradeForm,
   FreeSemesterForm,
+  Input,
   LiberalSystemSwitch,
   NonSubjectForm,
 } from 'shared/components';
@@ -24,7 +25,13 @@ import { scoreFormSchema } from 'shared/schemas';
 import { useStore } from 'shared/stores';
 import { dataUrltoFile } from 'shared/utils';
 
-import type { GradesInputMethodType, PostOneseoType, ScoreFormType, SemesterIdType } from 'types';
+import type {
+  GEDAchievementType,
+  GradesInputMethodType,
+  PostOneseoType,
+  ScoreFormType,
+  SemesterIdType,
+} from 'types';
 
 const formId = 'scoreForm';
 
@@ -198,7 +205,10 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
       schoolAddress &&
       screening;
 
-    if (!isAllWrite) return;
+    if (!isAllWrite) {
+      console.log(store);
+      return;
+    }
 
     const isFreeSemester = liberalSystem === 'freeSemester';
 
@@ -213,26 +223,30 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
       attendanceDays,
       volunteerTime,
       newSubjects,
+      gedTotalScore,
     } = data;
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const middleSchoolAchievement: MiddleSchoolAchievementType = {
-      achievement1_1: achievement1_1 ? achievement1_1.map((i) => Number(i)) : null,
-      achievement1_2: achievement1_2 ? achievement1_2.map((i) => Number(i)) : null,
-      achievement2_1: achievement2_1 ? achievement2_1.map((i) => Number(i)) : null,
-      achievement2_2: achievement2_2 ? achievement2_2.map((i) => Number(i)) : null,
-      achievement3_1: achievement3_1 ? achievement3_1.map((i) => Number(i)) : null,
-      artsPhysicalAchievement: artsPhysicalAchievement.map((i) => Number(i)),
-      absentDays: absentDays.map((i) => Number(i)),
-      attendanceDays: attendanceDays.map((i) => Number(i)),
-      volunteerTime: volunteerTime.map((i) => Number(i)),
-      newSubjects: newSubjects,
-      liberalSystem: isFreeSemester ? '자유학년제' : '자유학기제',
-      freeSemester: (isFreeSemester
-        ? freeSemesterConvertor[freeSemester!]
-        : null) as FreeSemesterType,
-      artsPhysicalSubjects: ['체육', '음악', '미술'],
-    };
+    const middleSchoolAchievement: MiddleSchoolAchievementType | GEDAchievementType =
+      store.graduationType === 'GED'
+        ? { gedTotalScore: Number(gedTotalScore) }
+        : {
+            achievement1_1: achievement1_1 ? achievement1_1.map((i) => Number(i)) : null,
+            achievement1_2: achievement1_2 ? achievement1_2.map((i) => Number(i)) : null,
+            achievement2_1: achievement2_1 ? achievement2_1.map((i) => Number(i)) : null,
+            achievement2_2: achievement2_2 ? achievement2_2.map((i) => Number(i)) : null,
+            achievement3_1: achievement3_1 ? achievement3_1.map((i) => Number(i)) : null,
+            artsPhysicalAchievement: artsPhysicalAchievement!.map((i) => Number(i)),
+            absentDays: absentDays!.map((i) => Number(i)),
+            attendanceDays: attendanceDays!.map((i) => Number(i)),
+            volunteerTime: volunteerTime!.map((i) => Number(i)),
+            newSubjects: newSubjects,
+            liberalSystem: isFreeSemester ? '자유학년제' : '자유학기제',
+            freeSemester: (isFreeSemester
+              ? freeSemesterConvertor[freeSemester!]
+              : null) as FreeSemesterType,
+            artsPhysicalSubjects: ['체육', '음악', '미술'],
+          };
 
     const body: Omit<PostOneseoType, 'profileImg'> = {
       guardianName: guardianName,
@@ -290,6 +304,20 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
     setLiberalSystem(
       defaultData?.liberalSystem ? LiberalSystemConvertor[defaultData.liberalSystem] : 'freeGrade',
     );
+
+    if (store.graduationType === 'GED') {
+      setValue('absentDays', null);
+      setValue('achievement1_1', null);
+      setValue('achievement1_2', null);
+      setValue('achievement2_1', null);
+      setValue('achievement2_2', null);
+      setValue('achievement3_1', null);
+      setValue('artsPhysicalAchievement', null);
+      setValue('attendanceDays', null);
+      setValue('newSubjects', null);
+      setValue('volunteerTime', null);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -336,95 +364,109 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
         >
           회원가입 시 입력한 기본 정보가 노출됩니다.
         </p>
-        <div
-          className={cn(
-            'flex',
-            'h-lvh',
-            'justify-center',
-            'bg-slate-50',
-            'w-full',
-            'bg-white',
-            'h-fit',
-            'gap-[2.5rem]',
-          )}
-        >
-          <FormController className={cn(['mt-[5.625rem]'])} />
+        {store.graduationType === 'GED' ? (
           <form
             id={formId}
-            onSubmit={handleSubmit(handleFormSubmit)}
-            className={cn('flex', 'flex-col', 'items-center')}
+            onSubmit={handleSubmit(handleFormSubmit, () => {
+              console.log(watch());
+            })}
           >
-            <LiberalSystemSwitch
-              liberalSystem={liberalSystem}
-              setLiberalSystem={setLiberalSystem}
-              className={cn('mb-[3rem]')}
-            />
-            <div
-              className={cn(
-                'flex',
-                'flex-col',
-                'gap-[2.5rem]',
-                'items-center',
-                liberalSystem === 'freeGrade' ? 'w-[35.4375rem]' : 'w-[43.4375rem]',
-              )}
+            <div className={cn('w-[18.75rem]', 'flex', 'flex-col', 'gap-1')}>
+              <p className={cn('text-slate-900', 'text-[0.875rem]/[1.25rem]')}>
+                검정고시 전과목 득점 합계 <span className={cn('text-red-600')}>*</span>
+              </p>
+              <Input {...register('gedTotalScore')} placeholder="점수 입력" />
+            </div>
+          </form>
+        ) : (
+          <div
+            className={cn(
+              'flex',
+              'h-lvh',
+              'justify-center',
+              'bg-white',
+              'w-full',
+              'h-fit',
+              'gap-[2.5rem]',
+            )}
+          >
+            <FormController className={cn(['mt-[5.625rem]'])} />
+            <form
+              id={formId}
+              onSubmit={handleSubmit(handleFormSubmit)}
+              className={cn('flex', 'flex-col', 'items-center')}
             >
-              <div className={cn(...formWrapper)}>
-                일반교과 성적
-                {liberalSystem === 'freeGrade' && (
-                  <FreeGradeForm
-                    register={register}
-                    setValue={setValue}
-                    subjectArray={subjectArray}
-                    control={control}
-                    handleDeleteSubjectClick={handleDeleteSubjectClick}
-                  />
+              <LiberalSystemSwitch
+                liberalSystem={liberalSystem}
+                setLiberalSystem={setLiberalSystem}
+                className={cn('mb-[3rem]')}
+              />
+              <div
+                className={cn(
+                  'flex',
+                  'flex-col',
+                  'gap-[2.5rem]',
+                  'items-center',
+                  liberalSystem === 'freeGrade' ? 'w-[35.4375rem]' : 'w-[43.4375rem]',
                 )}
-                {liberalSystem === 'freeSemester' && (
-                  <FreeSemesterForm
-                    register={register}
-                    setValue={setValue}
-                    subjectArray={subjectArray}
-                    control={control}
-                    handleDeleteSubjectClick={handleDeleteSubjectClick}
-                    freeSemester={freeSemester}
-                    setFreeSemester={setFreeSemester}
-                  />
-                )}
-                <button
-                  type="button"
-                  onClick={() => handleAddSubjectClick()}
-                  className={cn(
-                    'text-sm',
-                    'font-semibold',
-                    'leading-6',
-                    'text-[#0F172A]',
-                    'h-[2.5rem]',
-                    'w-full',
-                    'flex',
-                    'items-center',
-                    'justify-center',
-                    'rounded-md',
-                    'border-[0.0625rem]',
-                    'border-slate-200',
+              >
+                <div className={cn(...formWrapper)}>
+                  일반교과 성적
+                  {liberalSystem === 'freeGrade' && (
+                    <FreeGradeForm
+                      register={register}
+                      setValue={setValue}
+                      subjectArray={subjectArray}
+                      control={control}
+                      handleDeleteSubjectClick={handleDeleteSubjectClick}
+                    />
                   )}
-                >
-                  + 과목 추가하기
-                </button>
-              </div>
-              <div className={cn(...formWrapper)}>
-                예체능 교과 성적
-                <ArtPhysicalForm
-                  setValue={setValue}
-                  control={control}
-                  liberalSystem={liberalSystem}
-                />
-              </div>
-              <div className={cn(...formWrapper)}>
-                비교과 내용
-                <NonSubjectForm register={register} liberalSystem={liberalSystem} />
-              </div>
+                  {liberalSystem === 'freeSemester' && (
+                    <FreeSemesterForm
+                      register={register}
+                      setValue={setValue}
+                      subjectArray={subjectArray}
+                      control={control}
+                      handleDeleteSubjectClick={handleDeleteSubjectClick}
+                      freeSemester={freeSemester}
+                      setFreeSemester={setFreeSemester}
+                    />
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => handleAddSubjectClick()}
+                    className={cn(
+                      'text-sm',
+                      'font-semibold',
+                      'leading-6',
+                      'text-[#0F172A]',
+                      'h-[2.5rem]',
+                      'w-full',
+                      'flex',
+                      'items-center',
+                      'justify-center',
+                      'rounded-md',
+                      'border-[0.0625rem]',
+                      'border-slate-200',
+                    )}
+                  >
+                    + 과목 추가하기
+                  </button>
+                </div>
+                <div className={cn(...formWrapper)}>
+                  예체능 교과 성적
+                  <ArtPhysicalForm
+                    setValue={setValue}
+                    control={control}
+                    liberalSystem={liberalSystem}
+                  />
+                </div>
+                <div className={cn(...formWrapper)}>
+                  비교과 내용
+                  <NonSubjectForm register={register} liberalSystem={liberalSystem} />
+                </div>
 
-              {/* <button
+                {/* <button
           type="submit"
           className={cn(
             'pointer',
@@ -443,10 +485,11 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
         >
           저장
         </button> */}
-            </div>
-          </form>
-          {/* {type === 'admin' && <EditBar id={formId} />} */}
-        </div>
+              </div>
+            </form>
+            {/* {type === 'admin' && <EditBar id={formId} />} */}
+          </div>
+        )}
       </div>
       {/* </div> */}
     </>
