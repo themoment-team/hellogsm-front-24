@@ -95,6 +95,7 @@ const SignUpPage = () => {
       setBtnClick(true);
       formMethods.setValue('isSentCertificationNumber', true);
     },
+    // eslint-disable-next-line no-console
     onError: () => console.log('코드 전송에 실패하였습니다.'),
   });
 
@@ -115,7 +116,7 @@ const SignUpPage = () => {
 
       setLastSubmittedCode(codeDebounce);
     }
-  }, [codeDebounce, lastSubmittedCode]);
+  }, [codeDebounce, lastSubmittedCode, mutateVerifyCode]);
 
   const onSubmit = (data: z.infer<typeof signupFormSchema>) => {
     const month = String(data.birth.month).padStart(2, '0');
