@@ -24,9 +24,14 @@ import { scoreFormSchema } from 'shared/schemas';
 import { useStore } from 'shared/stores';
 import { dataUrltoFile } from 'shared/utils';
 
-import type { PostOneseoType, ScoreFormType, SemesterIdType } from 'types';
+import type { GradesInputMethodType, PostOneseoType, ScoreFormType, SemesterIdType } from 'types';
 
 const formId = 'scoreForm';
+
+const LiberalSystemConvertor: { [key: string]: GradesInputMethodType } = {
+  자유학기제: 'freeSemester',
+  자유학년제: 'freeGrade',
+};
 
 const freeSemesterConvertor = {
   achievement1_1: '1-1',
@@ -59,7 +64,7 @@ interface ScoreRegisterProps {
   data: GetMyOneseoType | undefined;
   memberId?: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setScoreWatch: Dispatch<any>;
+  setScoreWatch: Dispatch<() => void>;
 }
 
 const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) => {
@@ -99,7 +104,7 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
 
   useEffect(() => {
     setScoreWatch(watch);
-  }, [setScoreWatch, watch]);
+  }, []);
 
   useEffect(() => {
     setFreeSemester(
@@ -278,6 +283,10 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
 
       setTimeout(() => setValue('newSubjects', defaultData.newSubjects), 0);
     }
+
+    setLiberalSystem(
+      defaultData?.liberalSystem ? LiberalSystemConvertor[defaultData.liberalSystem] : 'freeGrade',
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
