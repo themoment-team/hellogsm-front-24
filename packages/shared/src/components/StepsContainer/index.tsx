@@ -64,13 +64,20 @@ const StepsContianer = ({ data, param, info }: Props) => {
     defaultMajors?.thirdDesiredMajor || '',
   ];
 
+  const userBasicInfo = {
+    name: info.name,
+    birth: info.birth,
+    sex: sex,
+    phoneNumber: info.phoneNumber,
+  };
+
   const { register, handleSubmit, setValue, watch } = useForm<basicRegisterType>({
     resolver: zodResolver(basicRegisterSchema),
     defaultValues: {
       img: defaultDetailData?.profileImg || '',
       address: defaultDetailData?.address || '',
       detailAddress: defaultDetailData?.detailAddress || '',
-      phoneNumber: defaultDetailData?.phoneNumber || '',
+      phoneNumber: userBasicInfo.phoneNumber,
       category: getCategoryFromGraduationType(defaultDetailData?.graduationType || ''),
       schoolName: defaultDetailData?.schoolName || '',
       schoolAddress: defaultDetailData?.schoolAddress || '',
@@ -86,12 +93,6 @@ const StepsContianer = ({ data, param, info }: Props) => {
       schoolTeacherPhoneNumber: defaultDetailData?.schoolTeacherPhoneNumber || '',
     },
   });
-
-  const userBasicInfo = {
-    name: info.name,
-    birth: info.birth,
-    sex: sex,
-  };
 
   return (
     <>
@@ -123,6 +124,7 @@ const StepsContianer = ({ data, param, info }: Props) => {
               <BasicRegister
                 name={userBasicInfo.name}
                 birth={userBasicInfo.birth}
+                phoneNumber={userBasicInfo.phoneNumber}
                 sex={userBasicInfo.sex}
                 register={register}
                 setValue={setValue}
@@ -133,7 +135,7 @@ const StepsContianer = ({ data, param, info }: Props) => {
             {param === '3' && (
               <GuardianRegister register={register} setValue={setValue} watch={watch} />
             )}
-            {param === '4' && <ScoreRegister data={data} />}
+            {param === '4' && <ScoreRegister type="client" data={data} />}
           </div>
         </div>
       </div>

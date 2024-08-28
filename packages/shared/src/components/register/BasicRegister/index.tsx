@@ -21,12 +21,21 @@ interface BasicInfoType {
   name: string;
   birth: string;
   sex: string;
+  phoneNumber: string;
   register: UseFormRegister<basicRegisterType>;
   setValue: UseFormSetValue<basicRegisterType>;
   watch: UseFormWatch<basicRegisterType>;
 }
 
-const BasicRegister = ({ name, birth, sex, register, setValue, watch }: BasicInfoType) => {
+const BasicRegister = ({
+  name,
+  birth,
+  sex,
+  phoneNumber,
+  register,
+  setValue,
+  watch,
+}: BasicInfoType) => {
   const daumPostCode = useDaumPostcodePopup();
 
   const userAddress = watch('address') ? watch('address') : '주소를 입력해 주세요';
@@ -120,12 +129,7 @@ const BasicRegister = ({ name, birth, sex, register, setValue, watch }: BasicInf
             </div>
 
             <CustomFormItem text={'휴대폰 번호'} className="gap-1" required={true} fullWidth={true}>
-              <Input
-                placeholder="010 1234 5678"
-                width="full"
-                {...register('phoneNumber')}
-                value={watch('phoneNumber')}
-              />
+              <Input width="full" {...register('phoneNumber')} disabled value={phoneNumber} />
             </CustomFormItem>
           </div>
         </div>
