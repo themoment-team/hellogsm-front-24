@@ -82,3 +82,10 @@ export const Download: Story = {
     children: 'download',
   },
 };
+
+export const Next: Story = {
+  args: {
+    variant: 'next',
+    children: 'next',
+  },
+};

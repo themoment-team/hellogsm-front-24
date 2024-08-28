@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
+import { YesNo, ScreeningType, TestResultType, OneseoListType } from 'types';
+
 import { SideMenu, FilterBar, ApplicantTH, ApplicantTR } from 'admin/components';
 
 import {
@@ -16,9 +18,6 @@ import { useDebounce } from 'shared/hooks';
 import { cn } from 'shared/lib/utils';
 
 import { useGetOneseoList } from 'api/hooks';
-
-import { OneseoListType } from 'types/oneseo';
-import { YesNo, ScreeningType, TestResultType } from 'types/oneseo';
 
 interface MainPageProps {
   initialData: OneseoListType | undefined;

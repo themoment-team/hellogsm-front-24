@@ -1,6 +1,6 @@
-import { ApplicantTR } from 'admin/components';
+import { OneseoType } from 'types';
 
-import { OneseoType } from 'types/oneseo';
+import { ApplicantTR } from 'admin/components';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
