@@ -45,78 +45,84 @@ const Section5 = () => {
     <div
       className={cn(
         'flex',
-        'items-center',
         'justify-center',
         'flex-col',
         'gap-[4.25rem]',
         'bg-white',
-        'items-start',
+        'items-center',
+        'px-[20rem]',
+        'py-[11.25rem]',
       )}
     >
-      <div
-        className={cn('flex', 'flex-col', 'items-start', 'w-[25.4375rem]', 'gap-2', 'items-start')}
-      >
-        <div className={cn('flex', 'items-end')}>
-          <span className={cn('text-gray-900', 'text-[2rem]/[2.75rem]', 'font-semibold')}>
-            창의 융합력을 갖춘 <br />
-            글로벌 소프트웨어 학과 소개
+      <div className={cn('flex', 'justify-center', 'gap-[4.25rem]', 'flex-col')}>
+        <div className={cn('flex', 'flex-col', 'items-start', 'w-[25.4375rem]')}>
+          <div className={cn('flex', 'items-end')}>
+            <span className={cn('text-gray-900', 'text-[2rem]/[2.75rem]', 'font-semibold')}>
+              창의 융합력을 갖춘 <br />
+              글로벌 소프트웨어 학과 소개
+            </span>
+          </div>
+          <span className={cn('text-gray-700', 'text-[1.25rem]/[1.75rem]', 'font-normal')}>
+            체계적인 교육과정을 제공하는 소프트웨어 학과
           </span>
         </div>
-        <span className={cn('text-gray-700', 'text-[1.25rem]/[1.75rem]', 'font-normal')}>
-          체계적인 교육과정을 제공하는 소프트웨어 학과
-        </span>
-      </div>
 
-      <div className={cn('flex', 'items-center', 'gap-[0.8125rem]')}>
-        {Elements.map((element, index) => (
-          <div
-            key={index}
-            className={cn('flex', 'w-[26.125rem]', 'flex-col', 'items-start', 'gap-6')}
-          >
-            <Image src={element.Img} alt={`${element.department} Image`} width={418} height={232} />
-            <div className={cn('w-full', 'flex', 'flex-col', 'flex-start', 'gap-3')}>
-              <div className={cn('w-full', 'flex', 'flex-col', 'items-start', 'gap-4')}>
-                <p className={cn('text-gray-900', 'text-[1.5rem]/[2rem]', 'font-semibold')}>
-                  {element.department}
-                </p>
-                <div className={cn('flex', 'items-center', 'gap-2')}>
-                  {element.learn.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className={cn(
-                        'flex',
-                        'px-2',
-                        'py-1',
-                        'justify-center',
-                        'items-center',
-                        'rounded-[5rem]',
-                        element.tagColor,
-                      )}
-                    >
-                      <p
+        <div className={cn('flex', 'items-center', 'gap-[0.8125rem]')}>
+          {Elements.map((element, index) => (
+            <div
+              key={index}
+              className={cn('flex', 'w-[26.125rem]', 'flex-col', 'items-start', 'gap-6')}
+            >
+              <Image
+                src={element.Img}
+                alt={`${element.department} Image`}
+                width={418}
+                height={232}
+              />
+              <div className={cn('w-full', 'flex', 'flex-col', 'flex-start', 'gap-3')}>
+                <div className={cn('w-full', 'flex', 'flex-col', 'items-start', 'gap-4')}>
+                  <p className={cn('text-gray-900', 'text-[1.5rem]/[2rem]', 'font-semibold')}>
+                    {element.department}
+                  </p>
+                  <div className={cn('flex', 'items-center', 'gap-2')}>
+                    {element.learn.map((item, idx) => (
+                      <div
+                        key={idx}
                         className={cn(
-                          element.textColor,
-                          'text-[0.875rem]/[1.25rem]',
-                          'font-normal',
+                          'flex',
+                          'px-2',
+                          'py-1',
+                          'justify-center',
+                          'items-center',
+                          'rounded-[5rem]',
+                          element.tagColor,
                         )}
                       >
-                        #{item}
-                      </p>
-                    </div>
-                  ))}
+                        <p
+                          className={cn(
+                            element.textColor,
+                            'text-[0.875rem]/[1.25rem]',
+                            'font-normal',
+                          )}
+                        >
+                          #{item}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
+                <span className={cn('text-gray-600', 'text-[1.125rem]/[1.75rem]', 'font-normal')}>
+                  {element.description.split('\n').map((line, idx) => (
+                    <span key={idx}>
+                      {line}
+                      <br />
+                    </span>
+                  ))}
+                </span>
               </div>
-              <span className={cn('text-gray-600', 'text-[1.125rem]/[1.75rem]', 'font-normal')}>
-                {element.description.split('\n').map((line, idx) => (
-                  <span key={idx}>
-                    {line}
-                    <br />
-                  </span>
-                ))}
-              </span>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
