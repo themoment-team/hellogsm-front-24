@@ -5,12 +5,13 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { MemberRegisterType, SexType } from 'types';
 import { z } from 'zod';
 
-import { FormItem as CustomFormItem, Footer, SexToggle } from 'client/components';
+import { Footer, SexToggle } from 'client/components';
 import { usePostMemberRegister } from 'client/hooks';
 import { signupFormSchema } from 'client/schemas';
 
 import {
   FormControl,
+  CustomFormItem,
   FormItem,
   Button,
   Input,
