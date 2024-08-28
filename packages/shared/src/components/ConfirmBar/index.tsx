@@ -101,10 +101,10 @@ const ConfirmBar = ({ id, watch }: ConfirmBarProps) => {
         )}
       >
         <div>
-          <span className={cn('text-body1', 'text-[#2563EB]')}>
+          <span className={cn('text-body1', 'text-blue-600')}>
             📎 최종 제출 후에는 정보를 수정할 수 없습니다. &nbsp;
           </span>
-          <span className={cn('text-body1', 'text-[#0F172A]')}>정확히 입력 후 제출해주세요!</span>
+          <span className={cn('text-body1', 'text-slate-900')}>정확히 입력 후 제출해주세요!</span>
         </div>
         <div className={cn('flex', 'items-center', 'gap-[0.5rem]')}>
           <Button variant="outline">임시저장</Button>
