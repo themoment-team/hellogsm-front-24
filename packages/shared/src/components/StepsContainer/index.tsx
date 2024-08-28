@@ -130,39 +130,56 @@ const StepsContainer = ({ data, param }: Props) => {
   const { mutate: postTempStorage } = usePostTempStorage();
 
   const temporarySave = () => {
-    const middleSchoolAchievement = {
-      achievement1_1: scoreWatch('achievement1_1') ?? null,
-      achievement1_2: scoreWatch('achievement1_2') ?? null,
-      achievement2_1: scoreWatch('achievement2_1') ?? null,
-      achievement2_2: scoreWatch('achievement2_2') ?? null,
-      achievement3_1: scoreWatch('achievement3_1') ?? null,
-      newSubjects: scoreWatch('achievement3_1') ?? null,
-      artsPhysicalAchievement: scoreWatch('artsPhysicalAchievement') ?? null,
-      absentDays: scoreWatch('absentDays') ?? null,
-      attendanceDays: scoreWatch('attendanceDays') ?? null,
-      volunteerTime: scoreWatch('volunteerTime') ?? null,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const middleSchoolAchievement: { [key: string]: any } = {
       liberalSystem: store.liberalSystem ?? null,
       freeSemester: store.freeSemester ?? null,
       artsPhysicalSubjects: ['체육', '음악', '미술'],
     };
 
+    if (param === '4') {
+      middleSchoolAchievement.achievement1_1 = scoreWatch('achievement1_1') ?? null;
+      middleSchoolAchievement.achievement1_2 = scoreWatch('achievement1_2') ?? null;
+      middleSchoolAchievement.achievement2_1 = scoreWatch('achievement2_1') ?? null;
+      middleSchoolAchievement.achievement2_2 = scoreWatch('achievement2_2') ?? null;
+      middleSchoolAchievement.achievement3_1 = scoreWatch('achievement3_1') ?? null;
+      middleSchoolAchievement.newSubjects = scoreWatch('achievement3_1') ?? null;
+      middleSchoolAchievement.artsPhysicalAchievement =
+        scoreWatch('artsPhysicalAchievement') ?? null;
+      middleSchoolAchievement.absentDays = scoreWatch('absentDays') ?? null;
+      middleSchoolAchievement.attendanceDays = scoreWatch('attendanceDays') ?? null;
+      middleSchoolAchievement.volunteerTime = scoreWatch('volunteerTime') ?? null;
+    }
+
     const tempOneseo = {
-      guardianName: watch('guardianName') ?? null,
-      guardianPhoneNumber: watch('guardianPhoneNumber') ?? null,
-      relationshipWithGuardian: watch('relationship') ?? null,
-      profileImg: watch('img') ?? null,
-      address: watch('address') ?? null,
-      detailAddress: watch('detailAddress') ?? null,
-      graduationType: getCategoryFromGraduationType(watch('category')) ?? null,
-      schoolTeacherName: watch('schoolTeacherName') ?? null,
-      schoolTeacherPhoneNumber: watch('schoolTeacherPhoneNumber') ?? null,
-      firstDesiredMajor: getMajorTypeText(watch('choice')[0]) ?? null,
-      secondDesiredMajor: getMajorTypeText(watch('choice')[1]) ?? null,
-      thirdDesiredMajor: getMajorTypeText(watch('choice')[2]) ?? null,
+      guardianName: watch('guardianName') ? watch('guardianName') : null,
+      guardianPhoneNumber: watch('guardianPhoneNumber') ? watch('guardianPhoneNumber') : null,
+      relationshipWithGuardian: watch('relationship') ? watch('relationship') : null,
+      profileImg: watch('img') ? watch('img') : null,
+      address: watch('address') ? watch('address') : null,
+      detailAddress: watch('detailAddress') ? watch('detailAddress') : null,
+      graduationType: getCategoryFromGraduationType(watch('category'))
+        ? getCategoryFromGraduationType(watch('category'))
+        : null,
+      schoolTeacherName: watch('schoolTeacherName') ? watch('schoolTeacherName') : null,
+      schoolTeacherPhoneNumber: watch('schoolTeacherPhoneNumber')
+        ? watch('schoolTeacherPhoneNumber')
+        : null,
+      firstDesiredMajor: getMajorTypeText(watch('choice')[0])
+        ? getMajorTypeText(watch('choice')[0])
+        : null,
+      secondDesiredMajor: getMajorTypeText(watch('choice')[1])
+        ? getMajorTypeText(watch('choice')[1])
+        : null,
+      thirdDesiredMajor: getMajorTypeText(watch('choice')[2])
+        ? getMajorTypeText(watch('choice')[2])
+        : null,
       middleSchoolAchievement: middleSchoolAchievement,
-      schoolName: watch('schoolName') ?? null,
-      schoolAddress: watch('schoolAddress') ?? null,
-      screening: getScreeningTypeText(watch('screening')) ?? null,
+      schoolName: watch('schoolName') ? watch('schoolName') : null,
+      schoolAddress: watch('schoolAddress') ? watch('schoolAddress') : null,
+      screening: getScreeningTypeText(watch('screening'))
+        ? getScreeningTypeText(watch('screening'))
+        : null,
     } as PostOneseoType;
 
     postTempStorage(tempOneseo);
