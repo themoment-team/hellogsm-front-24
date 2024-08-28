@@ -88,6 +88,7 @@ export interface PostOneseoType {
   schoolName: string | null;
   schoolAddress: string | null;
   screening: ScreeningType | null;
+  step?: number;
 }
 
 export interface GetMyOneseoType {
