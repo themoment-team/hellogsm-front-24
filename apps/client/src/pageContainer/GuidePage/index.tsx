@@ -1,9 +1,13 @@
+'use client';
+
 import Link from 'next/link';
 import { Button } from 'shared';
 
 import { BlueStarIcon, CloverIcon } from 'client/assets';
 
 import { cn } from 'shared/lib/utils';
+
+import { useGetMyAuthInfo, useGetMyMemberInfo } from 'api/hooks';
 
 const textStyle = ['text-[1.25rem]/[1.75rem]', 'font-semibold'];
 
@@ -138,6 +142,9 @@ const List = ({
 };
 
 const GuidePage = () => {
+  const { data: authInfo } = useGetMyAuthInfo();
+  const { data: memberInfo } = useGetMyMemberInfo();
+
   return (
     <div className={cn('w-full', 'flex', 'flex-col', 'justify-center', 'items-center')}>
       <div
@@ -210,7 +217,7 @@ const GuidePage = () => {
           </div>
         </div>
       </div>
-      <Link href={'/register?step=1'}>
+      <Link href={authInfo?.authReferrerType && memberInfo?.name ? '/signup' : '/register?step=1'}>
         <Button
           variant="fill"
           className={cn('sticky', 'bottom-10', 'w-[21.25rem]', 'z-10', 'mb-[10rem]')}

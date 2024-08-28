@@ -5,7 +5,13 @@ import { useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { basicRegisterType, GetMyOneseoType, MyMemberInfoType, PostOneseoType } from 'types';
+import {
+  basicRegisterType,
+  GetMyOneseoType,
+  MyMemberInfoType,
+  SexEnum,
+  PostOneseoType,
+} from 'types';
 
 import {
   ApplyRegister,
@@ -106,7 +112,7 @@ const StepsContainer = ({ data, param, info }: Props) => {
   const relationshipWithGuardian = defaultDetailData?.relationshipWithGuardian || '';
   const isPrimaryRelationship = ['부', '모'].includes(relationshipWithGuardian);
 
-  const sex = info.sex === 'MALE' ? '남자' : '여자';
+  const sex = SexEnum[info.sex];
 
   const choice = [
     getMajorType(defaultMajors?.firstDesiredMajor || ''),
