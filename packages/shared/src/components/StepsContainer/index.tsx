@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { basicRegisterType, GetMyOneseoType, MyMemberInfoType } from 'types';
+import { basicRegisterType, GetMyOneseoType, MyMemberInfoType, SexEnum } from 'types';
 
 import {
   ApplyRegister,
@@ -19,11 +19,6 @@ interface Props {
   data: GetMyOneseoType | undefined;
   info: MyMemberInfoType;
   param: string;
-}
-
-enum SexEnum {
-  MALE = '남자',
-  FEMALE = '여자',
 }
 
 const getCategoryFromGraduationType = (graduationType: string) => {
