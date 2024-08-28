@@ -8,12 +8,13 @@ import { MemberRegisterType, SexType, SendCodeType } from 'types';
 import { z } from 'zod';
 
 import { ChevronIcon } from 'client/assets';
-import { FormItem as CustomFormItem, Footer, SexToggle } from 'client/components';
+import { Footer, SexToggle } from 'client/components';
 import { useVerifyCode, usePostMemberRegister, useSendCode } from 'client/hooks';
 import { signupFormSchema } from 'client/schemas';
 
 import {
   FormControl,
+  CustomFormItem,
   FormItem,
   Button,
   Input,

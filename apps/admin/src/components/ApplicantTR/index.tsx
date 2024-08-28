@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { useForm, Controller } from 'react-hook-form';
 import { checkIsPassedDate } from 'shared';
+import { OneseoType, ScreeningEnum } from 'types';
 
 import { TextField } from 'admin/components';
 
@@ -12,8 +13,6 @@ import { Table, TableBody, TableCell, Toggle, TableRow, Badge, Button } from 'sh
 import { useDebounce } from 'shared/hooks';
 import { cn } from 'shared/lib/utils';
 import { formatScore } from 'shared/utils';
-
-import { OneseoType, ScreeningEnum } from 'types/oneseo';
 
 const ApplicantTR = ({
   aptitudeEvaluationScore,
