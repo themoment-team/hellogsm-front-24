@@ -106,7 +106,6 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
         setSchoolName,
         setSchoolAddress,
       } = store;
-      console.log(category);
 
       const categoryConvertor: { [key: string]: GraduationType } = {
         졸업자: 'GRADUATE',
@@ -196,7 +195,6 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
   };
 
   const handleNext = () => {
-    console.log(store);
     handleSubmit(onSubmit, onError)();
   };
 

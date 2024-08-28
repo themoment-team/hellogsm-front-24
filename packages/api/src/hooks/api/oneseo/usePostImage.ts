@@ -5,12 +5,7 @@ import { AxiosError } from 'axios';
 import { oneseoQueryKeys, oneseoUrl, post } from 'api/libs';
 
 interface ResponseType {
-  status: string;
-  code: number;
-  message: string;
-  data: {
-    url: string;
-  };
+  url: string;
 }
 
 export const usePostImage = (options: UseMutationOptions<ResponseType, AxiosError, FormData>) =>

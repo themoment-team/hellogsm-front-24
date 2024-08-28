@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { basicRegisterType, GetMyOneseoType, PostOneseoType } from 'types';
+import { basicRegisterType, GetMyOneseoType, MyMemberInfoType, PostOneseoType } from 'types';
 
 import {
   ApplyRegister,
@@ -22,6 +22,7 @@ import { usePostTempStorage } from 'api/hooks';
 
 interface Props {
   data: GetMyOneseoType | undefined;
+  info: MyMemberInfoType;
   param: string;
 }
 
@@ -77,7 +78,7 @@ const getMajorTypeText = (majorTpe: string) => {
   }
 };
 
-const StepsContainer = ({ data, param }: Props) => {
+const StepsContainer = ({ data, param, info }: Props) => {
   const store = useStore();
 
   const [scoreWatch, setScoreWatch] = useState<any>(null);
@@ -89,8 +90,7 @@ const StepsContainer = ({ data, param }: Props) => {
   const relationshipWithGuardian = defaultDetailData?.relationshipWithGuardian || '';
   const isPrimaryRelationship = ['부', '모'].includes(relationshipWithGuardian);
 
-  const sex =
-    defaultDetailData?.sex === 'MALE' ? '남자' : defaultDetailData?.sex === 'FEMALE' ? '여자' : '';
+  const sex = info.sex === 'MALE' ? '남자' : '여자';
 
   const choice = [
     defaultMajors?.firstDesiredMajor || '',
@@ -122,8 +122,8 @@ const StepsContainer = ({ data, param }: Props) => {
   });
 
   const userBasicInfo = {
-    name: defaultDetailData?.name,
-    birth: defaultDetailData?.birth,
+    name: info.name,
+    birth: info.birth,
     sex: sex,
   };
 

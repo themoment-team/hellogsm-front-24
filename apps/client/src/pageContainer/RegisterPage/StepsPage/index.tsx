@@ -3,14 +3,15 @@
 import { useEffect } from 'react';
 
 import { StepsContainer } from 'shared';
-import { GetMyOneseoType } from 'types';
+import { GetMyOneseoType, MyMemberInfoType } from 'types';
 
 interface RegisterStepsPageProps {
   data: GetMyOneseoType | undefined;
+  info: MyMemberInfoType;
   param: string;
 }
 
-const RegisterStepsPage = ({ data, param }: RegisterStepsPageProps) => {
+const RegisterStepsPage = ({ data, param, info }: RegisterStepsPageProps) => {
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
       event.preventDefault();
@@ -25,7 +26,7 @@ const RegisterStepsPage = ({ data, param }: RegisterStepsPageProps) => {
     };
   }, []);
 
-  return <StepsContainer data={data} param={param} />;
+  return <StepsContainer data={data} info={info} param={param} />;
 };
 
 export default RegisterStepsPage;

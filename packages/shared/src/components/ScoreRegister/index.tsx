@@ -117,7 +117,9 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
   const { mutate: mutatePostImage } = usePostImage({
     onSuccess: (data) => {
       if (oneseoBody) {
-        const body: PostOneseoType = { ...oneseoBody, profileImg: data.data.url };
+        const body: PostOneseoType = { ...oneseoBody, profileImg: data.url };
+        console.log(body);
+
         mutatePostMyOneseo(body);
       }
     },
@@ -246,7 +248,7 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
     setOneseoBody(body);
 
     const formData = new FormData();
-    formData.append('file', dataUrltoFile(profileImg, 'img'));
+    formData.append('file', dataUrltoFile(profileImg, 'img.png'));
 
     mutatePostImage(formData);
 
