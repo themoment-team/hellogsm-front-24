@@ -364,7 +364,9 @@ const SignUpPage = () => {
       <AlertDialog open={showModal}>
         <AlertDialogContent className="w-[400px]">
           <AlertDialogHeader>
-            <AlertDialogTitle>인증번호 전송에 실패하였습니다.</AlertDialogTitle>
+            <AlertDialogTitle>
+              인증번호 전송에 실패하였습니다. <br /> (인증번호는 최대 5번만 전송가능합니다.)
+            </AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogAction onClick={() => setShowModal(false)}>확인</AlertDialogAction>
