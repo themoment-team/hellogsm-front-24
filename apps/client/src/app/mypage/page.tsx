@@ -1,7 +1,7 @@
 import { getMyOneseo } from 'client/app/apis';
-import { MyPage } from 'client/pageContainer';
+import { MyPage as MyPageComponent } from 'client/pageContainer';
 
-export default async function Home() {
+export default async function MyPage() {
   const data = await getMyOneseo();
-  return <MyPage data={data} />;
+  return <MyPageComponent data={data} />;
 }
