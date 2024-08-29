@@ -4,6 +4,7 @@
 import { useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import {
   basicRegisterType,
@@ -74,6 +75,7 @@ const getScreeningTypeText = (screeningType: string) => {
 };
 
 const StepsContainer = ({ data, param, info }: Props) => {
+  const { push } = useRouter();
   const store = useStore();
 
   const [scoreWatch, setScoreWatch] = useState<ScoreFormType | null>(null);
@@ -88,7 +90,7 @@ const StepsContainer = ({ data, param, info }: Props) => {
 
   const sex = SexEnum[info.sex];
 
-  const choice = [
+  const choices = [
     defaultMajors?.firstDesiredMajor ? ReverseMajorConvertor[defaultMajors.firstDesiredMajor] : '',
     defaultMajors?.secondDesiredMajor
       ? ReverseMajorConvertor[defaultMajors.secondDesiredMajor]
@@ -110,7 +112,7 @@ const StepsContainer = ({ data, param, info }: Props) => {
       year: '',
       month: '',
       screening: getScreeningTypeText(defaultScreening || ''),
-      choice: choice,
+      choice: choices,
       guardianName: defaultDetailData?.guardianName || '',
       guardianPhoneNumber: defaultDetailData?.guardianPhoneNumber || '',
       relationship: isPrimaryRelationship ? relationshipWithGuardian : '',
@@ -119,6 +121,23 @@ const StepsContainer = ({ data, param, info }: Props) => {
       schoolTeacherPhoneNumber: defaultDetailData?.schoolTeacherPhoneNumber || '',
     },
   });
+
+  const {
+    img,
+    address,
+    detailAddress,
+    category,
+    schoolName,
+    year,
+    month,
+    screening,
+    choice,
+    guardianName,
+    guardianPhoneNumber,
+    relationship,
+    schoolTeacherName,
+    schoolTeacherPhoneNumber,
+  } = watch();
 
   const userBasicInfo = {
     name: info.name,
@@ -202,6 +221,25 @@ const StepsContainer = ({ data, param, info }: Props) => {
 
     postTempStorage(tempOneseo);
   };
+
+  const isBasicInfoComplete = !img || !address || !detailAddress;
+
+  const isApplyInfoComplete = !category || !schoolName || !year || !month || !screening || !choice;
+
+  const isGuardianInfoComplete =
+    !guardianName ||
+    !guardianPhoneNumber ||
+    !relationship ||
+    !schoolTeacherName ||
+    !!schoolTeacherPhoneNumber;
+
+  if (isBasicInfoComplete) {
+    push('/register?step=1');
+  } else if (isApplyInfoComplete) {
+    push('/register?step=2');
+  } else if (isGuardianInfoComplete) {
+    push('/register?step=3');
+  }
 
   return (
     <>
