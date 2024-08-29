@@ -1,7 +1,6 @@
 'use client';
 
 // import { plusAll } from 'shared';
-import { useEffect } from 'react';
 
 import { GetMyOneseoType, SexEnum } from 'types';
 
@@ -21,10 +20,6 @@ const tdStyle = 'border border-black ';
 
 const ApplicationPage = ({ initialData }: PrintPageProps) => {
   const { data: oneseo } = useGetMyOneseo({ initialData: initialData });
-
-  useEffect(() => {
-    console.log(oneseo);
-  }, [oneseo]);
 
   if (!oneseo) return <>원서 정보가 없습니다</>;
 
@@ -63,7 +58,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
         <p className="text-[2.1vh] font-bold hover:text-white">인쇄하기</p>
       </Button>
 
-      <div className="flex h-screen justify-center overflow-hidden bg-white p-2 text-[1vh]">
+      <div className=" flex h-full justify-center overflow-hidden bg-white p-2 text-[1vh]">
         <div className="relative z-[1] w-[63vh]">
           <div
             id="sample"
@@ -181,28 +176,29 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
               </thead>
             </table>
             <OneseoStatus oneseo={oneseo} />
-            <div className="p-2">
+            <div className="p-2 text-sm">
               <div className="mb-4">
                 위 학생은 2024학년도 귀교 제1학년에 입학하고자 소정의 서류를 갖추어 지원하며, &nbsp;
                 <strong>다른 산업수요맞춤형(마이스터)고등학교에 이중지원하지 않을 것을 서약</strong>
                 합니다.
               </div>
               <div className="flex justify-center mb-4">
-                <p className="mr-2">년</p>
-                <p className="mr-2">월</p>
+                <p className="mr-6">년</p>
+                <p className="mr-6">월</p>
                 <p>일</p>
               </div>
-              <div className="flex justify-between mb-4">
+              <div className="flex justify-end w-full gap-20 mb-4">
                 <p>지원자 :</p>
                 <p className="text-end">(인)</p>
               </div>
-              <div className="flex justify-between mb-4">
+              <div className="flex justify-end w-full gap-20 mb-4">
                 <p>보호자 :</p>
                 <p className="text-end">(인)</p>
               </div>
-              <div className="mb-4 text-center">광주소프트웨어마이스터고등학교장 귀하</div>
-              <div className="mb-4 text-center">위 기재 사항이 사실과 같음을 확인합니다.</div>
-              <div className="mb-4 text-center">중학교장[직인]</div>
+              <div className="text-left ">광주소프트웨어마이스터고등학교장 귀하</div>
+              <div className="w-full h-[0.5px] bg-slate-400"></div>
+              <div className="text-center ">위 기재 사항이 사실과 같음을 확인합니다.</div>
+              <div className="text-base text-right ">중학교장[직인]</div>
             </div>
           </div>
           <div className="my-4 text-center">2차 전형 응시 준비물 : 신분증[학생증], 필기구 등</div>
