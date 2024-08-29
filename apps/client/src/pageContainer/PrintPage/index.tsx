@@ -65,8 +65,6 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
 
     currentIdx += subjectLength;
 
-    console.log(arr, currentIdx);
-
     return (
       <>
         {arr.map((score, i) => (
@@ -79,6 +77,14 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
         </div>
       </>
     );
+  };
+
+  const calcVolunteerScore = (time: number) => {
+    if (time > 6) return 10;
+    if (time < 4) return 2;
+    if (time === 4) return 4;
+    if (time === 6) return 8;
+    return 6;
   };
 
   return (
@@ -333,7 +339,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                       <div className="font-bold bg-gray-200 border-b border-black text-center p-[0.2vh] h-[2.2vh]">
                         1학년 2학기
                       </div>
-                      <div className="font-bold bg-gray-200 border-b-0 border-black text-center p-[0.2vh] h-[2.2vh]">
+                      <div className="font-bold bg-gray-200 border-b border-black text-center p-[0.2vh] h-[2.2vh]">
                         성취도/평어
                       </div>
                     </div>
@@ -470,7 +476,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                       <div className="font-bold bg-gray-200 border-b border-black text-center p-[0.2vh] h-[2.2vh]">
                         1학년 2학기
                       </div>
-                      <div className="font-bold bg-gray-200 border-b-0 border-black text-center p-[0.2vh] h-[2.2vh]">
+                      <div className="font-bold bg-gray-200 border-b border-black text-center p-[0.2vh] h-[2.2vh]">
                         성취도/평어
                       </div>
                     </div>
@@ -533,8 +539,80 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                         봉사활동
                       </th>
                     </tr>
+                    <tr className="text-center">
+                      <td className="border border-black">결석</td>
+                      <td className="border border-black">지각</td>
+                      <td className="border border-black">조퇴</td>
+                      <td className="border border-black">결과</td>
+                      <td className="border border-black">환산일수</td>
+                      <td className="border border-black">환산점</td>
+                      <td className="border border-black">시간</td>
+                      <td className="border border-black">환산점</td>
+                    </tr>
                   </thead>
-                  <tbody>{/* 표 내용은 동일한 구조로 추가 */}</tbody>
+                  <tbody className="text-center">
+                    <tr>
+                      <td className="border border-black">1</td>
+                      {[
+                        oneseo.middleSchoolAchievement.absentDays[1],
+                        oneseo.middleSchoolAchievement.attendanceDays[0],
+                        oneseo.middleSchoolAchievement.attendanceDays[3],
+                        oneseo.middleSchoolAchievement.attendanceDays[6],
+                      ].map((day, index) => (
+                        <td className="border border-black" key={day + ' ' + index}>
+                          {day}
+                        </td>
+                      ))}
+                      <td className="border border-black" rowSpan={3}>
+                        {plusAll(oneseo.middleSchoolAchievement.absentDays)}
+                      </td>
+                      <td className="border border-black" rowSpan={3}>
+                        {Math.max(30 - plusAll(oneseo.middleSchoolAchievement.absentDays) * 3, 0)}
+                      </td>
+                      <td className="border border-black">
+                        {oneseo.middleSchoolAchievement.volunteerTime[0]}
+                      </td>
+                      <td className="border border-black" rowSpan={3}>
+                        {plusAll([
+                          oneseo.middleSchoolAchievement.volunteerTime.map((time) =>
+                            calcVolunteerScore(time),
+                          ),
+                        ])}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="border border-black">2</td>
+                      {[
+                        oneseo.middleSchoolAchievement.absentDays[1],
+                        oneseo.middleSchoolAchievement.attendanceDays[1],
+                        oneseo.middleSchoolAchievement.attendanceDays[4],
+                        oneseo.middleSchoolAchievement.attendanceDays[7],
+                      ].map((day, index) => (
+                        <td className="border border-black" key={day + ' ' + index}>
+                          {day}
+                        </td>
+                      ))}
+                      <td className="border border-black">
+                        {oneseo.middleSchoolAchievement.volunteerTime[1]}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="border border-black">3</td>
+                      {[
+                        oneseo.middleSchoolAchievement.absentDays[1],
+                        oneseo.middleSchoolAchievement.attendanceDays[2],
+                        oneseo.middleSchoolAchievement.attendanceDays[5],
+                        oneseo.middleSchoolAchievement.attendanceDays[8],
+                      ].map((day, index) => (
+                        <td className="border border-black" key={day + ' ' + index}>
+                          {day}
+                        </td>
+                      ))}
+                      <td className="border border-black">
+                        {oneseo.middleSchoolAchievement.volunteerTime[2]}
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
                 <table className="mx-auto w-[80%] border-collapse border text-[1vh] mt-[1.5vh]">
                   <thead>
