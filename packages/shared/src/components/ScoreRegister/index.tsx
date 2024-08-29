@@ -14,6 +14,7 @@ import { FreeSemesterType, GetMyOneseoType, MiddleSchoolAchievementType } from '
 
 import {
   ArtPhysicalForm,
+  EditBar,
   FormController,
   FreeGradeForm,
   FreeSemesterForm,
@@ -60,13 +61,14 @@ const formWrapper = [
 interface ScoreRegisterProps {
   data: GetMyOneseoType | undefined;
   memberId?: number;
+  type: 'client' | 'admin';
 }
 
-const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
+const ScoreRegister = ({ data, memberId, type }: ScoreRegisterProps) => {
   const store = useStore();
   const defaultData = data?.middleSchoolAchievement;
   const [liberalSystem, setLiberalSystem] = useState<GradesInputMethodType>(
-    defaultData
+    defaultData?.liberalSystem
       ? defaultData.liberalSystem === '자유학년제'
         ? 'freeGrade'
         : 'freeSemester'
@@ -102,6 +104,7 @@ const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
       attendanceDays:
         defaultData?.attendanceDays && defaultData.attendanceDays.map((i) => String(i)),
       volunteerTime: defaultData?.volunteerTime && defaultData.volunteerTime.map((i) => String(i)),
+      // gedTotalScore: defaultData?.gedTotalScore && defaultData.gedTotalScore,
     },
   });
 
@@ -124,8 +127,10 @@ const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
     onError: () => {},
   });
 
-  // const { mutate: mutatePostOneseo } = usePutOneseoByMemberId(memberId!, {
-  //   onSuccess: () => {},
+  // const { mutate: mutatePostOneseo } = usePutOneseoByMemberId(memberId ? memberId : 0, {
+  //   onSuccess: () => {
+  //     alert('수정되었습니다');
+  //   },
   //   onError: () => {},
   // });
 
@@ -243,6 +248,12 @@ const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
       middleSchoolAchievement: middleSchoolAchievement,
     };
 
+    if (type === 'admin') {
+      // mutatePostOneseo();
+
+      return;
+    }
+
     setOneseoBody(body);
 
     const formData = new FormData();
@@ -296,7 +307,7 @@ const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
 
   return (
     <>
-      <div className={cn(['w-[66.5rem]', 'flex', 'flex-col'])}>
+      <div className={cn(['w-[66.5rem]', 'flex', 'flex-col', type === 'admin' && 'pb-20'])}>
         {/* <div className={cn(['w-full', 'px-[2rem]', 'py-[1.5rem]', 'bg-white'])}> */}
         <h1
           className={cn([
@@ -431,7 +442,7 @@ const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
         </button> */}
             </div>
           </form>
-          {/* {type === 'admin' && <EditBar id={formId} />} */}
+          {type === 'admin' && <EditBar id={formId} />}
         </div>
       </div>
       {/* </div> */}

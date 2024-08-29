@@ -203,6 +203,8 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
     updateStep(prevStep);
   };
 
+  const handleCheckScoreButtonClick = () => {};
+
   return (
     <div
       className={cn(
@@ -235,9 +237,20 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
             이전
           </Button>
         )}
-        <Button variant="submit" onClick={handleNext}>
-          {currentStep === Steps.FOUR ? '점수 확인하기' : '다음으로'}
-        </Button>
+
+        {currentStep === Steps.FOUR ? (
+          <Button
+            onClick={handleCheckScoreButtonClick}
+            // variant={1 === '1' ? 'next' : 'submit'}
+            // disabled={1 == '1' && true}
+          >
+            점수 확인하기
+          </Button>
+        ) : (
+          <Button variant="submit" onClick={handleNext}>
+            다음으로
+          </Button>
+        )}
       </div>
     </div>
   );
