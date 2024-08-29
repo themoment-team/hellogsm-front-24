@@ -6,8 +6,6 @@ import {
   achievementGradeValues,
 } from 'types';
 
-import { Slash } from 'client/assets';
-
 import { plusAll } from 'shared/utils';
 
 interface OneseoStatusType {
@@ -55,12 +53,7 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
               {oneseo.privacyDetail.schoolName}
             </td>
           ) : (
-            <td
-              className='bg-[url(&apos;data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="100%" x2="100%" y2="0" stroke="gray" /></svg>&apos;)] bg-center bg-no-repeat'
-              colSpan={2}
-            >
-              <Slash />
-            </td>
+            <td colSpan={2} className="bg-slash"></td>
           )}
           <td className="border border-black" colSpan={6}>
             {GraduationEnum[oneseo.privacyDetail.graduationType]}
@@ -75,12 +68,7 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
               {oneseo.privacyDetail.schoolAddress}
             </td>
           ) : (
-            <td
-              className='bg-[url(&apos;data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="100%" x2="100%" y2="0" stroke="gray" /></svg>&apos;)] bg-center bg-no-repeat'
-              colSpan={7}
-            >
-              <Slash />
-            </td>
+            <td colSpan={7} className="bg-slash"></td>
           )}
         </tr>
         <tr>
@@ -116,9 +104,7 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
           {achievementGradeValues.map((gradeKey) => {
             // 검정고시나 자유학기제로 점수가 없다면 빈칸 처리
             return isGEDScore || !oneseo.middleSchoolAchievement[gradeKey]?.length ? (
-              <td key={gradeKey} className={tdStyle + 'w-[2.6875rem]'}>
-                <Slash />
-              </td>
+              <td key={gradeKey} className={tdStyle + 'w-[2.6875rem] bg-slash'}></td>
             ) : (
               <td key={gradeKey} className="border border-black">
                 {plusAll(oneseo.middleSchoolAchievement[gradeKey] ?? [0])}
@@ -126,9 +112,7 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
             );
           })}
           {isGEDScore ? (
-            <td className={tdStyle + 'w-[2.6875rem]'}>
-              <Slash />
-            </td>
+            <td className={tdStyle + 'w-[2.6875rem] bg-slash'}></td>
           ) : (
             <td className="border border-black">
               {plusAll(oneseo.middleSchoolAchievement.artsPhysicalAchievement)}
@@ -155,18 +139,14 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
         </tr>
         <tr>
           {isGEDScore || attendanceScore === 0 ? (
-            <td className={tdStyle + 'w-[2.6875rem]'}>
-              <Slash />
-            </td>
+            <td className={tdStyle + 'w-[2.6875rem]'}></td>
           ) : (
             <td className="border border-black" colSpan={3}>
               {attendanceScore}
             </td>
           )}
           {isGEDScore || volunteerScore === 0 ? (
-            <td className={tdStyle + 'w-[2.6875rem]'} colSpan={3}>
-              <Slash />
-            </td>
+            <td className={tdStyle + 'w-[2.6875rem]'} colSpan={3}></td>
           ) : (
             <td className="border border-black" colSpan={3}>
               {volunteerScore}

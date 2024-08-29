@@ -17,6 +17,8 @@ interface PrintPageProps {
   initialData: GetMyOneseoType | undefined;
 }
 
+const scoreToAlphabet = ['', 'E', 'D', 'C', 'B', 'A'] as const;
+
 const thStyle = 'border border-black bg-[#e9e9e9] ';
 const tdStyle = 'border border-black ';
 
@@ -219,18 +221,31 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
               <div className="relative z-[2] p-6 bg-white border border-gray-300 shadow-md">
                 <div
                   id="sample"
-                  className="absolute z-[-2] text-[40vh] text-gray-200 transform rotate-[-30deg] text-center select-none"
+                  className="absolute top-[-60px] z-[-2] text-[40vh] text-gray-200 transform rotate-[-30deg] text-center select-none"
                 >
                   견본
                 </div>
                 <p>[서식 3]</p>
-                <h1 className="text-[2vh] font-bold text-center">
+                <h1 className="text-[1.8vh] font-bold text-center">
                   {targetDate}학년도 광주소프트웨어마이스터고등학교 입학 전형성적 입력 확인서
                 </h1>
                 <div className="flex items-end justify-between">
                   <h2 className="text-[1.2vh] mt-[1.5vh] leading-[2vh]">일반교과</h2>
+                  <div>
+                    <table>
+                      <tr>
+                        <th className="w-20 border border-b-0 border-black bg-[#e9e9e9] p-[0.2vh] align-middle font-medium">
+                          접수번호
+                        </th>
+                        <td className="w-40 text-center border border-b-0 border-black">
+                          {oneseo.oneseoId}
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
                 </div>
-                <div className="flex h-[26vh] border border-black">
+
+                <div className="flex border border-black h-fit">
                   <div className="flex flex-col w-full border-r border-black">
                     <div className="relative z-10 border-b border-black">
                       <div className="text-right h-[2.2vh]">학년</div>
@@ -250,8 +265,8 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                     ))}
                     <div className="flex items-center justify-center">환산점</div>
                   </div>
-                  <div className="flex flex-col w-full border-r border-black">
-                    <div className="flex flex-col">
+                  <div className="flex flex-col w-full border-b-0 border-r border-black">
+                    <div className="flex flex-col ">
                       <div className="font-bold bg-gray-200 border-b border-black text-center p-[0.2vh] h-[2.2vh]">
                         1학년 1학기
                       </div>
@@ -268,10 +283,10 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                             key={i}
                             className="flex items-center justify-center border-b border-black"
                           >
-                            {score}
+                            {scoreToAlphabet[score]}
                           </div>
                         ))}
-                        <div className="flex items-center justify-center border-b border-black">
+                        <div className="flex items-center justify-center border-b-0 border-black">
                           {plusAll(oneseo.middleSchoolAchievement.achievement1_1)}
                         </div>
                       </>
@@ -282,7 +297,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                       <div className="font-bold bg-gray-200 border-b border-black text-center p-[0.2vh] h-[2.2vh]">
                         1학년 2학기
                       </div>
-                      <div className="font-bold bg-gray-200 border-b border-black text-center p-[0.2vh] h-[2.2vh]">
+                      <div className="font-bold bg-gray-200 border-b-0 border-black text-center p-[0.2vh] h-[2.2vh]">
                         성취도/평어
                       </div>
                     </div>
@@ -295,10 +310,10 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                             key={i}
                             className="flex items-center justify-center border-b border-black"
                           >
-                            {score}
+                            {scoreToAlphabet[score]}
                           </div>
                         ))}
-                        <div className="flex items-center justify-center border-b border-black">
+                        <div className="flex items-center justify-center border-b-0 border-black">
                           {plusAll(oneseo.middleSchoolAchievement.achievement1_2)}
                         </div>
                       </>
@@ -322,10 +337,10 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                             key={i}
                             className="flex items-center justify-center border-b border-black"
                           >
-                            {score}
+                            {scoreToAlphabet[score]}
                           </div>
                         ))}
-                        <div className="flex items-center justify-center border-b border-black">
+                        <div className="flex items-center justify-center border-b-0 border-black">
                           {plusAll(oneseo.middleSchoolAchievement.achievement2_1)}
                         </div>
                       </>
@@ -349,10 +364,10 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                             key={i}
                             className="flex items-center justify-center border-b border-black"
                           >
-                            {score}
+                            {scoreToAlphabet[score]}
                           </div>
                         ))}
-                        <div className="flex items-center justify-center border-b border-black">
+                        <div className="flex items-center justify-center border-b-0 border-black">
                           {plusAll(oneseo.middleSchoolAchievement.achievement2_2)}
                         </div>
                       </>
@@ -376,10 +391,10 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                             key={i}
                             className="flex items-center justify-center border-b border-black"
                           >
-                            {score}
+                            {scoreToAlphabet[score]}
                           </div>
                         ))}
-                        <div className="flex items-center justify-center border-b border-black">
+                        <div className="flex items-center justify-center border-b-0 border-black">
                           {plusAll(oneseo.middleSchoolAchievement.achievement3_1)}
                         </div>
                       </>
@@ -387,7 +402,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                   </div>
                 </div>
                 <h2 className="text-[1.2vh] mt-[1.5vh] leading-[2vh]">체육예술교과</h2>
-                <div className="flex flex-col h-[17vh] border border-black">
+                <div className="flex flex-col border border-black h-fit">
                   <div className="flex h-full">
                     <div className="flex flex-col w-full border-r border-black">
                       <div className="relative z-10 border-b border-black">
@@ -481,7 +496,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                   </thead>
                   <tbody>{/* 표 내용은 동일한 구조로 추가 */}</tbody>
                 </table>
-                <table className="w-[80%] border-collapse border text-[1vh] mt-[1.5vh]">
+                <table className="mx-auto w-[80%] border-collapse border text-[1vh] mt-[1.5vh]">
                   <thead>
                     <tr>
                       <th
@@ -505,7 +520,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                     </tr>
                   </tbody>
                 </table>
-                <table className="w-[50%] border-collapse border text-[1vh] mt-[1.5vh]">
+                <table className="mx-auto w-[50%] border-collapse border text-[1vh] mt-[1.5vh]">
                   <thead>
                     <tr>
                       <th
@@ -525,12 +540,12 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                 </table>
                 <div className="text-center text-[1.2vh] mt-[2vh]">
                   <p>위와 같이 입력하고 확인하였음을 증명합니다.</p>
-                  <div className="flex justify-center gap-[0.5vh] mt-[1vh]">
-                    <span>년</span>
-                    <span>월</span>
-                    <span>일</span>
+                  <div className="flex justify-center mb-4">
+                    <p className="mr-6">년</p>
+                    <p className="mr-6">월</p>
+                    <p>일</p>
                   </div>
-                  <div className="flex justify-between text-[1vh] mt-[1vh]">
+                  <div className="flex justify-between text-[1vh] mt-[1vh]  text-sm">
                     <span>광주소프트웨어마이스터고등학교장 귀하</span>
                     <span>중학교장[직인]</span>
                   </div>
