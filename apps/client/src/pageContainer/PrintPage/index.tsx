@@ -1,6 +1,8 @@
 'use client';
 
 // import { plusAll } from 'shared';
+import { useEffect } from 'react';
+
 import { GetMyOneseoType, SexEnum } from 'types';
 
 import { OneseoStatus } from 'client/components';
@@ -17,7 +19,13 @@ interface PrintPageProps {
 const ApplicationPage = ({ initialData }: PrintPageProps) => {
   const { data: oneseo } = useGetMyOneseo({ initialData: initialData });
 
+  useEffect(() => {
+    console.log(oneseo);
+  }, [oneseo]);
+
   if (!oneseo) return <>원서 정보가 없습니다</>;
+
+  const date = new Date();
 
   // const isGEDScore = !!oneseo.middleSchoolAchievement.gedTotalScore;
 
@@ -36,6 +44,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
         @media print {
           body {
             header,
+            #sample,
             footer {
               display: none !important;
             }
@@ -50,9 +59,13 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
         <PrintIcon />
         <p className="text-[2.1vh] font-bold hover:text-white">인쇄하기</p>
       </Button>
+
       <div className="flex h-screen justify-center overflow-hidden bg-white p-2 text-[1vh]">
         <div className="relative z-[1] w-[63vh]">
-          <div className="absolute z-[-1] rotate-[-30deg] select-none text-center text-[40vh] text-gray-200">
+          <div
+            id="sample"
+            className="absolute z-[-1] rotate-[-30deg] select-none text-center text-[40vh] text-gray-200"
+          >
             견본
           </div>
           <p>[서식 1]</p>
@@ -60,8 +73,20 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
             광주소프트웨어마이스터고등학교 입학원서
           </div>
           <div className="flex items-end justify-between">
-            <div className="mt-[1.5vh] text-[1.2vh] font-bold leading-[2vh]">
-              2024학년도 신입생 입학전형
+            <div className="mt-[1.5vh] text-lg font-bold leading-[2vh]">
+              {date.getFullYear() + 1}학년도 신입생 입학전형
+            </div>
+            <div>
+              <table>
+                <tr>
+                  <th className="w-20 border border-b-0 border-black bg-[#e9e9e9] p-[0.2vh] align-middle font-medium">
+                    접수번호
+                  </th>
+                  <td className="w-40 text-center border border-b-0 border-black">
+                    {oneseo.oneseoId}
+                  </td>
+                </tr>
+              </table>
             </div>
           </div>
           <div className="border border-black">

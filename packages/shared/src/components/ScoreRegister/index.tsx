@@ -449,7 +449,14 @@ const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
         <AlertDialog open={showModal}>
           <AlertDialogContent className="w-[400px]">
             <AlertDialogHeader>
-              <AlertDialogTitle>원서가 제출되었습니다!</AlertDialogTitle>
+              <AlertDialogTitle>
+                원서가 제출되었습니다!
+                <br />
+                {
+                  // TODO 연락처 수정 필요
+                }
+                문제가 있다면 blabla로 연락주세요.
+              </AlertDialogTitle>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogAction
@@ -458,7 +465,7 @@ const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
                   setShowModal(false);
                 }}
               >
-                다음에
+                확인
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
