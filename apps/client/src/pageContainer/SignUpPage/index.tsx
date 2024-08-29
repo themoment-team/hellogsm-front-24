@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { useForm, FormProvider } from 'react-hook-form';
 import { MemberRegisterType, SexType, SendCodeType } from 'types';
 import { z } from 'zod';
@@ -31,6 +32,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogTrigger,
 } from 'shared/components';
 import { useDebounce } from 'shared/hooks';
 import { cn } from 'shared/lib/utils';
@@ -38,12 +40,15 @@ import { cn } from 'shared/lib/utils';
 const PERMIT_YEAR = 50;
 
 const SignUpPage = () => {
+  const { push } = useRouter();
+
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
   const [btnClick, setBtnClick] = useState<boolean>(false);
   const [timeLeft, setTimeLeft] = useState<number>(180);
   const [lastSubmittedCode, setLastSubmittedCode] = useState<string>('');
   const [isSuccess, setIsSuccess] = useState<boolean | undefined>(undefined);
-  const [showModal, setShowModal] = useState<boolean>(false);
+
+  const [showModal, setShowModal] = useState<'code' | 'success' | ''>('');
 
   const formMethods = useForm({
     resolver: zodResolver(signupFormSchema),
@@ -95,7 +100,9 @@ const SignUpPage = () => {
 
   const { mutate: mutateMemberRegister } = usePostMemberRegister({
     onError: () => alert('멘토 등록에 실패하였습니다.'),
-    onSuccess: () => '',
+    onSuccess: () => {
+      setShowModal('success');
+    },
   });
 
   const { mutate: mutateSendCode } = useSendCode({
@@ -103,7 +110,7 @@ const SignUpPage = () => {
       setBtnClick(true);
       formMethods.setValue('isSentCertificationNumber', true);
     },
-    onError: () => setShowModal(true),
+    onError: () => setShowModal('code'),
   });
 
   const { mutate: mutateVerifyCode } = useVerifyCode({
@@ -362,7 +369,7 @@ const SignUpPage = () => {
 
       <Footer />
 
-      <AlertDialog open={showModal}>
+      <AlertDialog open={showModal === 'code'}>
         <AlertDialogContent className="w-[400px]">
           <AlertDialogHeader>
             <AlertDialogTitle>
@@ -370,7 +377,26 @@ const SignUpPage = () => {
             </AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogAction onClick={() => setShowModal(false)}>확인</AlertDialogAction>
+            <AlertDialogAction onClick={() => setShowModal('')}>확인</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={showModal === 'success'}>
+        <AlertDialogTrigger>Open</AlertDialogTrigger>
+        <AlertDialogContent className="w-[400px]">
+          <AlertDialogHeader>
+            <AlertDialogTitle>회원가입에 성공했습니다!</AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction
+              onClick={() => {
+                setShowModal('');
+                push('/');
+              }}
+            >
+              확인
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
