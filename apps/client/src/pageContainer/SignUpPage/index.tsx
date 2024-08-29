@@ -91,7 +91,7 @@ const SignUpPage = () => {
   const isCertificationValid = isSuccess === true;
   const isSubmitButtonDisabled = !isCertificationValid || !isAgreed;
 
-  const targetYear = new Date().getFullYear() - PERMIT_YEAR;
+  const targetYear = new Date().getFullYear();
 
   const { mutate: mutateMemberRegister } = usePostMemberRegister({
     onError: () => alert('멘토 등록에 실패하였습니다.'),
