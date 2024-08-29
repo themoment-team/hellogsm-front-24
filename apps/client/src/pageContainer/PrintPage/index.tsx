@@ -1,3 +1,5 @@
+'use client';
+
 // import { plusAll } from 'shared';
 import { GetMyOneseoType, SexEnum } from 'types';
 
