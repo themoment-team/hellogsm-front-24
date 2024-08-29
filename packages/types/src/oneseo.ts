@@ -29,7 +29,7 @@ export enum ScreeningEnum {
 export enum MajorEnum {
   소프트웨어개발과 = "SW",
   인공지능과 = "AI",
-  스마트IOT과 = "AI",
+  스마트IOT과 = "IOT",
 }
 
 export interface MiddleSchoolAchievementType {

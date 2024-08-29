@@ -34,23 +34,22 @@ interface Props {
   param: string;
 }
 
-const getCategoryFromGraduationType = (graduationType: string) => {
-  switch (graduationType) {
-    case 'CANDIDATE':
-      return '졸업예정';
-    case 'GRADUATE':
-      return '졸업자';
-    case 'GED':
-      return '검정고시';
-    case '졸업예정':
-      return 'CANDIDATE';
-    case '졸업자':
-      return 'GRADUATE';
-    case '검정고시':
-      return 'GED';
-    default:
-      return '';
-  }
+const GraduationTypeConvertor: { [key: string]: string } = {
+  CANDIDATE: '졸업예정',
+  GRADUATE: '졸업자',
+  GED: '검정고시',
+};
+
+const ReverseGraduationTypeConvertor: { [key: string]: string } = {
+  졸업예정: 'CANDIDATE',
+  졸업자: 'GRADUATE',
+  검정고시: 'GED',
+};
+
+const ReverseMajorConvertor: { [key: string]: string } = {
+  SW: '소프트웨어개발과',
+  AI: '인공지능과',
+  IOT: '스마트IOT과',
 };
 
 const getScreeningTypeText = (screeningType: string) => {
@@ -73,32 +72,6 @@ const getScreeningTypeText = (screeningType: string) => {
   }
 };
 
-const getMajorTypeText = (majorTpe: string) => {
-  switch (majorTpe) {
-    case '소프트웨어개발과':
-      return 'SW';
-    case '인공지능과':
-      return 'AI';
-    case '스마트IOT과':
-      return 'IOT';
-    default:
-      return '';
-  }
-};
-
-const getMajorType = (majorTpe: string) => {
-  switch (majorTpe) {
-    case 'SW':
-      return '소프트웨어개발과';
-    case 'AI':
-      return '인공지능과';
-    case 'IOT':
-      return '스마트IOT과';
-    default:
-      return '';
-  }
-};
-
 const StepsContainer = ({ data, param, info }: Props) => {
   const store = useStore();
 
@@ -115,9 +88,15 @@ const StepsContainer = ({ data, param, info }: Props) => {
   const sex = SexEnum[info.sex];
 
   const choice = [
-    getMajorType(defaultMajors?.firstDesiredMajor || ''),
-    getMajorType(defaultMajors?.secondDesiredMajor || ''),
-    getMajorType(defaultMajors?.thirdDesiredMajor || ''),
+    defaultMajors?.firstDesiredMajor
+      ? ReverseMajorConvertor[defaultMajors.firstDesiredMajor]
+      : undefined,
+    defaultMajors?.secondDesiredMajor
+      ? ReverseMajorConvertor[defaultMajors.secondDesiredMajor]
+      : undefined,
+    defaultMajors?.thirdDesiredMajor
+      ? ReverseMajorConvertor[defaultMajors.thirdDesiredMajor]
+      : undefined,
   ];
 
   const { register, handleSubmit, setValue, watch } = useForm<basicRegisterType>({
@@ -127,7 +106,9 @@ const StepsContainer = ({ data, param, info }: Props) => {
       address: defaultDetailData?.address || '',
       detailAddress: defaultDetailData?.detailAddress || '',
       phoneNumber: defaultDetailData?.phoneNumber || '',
-      category: getCategoryFromGraduationType(defaultDetailData?.graduationType || ''),
+      category:
+        defaultDetailData?.graduationType &&
+        GraduationTypeConvertor[defaultDetailData.graduationType],
       schoolName: defaultDetailData?.schoolName || '',
       schoolAddress: defaultDetailData?.schoolAddress || '',
       year: '',
@@ -195,22 +176,14 @@ const StepsContainer = ({ data, param, info }: Props) => {
       relationshipWithGuardian: watch('relationship') ? watch('relationship') : null,
       address: watch('address') ? watch('address') : null,
       detailAddress: watch('detailAddress') ? watch('detailAddress') : null,
-      graduationType: getCategoryFromGraduationType(watch('category'))
-        ? getCategoryFromGraduationType(watch('category'))
-        : null,
+      graduationType: watch('category') ? ReverseGraduationTypeConvertor[watch('category')] : null,
       schoolTeacherName: watch('schoolTeacherName') ? watch('schoolTeacherName') : null,
       schoolTeacherPhoneNumber: watch('schoolTeacherPhoneNumber')
         ? watch('schoolTeacherPhoneNumber')
         : null,
-      firstDesiredMajor: getMajorTypeText(watch('choice')[0])
-        ? getMajorTypeText(watch('choice')[0])
-        : null,
-      secondDesiredMajor: getMajorTypeText(watch('choice')[1])
-        ? getMajorTypeText(watch('choice')[1])
-        : null,
-      thirdDesiredMajor: getMajorTypeText(watch('choice')[2])
-        ? getMajorTypeText(watch('choice')[2])
-        : null,
+      firstDesiredMajor: watch('choice')[0] ? ReverseMajorConvertor[watch('choice')[0]] : null,
+      secondDesiredMajor: watch('choice')[1] ? ReverseMajorConvertor[watch('choice')[1]] : null,
+      thirdDesiredMajor: watch('choice')[2] ? ReverseMajorConvertor[watch('choice')[2]] : null,
       middleSchoolAchievement: middleSchoolAchievement,
       schoolName: watch('schoolName') ? watch('schoolName') : null,
       schoolAddress: watch('schoolAddress') ? watch('schoolAddress') : null,
