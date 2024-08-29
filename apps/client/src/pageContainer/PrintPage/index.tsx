@@ -2,6 +2,8 @@
 
 // import { plusAll } from 'shared';
 
+import { useEffect } from 'react';
+
 import { plusAll } from 'shared';
 import { GetMyOneseoType, SexEnum } from 'types';
 
@@ -17,13 +19,17 @@ interface PrintPageProps {
   initialData: GetMyOneseoType | undefined;
 }
 
-const scoreToAlphabet = ['', 'E', 'D', 'C', 'B', 'A'] as const;
+const scoreToAlphabet = ['없음', 'E', 'D', 'C', 'B', 'A'] as const;
 
 const thStyle = 'border border-black bg-[#e9e9e9] ';
 const tdStyle = 'border border-black ';
 
 const ApplicationPage = ({ initialData }: PrintPageProps) => {
   const { data: oneseo } = useGetMyOneseo({ initialData: initialData });
+
+  useEffect(() => {
+    console.log(oneseo);
+  }, [oneseo]);
 
   if (!oneseo) return <>원서 정보가 없습니다</>;
 
@@ -44,6 +50,37 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
     window.print();
   };
 
+  let currentIdx = 0;
+
+  const artPhysicalScores = [...oneseo.middleSchoolAchievement.artsPhysicalAchievement];
+
+  const getArtPhysicalElement = (achievement: number[] | null) => {
+    if (!achievement) {
+      return <div className="h-full bg-no-repeat bg-contain bg-slash"></div>;
+    }
+
+    const subjectLength = oneseo.middleSchoolAchievement.artsPhysicalSubjects.length;
+
+    const arr = artPhysicalScores.slice(currentIdx, currentIdx + subjectLength);
+
+    currentIdx += subjectLength;
+
+    console.log(arr, currentIdx);
+
+    return (
+      <>
+        {arr.map((score, i) => (
+          <div key={i} className="flex items-center justify-center border-b border-black">
+            {scoreToAlphabet[score]}
+          </div>
+        ))}
+        <div className="flex items-center justify-center border-b-0 border-black">
+          {plusAll(arr)}
+        </div>
+      </>
+    );
+  };
+
   return (
     <>
       <style jsx global>{`
@@ -59,7 +96,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
       `}</style>
       {/* 입학원서 */}
       <Button
-        className="fixed items-center gap-2 bottom-10 right-10 print:hidden"
+        className="fixed items-center gap-2 bottom-10 right-24 print:hidden"
         onClick={handlePrint}
       >
         <PrintIcon />
@@ -426,23 +463,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                         성취도/평어
                       </div>
                     </div>
-                    {!oneseo.middleSchoolAchievement.achievement1_1 ? (
-                      <div className="h-full bg-no-repeat bg-contain bg-slash"></div>
-                    ) : (
-                      <>
-                        {oneseo.middleSchoolAchievement.achievement1_1.map((score, i) => (
-                          <div
-                            key={i}
-                            className="flex items-center justify-center border-b border-black"
-                          >
-                            {scoreToAlphabet[score]}
-                          </div>
-                        ))}
-                        <div className="flex items-center justify-center border-b-0 border-black">
-                          {plusAll(oneseo.middleSchoolAchievement.achievement1_1)}
-                        </div>
-                      </>
-                    )}
+                    {getArtPhysicalElement(oneseo.middleSchoolAchievement.achievement1_1)}
                   </div>
                   <div className="flex flex-col w-full border-r border-black">
                     <div className="flex flex-col">
@@ -453,23 +474,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                         성취도/평어
                       </div>
                     </div>
-                    {!oneseo.middleSchoolAchievement.achievement1_2 ? (
-                      <div className="h-full bg-no-repeat bg-contain bg-slash"></div>
-                    ) : (
-                      <>
-                        {oneseo.middleSchoolAchievement.achievement1_2.map((score, i) => (
-                          <div
-                            key={i}
-                            className="flex items-center justify-center border-b border-black"
-                          >
-                            {scoreToAlphabet[score]}
-                          </div>
-                        ))}
-                        <div className="flex items-center justify-center border-b-0 border-black">
-                          {plusAll(oneseo.middleSchoolAchievement.achievement1_2)}
-                        </div>
-                      </>
-                    )}
+                    {getArtPhysicalElement(oneseo.middleSchoolAchievement.achievement1_2)}
                   </div>
                   <div className="flex flex-col w-full border-r border-black">
                     <div className="flex flex-col">
@@ -480,23 +485,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                         성취도/평어
                       </div>
                     </div>
-                    {!oneseo.middleSchoolAchievement.achievement2_1 ? (
-                      <div className="h-full bg-no-repeat bg-contain bg-slash"></div>
-                    ) : (
-                      <>
-                        {oneseo.middleSchoolAchievement.achievement2_1.map((score, i) => (
-                          <div
-                            key={i}
-                            className="flex items-center justify-center border-b border-black"
-                          >
-                            {scoreToAlphabet[score]}
-                          </div>
-                        ))}
-                        <div className="flex items-center justify-center border-b-0 border-black">
-                          {plusAll(oneseo.middleSchoolAchievement.achievement2_1)}
-                        </div>
-                      </>
-                    )}
+                    {getArtPhysicalElement(oneseo.middleSchoolAchievement.achievement2_1)}
                   </div>
                   <div className="flex flex-col w-full border-r border-black">
                     <div className="flex flex-col">
@@ -507,23 +496,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                         성취도/평어
                       </div>
                     </div>
-                    {!oneseo.middleSchoolAchievement.achievement2_2 ? (
-                      <div className="h-full bg-no-repeat bg-contain bg-slash"></div>
-                    ) : (
-                      <>
-                        {oneseo.middleSchoolAchievement.achievement2_2.map((score, i) => (
-                          <div
-                            key={i}
-                            className="flex items-center justify-center border-b border-black"
-                          >
-                            {scoreToAlphabet[score]}
-                          </div>
-                        ))}
-                        <div className="flex items-center justify-center border-b-0 border-black">
-                          {plusAll(oneseo.middleSchoolAchievement.achievement2_2)}
-                        </div>
-                      </>
-                    )}
+                    {getArtPhysicalElement(oneseo.middleSchoolAchievement.achievement2_2)}
                   </div>
                   <div className="flex flex-col w-full border-black">
                     <div className="flex flex-col">
@@ -534,23 +507,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                         성취도/평어
                       </div>
                     </div>
-                    {!oneseo.middleSchoolAchievement.achievement3_1 ? (
-                      <div className="h-full bg-no-repeat bg-contain bg-slash"></div>
-                    ) : (
-                      <>
-                        {oneseo.middleSchoolAchievement.achievement3_1.map((score, i) => (
-                          <div
-                            key={i}
-                            className="flex items-center justify-center border-b border-black"
-                          >
-                            {scoreToAlphabet[score]}
-                          </div>
-                        ))}
-                        <div className="flex items-center justify-center border-b-0 border-black">
-                          {plusAll(oneseo.middleSchoolAchievement.achievement3_1)}
-                        </div>
-                      </>
-                    )}
+                    {getArtPhysicalElement(oneseo.middleSchoolAchievement.achievement3_1)}
                   </div>
                 </div>
                 <h2 className="text-[1.2vh] mt-[1.5vh] leading-[2vh]">비교과</h2>
