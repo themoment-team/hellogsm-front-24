@@ -3,8 +3,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @rushstack/no-new-null */
 
-import { Dispatch, SetStateAction } from 'react';
-
 import { XIcon } from 'lucide-react';
 import { Control, Controller, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 
@@ -31,8 +29,8 @@ interface FreeSemesterFormProps {
   setValue: UseFormSetValue<ScoreFormType>;
   register: UseFormRegister<ScoreFormType>;
   handleDeleteSubjectClick: (idx: number) => void;
-  freeSemester: SemesterIdType | null;
-  setFreeSemester: Dispatch<SetStateAction<SemesterIdType | null>>;
+  freeSemester: SemesterIdType | null | undefined;
+  setFreeSemester: (semester: SemesterIdType | null) => void;
 }
 
 interface ScoreSelectProps {

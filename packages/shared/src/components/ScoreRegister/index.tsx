@@ -1,10 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @rushstack/no-new-null */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/naming-convention */
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Dispatch, useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 // import { usePostMyOneseo, usePutOneseo } from 'api';
@@ -23,6 +21,7 @@ import {
   FormController,
   FreeGradeForm,
   FreeSemesterForm,
+  Input,
   LiberalSystemSwitch,
   NonSubjectForm,
   AlertDialogTitle,
@@ -33,9 +32,20 @@ import { scoreFormSchema } from 'shared/schemas';
 import { useStore } from 'shared/stores';
 import { dataUrltoFile } from 'shared/utils';
 
-import type { GradesInputMethodType, PostOneseoType, ScoreFormType, SemesterIdType } from 'types';
+import type {
+  GEDAchievementType,
+  GradesInputMethodType,
+  PostOneseoType,
+  ScoreFormType,
+  SemesterIdType,
+} from 'types';
 
 const formId = 'scoreForm';
+
+const LiberalSystemConvertor: { [key: string]: GradesInputMethodType } = {
+  자유학기제: 'freeSemester',
+  자유학년제: 'freeGrade',
+};
 
 const freeSemesterConvertor = {
   achievement1_1: '1-1',
@@ -43,7 +53,7 @@ const freeSemesterConvertor = {
   achievement2_1: '2-1',
   achievement2_2: '2-2',
   achievement3_1: '3-1',
-};
+} as const;
 
 const reversedFreeSemesterConvertor: { [key: string]: SemesterIdType } = {
   '1-1': 'achievement1_1',
@@ -51,7 +61,7 @@ const reversedFreeSemesterConvertor: { [key: string]: SemesterIdType } = {
   '2-1': 'achievement2_1',
   '2-2': 'achievement2_2',
   '3-1': 'achievement3_1',
-};
+} as const;
 
 const formWrapper = [
   'flex',
@@ -67,29 +77,23 @@ const formWrapper = [
 interface ScoreRegisterProps {
   data: GetMyOneseoType | undefined;
   memberId?: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setScoreWatch?: Dispatch<ScoreFormType>;
 }
 
-const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
+const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) => {
   const store = useStore();
 
   const { push } = useRouter();
 
   const [showModal, setShowModal] = useState<boolean>(false);
 
+  const { setLiberalSystem, setFreeSemester, freeSemester, liberalSystem } = store;
+
   const defaultData = data?.middleSchoolAchievement;
-  const [liberalSystem, setLiberalSystem] = useState<GradesInputMethodType>(
-    defaultData
-      ? defaultData.liberalSystem === '자유학년제'
-        ? 'freeGrade'
-        : 'freeSemester'
-      : 'freeGrade',
-  );
 
   const [oneseoBody, setOneseoBody] = useState<Omit<PostOneseoType, 'profileImg'> | null>(null);
 
-  const [freeSemester, setFreeSemester] = useState<SemesterIdType | null>(
-    defaultData?.freeSemester ? reversedFreeSemesterConvertor[defaultData.freeSemester] : null,
-  );
   const [subjectArray, setSubjectArray] = useState<string[]>([...defaultSubjectArray]);
   const defaultSubjectLength = defaultSubjectArray.length;
 
@@ -109,13 +113,26 @@ const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
       artsPhysicalAchievement:
         defaultData?.artsPhysicalAchievement &&
         defaultData.artsPhysicalAchievement.map((i) => String(i)),
-      newSubjects: defaultData?.newSubjects && [...defaultData?.newSubjects],
+      newSubjects: defaultData?.newSubjects && [...defaultData.newSubjects],
       absentDays: defaultData?.absentDays && defaultData.absentDays.map((i) => String(i)),
       attendanceDays:
         defaultData?.attendanceDays && defaultData.attendanceDays.map((i) => String(i)),
       volunteerTime: defaultData?.volunteerTime && defaultData.volunteerTime.map((i) => String(i)),
     },
   });
+
+  useEffect(() => {
+    if (setScoreWatch) {
+      console.log('setScoreWatch');
+      setScoreWatch(watch());
+    }
+  }, [setScoreWatch, watch]);
+
+  useEffect(() => {
+    setFreeSemester(
+      defaultData?.freeSemester ? reversedFreeSemesterConvertor[defaultData.freeSemester] : null,
+    );
+  }, [defaultData, setFreeSemester]);
 
   const { mutate: mutatePostMyOneseo } = usePostMyOneseo({
     onSuccess: () => {
@@ -128,7 +145,6 @@ const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
     onSuccess: (data) => {
       if (oneseoBody) {
         const body: PostOneseoType = { ...oneseoBody, profileImg: data.url };
-        console.log(body);
 
         mutatePostMyOneseo(body);
       }
@@ -201,7 +217,10 @@ const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
       schoolAddress &&
       screening;
 
-    if (!isAllWrite) return;
+    if (!isAllWrite) {
+      console.log(store);
+      return;
+    }
 
     const isFreeSemester = liberalSystem === 'freeSemester';
 
@@ -216,26 +235,30 @@ const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
       attendanceDays,
       volunteerTime,
       newSubjects,
+      gedTotalScore,
     } = data;
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const middleSchoolAchievement: MiddleSchoolAchievementType = {
-      achievement1_1: achievement1_1 ? achievement1_1.map((i) => Number(i)) : null,
-      achievement1_2: achievement1_2 ? achievement1_2.map((i) => Number(i)) : null,
-      achievement2_1: achievement2_1 ? achievement2_1.map((i) => Number(i)) : null,
-      achievement2_2: achievement2_2 ? achievement2_2.map((i) => Number(i)) : null,
-      achievement3_1: achievement3_1 ? achievement3_1.map((i) => Number(i)) : null,
-      artsPhysicalAchievement: artsPhysicalAchievement.map((i) => Number(i)),
-      absentDays: absentDays.map((i) => Number(i)),
-      attendanceDays: attendanceDays.map((i) => Number(i)),
-      volunteerTime: volunteerTime.map((i) => Number(i)),
-      newSubjects: newSubjects,
-      liberalSystem: isFreeSemester ? '자유학년제' : '자유학기제',
-      freeSemester: (isFreeSemester
-        ? freeSemesterConvertor[freeSemester!]
-        : null) as FreeSemesterType,
-      artsPhysicalSubjects: ['체육', '음악', '미술'],
-    };
+    const middleSchoolAchievement: MiddleSchoolAchievementType | GEDAchievementType =
+      store.graduationType === 'GED'
+        ? { gedTotalScore: Number(gedTotalScore) }
+        : {
+            achievement1_1: achievement1_1 ? achievement1_1.map((i) => Number(i)) : null,
+            achievement1_2: achievement1_2 ? achievement1_2.map((i) => Number(i)) : null,
+            achievement2_1: achievement2_1 ? achievement2_1.map((i) => Number(i)) : null,
+            achievement2_2: achievement2_2 ? achievement2_2.map((i) => Number(i)) : null,
+            achievement3_1: achievement3_1 ? achievement3_1.map((i) => Number(i)) : null,
+            artsPhysicalAchievement: artsPhysicalAchievement!.map((i) => Number(i)),
+            absentDays: absentDays!.map((i) => Number(i)),
+            attendanceDays: attendanceDays!.map((i) => Number(i)),
+            volunteerTime: volunteerTime!.map((i) => Number(i)),
+            newSubjects: newSubjects,
+            liberalSystem: isFreeSemester ? '자유학년제' : '자유학기제',
+            freeSemester: (isFreeSemester
+              ? freeSemesterConvertor[freeSemester!]
+              : null) as FreeSemesterType,
+            artsPhysicalSubjects: ['체육', '음악', '미술'],
+          };
 
     const body: Omit<PostOneseoType, 'profileImg'> = {
       guardianName: guardianName,
@@ -289,6 +312,25 @@ const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
 
       setTimeout(() => setValue('newSubjects', defaultData.newSubjects), 0);
     }
+
+    setLiberalSystem(
+      defaultData?.liberalSystem ? LiberalSystemConvertor[defaultData.liberalSystem] : 'freeGrade',
+    );
+
+    if (store.graduationType === 'GED') {
+      setValue('absentDays', null);
+      setValue('achievement1_1', null);
+      setValue('achievement1_2', null);
+      setValue('achievement2_1', null);
+      setValue('achievement2_2', null);
+      setValue('achievement3_1', null);
+      setValue('artsPhysicalAchievement', null);
+      setValue('attendanceDays', null);
+      setValue('newSubjects', null);
+      setValue('volunteerTime', null);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -307,41 +349,54 @@ const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
   }, [defaultSubjectLength, freeSemester, liberalSystem, setValue, subjectArray]);
 
   return (
-    <>
-      <div className={cn(['w-[66.5rem]', 'flex', 'flex-col'])}>
-        {/* <div className={cn(['w-full', 'px-[2rem]', 'py-[1.5rem]', 'bg-white'])}> */}
-        <h1
-          className={cn([
-            'text-[1.25rem]',
-            'font-normal',
-            'font-semibold',
-            'leading-[1.75rem]',
-            'tracking-[-0.00625rem]',
-            'text-gray-900',
-          ])}
+    <div className={cn(['w-[66.5rem]', 'flex', 'flex-col'])}>
+      {/* <div className={cn(['w-full', 'px-[2rem]', 'py-[1.5rem]', 'bg-white'])}> */}
+      <h1
+        className={cn([
+          'text-[1.25rem]',
+          'font-normal',
+          'font-semibold',
+          'leading-[1.75rem]',
+          'tracking-[-0.00625rem]',
+          'text-gray-900',
+        ])}
+      >
+        성적을 입력해 주세요.
+      </h1>
+      <p
+        className={cn(
+          'text-sm',
+          'font-normal',
+          'leading-5',
+          'text-gray-600',
+          'mt-[0.125rem]',
+          'mb-[2rem]',
+        )}
+      >
+        회원가입 시 입력한 기본 정보가 노출됩니다.
+      </p>
+      {store.graduationType === 'GED' ? (
+        <form
+          id={formId}
+          onSubmit={handleSubmit(handleFormSubmit, () => {
+            console.log(watch());
+          })}
         >
-          성적을 입력해 주세요.
-        </h1>
-        <p
-          className={cn(
-            'text-sm',
-            'font-normal',
-            'leading-5',
-            'text-gray-600',
-            'mt-[0.125rem]',
-            'mb-[2rem]',
-          )}
-        >
-          회원가입 시 입력한 기본 정보가 노출됩니다.
-        </p>
+          <div className={cn('w-[18.75rem]', 'flex', 'flex-col', 'gap-1')}>
+            <p className={cn('text-slate-900', 'text-[0.875rem]/[1.25rem]')}>
+              검정고시 전과목 득점 합계 <span className={cn('text-red-600')}>*</span>
+            </p>
+            <Input {...register('gedTotalScore')} placeholder="점수 입력" />
+          </div>
+        </form>
+      ) : (
         <div
           className={cn(
             'flex',
             'h-lvh',
             'justify-center',
-            'bg-slate-50',
-            'w-full',
             'bg-white',
+            'w-full',
             'h-fit',
             'gap-[2.5rem]',
           )}
@@ -445,34 +500,33 @@ const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
           </form>
           {/* {type === 'admin' && <EditBar id={formId} />} */}
         </div>
+      )}
 
-        <AlertDialog open={showModal}>
-          <AlertDialogContent className="w-[400px]">
-            <AlertDialogHeader>
-              <AlertDialogTitle>
-                원서가 제출되었습니다!
-                <br />
-                {
-                  // TODO 연락처 수정 필요
-                }
-                문제가 있다면 blabla로 연락주세요.
-              </AlertDialogTitle>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogAction
-                onClick={() => {
-                  push('/mypage');
-                  setShowModal(false);
-                }}
-              >
-                확인
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      </div>
-      {/* </div> */}
-    </>
+      <AlertDialog open={showModal}>
+        <AlertDialogContent className="w-[400px]">
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              원서가 제출되었습니다!
+              <br />
+              {
+                // TODO 연락처 수정 필요
+              }
+              문제가 있다면 blabla로 연락주세요.
+            </AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction
+              onClick={() => {
+                push('/mypage');
+                setShowModal(false);
+              }}
+            >
+              확인
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
   );
 };
 

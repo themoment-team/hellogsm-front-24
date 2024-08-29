@@ -7,10 +7,10 @@ import { PostOneseoType } from 'types';
 import { oneseoQueryKeys, oneseoUrl, post } from 'api/libs';
 
 export const usePostTempStorage = (
-  options: UseMutationOptions<unknown, AxiosError, PostOneseoType>,
+  options?: UseMutationOptions<unknown, AxiosError, PostOneseoType>,
 ) =>
   useMutation({
-    mutationKey: oneseoQueryKeys.postMyOneseo(),
-    mutationFn: (data: PostOneseoType) => post(oneseoUrl.postMyOneseo(), data),
+    mutationKey: oneseoQueryKeys.postTempStorage(),
+    mutationFn: (data: PostOneseoType) => post(oneseoUrl.postTempStorage(), data),
     ...options,
   });

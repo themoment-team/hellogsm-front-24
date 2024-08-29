@@ -10,14 +10,14 @@ import { cn } from 'shared/lib/utils';
 interface ArtPhysicalFormProps {
   control: Control<ScoreFormType, any>;
   setValue: UseFormSetValue<ScoreFormType>;
-  liberalSystem: GradesInputMethodType;
+  liberalSystem: GradesInputMethodType | undefined;
 }
 
 interface ScoreSelectProps {
   name: `artsPhysicalAchievement.${number}`;
   control: Control<ScoreFormType, any>;
   setValue: UseFormSetValue<ScoreFormType>;
-  liberalSystem: GradesInputMethodType;
+  liberalSystem: GradesInputMethodType | undefined;
 }
 
 const artPhysicalSemesterArray = ['2학년 1학기', '2학년 2학기', '3학년 1학기'] as const;
