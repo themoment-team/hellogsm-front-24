@@ -102,7 +102,6 @@ const StepsContainer = ({ data, param, info }: Props) => {
       img: defaultDetailData?.profileImg || '',
       address: defaultDetailData?.address || '',
       detailAddress: defaultDetailData?.detailAddress || '',
-      phoneNumber: defaultDetailData?.phoneNumber || '',
       category:
         defaultDetailData?.graduationType &&
         GraduationTypeConvertor[defaultDetailData.graduationType],
@@ -125,6 +124,7 @@ const StepsContainer = ({ data, param, info }: Props) => {
     name: info.name,
     birth: info.birth,
     sex: sex,
+    phonNumber: info.phoneNumber,
   };
 
   const { mutate: postTempStorage } = usePostTempStorage({
@@ -234,6 +234,7 @@ const StepsContainer = ({ data, param, info }: Props) => {
                 name={userBasicInfo.name}
                 birth={userBasicInfo.birth}
                 sex={userBasicInfo.sex}
+                phoneNumber={userBasicInfo.phonNumber}
                 register={register}
                 setValue={setValue}
                 watch={watch}
