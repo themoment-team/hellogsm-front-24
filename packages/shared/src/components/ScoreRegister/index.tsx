@@ -9,16 +9,23 @@ import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 // import { usePostMyOneseo, usePutOneseo } from 'api';
 import { usePostImage, usePostMyOneseo } from 'api';
+import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FreeSemesterType, GetMyOneseoType, MiddleSchoolAchievementType } from 'types';
 
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
   ArtPhysicalForm,
   FormController,
   FreeGradeForm,
   FreeSemesterForm,
   LiberalSystemSwitch,
   NonSubjectForm,
+  AlertDialogTitle,
 } from 'shared/components';
 import { defaultSubjectArray } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
@@ -64,6 +71,11 @@ interface ScoreRegisterProps {
 
 const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
   const store = useStore();
+
+  const { push } = useRouter();
+
+  const [showModal, setShowModal] = useState<boolean>(false);
+
   const defaultData = data?.middleSchoolAchievement;
   const [liberalSystem, setLiberalSystem] = useState<GradesInputMethodType>(
     defaultData
@@ -107,7 +119,7 @@ const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
 
   const { mutate: mutatePostMyOneseo } = usePostMyOneseo({
     onSuccess: () => {
-      alert('원서 제출 완료');
+      setShowModal(true);
     },
     onError: () => {},
   });
@@ -433,6 +445,24 @@ const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
           </form>
           {/* {type === 'admin' && <EditBar id={formId} />} */}
         </div>
+
+        <AlertDialog open={showModal}>
+          <AlertDialogContent className="w-[400px]">
+            <AlertDialogHeader>
+              <AlertDialogTitle>원서가 제출되었습니다!</AlertDialogTitle>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogAction
+                onClick={() => {
+                  push('/mypage');
+                  setShowModal(false);
+                }}
+              >
+                다음에
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
       {/* </div> */}
     </>

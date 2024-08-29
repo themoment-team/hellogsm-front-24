@@ -78,6 +78,7 @@ const RadioButton = ({
               onChange={handleChange}
               className={cn(
                 'appearance-none',
+                'cursor-pointer',
                 'w-4',
                 'h-4',
                 'border-[1px]',
