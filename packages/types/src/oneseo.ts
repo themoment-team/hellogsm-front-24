@@ -14,11 +14,6 @@ export type SexType = "MALE" | "FEMALE";
 
 export type YesNo = "YES" | "NO";
 
-export enum SexEnum {
-  MALE = "남자",
-  FEMALE = "여자",
-}
-
 export enum ScreeningEnum {
   GENERAL = "일반전형",
   SPECIAL = "특별전형",
