@@ -11,6 +11,7 @@ import {
   MyMemberInfoType,
   SexEnum,
   PostOneseoType,
+  ScoreFormType,
 } from 'types';
 
 import {
@@ -75,7 +76,7 @@ const getScreeningTypeText = (screeningType: string) => {
 const StepsContainer = ({ data, param, info }: Props) => {
   const store = useStore();
 
-  const [scoreWatch, setScoreWatch] = useState<any>(null);
+  const [scoreWatch, setScoreWatch] = useState<ScoreFormType | null>(null);
   const [tempBody, setTempBody] = useState<PostOneseoType | null>(null);
 
   const defaultDetailData = data?.privacyDetail;

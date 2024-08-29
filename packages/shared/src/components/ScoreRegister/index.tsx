@@ -71,7 +71,7 @@ interface ScoreRegisterProps {
   data: GetMyOneseoType | undefined;
   memberId?: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setScoreWatch?: Dispatch<any>;
+  setScoreWatch?: Dispatch<ScoreFormType>;
 }
 
 const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) => {
@@ -112,7 +112,7 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
   useEffect(() => {
     if (setScoreWatch) {
       console.log('setScoreWatch');
-      setScoreWatch(watch);
+      setScoreWatch(watch());
     }
   }, [setScoreWatch, watch]);
 
