@@ -138,11 +138,11 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
               </table>
             </div>
           </div>
-          <div className="border border-black">
+          <div className="border border-t-0 border-r-0 border-black">
             <table className="w-full border-collapse text-center text-[1.2vh]">
               <thead>
                 <tr>
-                  <th className={thStyle + 'w-[3%]'} rowSpan={8}>
+                  <th className={thStyle + 'w-[3%] border-l-0'} rowSpan={8}>
                     인적사항
                   </th>
                 </tr>
@@ -227,7 +227,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
               </thead>
             </table>
             <OneseoStatus oneseo={oneseo} />
-            <div className="p-2 text-sm">
+            <div className="p-2 text-sm border-r border-black">
               <div className="mb-4">
                 위 학생은 2024학년도 귀교 제1학년에 입학하고자 소정의 서류를 갖추어 지원하며, &nbsp;
                 <strong>다른 산업수요맞춤형(마이스터)고등학교에 이중지원하지 않을 것을 서약</strong>

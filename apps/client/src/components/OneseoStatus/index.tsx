@@ -160,7 +160,7 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
         </tr>
         <tr>
           <td
-            className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium"
+            className="border border-l-0 border-black bg-[#e9e9e9] p-[0.2vh] font-medium"
             rowSpan={4}
             colSpan={2}
             style={{ height: '7vh' }}
