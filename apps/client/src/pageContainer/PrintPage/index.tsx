@@ -2,8 +2,6 @@
 
 // import { plusAll } from 'shared';
 
-import { useEffect } from 'react';
-
 import { plusAll } from 'shared';
 import { GetMyOneseoType, SexEnum } from 'types';
 
@@ -26,10 +24,6 @@ const tdStyle = 'border border-black ';
 
 const ApplicationPage = ({ initialData }: PrintPageProps) => {
   const { data: oneseo } = useGetMyOneseo({ initialData: initialData });
-
-  useEffect(() => {
-    console.log(oneseo);
-  }, [oneseo]);
 
   if (!oneseo) return <>원서 정보가 없습니다</>;
 
