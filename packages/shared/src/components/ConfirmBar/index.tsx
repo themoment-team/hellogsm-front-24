@@ -1,8 +1,6 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { UseFormWatch } from 'react-hook-form';
-import { basicRegisterType } from 'types';
 
 import { MouseIcon } from 'shared/assets';
 import {
@@ -19,7 +17,7 @@ import { cn } from 'shared/lib/utils';
 
 interface ConfirmBarProps {
   id: string;
-  watch: UseFormWatch<basicRegisterType>;
+  temporarySave: () => void;
 }
 
 interface FinalSubmitDialogProps {
@@ -81,7 +79,7 @@ const FinalSubmitDialog = ({ id }: FinalSubmitDialogProps) => {
   );
 };
 
-const ConfirmBar = ({ id, watch }: ConfirmBarProps) => {
+const ConfirmBar = ({ id, temporarySave }: ConfirmBarProps) => {
   return (
     <>
       <div
@@ -107,7 +105,9 @@ const ConfirmBar = ({ id, watch }: ConfirmBarProps) => {
           <span className={cn('text-body1', 'text-slate-900')}>정확히 입력 후 제출해주세요!</span>
         </div>
         <div className={cn('flex', 'items-center', 'gap-[0.5rem]')}>
-          <Button variant="outline">임시저장</Button>
+          <Button onClick={temporarySave} variant="outline">
+            임시저장
+          </Button>
           <FinalSubmitDialog id={id} />
         </div>
       </div>

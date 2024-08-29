@@ -1,14 +1,13 @@
 'use client';
 
 import { UseFormRegister } from 'react-hook-form';
-
 import { GradesInputMethodType, ScoreFormType } from 'types';
 
 import { cn } from 'shared/lib/utils';
 
 interface NonSubjectFormProps {
   register: UseFormRegister<ScoreFormType>;
-  liberalSystem: GradesInputMethodType;
+  liberalSystem: GradesInputMethodType | undefined;
 }
 
 const nonSubjectArray = [

@@ -8,7 +8,7 @@ interface ResponseType {
   url: string;
 }
 
-export const usePostImage = (options: UseMutationOptions<ResponseType, AxiosError, FormData>) =>
+export const usePostImage = (options?: UseMutationOptions<ResponseType, AxiosError, FormData>) =>
   useMutation({
     mutationKey: oneseoQueryKeys.postImage(),
     mutationFn: (data) =>

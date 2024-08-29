@@ -12,9 +12,9 @@ export default async function Register({ searchParams }: RegisterProps) {
 
   const [data, info] = await Promise.all([getMyOneseo(), getMyMemberInfo('/')]);
 
-  if (!step) redirect('/register?step=1');
+  if (info === undefined || (data !== undefined && data.step === null)) redirect('/');
 
-  if (info === undefined) redirect('/');
+  if (!step) redirect('/register?step=1');
 
   return <RegisterStepsPage data={data} info={info} param={step} />;
 }
