@@ -105,18 +105,18 @@ export interface GetMyOneseoType {
 
 export interface OneseoType {
   memberId: number;
-  submitCode: string;
+  submitCode: string | null;
   realOneseoArrivedYn: YesNo;
-  name: string;
+  name: string | null;
   screening: ScreeningType;
-  schoolName: string;
+  schoolName: string | null;
   phoneNumber: string;
   guardianPhoneNumber: string;
   schoolTeacherPhoneNumber: string;
-  firstTestPassYn: YesNo;
-  aptitudeEvaluationScore: number;
-  interviewScore: number;
-  secondTestPassYn: YesNo;
+  firstTestPassYn: YesNo | null;
+  aptitudeEvaluationScore: number | null;
+  interviewScore: number | null;
+  secondTestPassYn: YesNo | null;
 }
 
 export interface OneseoListType {
