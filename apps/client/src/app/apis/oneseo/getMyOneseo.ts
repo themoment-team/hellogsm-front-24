@@ -7,7 +7,7 @@ export const getMyOneseo = async (): Promise<GetMyOneseoType | undefined> => {
   const session = cookies().get('SESSION')?.value;
 
   const response = await fetch(
-    new URL(`${oneseoUrl.getMyOneseo()}}`, process.env.NEXT_PUBLIC_API_BASE_URL),
+    new URL(oneseoUrl.getMyOneseo(), process.env.NEXT_PUBLIC_API_BASE_URL),
     {
       method: 'GET',
       credentials: 'include',
@@ -17,6 +17,7 @@ export const getMyOneseo = async (): Promise<GetMyOneseoType | undefined> => {
       },
     },
   );
+
   const myOneseo = await response.json();
 
   if (response.status === 404) return undefined;

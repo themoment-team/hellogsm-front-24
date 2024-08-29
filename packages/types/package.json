@@ -8,8 +8,7 @@
   },
   "dependencies": {
     "shared": "workspace:^",
-    "types": "workspace:^",
-    "zod": "^3.23.8"
+    "types": "workspace:^"
   },
   "types": "workspace:^",
   "keywords": [],

@@ -1,6 +1,8 @@
+import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
+
 import { ApplicantTR } from 'admin/components';
 
-import { OneseoType } from 'types/oneseo';
+import { OneseoListType, OneseoType } from 'types/oneseo';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
@@ -12,7 +14,23 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const MockData: OneseoType = {
+interface ApplicationTRProps extends OneseoType {
+  refetch: (
+    options?: RefetchOptions | undefined,
+  ) => Promise<QueryObserverResult<OneseoListType, Error>>;
+}
+
+const fakeRefetch: (options?: any) => any = async (options) => {
+  return {
+    data: undefined as unknown as OneseoListType,
+    error: undefined as unknown as Error,
+    isLoading: false,
+    isError: false,
+    status: 'idle',
+  };
+};
+
+const MockData: ApplicationTRProps = {
   memberId: 0,
   submitCode: '',
   realOneseoArrivedYn: 'YES',
@@ -26,6 +44,7 @@ const MockData: OneseoType = {
   aptitudeEvaluationScore: 100,
   interviewScore: 100,
   secondTestPassYn: 'YES',
+  refetch: fakeRefetch,
 };
 
 export const Primary: Story = {

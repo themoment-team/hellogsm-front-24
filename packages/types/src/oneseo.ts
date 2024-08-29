@@ -14,6 +14,11 @@ export type SexType = "MALE" | "FEMALE";
 
 export type YesNo = "YES" | "NO";
 
+export enum SexEnum {
+  MALE = "남자",
+  FEMALE = "여자",
+}
+
 export enum ScreeningEnum {
   GENERAL = "일반전형",
   SPECIAL = "특별전형",
@@ -66,6 +71,7 @@ export interface MiddleSchoolAchievementType {
   volunteerTime: number[];
   liberalSystem: LiberalSystemType;
   freeSemester: FreeSemesterType;
+  artsPhysicalSubjects: string[];
 }
 
 export interface GEDAchievementType {
@@ -109,8 +115,7 @@ export interface PostOneseoType {
   firstDesiredMajor: MajorType;
   secondDesiredMajor: MajorType;
   thirdDesiredMajor: MajorType;
-  middleSchoolAchievement: MiddleSchoolAchievementType &
-    GEDAchievementType & { artsPhysicalSubjects: string[] };
+  middleSchoolAchievement: MiddleSchoolAchievementType | GEDAchievementType;
   schoolName: string;
   schoolAddress: string;
   screening: ScreeningType;
@@ -132,18 +137,18 @@ export interface GetMyOneseoType {
 
 export interface OneseoType {
   memberId: number;
-  submitCode: string;
+  submitCode: string | null;
   realOneseoArrivedYn: YesNo;
-  name: string;
+  name: string | null;
   screening: ScreeningType;
-  schoolName: string;
+  schoolName: string | null;
   phoneNumber: string;
   guardianPhoneNumber: string;
   schoolTeacherPhoneNumber: string;
-  firstTestPassYn: YesNo;
-  aptitudeEvaluationScore: number;
-  interviewScore: number;
-  secondTestPassYn: YesNo;
+  firstTestPassYn: YesNo | null;
+  aptitudeEvaluationScore: number | null;
+  interviewScore: number | null;
+  secondTestPassYn: YesNo | null;
 }
 
 export interface OneseoListType {

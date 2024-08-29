@@ -7,7 +7,7 @@ interface EditStep4PageProps {
 }
 
 const EditStep4Page = ({ data, memberId }: EditStep4PageProps) => {
-  return <ScoreRegister data={data} type="admin" memberId={memberId} />;
+  return <ScoreRegister data={data} memberId={memberId} />;
 };
 
 export default EditStep4Page;
