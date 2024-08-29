@@ -1,4 +1,10 @@
-import { GraduationType, MajorType, ScreeningType } from 'types';
+import {
+  GradesInputMethodType,
+  GraduationType,
+  MajorType,
+  ScreeningType,
+  SemesterIdType,
+} from 'types';
 import { create } from 'zustand';
 
 interface StoreType {
@@ -17,6 +23,8 @@ interface StoreType {
   schoolName: string | undefined;
   schoolAddress: string | undefined;
   screening: ScreeningType | undefined;
+  liberalSystem: GradesInputMethodType | undefined;
+  freeSemester: SemesterIdType | null | undefined;
   setGuardianName: (guardianName: string) => void;
   setGuardianPhoneNumber: (guardianPhoneNumber: string) => void;
   setRelationshipWithGuardian: (relationship: string) => void;
@@ -32,6 +40,8 @@ interface StoreType {
   setSchoolName: (schoolNmae: string) => void;
   setSchoolAddress: (SchoolAddress: string) => void;
   setScreening: (screening: ScreeningType) => void;
+  setLiberalSystem: (system: GradesInputMethodType) => void;
+  setFreeSemester: (semester: SemesterIdType | null) => void;
 }
 
 const useStore = create<StoreType>((set) => ({
@@ -50,6 +60,8 @@ const useStore = create<StoreType>((set) => ({
   schoolName: undefined,
   schoolAddress: undefined,
   screening: undefined,
+  liberalSystem: undefined,
+  freeSemester: undefined,
   setGuardianName: (guardianName) => set(() => ({ guardianName: guardianName })),
   setGuardianPhoneNumber: (guardianPhoneNumber) =>
     set(() => ({ guardianPhoneNumber: guardianPhoneNumber })),
@@ -68,6 +80,8 @@ const useStore = create<StoreType>((set) => ({
   setSchoolName: (schoolNmae) => set(() => ({ schoolName: schoolNmae })),
   setSchoolAddress: (SchoolAddress) => set(() => ({ schoolAddress: SchoolAddress })),
   setScreening: (screening) => set(() => ({ screening: screening })),
+  setLiberalSystem: (system) => set(() => ({ liberalSystem: system })),
+  setFreeSemester: (semester) => set(() => ({ freeSemester: semester })),
 }));
 
 export default useStore;
