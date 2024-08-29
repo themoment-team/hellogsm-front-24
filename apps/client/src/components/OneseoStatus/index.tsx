@@ -6,14 +6,30 @@ import {
   achievementGradeValues,
 } from 'types';
 
+import { Slash } from 'client/assets';
+
 import { plusAll } from 'shared/utils';
 
 interface OneseoStatusType {
   oneseo: GetMyOneseoType;
 }
 
+const tdStyle = 'border border-black ';
+
 const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
   const isGEDScore = !!oneseo.middleSchoolAchievement.gedTotalScore;
+
+  const totalScore: number = isGEDScore
+    ? 0
+    : plusAll([
+        ...achievementGradeValues.map(
+          (gradeKey) => oneseo.middleSchoolAchievement[gradeKey] ?? [0],
+        ),
+        oneseo.middleSchoolAchievement.artsPhysicalAchievement,
+      ]);
+
+  const attendanceScore = plusAll(oneseo.middleSchoolAchievement.attendanceDays);
+  const volunteerScore = plusAll(oneseo.middleSchoolAchievement.volunteerTime);
 
   return (
     <table className="mx-auto w-full border-collapse text-center text-[1.2vh] leading-[2.2vh]">
@@ -42,7 +58,9 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
             <td
               className='bg-[url(&apos;data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="100%" x2="100%" y2="0" stroke="gray" /></svg>&apos;)] bg-center bg-no-repeat'
               colSpan={2}
-            />
+            >
+              <Slash />
+            </td>
           )}
           <td className="border border-black" colSpan={6}>
             {GraduationEnum[oneseo.privacyDetail.graduationType]}
@@ -60,7 +78,9 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
             <td
               className='bg-[url(&apos;data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="100%" x2="100%" y2="0" stroke="gray" /></svg>&apos;)] bg-center bg-no-repeat'
               colSpan={7}
-            />
+            >
+              <Slash />
+            </td>
           )}
         </tr>
         <tr>
@@ -95,11 +115,10 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
         <tr>
           {achievementGradeValues.map((gradeKey) => {
             // 검정고시나 자유학기제로 점수가 없다면 빈칸 처리
-            return isGEDScore || oneseo.middleSchoolAchievement[gradeKey] === null ? (
-              <td
-                key={gradeKey}
-                className='bg-[url(&apos;data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="100%" x2="100%" y2="0" stroke="gray" /></svg>&apos;)] bg-center bg-no-repeat'
-              />
+            return isGEDScore || !oneseo.middleSchoolAchievement[gradeKey]?.length ? (
+              <td key={gradeKey} className={tdStyle + 'w-[2.6875rem]'}>
+                <Slash />
+              </td>
             ) : (
               <td key={gradeKey} className="border border-black">
                 {plusAll(oneseo.middleSchoolAchievement[gradeKey] ?? [0])}
@@ -107,21 +126,16 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
             );
           })}
           {isGEDScore ? (
-            <td className='bg-[url(&apos;data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="100%" x2="100%" y2="0" stroke="gray" /></svg>&apos;)] bg-center bg-no-repeat' />
+            <td className={tdStyle + 'w-[2.6875rem]'}>
+              <Slash />
+            </td>
           ) : (
             <td className="border border-black">
-              {oneseo.middleSchoolAchievement.artsPhysicalAchievement}
+              {plusAll(oneseo.middleSchoolAchievement.artsPhysicalAchievement)}
             </td>
           )}
           <td className="border border-black">
-            {isGEDScore
-              ? oneseo.middleSchoolAchievement.gedTotalScore
-              : plusAll([
-                  ...achievementGradeValues.map(
-                    (gradeKey) => oneseo.middleSchoolAchievement[gradeKey] ?? [0],
-                  ),
-                  oneseo.middleSchoolAchievement.artsPhysicalAchievement,
-                ])}
+            {isGEDScore ? oneseo.middleSchoolAchievement.gedTotalScore : totalScore}
           </td>
         </tr>
         <tr>
@@ -136,44 +150,32 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
           </td>
           <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium">소계</td>
           <td className="border border-black" colSpan={2} rowSpan={2}>
-            {plusAll([
-              ...achievementGradeValues.map(
-                (gradeKey) => oneseo.middleSchoolAchievement[gradeKey] ?? [0],
-              ),
-              oneseo.middleSchoolAchievement.artsPhysicalAchievement,
-            ])}
+            {totalScore + volunteerScore + attendanceScore}
           </td>
         </tr>
         <tr>
-          {isGEDScore || plusAll(oneseo.middleSchoolAchievement.attendanceDays) === 0 ? (
-            <td
-              className='bg-[url(&apos;data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="100%" x2="100%" y2="0" stroke="gray" /></svg>&apos;)] bg-center bg-no-repeat'
-              colSpan={3}
-            />
+          {isGEDScore || attendanceScore === 0 ? (
+            <td className={tdStyle + 'w-[2.6875rem]'}>
+              <Slash />
+            </td>
           ) : (
             <td className="border border-black" colSpan={3}>
-              {plusAll(oneseo.middleSchoolAchievement.attendanceDays)}
+              {attendanceScore}
             </td>
           )}
-          {isGEDScore || plusAll(oneseo.middleSchoolAchievement.volunteerTime) ? (
-            <td
-              className='bg-[url(&apos;data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="100%" x2="100%" y2="0" stroke="gray" /></svg>&apos;)] bg-center bg-no-repeat'
-              colSpan={3}
-            />
+          {isGEDScore || volunteerScore === 0 ? (
+            <td className={tdStyle + 'w-[2.6875rem]'} colSpan={3}>
+              <Slash />
+            </td>
           ) : (
             <td className="border border-black" colSpan={3}>
-              {plusAll(oneseo.middleSchoolAchievement.volunteerTime)}
+              {volunteerScore}
             </td>
           )}
           <td className="border border-black">
             {isGEDScore
               ? oneseo.middleSchoolAchievement.gedTotalScore
-              : plusAll([
-                  ...achievementGradeValues.map(
-                    (gradeKey) => oneseo.middleSchoolAchievement[gradeKey] ?? [0],
-                  ),
-                  oneseo.middleSchoolAchievement.artsPhysicalAchievement,
-                ])}
+              : volunteerScore + attendanceScore}
           </td>
         </tr>
         <tr>
