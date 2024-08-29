@@ -16,6 +16,9 @@ interface PrintPageProps {
   initialData: GetMyOneseoType | undefined;
 }
 
+const thStyle = 'border border-black bg-[#e9e9e9] ';
+const tdStyle = 'border border-black ';
+
 const ApplicationPage = ({ initialData }: PrintPageProps) => {
   const { data: oneseo } = useGetMyOneseo({ initialData: initialData });
 
@@ -93,23 +96,23 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
             <table className="w-full border-collapse text-center text-[1.2vh]">
               <thead>
                 <tr>
-                  <th className="w-[3%]" rowSpan={7}>
+                  <th className={thStyle + 'w-[3%]'} rowSpan={8}>
                     인적사항
                   </th>
                 </tr>
                 <tr>
-                  <th className="w-[3%]" rowSpan={3}>
+                  <th className={thStyle + 'w-[3%]'} rowSpan={3}>
                     지원자
                   </th>
-                  <th>성 명</th>
-                  <td>{oneseo.privacyDetail.name}</td>
-                  <th className="w-[3%]">성별</th>
-                  <td>{SexEnum[oneseo.privacyDetail.sex ?? 'MALE']}</td>
-                  <th>생년월일</th>
-                  <td>{oneseo.privacyDetail.birth}</td>
+                  <th className={thStyle}>성 명</th>
+                  <td className={tdStyle}>{oneseo.privacyDetail.name}</td>
+                  <th className={thStyle + 'w-[3%]'}>성별</th>
+                  <td className={tdStyle}>{SexEnum[oneseo.privacyDetail.sex ?? 'MALE']}</td>
+                  <th className={thStyle}>생년월일</th>
+                  <td className={tdStyle}>{oneseo.privacyDetail.birth}</td>
                   <td
                     rowSpan={6}
-                    className="h-[25vh] w-[18vh]"
+                    className={tdStyle + 'h-[25vh] w-[18vh]'}
                     style={{
                       backgroundImage: `url(${oneseo.privacyDetail.profileImg})`,
                       backgroundSize: '18vh 25vh',
@@ -118,49 +121,61 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                   ></td>
                 </tr>
                 <tr>
-                  <th>주 소</th>
-                  <td colSpan={5}>{oneseo.privacyDetail.address}</td>
+                  <th className={thStyle}>주 소</th>
+                  <td className={tdStyle} colSpan={5}>
+                    {oneseo.privacyDetail.address}
+                  </td>
                 </tr>
                 <tr>
-                  <th>연락처</th>
+                  <th className={thStyle}>연락처</th>
                   {/* <th>집전화</th>
                   {oneseo.privacyDetail.phoneNumber ? (
                     <td colSpan={1}>{oneseo.privacyDetail.phoneNumber}</td>
                   ) : (
                     <td colSpan={2} className="line-through"></td>
                   )} */}
-                  <th>핸드폰</th>
-                  <td>{oneseo.privacyDetail.phoneNumber}</td>
+                  <th className={thStyle}>핸드폰</th>
+                  <td colSpan={4} className={tdStyle}>
+                    {oneseo.privacyDetail.phoneNumber}
+                  </td>
                 </tr>
                 <tr>
-                  <th className="w-[3%]" rowSpan={2}>
+                  <th className={thStyle + 'w-[3%]'} rowSpan={2}>
                     보호자
                   </th>
-                  <th>성 명</th>
-                  <td colSpan={2}>{oneseo.privacyDetail.guardianName}</td>
-                  <th>지원자와의 관계</th>
-                  <td colSpan={2}>{oneseo.privacyDetail.relationshipWithGuardian}</td>
+                  <th className={thStyle}>성 명</th>
+                  <td className={tdStyle} colSpan={1}>
+                    {oneseo.privacyDetail.guardianName}
+                  </td>
+                  <th className={thStyle} colSpan={2}>
+                    지원자와의 관계
+                  </th>
+                  <td className={tdStyle} colSpan={2}>
+                    {oneseo.privacyDetail.relationshipWithGuardian}
+                  </td>
                 </tr>
                 <tr>
-                  <th>핸드폰</th>
-                  <td colSpan={5}>{oneseo.privacyDetail.guardianPhoneNumber}</td>
+                  <th className={thStyle}>핸드폰</th>
+                  <td className={tdStyle} colSpan={5}>
+                    {oneseo.privacyDetail.guardianPhoneNumber}
+                  </td>
                 </tr>
                 <tr>
-                  <th colSpan={3}>
+                  <th className={thStyle} colSpan={3} rowSpan={6}>
                     원서작성자(담임) <br /> 성명
                   </th>
                   {oneseo.privacyDetail.schoolTeacherName ? (
-                    <td colSpan={2} className="text-end">
+                    <td colSpan={2} className={tdStyle + 'text-end'} rowSpan={3}>
                       {oneseo.privacyDetail.schoolTeacherName}(인)
                     </td>
                   ) : (
-                    <td colSpan={2} className="line-through"></td>
+                    <td className={tdStyle + 'line-through'} colSpan={2} rowSpan={3} />
                   )}
-                  <th>핸드폰</th>
+                  <th className={thStyle}>핸드폰</th>
                   {oneseo.privacyDetail.schoolTeacherPhoneNumber ? (
                     <td>{oneseo.privacyDetail.schoolTeacherPhoneNumber}</td>
                   ) : (
-                    <td className="line-through"></td>
+                    <td className={tdStyle + 'line-through'} />
                   )}
                 </tr>
               </thead>
