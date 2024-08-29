@@ -6,6 +6,7 @@ import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 
 import { useForm, Controller } from 'react-hook-form';
 import { checkIsPassedDate } from 'shared';
+import { OneseoListType, OneseoType, ScreeningEnum } from 'types';
 
 import { TextField } from 'admin/components';
 
@@ -17,8 +18,6 @@ import { cn } from 'shared/lib/utils';
 import { formatScore } from 'shared/utils';
 
 import { usePatchArrivedStatus, usePatchAptitudeScore, usePatchInterviewScore } from 'api/hooks';
-
-import { OneseoListType, OneseoType, ScreeningEnum } from 'types/oneseo';
 
 interface ApplicationTRProps extends OneseoType {
   refetch: (
