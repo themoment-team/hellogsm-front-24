@@ -2,13 +2,14 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { basicRegisterType, GetMyOneseoType } from 'types';
+import { basicRegisterType, GetMyOneseoType, MyMemberInfoType, SexEnum } from 'types';
 
 import {
   ApplyRegister,
   BasicRegister,
   ConfirmBar,
   GuardianRegister,
+  ScoreRegister,
   StepBar,
 } from 'shared/components';
 import { cn } from 'shared/lib/utils';
@@ -16,6 +17,7 @@ import { basicRegisterSchema } from 'shared/schemas';
 
 interface Props {
   data: GetMyOneseoType | undefined;
+  info: MyMemberInfoType;
   param: string;
 }
 
@@ -46,7 +48,7 @@ const getScreeningTypeText = (screeningType: string) => {
   }
 };
 
-const StepsContianer = ({ data, param }: Props) => {
+const StepsContianer = ({ data, param, info }: Props) => {
   const defaultDetailData = data?.privacyDetail;
   const defaultMajors = data?.desiredMajors;
   const defaultScreening = data?.wantedScreening;
@@ -54,8 +56,7 @@ const StepsContianer = ({ data, param }: Props) => {
   const relationshipWithGuardian = defaultDetailData?.relationshipWithGuardian || '';
   const isPrimaryRelationship = ['부', '모'].includes(relationshipWithGuardian);
 
-  const sex =
-    defaultDetailData?.sex === 'MALE' ? '남자' : defaultDetailData?.sex === 'FEMALE' ? '여자' : '';
+  const sex = SexEnum[info.sex];
 
   const choice = [
     defaultMajors?.firstDesiredMajor || '',
@@ -87,8 +88,8 @@ const StepsContianer = ({ data, param }: Props) => {
   });
 
   const userBasicInfo = {
-    name: defaultDetailData?.name,
-    birth: defaultDetailData?.birth,
+    name: info.name,
+    birth: info.birth,
     sex: sex,
   };
 
@@ -102,9 +103,10 @@ const StepsContianer = ({ data, param }: Props) => {
           'pt-[3.56rem]',
           'flex',
           'justify-center',
+          'pb-[5rem]',
         ])}
       >
-        <div className={cn(['w-[66.5rem]', 'flex', 'flex-col', 'bg-white'])}>
+        <div className={cn(['w-[66.5rem]', 'flex', 'flex-col', 'bg-white', 'rounded-[1.25rem]'])}>
           <StepBar param={param} handleSubmit={handleSubmit} watch={watch} />
           <div
             className={cn([
@@ -131,10 +133,11 @@ const StepsContianer = ({ data, param }: Props) => {
             {param === '3' && (
               <GuardianRegister register={register} setValue={setValue} watch={watch} />
             )}
+            {param === '4' && <ScoreRegister data={data} />}
           </div>
         </div>
       </div>
-      <ConfirmBar />
+      <ConfirmBar watch={watch} id="scoreForm" />
     </>
   );
 };

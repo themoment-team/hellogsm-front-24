@@ -8,29 +8,25 @@ import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 // import { usePostMyOneseo, usePutOneseo } from 'api';
+import { usePostImage, usePostMyOneseo } from 'api';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FreeSemesterType, GetMyOneseoType, MiddleSchoolAchievementType } from 'types';
 
 import {
   ArtPhysicalForm,
-  EditBar,
-  // ArtPhysicalForm,
-  // ConfirmBar,
   FormController,
   FreeGradeForm,
   FreeSemesterForm,
-  // FreeGradeForm,
-  // FreeSemesterForm,
   LiberalSystemSwitch,
   NonSubjectForm,
-  // NonSubjectForm,
-  // StepBar,
 } from 'shared/components';
 import { defaultSubjectArray } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
 import { scoreFormSchema } from 'shared/schemas';
+import { useStore } from 'shared/stores';
+import { dataUrltoFile } from 'shared/utils';
 
-import type { GradesInputMethodType, ScoreFormType, SemesterIdType } from 'types';
+import type { GradesInputMethodType, PostOneseoType, ScoreFormType, SemesterIdType } from 'types';
 
 const formId = 'scoreForm';
 
@@ -63,11 +59,11 @@ const formWrapper = [
 
 interface ScoreRegisterProps {
   data: GetMyOneseoType | undefined;
-  type: 'client' | 'admin';
   memberId?: number;
 }
 
-const ScoreRegister = ({ data, type, memberId }: ScoreRegisterProps) => {
+const ScoreRegister = ({ data, memberId }: ScoreRegisterProps) => {
+  const store = useStore();
   const defaultData = data?.middleSchoolAchievement;
   const [liberalSystem, setLiberalSystem] = useState<GradesInputMethodType>(
     defaultData
@@ -76,6 +72,9 @@ const ScoreRegister = ({ data, type, memberId }: ScoreRegisterProps) => {
         : 'freeSemester'
       : 'freeGrade',
   );
+
+  const [oneseoBody, setOneseoBody] = useState<Omit<PostOneseoType, 'profileImg'> | null>(null);
+
   const [freeSemester, setFreeSemester] = useState<SemesterIdType | null>(
     defaultData?.freeSemester ? reversedFreeSemesterConvertor[defaultData.freeSemester] : null,
   );
@@ -106,12 +105,26 @@ const ScoreRegister = ({ data, type, memberId }: ScoreRegisterProps) => {
     },
   });
 
-  // const { mutate: mutatePostMyOneseo } = usePostMyOneseo({
-  //   onSuccess: () => {},
-  //   onError: () => {},
-  // });
+  const { mutate: mutatePostMyOneseo } = usePostMyOneseo({
+    onSuccess: () => {
+      alert('원서 제출 완료');
+    },
+    onError: () => {},
+  });
 
-  // const { mutate: mutatePostOneseo } = usePutOneseo(memberId ?? 0, {
+  const { mutate: mutatePostImage } = usePostImage({
+    onSuccess: (data) => {
+      if (oneseoBody) {
+        const body: PostOneseoType = { ...oneseoBody, profileImg: data.url };
+        console.log(body);
+
+        mutatePostMyOneseo(body);
+      }
+    },
+    onError: () => {},
+  });
+
+  // const { mutate: mutatePostOneseo } = usePutOneseoByMemberId(memberId!, {
   //   onSuccess: () => {},
   //   onError: () => {},
   // });
@@ -141,6 +154,43 @@ const ScoreRegister = ({ data, type, memberId }: ScoreRegisterProps) => {
   const handleFormSubmit: SubmitHandler<ScoreFormType> = (data) => {
     if (liberalSystem === 'freeSemester' && !freeSemester) return;
 
+    const {
+      guardianName,
+      guardianPhoneNumber,
+      relationshipWithGuardian,
+      profileImg,
+      address,
+      detailAddress,
+      graduationType,
+      schoolTeacherName,
+      schoolTeacherPhoneNumber,
+      firstDesiredMajor,
+      secondDesiredMajor,
+      thirdDesiredMajor,
+      schoolName,
+      schoolAddress,
+      screening,
+    } = store;
+
+    const isAllWrite =
+      guardianName &&
+      guardianPhoneNumber &&
+      relationshipWithGuardian &&
+      profileImg &&
+      address &&
+      detailAddress &&
+      graduationType &&
+      schoolTeacherName &&
+      schoolTeacherPhoneNumber &&
+      firstDesiredMajor &&
+      secondDesiredMajor &&
+      thirdDesiredMajor &&
+      schoolName &&
+      schoolAddress &&
+      screening;
+
+    if (!isAllWrite) return;
+
     const isFreeSemester = liberalSystem === 'freeSemester';
 
     const {
@@ -157,7 +207,7 @@ const ScoreRegister = ({ data, type, memberId }: ScoreRegisterProps) => {
     } = data;
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const body: MiddleSchoolAchievementType = {
+    const middleSchoolAchievement: MiddleSchoolAchievementType = {
       achievement1_1: achievement1_1 ? achievement1_1.map((i) => Number(i)) : null,
       achievement1_2: achievement1_2 ? achievement1_2.map((i) => Number(i)) : null,
       achievement2_1: achievement2_1 ? achievement2_1.map((i) => Number(i)) : null,
@@ -172,7 +222,33 @@ const ScoreRegister = ({ data, type, memberId }: ScoreRegisterProps) => {
       freeSemester: (isFreeSemester
         ? freeSemesterConvertor[freeSemester!]
         : null) as FreeSemesterType,
+      artsPhysicalSubjects: ['체육', '음악', '미술'],
     };
+
+    const body: Omit<PostOneseoType, 'profileImg'> = {
+      guardianName: guardianName,
+      guardianPhoneNumber: guardianPhoneNumber,
+      relationshipWithGuardian: relationshipWithGuardian,
+      address: address,
+      detailAddress: detailAddress,
+      graduationType: graduationType,
+      schoolTeacherName: schoolTeacherName,
+      schoolTeacherPhoneNumber: schoolTeacherPhoneNumber,
+      firstDesiredMajor: firstDesiredMajor,
+      secondDesiredMajor: secondDesiredMajor,
+      thirdDesiredMajor: thirdDesiredMajor,
+      schoolName: schoolName,
+      schoolAddress: schoolAddress,
+      screening: screening,
+      middleSchoolAchievement: middleSchoolAchievement,
+    };
+
+    setOneseoBody(body);
+
+    const formData = new FormData();
+    formData.append('file', dataUrltoFile(profileImg, 'img.png'));
+
+    mutatePostImage(formData);
 
     // if (type === 'client') return mutatePostMyOneseo(body);
 
@@ -220,132 +296,121 @@ const ScoreRegister = ({ data, type, memberId }: ScoreRegisterProps) => {
 
   return (
     <>
-      <div
-        className={cn([
-          'w-full',
-          'bg-slate-50',
-          'pb-[5rem]',
-          'flex',
-          'justify-center',
-          type === 'client' ? 'pt-[3.56rem]' : 'pt-[8.15rem]',
-        ])}
-      >
-        <div className={cn(['w-[66.5rem]', 'flex', 'flex-col'])}>
-          {/* <StepBar /> */}
-          <div className={cn(['w-full', 'px-[2rem]', 'py-[1.5rem]', 'bg-white'])}>
-            <h1
-              className={cn([
-                'text-[1.25rem]',
-                'font-normal',
-                'font-semibold',
-                'leading-[1.75rem]',
-                'tracking-[-0.00625rem]',
-                'text-gray-900',
-              ])}
-            >
-              성적을 입력해 주세요.
-            </h1>
-            <p
-              className={cn(
-                'text-sm',
-                'font-normal',
-                'leading-5',
-                'text-gray-600',
-                'mt-[0.125rem]',
-                'mb-[2rem]',
-              )}
-            >
-              회원가입 시 입력한 기본 정보가 노출됩니다.
-            </p>
+      <div className={cn(['w-[66.5rem]', 'flex', 'flex-col'])}>
+        {/* <div className={cn(['w-full', 'px-[2rem]', 'py-[1.5rem]', 'bg-white'])}> */}
+        <h1
+          className={cn([
+            'text-[1.25rem]',
+            'font-normal',
+            'font-semibold',
+            'leading-[1.75rem]',
+            'tracking-[-0.00625rem]',
+            'text-gray-900',
+          ])}
+        >
+          성적을 입력해 주세요.
+        </h1>
+        <p
+          className={cn(
+            'text-sm',
+            'font-normal',
+            'leading-5',
+            'text-gray-600',
+            'mt-[0.125rem]',
+            'mb-[2rem]',
+          )}
+        >
+          회원가입 시 입력한 기본 정보가 노출됩니다.
+        </p>
+        <div
+          className={cn(
+            'flex',
+            'h-lvh',
+            'justify-center',
+            'bg-slate-50',
+            'w-full',
+            'bg-white',
+            'h-fit',
+            'gap-[2.5rem]',
+          )}
+        >
+          <FormController className={cn(['mt-[5.625rem]'])} />
+          <form
+            id={formId}
+            onSubmit={handleSubmit(handleFormSubmit)}
+            className={cn('flex', 'flex-col', 'items-center')}
+          >
+            <LiberalSystemSwitch
+              liberalSystem={liberalSystem}
+              setLiberalSystem={setLiberalSystem}
+              className={cn('mb-[3rem]')}
+            />
             <div
               className={cn(
                 'flex',
-                'h-lvh',
-                'justify-center',
-                'bg-slate-50',
-                'w-full',
-                'bg-white',
-                'h-fit',
+                'flex-col',
                 'gap-[2.5rem]',
+                'items-center',
+                liberalSystem === 'freeGrade' ? 'w-[35.4375rem]' : 'w-[43.4375rem]',
               )}
             >
-              <FormController className={cn(['mt-[5.625rem]'])} />
-              <form
-                id={formId}
-                onSubmit={handleSubmit(handleFormSubmit)}
-                className={cn('flex', 'flex-col', 'items-center')}
-              >
-                <LiberalSystemSwitch
-                  liberalSystem={liberalSystem}
-                  setLiberalSystem={setLiberalSystem}
-                  className={cn('mb-[3rem]')}
-                />
-                <div
+              <div className={cn(...formWrapper)}>
+                일반교과 성적
+                {liberalSystem === 'freeGrade' && (
+                  <FreeGradeForm
+                    register={register}
+                    setValue={setValue}
+                    subjectArray={subjectArray}
+                    control={control}
+                    handleDeleteSubjectClick={handleDeleteSubjectClick}
+                  />
+                )}
+                {liberalSystem === 'freeSemester' && (
+                  <FreeSemesterForm
+                    register={register}
+                    setValue={setValue}
+                    subjectArray={subjectArray}
+                    control={control}
+                    handleDeleteSubjectClick={handleDeleteSubjectClick}
+                    freeSemester={freeSemester}
+                    setFreeSemester={setFreeSemester}
+                  />
+                )}
+                <button
+                  type="button"
+                  onClick={() => handleAddSubjectClick()}
                   className={cn(
+                    'text-sm',
+                    'font-semibold',
+                    'leading-6',
+                    'text-[#0F172A]',
+                    'h-[2.5rem]',
+                    'w-full',
                     'flex',
-                    'flex-col',
-                    'gap-[2.5rem]',
                     'items-center',
-                    liberalSystem === 'freeGrade' ? 'w-[35.4375rem]' : 'w-[43.4375rem]',
+                    'justify-center',
+                    'rounded-md',
+                    'border-[0.0625rem]',
+                    'border-slate-200',
                   )}
                 >
-                  <div className={cn(...formWrapper)}>
-                    일반교과 성적
-                    {liberalSystem === 'freeGrade' && (
-                      <FreeGradeForm
-                        register={register}
-                        setValue={setValue}
-                        subjectArray={subjectArray}
-                        control={control}
-                        handleDeleteSubjectClick={handleDeleteSubjectClick}
-                      />
-                    )}
-                    {liberalSystem === 'freeSemester' && (
-                      <FreeSemesterForm
-                        register={register}
-                        setValue={setValue}
-                        subjectArray={subjectArray}
-                        control={control}
-                        handleDeleteSubjectClick={handleDeleteSubjectClick}
-                        freeSemester={freeSemester}
-                        setFreeSemester={setFreeSemester}
-                      />
-                    )}
-                    <button
-                      type="button"
-                      onClick={() => handleAddSubjectClick()}
-                      className={cn(
-                        'text-sm',
-                        'font-semibold',
-                        'leading-6',
-                        'text-[#0F172A]',
-                        'h-[2.5rem]',
-                        'w-full',
-                        'flex',
-                        'items-center',
-                        'justify-center',
-                        'rounded-md',
-                        'border-[0.0625rem]',
-                        'border-slate-200',
-                      )}
-                    >
-                      + 과목 추가하기
-                    </button>
-                  </div>
-                  <div className={cn(...formWrapper)}>
-                    예체능 교과 성적
-                    <ArtPhysicalForm
-                      setValue={setValue}
-                      control={control}
-                      liberalSystem={liberalSystem}
-                    />
-                  </div>
-                  <div className={cn(...formWrapper)}>
-                    비교과 내용
-                    <NonSubjectForm register={register} liberalSystem={liberalSystem} />
-                  </div>
+                  + 과목 추가하기
+                </button>
+              </div>
+              <div className={cn(...formWrapper)}>
+                예체능 교과 성적
+                <ArtPhysicalForm
+                  setValue={setValue}
+                  control={control}
+                  liberalSystem={liberalSystem}
+                />
+              </div>
+              <div className={cn(...formWrapper)}>
+                비교과 내용
+                <NonSubjectForm register={register} liberalSystem={liberalSystem} />
+              </div>
 
-                  {/* <button
+              {/* <button
           type="submit"
           className={cn(
             'pointer',
@@ -364,14 +429,12 @@ const ScoreRegister = ({ data, type, memberId }: ScoreRegisterProps) => {
         >
           저장
         </button> */}
-                </div>
-              </form>
-              {/* {type === 'client' && <ConfirmBar />} */}
-              {type === 'admin' && <EditBar id={formId} />}
             </div>
-          </div>
+          </form>
+          {/* {type === 'admin' && <EditBar id={formId} />} */}
         </div>
       </div>
+      {/* </div> */}
     </>
   );
 };
