@@ -34,7 +34,7 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
       <tbody>
         <tr>
           <td
-            className="h-[26vh] w-[3%] border border-black bg-[#e9e9e9] p-[0.2vh] align-middle font-medium"
+            className="h-[26vh] w-[3%] border-t-0 border-l-0 border border-black bg-[#e9e9e9] p-[0.2vh] align-middle font-medium"
             rowSpan={9}
           >
             지원자 현황
@@ -42,14 +42,14 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
         </tr>
         <tr>
           <td
-            className="border border-black bg-[#e9e9e9] p-[0.2vh] align-middle font-medium"
+            className="border border-black border-t-0 bg-[#e9e9e9] p-[0.2vh] align-middle font-medium"
             colSpan={2}
             rowSpan={2}
           >
             출신중학교
           </td>
           {oneseo.privacyDetail.schoolName ? (
-            <td className="border border-black" colSpan={2}>
+            <td className="border border-t-0 border-black" colSpan={2}>
               {oneseo.privacyDetail.schoolName}
             </td>
           ) : (

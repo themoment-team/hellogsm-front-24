@@ -9,7 +9,7 @@ import { OneseoStatus } from 'client/components';
 
 import { PrintIcon } from 'shared/assets';
 import { Button } from 'shared/components';
-import { defaultSubjectArray } from 'shared/constants';
+import { artPhysicalSubjectArray, defaultSubjectArray } from 'shared/constants';
 
 import { useGetMyOneseo } from 'api/hooks';
 
@@ -247,10 +247,9 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
 
                 <div className="flex border border-black h-fit">
                   <div className="flex flex-col w-full border-r border-black">
-                    <div className="relative z-10 border-b border-black">
+                    <div className="relative z-10 border-b border-black bg-backslash">
                       <div className="text-right h-[2.2vh]">학년</div>
                       <div className="text-left h-[2.2vh]">과목</div>
-                      <div className="absolute top-0 left-0 w-full h-full bg-no-repeat bg-contain bg-[url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><line x1=\'0\' y1=\'0\' x2=\'100%\' y2=\'100%\' stroke=\'gray\' /></svg>')]"></div>
                     </div>
                     {[
                       ...defaultSubjectArray,
@@ -275,7 +274,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                       </div>
                     </div>
                     {!oneseo.middleSchoolAchievement.achievement1_1 ? (
-                      <div className="h-full bg-no-repeat bg-contain bg-[url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><line x1=\'0\' y1=\'0\' x2=\'100%\' y2=\'100%\' stroke=\'gray\' /></svg>')]"></div>
+                      <div className="h-full bg-no-repeat bg-contain bg-slash"></div>
                     ) : (
                       <>
                         {oneseo.middleSchoolAchievement.achievement1_1.map((score, i) => (
@@ -302,7 +301,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                       </div>
                     </div>
                     {!oneseo.middleSchoolAchievement.achievement1_2 ? (
-                      <div className="h-full bg-no-repeat bg-contain bg-[url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><line x1=\'0\' y1=\'0\' x2=\'100%\' y2=\'100%\' stroke=\'gray\' /></svg>')]"></div>
+                      <div className="h-full bg-no-repeat bg-contain bg-slash"></div>
                     ) : (
                       <>
                         {oneseo.middleSchoolAchievement.achievement1_2.map((score, i) => (
@@ -329,7 +328,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                       </div>
                     </div>
                     {!oneseo.middleSchoolAchievement.achievement2_1 ? (
-                      <div className="h-full bg-no-repeat bg-contain bg-[url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><line x1=\'0\' y1=\'0\' x2=\'100%\' y2=\'100%\' stroke=\'gray\' /></svg>')]"></div>
+                      <div className="h-full bg-no-repeat bg-contain bg-slash"></div>
                     ) : (
                       <>
                         {oneseo.middleSchoolAchievement.achievement2_1.map((score, i) => (
@@ -356,7 +355,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                       </div>
                     </div>
                     {!oneseo.middleSchoolAchievement.achievement2_2 ? (
-                      <div className="h-full bg-no-repeat bg-contain bg-[url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><line x1=\'0\' y1=\'0\' x2=\'100%\' y2=\'100%\' stroke=\'gray\' /></svg>')]"></div>
+                      <div className="h-full bg-no-repeat bg-contain bg-slash"></div>
                     ) : (
                       <>
                         {oneseo.middleSchoolAchievement.achievement2_2.map((score, i) => (
@@ -383,7 +382,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                       </div>
                     </div>
                     {!oneseo.middleSchoolAchievement.achievement3_1 ? (
-                      <div className="h-full bg-no-repeat bg-contain bg-[url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><line x1=\'0\' y1=\'0\' x2=\'100%\' y2=\'100%\' stroke=\'gray\' /></svg>')]"></div>
+                      <div className="h-full bg-no-repeat bg-contain bg-slash"></div>
                     ) : (
                       <>
                         {oneseo.middleSchoolAchievement.achievement3_1.map((score, i) => (
@@ -402,72 +401,156 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                   </div>
                 </div>
                 <h2 className="text-[1.2vh] mt-[1.5vh] leading-[2vh]">체육예술교과</h2>
-                <div className="flex flex-col border border-black h-fit">
-                  <div className="flex h-full">
-                    <div className="flex flex-col w-full border-r border-black">
-                      <div className="relative z-10 border-b border-black">
-                        <div className="text-right h-[2.2vh]">학년</div>
-                        <div className="text-left h-[2.2vh]">과목</div>
-                        <div className="absolute top-0 left-0 w-full h-full bg-no-repeat bg-contain bg-[url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><line x1=\'0\' y1=\'0\' x2=\'100%\' y2=\'100%\' stroke=\'gray\' /></svg>')]"></div>
+                <div className="flex border border-black h-fit">
+                  <div className="flex flex-col w-full border-r border-black">
+                    <div className="relative z-10 border-b border-black bg-backslash">
+                      <div className="text-right h-[2.2vh]">학년</div>
+                      <div className="text-left h-[2.2vh]">과목</div>
+                    </div>
+                    {[...artPhysicalSubjectArray].map((subject) => (
+                      <div
+                        key={subject}
+                        className="flex items-center justify-center border-b border-black"
+                      >
+                        {subject}
                       </div>
-                      {oneseo.middleSchoolAchievement.artsPhysicalSubjects?.map((subject) => (
-                        <div
-                          key={subject}
-                          className="flex items-center justify-center border-b border-black"
-                        >
-                          {subject}
-                        </div>
-                      ))}
-                      {/* {oneseo.middleSchoolAchievement.artsPhysicalSubjects?.map((subject) => (
-                    <div
-                      key={subject}
-                      className="flex items-center justify-center border-b border-black"
-                    >
-                      {subject}
-                    </div>
-                  ))} */}
-                      <div className="flex items-center justify-center">환산점</div>
-                    </div>
-                    <div className="flex flex-col w-full border-r border-black">
+                    ))}
+                    <div className="flex items-center justify-center">환산점</div>
+                  </div>
+                  <div className="flex flex-col w-full border-b-0 border-r border-black">
+                    <div className="flex flex-col ">
                       <div className="font-bold bg-gray-200 border-b border-black text-center p-[0.2vh] h-[2.2vh]">
-                        1학년
+                        1학년 1학기
                       </div>
-                      <div className="flex items-center justify-center border-b border-black">
-                        {oneseo.middleSchoolAchievement.artsPhysicalAchievement[0]}
-                      </div>
-                    </div>
-                    <div className="flex flex-col w-full border-r border-black">
-                      <div className="font-bold bg-gray-200 border-b border-black text-center p-[0.2vh] h-[2.2vh]">
-                        2학년
-                      </div>
-                      <div className="flex items-center justify-center border-b border-black">
-                        {oneseo.middleSchoolAchievement.artsPhysicalAchievement[1]}
-                      </div>
-                    </div>
-                    <div className="flex flex-col w-full border-r border-black">
-                      <div className="font-bold bg-gray-200 border-b border-black text-center p-[0.2vh] h-[2.2vh]">
-                        3학년
-                      </div>
-                      <div className="flex items-center justify-center border-b border-black">
-                        {oneseo.middleSchoolAchievement.artsPhysicalAchievement[2]}
-                      </div>
-                    </div>
-                    <div className="flex flex-col w-full border-r border-black">
-                      <div className="font-bold bg-gray-200 border-b border-black text-center p-[0.2vh] h-[2.2vh]">
-                        환산점
-                      </div>
-                      <div className="flex items-center justify-center border-b border-black">
-                        {oneseo.middleSchoolAchievement.artsPhysicalAchievement}
-                      </div>
-                    </div>
-                    <div className="flex flex-col w-full border-r border-black">
                       <div className="font-bold bg-gray-200 border-b border-black text-center p-[0.2vh] h-[2.2vh]">
                         성취도/평어
                       </div>
-                      <div className="flex items-center justify-center border-b border-black">
-                        {/* {admissionGrade?.artisticScore} */}
+                    </div>
+                    {!oneseo.middleSchoolAchievement.achievement1_1 ? (
+                      <div className="h-full bg-no-repeat bg-contain bg-slash"></div>
+                    ) : (
+                      <>
+                        {oneseo.middleSchoolAchievement.achievement1_1.map((score, i) => (
+                          <div
+                            key={i}
+                            className="flex items-center justify-center border-b border-black"
+                          >
+                            {scoreToAlphabet[score]}
+                          </div>
+                        ))}
+                        <div className="flex items-center justify-center border-b-0 border-black">
+                          {plusAll(oneseo.middleSchoolAchievement.achievement1_1)}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  <div className="flex flex-col w-full border-r border-black">
+                    <div className="flex flex-col">
+                      <div className="font-bold bg-gray-200 border-b border-black text-center p-[0.2vh] h-[2.2vh]">
+                        1학년 2학기
+                      </div>
+                      <div className="font-bold bg-gray-200 border-b-0 border-black text-center p-[0.2vh] h-[2.2vh]">
+                        성취도/평어
                       </div>
                     </div>
+                    {!oneseo.middleSchoolAchievement.achievement1_2 ? (
+                      <div className="h-full bg-no-repeat bg-contain bg-slash"></div>
+                    ) : (
+                      <>
+                        {oneseo.middleSchoolAchievement.achievement1_2.map((score, i) => (
+                          <div
+                            key={i}
+                            className="flex items-center justify-center border-b border-black"
+                          >
+                            {scoreToAlphabet[score]}
+                          </div>
+                        ))}
+                        <div className="flex items-center justify-center border-b-0 border-black">
+                          {plusAll(oneseo.middleSchoolAchievement.achievement1_2)}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  <div className="flex flex-col w-full border-r border-black">
+                    <div className="flex flex-col">
+                      <div className="font-bold bg-gray-200 border-b border-black text-center p-[0.2vh] h-[2.2vh]">
+                        2학년 1학기
+                      </div>
+                      <div className="font-bold bg-gray-200 border-b border-black text-center p-[0.2vh] h-[2.2vh]">
+                        성취도/평어
+                      </div>
+                    </div>
+                    {!oneseo.middleSchoolAchievement.achievement2_1 ? (
+                      <div className="h-full bg-no-repeat bg-contain bg-slash"></div>
+                    ) : (
+                      <>
+                        {oneseo.middleSchoolAchievement.achievement2_1.map((score, i) => (
+                          <div
+                            key={i}
+                            className="flex items-center justify-center border-b border-black"
+                          >
+                            {scoreToAlphabet[score]}
+                          </div>
+                        ))}
+                        <div className="flex items-center justify-center border-b-0 border-black">
+                          {plusAll(oneseo.middleSchoolAchievement.achievement2_1)}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  <div className="flex flex-col w-full border-r border-black">
+                    <div className="flex flex-col">
+                      <div className="font-bold bg-gray-200 border-b border-black text-center p-[0.2vh] h-[2.2vh]">
+                        2학년 2학기
+                      </div>
+                      <div className="font-bold bg-gray-200 border-b border-black text-center p-[0.2vh] h-[2.2vh]">
+                        성취도/평어
+                      </div>
+                    </div>
+                    {!oneseo.middleSchoolAchievement.achievement2_2 ? (
+                      <div className="h-full bg-no-repeat bg-contain bg-slash"></div>
+                    ) : (
+                      <>
+                        {oneseo.middleSchoolAchievement.achievement2_2.map((score, i) => (
+                          <div
+                            key={i}
+                            className="flex items-center justify-center border-b border-black"
+                          >
+                            {scoreToAlphabet[score]}
+                          </div>
+                        ))}
+                        <div className="flex items-center justify-center border-b-0 border-black">
+                          {plusAll(oneseo.middleSchoolAchievement.achievement2_2)}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  <div className="flex flex-col w-full border-black">
+                    <div className="flex flex-col">
+                      <div className="font-bold bg-gray-200 border-b border-black text-center p-[0.2vh] h-[2.2vh]">
+                        3학년 1학기
+                      </div>
+                      <div className="font-bold bg-gray-200 border-b border-black text-center p-[0.2vh] h-[2.2vh]">
+                        성취도/평어
+                      </div>
+                    </div>
+                    {!oneseo.middleSchoolAchievement.achievement3_1 ? (
+                      <div className="h-full bg-no-repeat bg-contain bg-slash"></div>
+                    ) : (
+                      <>
+                        {oneseo.middleSchoolAchievement.achievement3_1.map((score, i) => (
+                          <div
+                            key={i}
+                            className="flex items-center justify-center border-b border-black"
+                          >
+                            {scoreToAlphabet[score]}
+                          </div>
+                        ))}
+                        <div className="flex items-center justify-center border-b-0 border-black">
+                          {plusAll(oneseo.middleSchoolAchievement.achievement3_1)}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
                 <h2 className="text-[1.2vh] mt-[1.5vh] leading-[2vh]">비교과</h2>
