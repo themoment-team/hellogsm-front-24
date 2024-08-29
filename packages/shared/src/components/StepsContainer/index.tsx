@@ -88,15 +88,11 @@ const StepsContainer = ({ data, param, info }: Props) => {
   const sex = SexEnum[info.sex];
 
   const choice = [
-    defaultMajors?.firstDesiredMajor
-      ? ReverseMajorConvertor[defaultMajors.firstDesiredMajor]
-      : undefined,
+    defaultMajors?.firstDesiredMajor ? ReverseMajorConvertor[defaultMajors.firstDesiredMajor] : '',
     defaultMajors?.secondDesiredMajor
       ? ReverseMajorConvertor[defaultMajors.secondDesiredMajor]
-      : undefined,
-    defaultMajors?.thirdDesiredMajor
-      ? ReverseMajorConvertor[defaultMajors.thirdDesiredMajor]
-      : undefined,
+      : '',
+    defaultMajors?.thirdDesiredMajor ? ReverseMajorConvertor[defaultMajors.thirdDesiredMajor] : '',
   ];
 
   const { register, handleSubmit, setValue, watch } = useForm<basicRegisterType>({
