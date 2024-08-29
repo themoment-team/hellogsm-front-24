@@ -70,7 +70,7 @@ const StepsContianer = ({ data, param, info }: Props) => {
       img: defaultDetailData?.profileImg || '',
       address: defaultDetailData?.address || '',
       detailAddress: defaultDetailData?.detailAddress || '',
-      phoneNumber: defaultDetailData?.phoneNumber || '',
+      phoneNumber: info.phoneNumber || '',
       category: getCategoryFromGraduationType(defaultDetailData?.graduationType || ''),
       schoolName: defaultDetailData?.schoolName || '',
       schoolAddress: defaultDetailData?.schoolAddress || '',
@@ -91,6 +91,7 @@ const StepsContianer = ({ data, param, info }: Props) => {
     name: info.name,
     birth: info.birth,
     sex: sex,
+    phoneNumber: info.phoneNumber,
   };
 
   return (
@@ -124,6 +125,7 @@ const StepsContianer = ({ data, param, info }: Props) => {
                 name={userBasicInfo.name}
                 birth={userBasicInfo.birth}
                 sex={userBasicInfo.sex}
+                phoneNumber={userBasicInfo.phoneNumber}
                 register={register}
                 setValue={setValue}
                 watch={watch}

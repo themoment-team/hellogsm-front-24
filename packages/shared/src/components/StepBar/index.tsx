@@ -83,6 +83,7 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
 
   const handleStep1Errors = () => {
     const { img, address, detailAddress, phoneNumber } = watch();
+
     if (img && address && detailAddress && phoneNumber) {
       const { setProfileImg, setAddress, setDetailAddress } = store;
 

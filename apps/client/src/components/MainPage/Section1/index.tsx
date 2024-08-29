@@ -83,9 +83,7 @@ const Section1 = () => {
           </div>
 
           <button
-            onClick={() => {
-              push('/guide');
-            }}
+            onClick={() => push('/guide')}
             className={cn(
               'text-[#F7F7F7]',
               'text-2xl',
