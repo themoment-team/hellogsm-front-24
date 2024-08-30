@@ -4,3 +4,4 @@ export * from './RegisterPage';
 export { default as GuidePage } from './GuidePage';
 export { default as MyPage } from './MyPage';
 export { default as FaqPage } from './FaqPage';
+export { default as CalculatePage } from './CalculatePage';
