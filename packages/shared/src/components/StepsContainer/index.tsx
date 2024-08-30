@@ -78,7 +78,7 @@ const StepsContainer = ({ data, param, info }: Props) => {
 
   const [scoreWatch, setScoreWatch] = useState<ScoreFormType | null>(null);
   const [tempBody, setTempBody] = useState<PostOneseoType | null>(null);
-  const [isStep4Checkable, setIsStep4Checkable] = useState<boolean>(false);
+  const [isStep4Clickable, setIsStep4Clickable] = useState<boolean>(false);
 
   const defaultDetailData = data?.privacyDetail;
   const defaultMajors = data?.desiredMajors;
@@ -224,7 +224,7 @@ const StepsContainer = ({ data, param, info }: Props) => {
             param={param}
             handleSubmit={handleSubmit}
             watch={watch}
-            isStep4Checkable={isStep4Checkable}
+            isStep4Clickable={isStep4Clickable}
           />
           <div
             className={cn([
@@ -258,8 +258,8 @@ const StepsContainer = ({ data, param, info }: Props) => {
                 setScoreWatch={setScoreWatch}
                 scoreWatch={scoreWatch}
                 data={data}
-                isStep4Checkable={isStep4Checkable}
-                setIsStep4Checkable={setIsStep4Checkable}
+                isStep4Clickable={isStep4Clickable}
+                setIsStep4Clickable={setIsStep4Clickable}
               />
             )}
           </div>
@@ -268,7 +268,7 @@ const StepsContainer = ({ data, param, info }: Props) => {
       <ConfirmBar
         temporarySave={temporarySave}
         id="scoreForm"
-        isStep4Checkable={isStep4Checkable}
+        isStep4Clickable={isStep4Clickable}
       />
     </>
   );

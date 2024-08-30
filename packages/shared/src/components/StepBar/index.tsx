@@ -76,11 +76,11 @@ interface StepBarType {
   param?: string;
   handleSubmit: UseFormHandleSubmit<basicRegisterType>;
   watch: UseFormWatch<basicRegisterType>;
-  isStep4Checkable: boolean;
+  isStep4Clickable: boolean;
   scoreWatch?: ScoreFormType;
 }
 
-const StepBar = ({ param, handleSubmit, watch, isStep4Checkable, scoreWatch }: StepBarType) => {
+const StepBar = ({ param, handleSubmit, watch, isStep4Clickable, scoreWatch }: StepBarType) => {
   const { push } = useRouter();
   const params = useSearchParams();
   const path = usePathname();
@@ -158,10 +158,10 @@ const StepBar = ({ param, handleSubmit, watch, isStep4Checkable, scoreWatch }: S
     }
 
     if (param === '4') {
-      return setIsClickable(isStep4Checkable);
+      return setIsClickable(isStep4Clickable);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [param, store.liberalSystem, store.freeSemester, isStep4Checkable, watch()]);
+  }, [param, store.liberalSystem, store.freeSemester, isStep4Clickable, watch()]);
 
   useEffect(() => {
     const stepNumber = Number(params.get('step')) || Steps.ONE;
