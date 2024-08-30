@@ -1,7 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
 import { SearchIcon, PrintIcon, FileIcon } from 'admin/assets';
 
 import {
@@ -38,8 +36,6 @@ const FilterBar = ({
   setScreeningTag,
   screeningTag,
 }: FilterBarProps) => {
-  const { push } = useRouter();
-
   const handleSubmittedChange = (value: string) => {
     if (value === 'YES' || value === 'NO') {
       setIsSubmitted(value);

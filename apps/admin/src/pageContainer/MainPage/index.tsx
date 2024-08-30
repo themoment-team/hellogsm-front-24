@@ -109,6 +109,8 @@ const MainPage = ({ initialData }: MainPageProps) => {
               'w-full',
               'rounded-t-md',
               'overflow-hidden',
+              'max-h-[calc(100vh-280px)]',
+              'overflow-scroll',
             )}
           >
             <ApplicantTH />
