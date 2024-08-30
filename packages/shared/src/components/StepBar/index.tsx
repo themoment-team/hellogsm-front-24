@@ -12,15 +12,7 @@ import {
 import { basicRegisterType, GraduationType, MajorType, ScreeningType } from 'types';
 
 import { StepCheckIcon, ProgressBarIcon } from 'shared/assets';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  Button,
-} from 'shared/components';
+import { Button } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 import { useStore } from 'shared/stores';
 
@@ -75,8 +67,6 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
   const store = useStore();
 
   const [currentStep, setCurrentStep] = useState(Steps.ONE);
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const [errors, setErrors] = useState<string[]>([]);
 
   useEffect(() => {
     const stepNumber = Number(params.get('step')) || Steps.ONE;
@@ -99,17 +89,8 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
       setProfileImg(img);
       setAddress(address);
       setDetailAddress(detailAddress);
-      setErrors([]);
 
       updateStep(Math.min(currentStep + 1, Steps.FOUR));
-    } else {
-      if (errors.length === 0) {
-        if (!img) errors.push('프로필 이미지');
-        if (!address) errors.push('주소');
-        if (!detailAddress) errors.push('상세 주소');
-      }
-
-      setShowModal(true);
     }
   };
 
@@ -151,19 +132,8 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
       setGraduationType(categoryConvertor[category]);
       setSchoolName(schoolName);
       setSchoolAddress(schoolAddress);
-      setErrors([]);
 
       updateStep(Math.min(currentStep + 1, Steps.FOUR));
-    } else {
-      if (errors.length === 0) {
-        if (!category) errors.push('지원자 유형');
-        if (!schoolName) errors.push('출신 중학교');
-        if (!year && !month) errors.push('졸업일');
-        if (!screening) errors.push('전형');
-        if (!choice) errors.push('지원학과 선택');
-      }
-
-      setShowModal(true);
     }
   };
 
@@ -196,18 +166,7 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
       setSchoolTeacherName(schoolTeacherName);
       setSchoolTeacherPhoneNumber(schoolTeacherPhoneNumber);
 
-      setErrors([]);
       updateStep(Math.min(currentStep + 1, Steps.FOUR));
-    } else {
-      if (errors.length === 0) {
-        if (!guardianName) errors.push('보호자 이름');
-        if (!guardianPhoneNumber) errors.push('보호자 연락처');
-        if (!relationship) errors.push('보호자 관계');
-        if (!schoolTeacherName) errors.push('담임선생님 이름');
-        if (!schoolTeacherPhoneNumber) errors.push('담임선생님 연락처');
-      }
-
-      setShowModal(true);
     }
   };
 
@@ -241,7 +200,6 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
 
   const handlePrevious = () => {
     const prevStep = Math.max(currentStep - 1, Steps.ONE);
-    setErrors([]);
     updateStep(prevStep);
   };
 
@@ -283,22 +241,6 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
           </Button>
         </div>
       </div>
-      <AlertDialog open={showModal}>
-        <AlertDialogContent className="w-[400px]">
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              필수 입력 부분 중
-              <p className={cn('text-red-600', 'text-[0.875rem]/[1.25rem]', 'font-normal')}>
-                {errors.filter(Boolean).join(', ')}
-              </p>
-              부분이 채워지지 않았습니다.
-            </AlertDialogTitle>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogAction onClick={() => setShowModal(false)}>확인</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </>
   );
 };
