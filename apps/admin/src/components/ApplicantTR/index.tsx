@@ -148,7 +148,7 @@ const ApplicantTR = ({
                   <AlertDialogTitle>서류 제출 여부를 변경하시겠습니까?</AlertDialogTitle>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>취소</AlertDialogCancel>
+                  <AlertDialogCancel onClick={() => setDialogOpen('')}>취소</AlertDialogCancel>
                   <AlertDialogAction onClick={handleRealOneseoArrived}>변경하기</AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
