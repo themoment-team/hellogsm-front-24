@@ -75,7 +75,15 @@ const MainPage = ({ initialData }: MainPageProps) => {
   }, [debouncedKeyword, page, testResultTag, isSubmitted, screeningTag]);
 
   return (
-    <main className={cn(isOpen && 'ml-60', isOpen ? 'px-10' : 'pl-20 pr-10', 'pt-[60px]', 'pb-8')}>
+    <main
+      className={cn(
+        isOpen && 'ml-60',
+        isOpen ? 'px-10' : 'pl-20 pr-10',
+        'pt-[60px]',
+        'pb-8',
+        'bg-white',
+      )}
+    >
       <SideMenu
         testResultTag={testResultTag}
         setTestResultTag={setTestResultTag}
