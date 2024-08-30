@@ -11,7 +11,22 @@ import { OneseoListType, OneseoType, ScreeningEnum } from 'types';
 import { TextField } from 'admin/components';
 
 import { CheckIcon } from 'shared/assets';
-import { Table, TableBody, TableCell, Toggle, TableRow, Badge, Button } from 'shared/components';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  Toggle,
+  TableRow,
+  Badge,
+  Button,
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from 'shared/components';
 import { 심층면접일자, 직무적성일자 } from 'shared/constants';
 import { useDebounce } from 'shared/hooks';
 import { cn } from 'shared/lib/utils';
@@ -41,6 +56,8 @@ const ApplicantTR = ({
   secondTestPassYn,
   submitCode,
 }: ApplicationTRProps) => {
+  const [dialogOpen, setDialogOpen] = useState<'' | 'submit'>('');
+
   const 직무적성처리시작일자 = new Date(직무적성일자);
   const 심층면접처리시작일자 = new Date(심층면접일자);
 
@@ -118,13 +135,24 @@ const ApplicantTR = ({
         <TableRow>
           <TableCell className="w-[100px] text-zinc-900">{submitCode}</TableCell>
           <TableCell className="w-[130px]">
-            <Toggle
-              onClick={handleRealOneseoArrived}
-              pressed={isRealOneseoArrived}
-              icon={<CheckIcon />}
-            >
-              제출 완료
-            </Toggle>
+            <AlertDialog open={dialogOpen === 'submit'}>
+              <Toggle
+                onClick={() => setDialogOpen('submit')}
+                pressed={isRealOneseoArrived}
+                icon={<CheckIcon />}
+              >
+                제출 완료
+              </Toggle>
+              <AlertDialogContent className="w-[400px]">
+                <AlertDialogHeader>
+                  <AlertDialogTitle>서류 제출 여부를 변경하시겠습니까?</AlertDialogTitle>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>취소</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleRealOneseoArrived}>변경하기</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </TableCell>
           <TableCell className="w-[154px] font-semibold text-zinc-900">
             {name} <br />
