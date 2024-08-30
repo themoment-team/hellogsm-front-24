@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
@@ -233,16 +233,15 @@ const StepsContainer = ({ data, param, info }: Props) => {
     !schoolTeacherName ||
     !!schoolTeacherPhoneNumber;
 
-  if (isBasicInfoComplete) {
-    push('/register?step=1');
-    return;
-  } else if (isApplyInfoComplete) {
-    push('/register?step=2');
-    return;
-  } else if (isGuardianInfoComplete) {
-    push('/register?step=3');
-    return;
-  }
+  useEffect(() => {
+    if (isBasicInfoComplete) {
+      push('/register?step=1');
+    } else if (isApplyInfoComplete) {
+      push('/register?step=2');
+    } else if (isGuardianInfoComplete) {
+      push('/register?step=3');
+    }
+  }, [isBasicInfoComplete, isApplyInfoComplete, isGuardianInfoComplete]);
 
   return (
     <>
