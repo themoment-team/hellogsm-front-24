@@ -64,7 +64,7 @@ const FilterBar = ({
   };
 
   const handlePrintButtonClick = () => {
-    push('/print');
+    window.open('/print');
   };
 
   return (
