@@ -235,10 +235,13 @@ const StepsContainer = ({ data, param, info }: Props) => {
 
   if (isBasicInfoComplete) {
     push('/register?step=1');
+    return;
   } else if (isApplyInfoComplete) {
     push('/register?step=2');
+    return;
   } else if (isGuardianInfoComplete) {
     push('/register?step=3');
+    return;
   }
 
   return (
