@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 // import { usePostMyOneseo, usePutOneseo } from 'api';
-import { usePostImage, usePostMyOneseo } from 'api';
+import { usePostImage, usePostMockScore, usePostMyOneseo } from 'api';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FreeSemesterType, GetMyOneseoType, MiddleSchoolAchievementType } from 'types';
 
@@ -19,6 +19,7 @@ import {
   Input,
   LiberalSystemSwitch,
   NonSubjectForm,
+  ScoreCalculateDialog,
 } from 'shared/components';
 import { defaultSubjectArray } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
@@ -29,6 +30,7 @@ import { dataUrltoFile } from 'shared/utils';
 import type {
   GEDAchievementType,
   GradesInputMethodType,
+  MockScoreType,
   PostOneseoType,
   ScoreFormType,
   SemesterIdType,
@@ -71,11 +73,11 @@ const formWrapper = [
 interface ScoreRegisterProps {
   data: GetMyOneseoType | undefined;
   memberId?: number;
-  type: 'client' | 'admin';
+  type: 'client' | 'admin' | 'calculate';
   scoreWatch?: ScoreFormType | null;
   setScoreWatch?: Dispatch<SetStateAction<ScoreFormType | null>>;
-  isStep4Checkable: boolean;
-  setIsStep4Checkable?: Dispatch<SetStateAction<boolean>>;
+  isStep4Clickable?: boolean;
+  setIsStep4Clickable?: Dispatch<SetStateAction<boolean>>;
 }
 
 const ScoreRegister = ({
@@ -83,17 +85,20 @@ const ScoreRegister = ({
   memberId,
   setScoreWatch,
   type,
-  isStep4Checkable,
-  setIsStep4Checkable,
+  isStep4Clickable,
+  setIsStep4Clickable,
 }: ScoreRegisterProps) => {
   const store = useStore();
   const { setLiberalSystem, setFreeSemester, freeSemester, liberalSystem } = store;
 
-  const defaultData = data?.middleSchoolAchievement;
-
   const [oneseoBody, setOneseoBody] = useState<Omit<PostOneseoType, 'profileImg'> | null>(null);
-
   const [subjectArray, setSubjectArray] = useState<string[]>([...defaultSubjectArray]);
+  const [scoreCalculateDialogData, setScoreCalculateDialogData] = useState<MockScoreType | null>(
+    null,
+  );
+  const [isDialog, setIsDialog] = useState(false);
+
+  const defaultData = data?.middleSchoolAchievement;
   const defaultSubjectLength = defaultSubjectArray.length;
 
   const { register, handleSubmit, setValue, unregister, watch, control } = useForm<ScoreFormType>({
@@ -122,29 +127,25 @@ const ScoreRegister = ({
   });
 
   useEffect(() => {
-    console.log('setWatch');
-
     if (setScoreWatch && watch()) {
       setScoreWatch(watch());
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isStep4Checkable, watch('gedTotalScore')]);
+  }, [isStep4Clickable, watch('gedTotalScore')]);
 
   useEffect(() => {
-    if (!setIsStep4Checkable) return;
-
-    console.log('1211');
+    if (!setIsStep4Clickable) return;
 
     if (
       (store.graduationType === 'CANDIDATE' || store.graduationType === 'GRADUATE') &&
       scoreFormSchema.safeParse(watch()).success === true
     ) {
-      setIsStep4Checkable(true);
+      setIsStep4Clickable(true);
     } else if (store.graduationType === 'GED' && Number(watch('gedTotalScore')) > 0) {
-      setIsStep4Checkable(true);
+      setIsStep4Clickable(true);
     } else {
-      setIsStep4Checkable(false);
+      setIsStep4Clickable(false);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -160,6 +161,23 @@ const ScoreRegister = ({
     onSuccess: () => {
       alert('원서 제출 완료');
     },
+    onError: () => {},
+  });
+
+  const { mutate: postMockScore } = usePostMockScore(store.graduationType!, {
+    onSuccess: (data) => {
+      const scoreCalculateDialogData: MockScoreType = {
+        generalSubjectsScore: data.generalSubjectsScore,
+        artsPhysicalSubjectsScore: data.artsPhysicalSubjectsScore,
+        attendanceScore: data.attendanceScore,
+        volunteerScore: data.volunteerScore,
+        totalScore: data.totalScore,
+      };
+
+      setScoreCalculateDialogData(scoreCalculateDialogData);
+      setIsDialog(true);
+    },
+
     onError: () => {},
   });
 
@@ -243,7 +261,7 @@ const ScoreRegister = ({
       schoolAddress &&
       screening;
 
-    if (!isAllWrite) return;
+    if (type !== 'calculate' && !isAllWrite) return;
 
     const isFreeSemester = liberalSystem === 'freeSemester';
 
@@ -283,22 +301,26 @@ const ScoreRegister = ({
             artsPhysicalSubjects: ['체육', '음악', '미술'],
           };
 
+    if (type === 'calculate') {
+      return postMockScore(middleSchoolAchievement);
+    }
+
     const body: Omit<PostOneseoType, 'profileImg'> = {
-      guardianName: guardianName,
-      guardianPhoneNumber: guardianPhoneNumber,
-      relationshipWithGuardian: relationshipWithGuardian,
-      address: address,
-      detailAddress: detailAddress,
-      graduationType: graduationType,
-      schoolTeacherName: schoolTeacherName,
-      schoolTeacherPhoneNumber: schoolTeacherPhoneNumber,
-      firstDesiredMajor: firstDesiredMajor,
-      secondDesiredMajor: secondDesiredMajor,
-      thirdDesiredMajor: thirdDesiredMajor,
-      schoolName: schoolName,
-      schoolAddress: schoolAddress,
-      screening: screening,
-      middleSchoolAchievement: middleSchoolAchievement,
+      guardianName: guardianName!,
+      guardianPhoneNumber: guardianPhoneNumber!,
+      relationshipWithGuardian: relationshipWithGuardian!,
+      address: address!,
+      detailAddress: detailAddress!,
+      graduationType: graduationType!,
+      schoolTeacherName: schoolTeacherName!,
+      schoolTeacherPhoneNumber: schoolTeacherPhoneNumber!,
+      firstDesiredMajor: firstDesiredMajor!,
+      secondDesiredMajor: secondDesiredMajor!,
+      thirdDesiredMajor: thirdDesiredMajor!,
+      schoolName: schoolName!,
+      schoolAddress: schoolAddress!,
+      screening: screening!,
+      middleSchoolAchievement: middleSchoolAchievement!,
     };
 
     if (type === 'admin') {
@@ -310,7 +332,7 @@ const ScoreRegister = ({
     setOneseoBody(body);
 
     const formData = new FormData();
-    formData.append('file', dataUrltoFile(profileImg, 'img.png'));
+    formData.append('file', dataUrltoFile(profileImg!, 'img.png'));
 
     mutatePostImage(formData);
 
@@ -379,7 +401,7 @@ const ScoreRegister = ({
 
   return (
     <>
-      <div className={cn(['w-[66.5rem]', 'flex', 'flex-col', type === 'admin' && 'pb-20'])}>
+      <div className={cn(['w-[66.5rem]', 'px-8', 'flex', 'flex-col', type === 'admin' && 'pb-20'])}>
         {/* <div className={cn(['w-full', 'px-[2rem]', 'py-[1.5rem]', 'bg-white'])}> */}
         <h1
           className={cn([
@@ -528,6 +550,12 @@ const ScoreRegister = ({
         )}
       </div>
       {/* </div> */}
+      <ScoreCalculateDialog
+        isDialog={isDialog}
+        setIsDialog={setIsDialog}
+        scoreCalculateDialogData={scoreCalculateDialogData}
+        type="mock"
+      />
     </>
   );
 };
