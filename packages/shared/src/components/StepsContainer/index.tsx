@@ -234,14 +234,14 @@ const StepsContainer = ({ data, param, info }: Props) => {
     !!schoolTeacherPhoneNumber;
 
   useEffect(() => {
-    if (isBasicInfoComplete) {
+    if (param === '1' && isBasicInfoComplete) {
       push('/register?step=1');
-    } else if (isApplyInfoComplete) {
+    } else if (param === '2' && isApplyInfoComplete) {
       push('/register?step=2');
-    } else if (isGuardianInfoComplete) {
+    } else if (param === '3' && isGuardianInfoComplete) {
       push('/register?step=3');
     }
-  }, [isBasicInfoComplete, isApplyInfoComplete, isGuardianInfoComplete]);
+  }, [isBasicInfoComplete, isApplyInfoComplete, isGuardianInfoComplete, param, push]);
 
   return (
     <>
