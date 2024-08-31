@@ -32,8 +32,9 @@ import { usePostImage, usePostTempStorage } from 'api/hooks';
 
 interface Props {
   data: GetMyOneseoType | undefined;
-  info: MyMemberInfoType;
+  info: MyMemberInfoType | undefined;
   param: string;
+  memberId: number;
 }
 
 const GraduationTypeConvertor: { [key: string]: string } = {
@@ -74,7 +75,7 @@ const getScreeningTypeText = (screeningType: string) => {
   }
 };
 
-const StepsContainer = ({ data, param, info }: Props) => {
+const StepsContainer = ({ data, param, info, memberId }: Props) => {
   const { push } = useRouter();
   const store = useStore();
 
@@ -89,7 +90,7 @@ const StepsContainer = ({ data, param, info }: Props) => {
   const relationshipWithGuardian = defaultDetailData?.relationshipWithGuardian || '';
   const isPrimaryRelationship = ['부', '모'].includes(relationshipWithGuardian);
 
-  const sex = SexEnum[info.sex];
+  const sex = info ? SexEnum[info.sex] : '';
 
   const choices = [
     defaultMajors?.firstDesiredMajor ? ReverseMajorConvertor[defaultMajors.firstDesiredMajor] : '',
@@ -141,10 +142,10 @@ const StepsContainer = ({ data, param, info }: Props) => {
   } = watch();
 
   const userBasicInfo = {
-    name: info.name,
-    birth: info.birth,
+    name: info?.name || '',
+    birth: info?.birth || '',
     sex: sex,
-    phoneNumber: info.phoneNumber,
+    phoneNumber: info?.phoneNumber || '',
   };
 
   const { mutate: postTempStorage } = usePostTempStorage({
@@ -235,14 +236,21 @@ const StepsContainer = ({ data, param, info }: Props) => {
     !!schoolTeacherPhoneNumber;
 
   useEffect(() => {
-    if (param === '1' && isBasicInfoComplete) {
-      push('/register?step=1');
-    } else if (param === '2' && isApplyInfoComplete) {
-      push('/register?step=2');
-    } else if (param === '3' && isGuardianInfoComplete) {
-      push('/register?step=3');
+    const baseRoute = memberId ? `/edit/${memberId}` : '/register';
+
+    if (param === '2' && isBasicInfoComplete) {
+      push(`${baseRoute}?step=1`);
+      return;
     }
-  }, [isBasicInfoComplete, isApplyInfoComplete, isGuardianInfoComplete, param, push]);
+    if (param === '3' && isBasicInfoComplete) {
+      push(`${baseRoute}?step=1`);
+      if (isApplyInfoComplete) {
+        push(`${baseRoute}?step=2`);
+        return;
+      }
+      return;
+    }
+  }, [isBasicInfoComplete, isApplyInfoComplete, isGuardianInfoComplete, param, push, memberId]);
 
   return (
     <>
