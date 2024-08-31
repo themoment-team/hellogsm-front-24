@@ -2,19 +2,31 @@
 
 import { useEffect, useState } from 'react';
 
+import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
+
 import { useForm, Controller } from 'react-hook-form';
 import { checkIsPassedDate } from 'shared';
-import { OneseoType, ScreeningEnum } from 'types';
+import { OneseoListType, OneseoType, ScreeningEnum } from 'types';
 
 import { TextField } from 'admin/components';
 
 import { CheckIcon } from 'shared/assets';
 import { Table, TableBody, TableCell, Toggle, TableRow, Badge, Button } from 'shared/components';
+import { 심층면접일자, 직무적성일자 } from 'shared/constants';
 import { useDebounce } from 'shared/hooks';
 import { cn } from 'shared/lib/utils';
 import { formatScore } from 'shared/utils';
 
+import { usePatchArrivedStatus, usePatchAptitudeScore, usePatchInterviewScore } from 'api/hooks';
+
+interface ApplicationTRProps extends OneseoType {
+  refetch: (
+    options?: RefetchOptions | undefined,
+  ) => Promise<QueryObserverResult<OneseoListType, Error>>;
+}
+
 const ApplicantTR = ({
+  refetch,
   aptitudeEvaluationScore,
   firstTestPassYn,
   guardianPhoneNumber,
@@ -28,21 +40,49 @@ const ApplicantTR = ({
   screening,
   secondTestPassYn,
   submitCode,
-}: OneseoType) => {
-  const example직무적성처리시작일자 = new Date('2024-07-31');
-  const example심층면접처리시작일자 = new Date('2024-08-30');
+}: ApplicationTRProps) => {
+  const 직무적성처리시작일자 = new Date(직무적성일자);
+  const 심층면접처리시작일자 = new Date(심층면접일자);
 
   const [isRealOneseoArrived, setIsRealOneseoArrived] = useState<boolean>(
     realOneseoArrivedYn === 'YES',
   );
 
-  const is직무적성처리기간 = checkIsPassedDate(example직무적성처리시작일자);
-  const is심층면접처리기간 = checkIsPassedDate(example심층면접처리시작일자);
+  const { mutate: patchArrivedStatus } = usePatchArrivedStatus(memberId, {
+    onSuccess: () => {
+      refetch();
+    },
+    onError: () => {
+      setIsRealOneseoArrived((prev) => !prev);
+    },
+  });
+
+  const { mutate: patchAptitudeScore } = usePatchAptitudeScore(memberId, {
+    onSuccess: () => {
+      refetch();
+    },
+  });
+  const { mutate: patchInterviewScore } = usePatchInterviewScore(memberId, {
+    onSuccess: () => {
+      refetch();
+    },
+  });
+
+  const firstTestResult =
+    firstTestPassYn === 'YES' ? '합격' : firstTestPassYn === 'NO' ? '불합격' : '미정';
+  const secondTestResult =
+    secondTestPassYn === 'YES' ? '합격' : secondTestPassYn === 'NO' ? '불합격' : '미정';
+
+  const is직무적성처리기간 = checkIsPassedDate(직무적성처리시작일자);
+  const is심층면접처리기간 = checkIsPassedDate(심층면접처리시작일자);
+
+  const formatted직무적성점수 = formatScore(String(aptitudeEvaluationScore ?? ''));
+  const formatted심층면접점수 = formatScore(String(interviewScore ?? ''));
 
   const { control, watch, setValue } = useForm({
     defaultValues: {
-      직무적성점수: '',
-      심층면접점수: '',
+      직무적성점수: formatted직무적성점수,
+      심층면접점수: formatted심층면접점수,
     },
   });
 
@@ -60,7 +100,16 @@ const ApplicantTR = ({
   }, [debounced직무적성점수, debounced심층면접점수, setValue]);
 
   const handleRealOneseoArrived = () => {
+    patchArrivedStatus();
     setIsRealOneseoArrived((prev) => !prev);
+  };
+
+  const handleAptitudeScore = () => {
+    patchAptitudeScore({ aptitudeEvaluationScore: parseInt(watch('직무적성점수')) });
+  };
+
+  const handleInterviewScore = () => {
+    patchInterviewScore({ interviewScore: parseInt(watch('심층면접점수')) });
   };
 
   return (
@@ -84,36 +133,58 @@ const ApplicantTR = ({
           <TableCell className="w-[154px] text-zinc-600">{schoolName}</TableCell>
           <TableCell className="max-w-full text-zinc-900">{ScreeningEnum[screening]}</TableCell>
           <TableCell className="w-[96px]">
-            {is직무적성처리기간 ? (
+            <Badge variant={firstTestResult}>{firstTestResult}</Badge>
+          </TableCell>
+          <TableCell className="w-[180px] text-zinc-400">
+            {firstTestPassYn === 'YES' && is직무적성처리기간 ? (
               <div className={cn('flex', 'gap-1.5')}>
                 <Controller
                   name="직무적성점수"
                   control={control}
-                  render={({ field }) => <TextField {...field} />}
+                  render={({ field }) => <TextField {...field} disabled={!!secondTestPassYn} />}
                 />
-                <Button variant="subtitle">저장</Button>
+                <Button
+                  variant={
+                    watch('직무적성점수') && formatted직무적성점수 !== watch('직무적성점수')
+                      ? 'default'
+                      : 'subtitle'
+                  }
+                  onClick={handleAptitudeScore}
+                  disabled={!!secondTestPassYn}
+                >
+                  저장
+                </Button>
               </div>
             ) : (
-              <Badge variant="미정">미정</Badge>
+              '진행 전'
             )}
           </TableCell>
           <TableCell className="w-[180px] text-zinc-400">
-            {aptitudeEvaluationScore ?? '진행 전'}
-          </TableCell>
-          <TableCell className="w-[180px] text-zinc-400">{interviewScore ?? '진행 전'}</TableCell>
-          <TableCell className="w-[96px]">
-            {is심층면접처리기간 ? (
+            {firstTestPassYn === 'YES' && is심층면접처리기간 ? (
               <div className={cn('flex', 'gap-1.5')}>
                 <Controller
                   name="심층면접점수"
                   control={control}
-                  render={({ field }) => <TextField {...field} />}
+                  render={({ field }) => <TextField {...field} disabled={!!secondTestPassYn} />}
                 />
-                <Button variant="subtitle">저장</Button>
+                <Button
+                  variant={
+                    watch('심층면접점수') && formatted심층면접점수 !== watch('심층면접점수')
+                      ? 'default'
+                      : 'subtitle'
+                  }
+                  onClick={handleInterviewScore}
+                  disabled={!!secondTestPassYn}
+                >
+                  저장
+                </Button>
               </div>
             ) : (
-              <Badge variant="미정">미정</Badge>
+              '진행 전'
             )}
+          </TableCell>
+          <TableCell className="w-[96px]">
+            <Badge variant={secondTestResult}>{secondTestResult}</Badge>
           </TableCell>
           <TableCell className="w-[149px]">
             <Button className="ml-[33.24px]" variant="outline">

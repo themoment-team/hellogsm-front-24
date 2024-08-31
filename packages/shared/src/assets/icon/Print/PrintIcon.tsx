@@ -1,5 +1,11 @@
 const PrintIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1rem"
+    height="1rem"
+    viewBox="0 0 16 16"
+    fill="none"
+  >
     <g clipPath="url(#clip0_1483_17766)">
       <path
         d="M4 6.00004V1.33337H12V6.00004"

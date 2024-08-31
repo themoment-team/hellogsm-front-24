@@ -4,10 +4,6 @@ export const basicRegisterSchema = z.object({
   img: z.string().min(1, '이미지를 넣어주세요'),
   address: z.string().min(1, '주소를 입력해주세요'),
   detailAddress: z.string().min(1, '상세주소를 입력해주세요'),
-  phoneNumber: z
-    .string()
-    .min(1, '휴대폰 번호를 입력해주세요')
-    .max(11, { message: '전화번호를 제대로 입력해주세요.' }),
   category: z.string().min(1, '유형을 선택해주세요'),
   schoolName: z.string().min(1, '중학교를 입력해주세요'),
   schoolAddress: z.string().min(1, '중학교위치를 입력해주세요'),

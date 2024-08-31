@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { Button } from 'shared';
 import { GetMyOneseoType } from 'types';
 
@@ -12,6 +13,8 @@ interface MyInfoProps {
 }
 
 const MyPage = ({ data }: MyInfoProps) => {
+  const { push } = useRouter();
+
   const submitCode = data?.submitCode;
   const wantedScreening = data?.wantedScreening;
   const desiredMajors = data?.desiredMajors;
@@ -148,7 +151,9 @@ const MyPage = ({ data }: MyInfoProps) => {
                       </p>
                     </div>
 
-                    <Button variant="download">다운로드</Button>
+                    <Button onClick={() => push('/print')} variant="download">
+                      다운로드
+                    </Button>
                   </div>
                 ))}
               </div>

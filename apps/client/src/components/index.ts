@@ -11,3 +11,5 @@ export { default as MockCalculatePage } from './MockCalculatePage';
 export { default as SexToggle } from './SexToggle';
 export { default as LoginDialog } from './LoginDialog';
 export { default as ChannelTalk } from './ChannelTalk';
+export { default as OneseoStatus } from './OneseoStatus';
+export { default as FaqElement } from './FaqElement';

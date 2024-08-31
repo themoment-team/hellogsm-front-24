@@ -21,6 +21,44 @@ export enum ScreeningEnum {
   EXTRA_ADMISSION = "특례입학",
 }
 
+export enum GraduationEnum {
+  CANDIDATE = "졸업",
+  GRADUATE = "졸업예정",
+  GED = "검정고시",
+}
+
+export enum MajorEnum {
+  SW = "소프트웨어개발과",
+  IOT = "스마트 IoT과",
+  AI = "인공지능과",
+}
+
+export enum SexEnum {
+  MALE = "남자",
+  FEMALE = "여자",
+}
+
+export type AchievementGradeType =
+  | "achievement1_1"
+  | "achievement1_2"
+  | "achievement2_1"
+  | "achievement2_2"
+  | "achievement3_1";
+
+export const achievementGradeValues = [
+  "achievement1_1",
+  "achievement1_2",
+  "achievement2_1",
+  "achievement2_2",
+  "achievement3_1",
+] as const;
+
+export enum MajorEnum {
+  소프트웨어개발과 = "SW",
+  인공지능과 = "AI",
+  스마트IOT과 = "IOT",
+}
+
 export interface MiddleSchoolAchievementType {
   achievement1_1: number[] | null;
   achievement1_2: number[] | null;
@@ -32,8 +70,9 @@ export interface MiddleSchoolAchievementType {
   absentDays: number[];
   attendanceDays: number[];
   volunteerTime: number[];
-  liberalSystem: LiberalSystemType;
-  freeSemester: FreeSemesterType;
+  liberalSystem: LiberalSystemType | null;
+  freeSemester: FreeSemesterType | null;
+  artsPhysicalSubjects: string[];
 }
 
 export interface GEDAchievementType {
@@ -48,7 +87,7 @@ export interface DesireMajorsType {
 
 export interface PrivacyDetailType {
   name: string;
-  sex: string;
+  sex: SexType;
   birth: string;
   phoneNumber: string;
   graduationType: GraduationType;
@@ -65,23 +104,23 @@ export interface PrivacyDetailType {
 }
 
 export interface PostOneseoType {
-  guardianName: string;
-  guardianPhoneNumber: string;
-  relationshipWithGuardian: string;
-  profileImg: string;
-  address: string;
-  detailAddress: string;
-  graduationType: GraduationType;
-  schoolTeacherName: string;
-  schoolTeacherPhoneNumber: string;
-  firstDesiredMajor: MajorType;
-  secondDesiredMajor: MajorType;
-  thirdDesiredMajor: MajorType;
-  middleSchoolAchievement: MiddleSchoolAchievementType &
-    GEDAchievementType & { artsPhysicalSubjects: string[] };
-  schoolName: string;
-  schoolAddress: string;
-  screening: ScreeningType;
+  guardianName: string | null;
+  guardianPhoneNumber: string | null;
+  relationshipWithGuardian: string | null;
+  profileImg: string | null;
+  address: string | null;
+  detailAddress: string | null;
+  graduationType: GraduationType | null;
+  schoolTeacherName: string | null;
+  schoolTeacherPhoneNumber: string | null;
+  firstDesiredMajor: MajorType | null;
+  secondDesiredMajor: MajorType | null;
+  thirdDesiredMajor: MajorType | null;
+  middleSchoolAchievement: MiddleSchoolAchievementType | GEDAchievementType;
+  schoolName: string | null;
+  schoolAddress: string | null;
+  screening: ScreeningType | null;
+  step?: number;
 }
 
 export interface GetMyOneseoType {
@@ -100,18 +139,18 @@ export interface GetMyOneseoType {
 
 export interface OneseoType {
   memberId: number;
-  submitCode: string;
+  submitCode: string | null;
   realOneseoArrivedYn: YesNo;
-  name: string;
+  name: string | null;
   screening: ScreeningType;
-  schoolName: string;
+  schoolName: string | null;
   phoneNumber: string;
   guardianPhoneNumber: string;
   schoolTeacherPhoneNumber: string;
-  firstTestPassYn: YesNo;
-  aptitudeEvaluationScore: number;
-  interviewScore: number;
-  secondTestPassYn: YesNo;
+  firstTestPassYn: YesNo | null;
+  aptitudeEvaluationScore: number | null;
+  interviewScore: number | null;
+  secondTestPassYn: YesNo | null;
 }
 
 export interface OneseoListType {

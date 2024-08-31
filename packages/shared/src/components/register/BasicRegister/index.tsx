@@ -18,15 +18,24 @@ import { cn } from 'shared/lib/utils';
 import type { basicRegisterType } from 'types';
 
 interface BasicInfoType {
-  name: string | undefined;
-  birth: string | undefined;
+  name: string;
+  birth: string;
   sex: string;
+  phoneNumber: string;
   register: UseFormRegister<basicRegisterType>;
   setValue: UseFormSetValue<basicRegisterType>;
   watch: UseFormWatch<basicRegisterType>;
 }
 
-const BasicRegister = ({ name, birth, sex, register, setValue, watch }: BasicInfoType) => {
+const BasicRegister = ({
+  name,
+  birth,
+  sex,
+  phoneNumber,
+  register,
+  setValue,
+  watch,
+}: BasicInfoType) => {
   const daumPostCode = useDaumPostcodePopup();
 
   const userAddress = watch('address') ? watch('address') : '주소를 입력해 주세요';
@@ -98,14 +107,21 @@ const BasicRegister = ({ name, birth, sex, register, setValue, watch }: BasicInf
             <RadioButton
               title={'성별'}
               options={['남자', '여자']}
+              required={true}
               disabled={true}
               disabledOption={sex}
+              defaultValue={sex}
             />
 
             <div className={cn('flex', 'flex-col', 'items-start', 'gap-[0.375rem]', 'w-full')}>
               <CustomFormItem text={'주소지'} className="gap-1" required={true} fullWidth={true}>
                 <div className={cn('w-full', 'flex', 'gap-2')}>
-                  <Input placeholder={userAddress} width="full" value={watch('address')} />
+                  <Input
+                    placeholder={userAddress}
+                    width="full"
+                    {...register('address')}
+                    value={watch('address')}
+                  />
 
                   <Button onClick={handleZipCodeButtonClick}>주소 찾기</Button>
                 </div>
@@ -119,12 +135,7 @@ const BasicRegister = ({ name, birth, sex, register, setValue, watch }: BasicInf
             </div>
 
             <CustomFormItem text={'휴대폰 번호'} className="gap-1" required={true} fullWidth={true}>
-              <Input
-                placeholder="010 1234 5678"
-                width="full"
-                {...register('phoneNumber')}
-                value={watch('phoneNumber')}
-              />
+              <Input placeholder={phoneNumber} disabled width="full" />
             </CustomFormItem>
           </div>
         </div>

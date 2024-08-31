@@ -3,8 +3,8 @@ import { GradesInputMethodType } from 'types';
 import { cn } from 'shared/lib/utils';
 
 interface LiberalSystemSwitchProps {
-  liberalSystem: GradesInputMethodType;
-  setLiberalSystem: React.Dispatch<React.SetStateAction<GradesInputMethodType>>;
+  liberalSystem: GradesInputMethodType | undefined;
+  setLiberalSystem: (system: GradesInputMethodType) => void;
   className?: string;
 }
 

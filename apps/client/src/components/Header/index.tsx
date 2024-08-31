@@ -68,7 +68,7 @@ const Header = () => {
         <ActiveLink href="/" className={cn('relative')} activeClassName={cn(...activeStyle)}>
           홈
         </ActiveLink>
-        <ActiveLink href="/" className={cn('relative')} activeClassName={cn(...activeStyle)}>
+        <ActiveLink href="/guide" className={cn('relative')} activeClassName={cn(...activeStyle)}>
           원서접수
         </ActiveLink>
         <ActiveLink href="/faq" className={cn('relative')} activeClassName={cn(...activeStyle)}>
@@ -76,10 +76,12 @@ const Header = () => {
         </ActiveLink>
       </nav>
 
-      {authInfo && memberInfo ? (
+      {authInfo?.authReferrerType && memberInfo?.name ? (
         <Link href="/" className={cn(...loginLinkStyle)}>
           <I.HeaderProfileIcon /> {memberInfo.name} 님
         </Link>
+      ) : authInfo?.authReferrerType && !memberInfo?.name ? (
+        '회원가입을 진행해주세요'
       ) : (
         <LoginDialog />
       )}

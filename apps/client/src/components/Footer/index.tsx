@@ -27,7 +27,7 @@ const Footer = () => {
   return (
     <footer
       className={cn(
-        'bg-sub-navy',
+        'bg-gray-100',
         'py-15',
         'relative',
         'flex',
@@ -42,7 +42,7 @@ const Footer = () => {
           <div
             className={cn('flex', 'flex-col', 'items-end', 'gap-2', 'text-white', 'md:items-start')}
           >
-            <p className={cn('w-full', 'text-right', 'font-normal')}>
+            <p className={cn('w-full', 'text-right', 'font-normal', 'text-slate-600')}>
               ©{year} Copyright 광주소프트웨어마이스터고등학교 ALL RIGHTS RESERVED.
             </p>
             <div className={cn('flex', 'gap-6')}>
@@ -50,7 +50,7 @@ const Footer = () => {
                 <a
                   key={text}
                   href={link}
-                  className={cn('text-h5', 'font-bold')}
+                  className={cn('text-h5', 'font-bold', 'text-slate-600')}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -59,7 +59,7 @@ const Footer = () => {
               ))}
             </div>
           </div>
-          <p className={cn('text-body2', 'w-full', 'text-right', 'font-normal', 'text-white/60')}>
+          <p className={cn('text-body2', 'w-full', 'text-right', 'font-normal', 'text-slate-400')}>
             우) 62423 광주광역시 광산구 상무대로 312
             <br />
             교무실 062)949-6800(08:30~16:30) 행정실 062)949-6806(08:30~16:30)

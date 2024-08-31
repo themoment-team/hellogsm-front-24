@@ -9,9 +9,9 @@ const ChevronIcon = () => (
     <path
       d="M11 1.5L6 6.5L1 1.5"
       stroke="#4B5563"
-      stroke-width="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );

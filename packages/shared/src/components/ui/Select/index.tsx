@@ -198,7 +198,7 @@ const SelectSeparator = React.forwardRef<
 ));
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
-const Example = () => {
+const SelectExample = () => {
   return (
     <Select>
       <SelectTrigger className="w-[180px]">
@@ -214,7 +214,7 @@ const Example = () => {
 };
 
 export {
-  Example,
+  SelectExample,
   Select,
   SelectGroup,
   SelectValue,

@@ -106,7 +106,9 @@ const MainPage = ({ initialData }: MainPageProps) => {
             <ApplicantTH />
             <div className={cn('bg-zinc-200', 'w-full', 'h-[1px]')} />
             {data?.oneseos &&
-              data.oneseos.map((oneseo) => <ApplicantTR {...oneseo} key={oneseo.memberId} />)}
+              data.oneseos.map((oneseo) => (
+                <ApplicantTR {...oneseo} key={oneseo.memberId} refetch={refetch} />
+              ))}
           </div>
 
           {totalPages ? (

@@ -29,6 +29,10 @@ const config: Config = {
       },
     },
     extend: {
+      backgroundImage: {
+        slash: `url('/images/slash.svg')`,
+        backslash: `url('/images/back-slash.svg')`,
+      },
       fontSize: {
         h1: ["3rem", "4.4375rem"],
         h2: ["2.125rem", "3.125rem"],
