@@ -20,6 +20,9 @@ interface ScoreCalculateDialogProps {
   type: 'score' | 'mock';
 }
 
+const SUBJECT = '교과';
+const TOTAL = '총합';
+
 const ScoreCalculateDialog = ({
   isDialog,
   setIsDialog,
@@ -54,8 +57,8 @@ const ScoreCalculateDialog = ({
                 'flex-col',
                 'border-zinc-200',
                 'border-y-[0.0625rem]',
-                title === '교과' && ['border-l-[0.0625rem]', 'rounded-l-md'],
-                title === '총합' && ['border-r-[0.0625rem]', 'rounded-r-md'],
+                title === SUBJECT && ['border-l-[0.0625rem]', 'rounded-l-md'],
+                title === TOTAL && ['border-r-[0.0625rem]', 'rounded-r-md'],
               )}
             >
               <h1
@@ -71,8 +74,8 @@ const ScoreCalculateDialog = ({
                   'text-[0.875rem]/[1.5rem]',
                   'font-semibold',
                   'bg-zinc-50',
-                  title === '교과' && 'rounded-tl-md',
-                  title === '총합' && 'rounded-tr-md',
+                  title === SUBJECT && 'rounded-tl-md',
+                  title === TOTAL && 'rounded-tr-md',
                 )}
               >
                 {title}
@@ -85,10 +88,10 @@ const ScoreCalculateDialog = ({
                   'justify-center',
                   'items-center',
                   'text-[0.875rem]/[1.25rem]',
-                  title === '총합'
+                  title === SUBJECT
                     ? ['font-semibold', 'text-blue-600', 'rounded-tr-md']
                     : ['font-normal', 'text-slate-700'],
-                  title === '교과' && 'rounded-tl-md',
+                  title === TOTAL && 'rounded-tl-md',
                 )}
               >
                 {score}
