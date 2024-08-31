@@ -34,7 +34,7 @@ interface Props {
   data: GetMyOneseoType | undefined;
   info: MyMemberInfoType | undefined;
   param: string;
-  memberId: number;
+  memberId?: number;
 }
 
 const GraduationTypeConvertor: { [key: string]: string } = {
