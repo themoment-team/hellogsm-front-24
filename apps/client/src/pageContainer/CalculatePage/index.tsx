@@ -1,10 +1,12 @@
 'use client';
 
-import Image from 'next/image';
 import { useState } from 'react';
+
+import Image from 'next/image';
 import { Button, ScoreRegister, useStore } from 'shared';
-import { cn } from 'shared/lib/utils';
 import { GraduationType } from 'types';
+
+import { cn } from 'shared/lib/utils';
 
 const graduationArray: { text: string; value: GraduationType; img: string }[] = [
   { text: '졸업 예정', value: 'CANDIDATE', img: '/images/candidate.png' },
@@ -62,6 +64,7 @@ const CalculatePage = () => {
             <div className={cn('flex', 'gap-5', 'w-[39.4375rem]')}>
               {graduationArray.map(({ text, value, img }) => (
                 <button
+                  key={value}
                   className={cn(
                     'h-28',
                     'pt-5',
