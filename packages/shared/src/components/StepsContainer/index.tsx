@@ -80,6 +80,7 @@ const StepsContainer = ({ data, param, info }: Props) => {
 
   const [scoreWatch, setScoreWatch] = useState<ScoreFormType | null>(null);
   const [tempBody, setTempBody] = useState<PostOneseoType | null>(null);
+  const [isStep4Checkable, setIsStep4Checkable] = useState<boolean>(false);
 
   const defaultDetailData = data?.privacyDetail;
   const defaultMajors = data?.desiredMajors;
@@ -138,6 +139,7 @@ const StepsContainer = ({ data, param, info }: Props) => {
     schoolTeacherName,
     schoolTeacherPhoneNumber,
   } = watch();
+  s;
 
   const userBasicInfo = {
     name: info.name,
@@ -257,7 +259,13 @@ const StepsContainer = ({ data, param, info }: Props) => {
         ])}
       >
         <div className={cn(['w-[66.5rem]', 'flex', 'flex-col', 'bg-white', 'rounded-[1.25rem]'])}>
-          <StepBar param={param} handleSubmit={handleSubmit} watch={watch} />
+          <StepBar
+            scoreWatch={scoreWatch!}
+            param={param}
+            handleSubmit={handleSubmit}
+            watch={watch}
+            isStep4Checkable={isStep4Checkable}
+          />
           <div
             className={cn([
               'flex',
@@ -284,11 +292,24 @@ const StepsContainer = ({ data, param, info }: Props) => {
             {param === '3' && (
               <GuardianRegister register={register} setValue={setValue} watch={watch} />
             )}
-            {param === '4' && <ScoreRegister setScoreWatch={setScoreWatch} data={data} />}
+            {param === '4' && (
+              <ScoreRegister
+                type="client"
+                setScoreWatch={setScoreWatch}
+                scoreWatch={scoreWatch}
+                data={data}
+                isStep4Checkable={isStep4Checkable}
+                setIsStep4Checkable={setIsStep4Checkable}
+              />
+            )}
           </div>
         </div>
       </div>
-      <ConfirmBar temporarySave={temporarySave} id="scoreForm" />
+      <ConfirmBar
+        temporarySave={temporarySave}
+        id="scoreForm"
+        isStep4Checkable={isStep4Checkable}
+      />
     </>
   );
 };

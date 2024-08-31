@@ -27,7 +27,7 @@ const Footer = () => {
   return (
     <footer
       className={cn(
-        'bg-gray-50',
+        'bg-gray-100',
         'py-15',
         'relative',
         'flex',

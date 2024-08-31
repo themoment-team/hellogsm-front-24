@@ -14,3 +14,4 @@ export { default as RadioButton } from './RadioButton';
 export { default as CustomFormItem } from './CustomFormItem';
 export { default as ConfirmBar } from './ConfirmBar';
 export { default as EditBar } from './EditBar';
+export { default as ScoreCalculateDialog } from './ScoreCalculateDialog';

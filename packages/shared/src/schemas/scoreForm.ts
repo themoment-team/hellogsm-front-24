@@ -25,7 +25,7 @@ export const scoreFormSchema = z.object({
   absentDays: z.nullable(z.array(z.string().refine((value) => !isNaN(Number(value)) && value))),
   attendanceDays: z.nullable(z.array(z.string().refine((value) => !isNaN(Number(value)) && value))),
   volunteerTime: z.nullable(z.array(z.string().refine((value) => !isNaN(Number(value)) && value))),
-  gedTotalScore: z
-    .string()
-    .refine((value) => !isNaN(Number(value)) && value && Number(value) <= 600),
+  gedTotalScore: z.nullable(
+    z.string().refine((value) => !isNaN(Number(value)) && Number(value) <= 600),
+  ),
 });
