@@ -1,5 +1,6 @@
 'use client';
 
+import { useGetMyOneseo } from 'api';
 import { useRouter } from 'next/navigation';
 import { Button } from 'shared';
 import { GetMyOneseoType } from 'types';
@@ -9,11 +10,15 @@ import { AlertIcon, DocumentIcon, ParticleIcon, ProfileIcon } from 'client/asset
 import { cn } from 'shared/lib/utils';
 
 interface MyInfoProps {
-  data: GetMyOneseoType | undefined;
+  initialData: GetMyOneseoType | undefined;
 }
 
-const MyPage = ({ data }: MyInfoProps) => {
+const MyPage = ({ initialData }: MyInfoProps) => {
   const { push } = useRouter();
+
+  const { data } = useGetMyOneseo({
+    initialData: initialData,
+  });
 
   const submitCode = data?.submitCode;
   const wantedScreening = data?.wantedScreening;
