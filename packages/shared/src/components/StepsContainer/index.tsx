@@ -139,7 +139,6 @@ const StepsContainer = ({ data, param, info }: Props) => {
     schoolTeacherName,
     schoolTeacherPhoneNumber,
   } = watch();
-  s;
 
   const userBasicInfo = {
     name: info.name,
