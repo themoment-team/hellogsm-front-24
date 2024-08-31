@@ -191,6 +191,7 @@ const StepBar = ({ param, handleSubmit, watch, isStep4Checkable, scoreWatch }: S
 
   const handleStep2Errors = () => {
     const { category, schoolName, year, month, screening, choice, schoolAddress } = watch();
+
     if (category && schoolName && year && month && screening && choice && schoolAddress) {
       const {
         setScreening,
@@ -239,14 +240,15 @@ const StepBar = ({ param, handleSubmit, watch, isStep4Checkable, scoreWatch }: S
       relationship,
       schoolTeacherName,
       schoolTeacherPhoneNumber,
+      otherRelationship,
     } = watch();
 
     if (
       guardianName &&
       guardianPhoneNumber &&
-      relationship &&
       schoolTeacherName &&
-      schoolTeacherPhoneNumber
+      schoolTeacherPhoneNumber &&
+      (otherRelationship || relationship)
     ) {
       const {
         setGuardianName,
@@ -258,7 +260,7 @@ const StepBar = ({ param, handleSubmit, watch, isStep4Checkable, scoreWatch }: S
 
       setGuardianName(guardianName);
       setGuardianPhoneNumber(guardianPhoneNumber);
-      setRelationshipWithGuardian(relationship);
+      setRelationshipWithGuardian(relationship ? relationship : otherRelationship!);
       setSchoolTeacherName(schoolTeacherName);
       setSchoolTeacherPhoneNumber(schoolTeacherPhoneNumber);
 
@@ -266,15 +268,105 @@ const StepBar = ({ param, handleSubmit, watch, isStep4Checkable, scoreWatch }: S
     }
   };
 
-  const onSubmit: SubmitHandler<basicRegisterType> = (data) => {
+  const onSubmit: SubmitHandler<basicRegisterType> = () => {
     // eslint-disable-next-line no-console
-    const nextStep = Math.min(currentStep + 1, Steps.FOUR);
-    updateStep(nextStep);
+    const {
+      img,
+      address,
+      detailAddress,
+      category,
+      schoolName,
+      schoolAddress,
+      year,
+      month,
+      screening,
+      choice,
+      guardianName,
+      guardianPhoneNumber,
+      relationship,
+      otherRelationship,
+      schoolTeacherName,
+      schoolTeacherPhoneNumber,
+    } = watch();
+
+    if (
+      img &&
+      address &&
+      detailAddress &&
+      category &&
+      schoolName &&
+      schoolAddress &&
+      year &&
+      month &&
+      screening &&
+      choice &&
+      guardianName &&
+      guardianPhoneNumber &&
+      schoolTeacherName &&
+      schoolTeacherPhoneNumber &&
+      (otherRelationship || relationship)
+    ) {
+      const {
+        setProfileImg,
+        setAddress,
+        setDetailAddress,
+        setScreening,
+        setGuardianName,
+        setGuardianPhoneNumber,
+        setRelationshipWithGuardian,
+        setSchoolTeacherName,
+        setSchoolTeacherPhoneNumber,
+        setFirstDesiredMajor,
+        setSecondDesiredMajor,
+        setThirdDesiredMajor,
+        setGraduationType,
+        setSchoolName,
+        setSchoolAddress,
+      } = store;
+
+      const categoryConvertor: { [key: string]: GraduationType } = {
+        졸업자: 'GRADUATE',
+        졸업예정: 'CANDIDATE',
+        검정고시: 'GED',
+      };
+
+      const screeningConvertor: { [key: string]: ScreeningType } = {
+        일반전형: 'GENERAL',
+        사회통합전형: 'SPECIAL',
+        '정원 외 특별전형': 'EXTRA_ADMISSION',
+      };
+
+      const majorConvertor: { [key: string]: MajorType } = {
+        소프트웨어개발과: 'SW',
+        스마트IOT과: 'IOT',
+        인공지능과: 'AI',
+      };
+
+      setProfileImg(img);
+      setAddress(address);
+      setDetailAddress(detailAddress);
+      setScreening(screeningConvertor[screening]);
+      setFirstDesiredMajor(majorConvertor[choice[0]]);
+      setSecondDesiredMajor(majorConvertor[choice[1]]);
+      setThirdDesiredMajor(majorConvertor[choice[2]]);
+      setGraduationType(categoryConvertor[category]);
+      setSchoolName(schoolName);
+      setSchoolAddress(schoolAddress);
+      setGuardianName(guardianName);
+      setGuardianPhoneNumber(guardianPhoneNumber);
+      setRelationshipWithGuardian(relationship ? relationship : otherRelationship!);
+      setSchoolTeacherName(schoolTeacherName);
+      setSchoolTeacherPhoneNumber(schoolTeacherPhoneNumber);
+
+      updateStep(Math.min(currentStep + 1, Steps.FOUR));
+
+      const nextStep = Math.min(currentStep + 1, Steps.FOUR);
+      updateStep(nextStep);
+    }
   };
 
   const onError: SubmitErrorHandler<basicRegisterType> = (errors) => {
     // eslint-disable-next-line no-console
-    console.log(errors);
     switch (param) {
       case '1':
         handleStep1Errors();
@@ -301,8 +393,6 @@ const StepBar = ({ param, handleSubmit, watch, isStep4Checkable, scoreWatch }: S
 
   const handleCheckScoreButtonClick = () => {
     if (!scoreWatch) return;
-
-    console.log(scoreWatch.gedTotalScore);
 
     const middleSchoolAchievement: MiddleSchoolAchievementType | GEDAchievementType =
       store.graduationType === 'GED'

@@ -26,7 +26,7 @@ const RegisterStepsPage = ({ data, param, info }: RegisterStepsPageProps) => {
     };
   }, []);
 
-  return <StepsContainer data={data} info={info} param={param} />;
+  return <StepsContainer data={data} info={info} param={param} type="client" />;
 };
 
 export default RegisterStepsPage;

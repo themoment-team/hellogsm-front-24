@@ -11,42 +11,32 @@ import {
   GetMyOneseoType,
   MyMemberInfoType,
   SexEnum,
-  PostOneseoType,
   ScoreFormType,
 } from 'types';
 
 import {
   ApplyRegister,
   BasicRegister,
-  ConfirmBar,
+  EditBar,
   GuardianRegister,
   ScoreRegister,
   StepBar,
 } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 import { basicRegisterSchema } from 'shared/schemas';
-import { useStore } from 'shared/stores';
-import { dataUrltoFile } from 'shared/utils';
-
-import { usePostImage, usePostTempStorage } from 'api/hooks';
 
 interface Props {
   data: GetMyOneseoType | undefined;
-  info: MyMemberInfoType | undefined;
+  info?: MyMemberInfoType;
   param: string;
   memberId?: number;
+  type: 'client' | 'admin';
 }
 
 const GraduationTypeConvertor: { [key: string]: string } = {
   CANDIDATE: '졸업예정',
   GRADUATE: '졸업자',
   GED: '검정고시',
-};
-
-const ReverseGraduationTypeConvertor: { [key: string]: string } = {
-  졸업예정: 'CANDIDATE',
-  졸업자: 'GRADUATE',
-  검정고시: 'GED',
 };
 
 const ReverseMajorConvertor: { [key: string]: string } = {
@@ -75,12 +65,9 @@ const getScreeningTypeText = (screeningType: string) => {
   }
 };
 
-const StepsContainer = ({ data, param, info, memberId }: Props) => {
+const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
   const { push } = useRouter();
-  const store = useStore();
-
   const [scoreWatch, setScoreWatch] = useState<ScoreFormType | null>(null);
-  const [tempBody, setTempBody] = useState<PostOneseoType | null>(null);
   const [isStep4Checkable, setIsStep4Checkable] = useState<boolean>(false);
 
   const defaultDetailData = data?.privacyDetail;
@@ -148,80 +135,11 @@ const StepsContainer = ({ data, param, info, memberId }: Props) => {
     phoneNumber: info?.phoneNumber || '',
   };
 
-  const { mutate: postTempStorage } = usePostTempStorage({
-    onSuccess: () => {
-      alert('원서 제출 완료');
-    },
-    onError: () => {},
-  });
-
-  const { mutate: mutatePostImage } = usePostImage({
-    onSuccess: (data) => {
-      if (tempBody) {
-        const body: PostOneseoType = { ...tempBody, profileImg: data.url };
-
-        postTempStorage(body);
-      }
-    },
-    onError: () => {},
-  });
-
-  const temporarySave = () => {
-    const middleSchoolAchievement: { [key: string]: any } = {
-      liberalSystem: store.liberalSystem ?? null,
-      freeSemester: store.freeSemester ?? null,
-      artsPhysicalSubjects: ['체육', '음악', '미술'],
-    };
-
-    if (param === '4') {
-      if (!scoreWatch) return;
-
-      middleSchoolAchievement.achievement1_1 = scoreWatch.achievement1_1 ?? null;
-      middleSchoolAchievement.achievement1_2 = scoreWatch.achievement1_2 ?? null;
-      middleSchoolAchievement.achievement2_1 = scoreWatch.achievement2_1 ?? null;
-      middleSchoolAchievement.achievement2_2 = scoreWatch.achievement2_2 ?? null;
-      middleSchoolAchievement.achievement3_1 = scoreWatch.achievement3_1 ?? null;
-      middleSchoolAchievement.newSubjects = scoreWatch.achievement3_1 ?? null;
-      middleSchoolAchievement.artsPhysicalAchievement = scoreWatch.artsPhysicalAchievement ?? null;
-      middleSchoolAchievement.absentDays = scoreWatch.absentDays ?? null;
-      middleSchoolAchievement.attendanceDays = scoreWatch.attendanceDays ?? null;
-      middleSchoolAchievement.volunteerTime = scoreWatch.volunteerTime ?? null;
-    }
-
-    const tempOneseo = {
-      guardianName: watch('guardianName') ? watch('guardianName') : null,
-      guardianPhoneNumber: watch('guardianPhoneNumber') ? watch('guardianPhoneNumber') : null,
-      relationshipWithGuardian: watch('relationship') ? watch('relationship') : null,
-      address: watch('address') ? watch('address') : null,
-      detailAddress: watch('detailAddress') ? watch('detailAddress') : null,
-      graduationType: watch('category') ? ReverseGraduationTypeConvertor[watch('category')] : null,
-      schoolTeacherName: watch('schoolTeacherName') ? watch('schoolTeacherName') : null,
-      schoolTeacherPhoneNumber: watch('schoolTeacherPhoneNumber')
-        ? watch('schoolTeacherPhoneNumber')
-        : null,
-      firstDesiredMajor: watch('choice')[0] ? ReverseMajorConvertor[watch('choice')[0]] : null,
-      secondDesiredMajor: watch('choice')[1] ? ReverseMajorConvertor[watch('choice')[1]] : null,
-      thirdDesiredMajor: watch('choice')[2] ? ReverseMajorConvertor[watch('choice')[2]] : null,
-      middleSchoolAchievement: middleSchoolAchievement,
-      schoolName: watch('schoolName') ? watch('schoolName') : null,
-      schoolAddress: watch('schoolAddress') ? watch('schoolAddress') : null,
-      screening: getScreeningTypeText(watch('screening'))
-        ? getScreeningTypeText(watch('screening'))
-        : null,
-      step: Number(param),
-    } as PostOneseoType;
-
-    if (watch('img')) {
-      const formData = new FormData();
-      formData.append('file', dataUrltoFile(watch('img'), 'img.png'));
-
-      setTempBody(tempOneseo);
-      mutatePostImage(formData);
-
-      return;
-    }
-
-    postTempStorage(tempOneseo);
+  const adminBasicInfo = {
+    name: data?.privacyDetail.name,
+    birth: data?.privacyDetail.birth,
+    sex: data?.privacyDetail.sex,
+    phoneNumber: data?.privacyDetail.phoneNumber,
   };
 
   const isBasicInfoComplete = !img || !address || !detailAddress;
@@ -286,10 +204,12 @@ const StepsContainer = ({ data, param, info, memberId }: Props) => {
           >
             {param === '1' && (
               <BasicRegister
-                name={userBasicInfo.name}
-                birth={userBasicInfo.birth}
-                sex={userBasicInfo.sex}
-                phoneNumber={userBasicInfo.phoneNumber}
+                name={type === 'client' ? userBasicInfo.name : adminBasicInfo.name!}
+                birth={type === 'client' ? userBasicInfo.birth : adminBasicInfo.birth!}
+                sex={type === 'client' ? userBasicInfo.sex : SexEnum[adminBasicInfo.sex!]}
+                phoneNumber={
+                  type === 'client' ? userBasicInfo.phoneNumber : adminBasicInfo.phoneNumber!
+                }
                 register={register}
                 setValue={setValue}
                 watch={watch}
@@ -301,10 +221,11 @@ const StepsContainer = ({ data, param, info, memberId }: Props) => {
             )}
             {param === '4' && (
               <ScoreRegister
-                type="client"
+                type={type}
                 setScoreWatch={setScoreWatch}
                 scoreWatch={scoreWatch}
                 data={data}
+                memberId={memberId}
                 isStep4Checkable={isStep4Checkable}
                 setIsStep4Checkable={setIsStep4Checkable}
               />
@@ -312,11 +233,7 @@ const StepsContainer = ({ data, param, info, memberId }: Props) => {
           </div>
         </div>
       </div>
-      <ConfirmBar
-        temporarySave={temporarySave}
-        id="scoreForm"
-        isStep4Checkable={isStep4Checkable}
-      />
+      <EditBar id="scoreForm" />
     </>
   );
 };
