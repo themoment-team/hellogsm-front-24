@@ -107,6 +107,7 @@ const BasicRegister = ({
             <RadioButton
               title={'성별'}
               options={['남자', '여자']}
+              required={true}
               disabled={true}
               disabledOption={sex}
               defaultValue={sex}
@@ -115,7 +116,12 @@ const BasicRegister = ({
             <div className={cn('flex', 'flex-col', 'items-start', 'gap-[0.375rem]', 'w-full')}>
               <CustomFormItem text={'주소지'} className="gap-1" required={true} fullWidth={true}>
                 <div className={cn('w-full', 'flex', 'gap-2')}>
-                  <Input placeholder={userAddress} width="full" value={watch('address')} />
+                  <Input
+                    placeholder={userAddress}
+                    width="full"
+                    {...register('address')}
+                    value={watch('address')}
+                  />
 
                   <Button onClick={handleZipCodeButtonClick}>주소 찾기</Button>
                 </div>
@@ -129,7 +135,7 @@ const BasicRegister = ({
             </div>
 
             <CustomFormItem text={'휴대폰 번호'} className="gap-1" required={true} fullWidth={true}>
-              <Input width="full" {...register('phoneNumber')} disabled value={phoneNumber} />
+              <Input placeholder={phoneNumber} width="full" disabled={true} />
             </CustomFormItem>
           </div>
         </div>

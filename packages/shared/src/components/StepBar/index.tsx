@@ -12,13 +12,13 @@ import {
 } from 'react-hook-form';
 import {
   basicRegisterType,
-  GEDAchievementType,
   GraduationType,
   MajorType,
   MiddleSchoolAchievementType,
   MockScoreType,
   ScoreFormType,
   ScreeningType,
+  GEDAchievementType,
 } from 'types';
 
 import { StepCheckIcon, ProgressBarIcon } from 'shared/assets';
@@ -177,8 +177,8 @@ const StepBar = ({ param, handleSubmit, watch, isStep4Checkable, scoreWatch }: S
   };
 
   const handleStep1Errors = () => {
-    const { img, address, detailAddress, phoneNumber } = watch();
-    if (img && address && detailAddress && phoneNumber) {
+    const { img, address, detailAddress } = watch();
+    if (img && address && detailAddress) {
       const { setProfileImg, setAddress, setDetailAddress } = store;
 
       setProfileImg(img);

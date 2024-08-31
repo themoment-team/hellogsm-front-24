@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import {
   basicRegisterType,
@@ -74,6 +75,7 @@ const getScreeningTypeText = (screeningType: string) => {
 };
 
 const StepsContainer = ({ data, param, info }: Props) => {
+  const { push } = useRouter();
   const store = useStore();
 
   const [scoreWatch, setScoreWatch] = useState<ScoreFormType | null>(null);
@@ -89,7 +91,7 @@ const StepsContainer = ({ data, param, info }: Props) => {
 
   const sex = SexEnum[info.sex];
 
-  const choice = [
+  const choices = [
     defaultMajors?.firstDesiredMajor ? ReverseMajorConvertor[defaultMajors.firstDesiredMajor] : '',
     defaultMajors?.secondDesiredMajor
       ? ReverseMajorConvertor[defaultMajors.secondDesiredMajor]
@@ -97,20 +99,12 @@ const StepsContainer = ({ data, param, info }: Props) => {
     defaultMajors?.thirdDesiredMajor ? ReverseMajorConvertor[defaultMajors.thirdDesiredMajor] : '',
   ];
 
-  const userBasicInfo = {
-    name: info.name,
-    birth: info.birth,
-    sex: sex,
-    phoneNumber: info.phoneNumber,
-  };
-
   const { register, handleSubmit, setValue, watch } = useForm<basicRegisterType>({
     resolver: zodResolver(basicRegisterSchema),
     defaultValues: {
       img: defaultDetailData?.profileImg || '',
       address: defaultDetailData?.address || '',
       detailAddress: defaultDetailData?.detailAddress || '',
-      phoneNumber: userBasicInfo.phoneNumber,
       category:
         defaultDetailData?.graduationType &&
         GraduationTypeConvertor[defaultDetailData.graduationType],
@@ -119,7 +113,7 @@ const StepsContainer = ({ data, param, info }: Props) => {
       year: '',
       month: '',
       screening: getScreeningTypeText(defaultScreening || ''),
-      choice: choice,
+      choice: choices,
       guardianName: defaultDetailData?.guardianName || '',
       guardianPhoneNumber: defaultDetailData?.guardianPhoneNumber || '',
       relationship: isPrimaryRelationship ? relationshipWithGuardian : '',
@@ -128,6 +122,30 @@ const StepsContainer = ({ data, param, info }: Props) => {
       schoolTeacherPhoneNumber: defaultDetailData?.schoolTeacherPhoneNumber || '',
     },
   });
+
+  const {
+    img,
+    address,
+    detailAddress,
+    category,
+    schoolName,
+    year,
+    month,
+    screening,
+    choice,
+    guardianName,
+    guardianPhoneNumber,
+    relationship,
+    schoolTeacherName,
+    schoolTeacherPhoneNumber,
+  } = watch();
+
+  const userBasicInfo = {
+    name: info.name,
+    birth: info.birth,
+    sex: sex,
+    phonNumber: info.phoneNumber,
+  };
 
   const { mutate: postTempStorage } = usePostTempStorage({
     onSuccess: () => {
@@ -205,6 +223,27 @@ const StepsContainer = ({ data, param, info }: Props) => {
     postTempStorage(tempOneseo);
   };
 
+  const isBasicInfoComplete = !img || !address || !detailAddress;
+
+  const isApplyInfoComplete = !category || !schoolName || !year || !month || !screening || !choice;
+
+  const isGuardianInfoComplete =
+    !guardianName ||
+    !guardianPhoneNumber ||
+    !relationship ||
+    !schoolTeacherName ||
+    !!schoolTeacherPhoneNumber;
+
+  useEffect(() => {
+    if (param === '1' && isBasicInfoComplete) {
+      push('/register?step=1');
+    } else if (param === '2' && isApplyInfoComplete) {
+      push('/register?step=2');
+    } else if (param === '3' && isGuardianInfoComplete) {
+      push('/register?step=3');
+    }
+  }, [isBasicInfoComplete, isApplyInfoComplete, isGuardianInfoComplete, param, push]);
+
   return (
     <>
       <div
@@ -241,8 +280,8 @@ const StepsContainer = ({ data, param, info }: Props) => {
               <BasicRegister
                 name={userBasicInfo.name}
                 birth={userBasicInfo.birth}
-                phoneNumber={userBasicInfo.phoneNumber}
                 sex={userBasicInfo.sex}
+                phoneNumber={userBasicInfo.phonNumber}
                 register={register}
                 setValue={setValue}
                 watch={watch}
