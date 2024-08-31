@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
+import { usePostMockScore } from 'api';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import {
   SubmitErrorHandler,
@@ -9,12 +10,29 @@ import {
   UseFormHandleSubmit,
   UseFormWatch,
 } from 'react-hook-form';
-import { basicRegisterType, GraduationType, MajorType, ScreeningType } from 'types';
+import {
+  basicRegisterType,
+  GraduationType,
+  MajorType,
+  MiddleSchoolAchievementType,
+  MockScoreType,
+  ScoreFormType,
+  ScreeningType,
+  GEDAchievementType,
+} from 'types';
 
 import { StepCheckIcon, ProgressBarIcon } from 'shared/assets';
-import { Button } from 'shared/components';
+import { Button, ScoreCalculateDialog } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 import { useStore } from 'shared/stores';
+
+const freeSemesterConvertor = {
+  achievement1_1: '1-1',
+  achievement1_2: '1-2',
+  achievement2_1: '2-1',
+  achievement2_2: '2-2',
+  achievement3_1: '3-1',
+} as const;
 
 export enum Steps {
   ONE = 1,
@@ -58,15 +76,92 @@ interface StepBarType {
   param?: string;
   handleSubmit: UseFormHandleSubmit<basicRegisterType>;
   watch: UseFormWatch<basicRegisterType>;
+  isStep4Checkable: boolean;
+  scoreWatch?: ScoreFormType;
 }
 
-const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
+const StepBar = ({ param, handleSubmit, watch, isStep4Checkable, scoreWatch }: StepBarType) => {
   const { push } = useRouter();
   const params = useSearchParams();
   const path = usePathname();
   const store = useStore();
-
+  const [isDialog, setIsDialog] = useState(false);
+  const [isClickable, setIsClickable] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState(Steps.ONE);
+  const [scoreCalculateDialogData, setScoreCalculateDialogData] = useState<MockScoreType | null>(
+    null,
+  );
+
+  const { mutate: postMockScore } = usePostMockScore(store.graduationType!, {
+    onSuccess: (data) => {
+      const scoreCalculateDialogData: MockScoreType = {
+        generalSubjectsScore: data.generalSubjectsScore,
+        artsPhysicalSubjectsScore: data.artsPhysicalSubjectsScore,
+        attendanceScore: data.attendanceScore,
+        volunteerScore: data.volunteerScore,
+        totalScore: data.totalScore,
+      };
+
+      setScoreCalculateDialogData(scoreCalculateDialogData);
+      setIsDialog(true);
+    },
+    onError: () => {},
+  });
+
+  useEffect(() => {
+    if (param === '1') {
+      const { img, address, detailAddress } = watch();
+      const step1IsClickable = img && address && detailAddress ? true : false;
+
+      return setIsClickable(step1IsClickable);
+    }
+
+    if (param === '2') {
+      const { category, schoolName, schoolAddress, month, year, choice, screening } = watch();
+
+      const step2IsClickable =
+        category &&
+        schoolName &&
+        schoolAddress &&
+        month &&
+        year &&
+        choice[0] &&
+        choice[1] &&
+        choice[2] &&
+        screening
+          ? true
+          : false;
+
+      return setIsClickable(step2IsClickable);
+    }
+
+    if (param === '3') {
+      const {
+        guardianName,
+        guardianPhoneNumber,
+        schoolTeacherName,
+        schoolTeacherPhoneNumber,
+        otherRelationship,
+        relationship,
+      } = watch();
+
+      const step3IsClickable =
+        guardianName &&
+        guardianPhoneNumber &&
+        schoolTeacherName &&
+        schoolTeacherPhoneNumber &&
+        (otherRelationship || relationship)
+          ? true
+          : false;
+
+      return setIsClickable(step3IsClickable);
+    }
+
+    if (param === '4') {
+      return setIsClickable(isStep4Checkable);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [param, store.liberalSystem, store.freeSemester, isStep4Checkable, watch()]);
 
   useEffect(() => {
     const stepNumber = Number(params.get('step')) || Steps.ONE;
@@ -82,9 +177,8 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
   };
 
   const handleStep1Errors = () => {
-    const { img, address, detailAddress, phoneNumber } = watch();
-
-    if (img && address && detailAddress && phoneNumber) {
+    const { img, address, detailAddress } = watch();
+    if (img && address && detailAddress) {
       const { setProfileImg, setAddress, setDetailAddress } = store;
 
       setProfileImg(img);
@@ -146,6 +240,7 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
       schoolTeacherName,
       schoolTeacherPhoneNumber,
     } = watch();
+
     if (
       guardianName &&
       guardianPhoneNumber &&
@@ -204,43 +299,107 @@ const StepBar = ({ param, handleSubmit, watch }: StepBarType) => {
     updateStep(prevStep);
   };
 
+  const handleCheckScoreButtonClick = () => {
+    if (!scoreWatch) return;
+
+    console.log(scoreWatch.gedTotalScore);
+
+    const middleSchoolAchievement: MiddleSchoolAchievementType | GEDAchievementType =
+      store.graduationType === 'GED'
+        ? {
+            gedTotalScore: scoreWatch.gedTotalScore ? Number(scoreWatch.gedTotalScore) : 0,
+          }
+        : {
+            liberalSystem: store.liberalSystem === 'freeGrade' ? '자유학년제' : '자유학기제',
+            freeSemester: store.freeSemester ? freeSemesterConvertor[store.freeSemester] : null,
+            artsPhysicalSubjects: ['체육', '음악', '미술'],
+            achievement1_1: scoreWatch.achievement1_1
+              ? scoreWatch.achievement1_1.map((score) => Number(score))
+              : null,
+            achievement1_2: scoreWatch.achievement1_2
+              ? scoreWatch.achievement1_2.map((score) => Number(score))
+              : null,
+            achievement2_1: scoreWatch.achievement2_1
+              ? scoreWatch.achievement2_1.map((score) => Number(score))
+              : null,
+            achievement2_2: scoreWatch.achievement2_2
+              ? scoreWatch.achievement2_2.map((score) => Number(score))
+              : null,
+            achievement3_1: scoreWatch.achievement3_1
+              ? scoreWatch.achievement3_1.map((score) => Number(score))
+              : null,
+            newSubjects: scoreWatch.newSubjects,
+            artsPhysicalAchievement: scoreWatch.artsPhysicalAchievement!.map((score) =>
+              Number(score),
+            ),
+            absentDays: scoreWatch.absentDays!.map((score) => Number(score)),
+            attendanceDays: scoreWatch.attendanceDays!.map((score) => Number(score)),
+            volunteerTime: scoreWatch.volunteerTime!.map((score) => Number(score)),
+          };
+
+    postMockScore(middleSchoolAchievement);
+  };
+
   return (
-    <div
-      className={cn(
-        'flex',
-        'h-[4.25rem]',
-        'px-[1.75rem]',
-        'py-[1.125rem]',
-        'justify-between',
-        'items-center',
-        'rounded-t-[1.125rem]',
-        'bg-white',
-        'border-solid',
-        'border-b',
-        'border-gray-100',
-      )}
-    >
-      <div className={cn('flex', 'items-center', 'gap-[0.5rem]')}>
-        {[Steps.ONE, Steps.TWO, Steps.THREE, Steps.FOUR].map((step, index) => (
-          <div key={step} className={cn('flex', 'items-center', 'gap-[0.5rem]')}>
-            <Step step={step} isActive={currentStep === step} isCompleted={currentStep > step} />
-            {index < Steps.FOUR - 1 && (
-              <ProgressBarIcon color={currentStep > step ? '#2563eb' : '#CBD5E1'} />
-            )}
-          </div>
-        ))}
-      </div>
-      <div className={cn('flex', 'gap-[0.5rem]')}>
-        {currentStep > Steps.ONE && (
-          <Button variant="ghost" onClick={handlePrevious}>
-            이전
-          </Button>
+    <>
+      <div
+        className={cn(
+          'flex',
+          'h-[4.25rem]',
+          'px-[1.75rem]',
+          'py-[1.125rem]',
+          'justify-between',
+          'items-center',
+          'rounded-t-[1.125rem]',
+          'bg-white',
+          'border-solid',
+          'border-b',
+          'border-gray-100',
         )}
-        <Button variant="submit" onClick={handleNext}>
-          {currentStep === Steps.FOUR ? '점수 확인하기' : '다음으로'}
-        </Button>
+      >
+        <div className={cn('flex', 'items-center', 'gap-[0.5rem]')}>
+          {[Steps.ONE, Steps.TWO, Steps.THREE, Steps.FOUR].map((step, index) => (
+            <div key={step} className={cn('flex', 'items-center', 'gap-[0.5rem]')}>
+              <Step step={step} isActive={currentStep === step} isCompleted={currentStep > step} />
+              {index < Steps.FOUR - 1 && (
+                <ProgressBarIcon color={currentStep > step ? '#2563eb' : '#CBD5E1'} />
+              )}
+            </div>
+          ))}
+        </div>
+        <div className={cn('flex', 'gap-[0.5rem]')}>
+          {currentStep > Steps.ONE && (
+            <Button variant="ghost" onClick={handlePrevious}>
+              이전
+            </Button>
+          )}
+
+          {currentStep === Steps.FOUR ? (
+            <Button
+              variant={isClickable ? 'next' : 'submit'}
+              disabled={!isClickable}
+              onClick={handleCheckScoreButtonClick}
+            >
+              점수 확인하기
+            </Button>
+          ) : (
+            <Button
+              variant={isClickable ? 'next' : 'submit'}
+              disabled={!isClickable}
+              onClick={handleNext}
+            >
+              다음으로
+            </Button>
+          )}
+        </div>
       </div>
-    </div>
+      <ScoreCalculateDialog
+        isDialog={isDialog}
+        setIsDialog={setIsDialog}
+        scoreCalculateDialogData={scoreCalculateDialogData!}
+        type="score"
+      />
+    </>
   );
 };
 

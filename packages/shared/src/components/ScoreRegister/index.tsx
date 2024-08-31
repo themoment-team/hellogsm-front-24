@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 'use client';
 
-import { Dispatch, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 // import { usePostMyOneseo, usePutOneseo } from 'api';
@@ -77,11 +77,21 @@ const formWrapper = [
 interface ScoreRegisterProps {
   data: GetMyOneseoType | undefined;
   memberId?: number;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setScoreWatch?: Dispatch<ScoreFormType>;
+  type: 'client' | 'admin';
+  scoreWatch?: ScoreFormType | null;
+  setScoreWatch?: Dispatch<SetStateAction<ScoreFormType | null>>;
+  isStep4Checkable: boolean;
+  setIsStep4Checkable?: Dispatch<SetStateAction<boolean>>;
 }
 
-const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) => {
+const ScoreRegister = ({
+  data,
+  memberId,
+  setScoreWatch,
+  type,
+  isStep4Checkable,
+  setIsStep4Checkable,
+}: ScoreRegisterProps) => {
   const store = useStore();
 
   const { push } = useRouter();
@@ -118,15 +128,38 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
       attendanceDays:
         defaultData?.attendanceDays && defaultData.attendanceDays.map((i) => String(i)),
       volunteerTime: defaultData?.volunteerTime && defaultData.volunteerTime.map((i) => String(i)),
+      gedTotalScore: defaultData?.gedTotalScore ? String(defaultData.gedTotalScore) : '',
     },
   });
 
   useEffect(() => {
-    if (setScoreWatch) {
-      console.log('setScoreWatch');
+    console.log('setWatch');
+
+    if (setScoreWatch && watch()) {
       setScoreWatch(watch());
     }
-  }, [setScoreWatch, watch]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isStep4Checkable, watch('gedTotalScore')]);
+
+  useEffect(() => {
+    if (!setIsStep4Checkable) return;
+
+    console.log('1211');
+
+    if (
+      (store.graduationType === 'CANDIDATE' || store.graduationType === 'GRADUATE') &&
+      scoreFormSchema.safeParse(watch()).success === true
+    ) {
+      setIsStep4Checkable(true);
+    } else if (store.graduationType === 'GED' && Number(watch('gedTotalScore')) > 0) {
+      setIsStep4Checkable(true);
+    } else {
+      setIsStep4Checkable(false);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watch()]);
 
   useEffect(() => {
     setFreeSemester(
@@ -152,8 +185,10 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
     onError: () => {},
   });
 
-  // const { mutate: mutatePostOneseo } = usePutOneseoByMemberId(memberId!, {
-  //   onSuccess: () => {},
+  // const { mutate: mutatePostOneseo } = usePutOneseoByMemberId(memberId ? memberId : 0, {
+  //   onSuccess: () => {
+  //     alert('수정되었습니다');
+  //   },
   //   onError: () => {},
   // });
 
@@ -168,6 +203,7 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
     const score2_1 = watch('achievement2_1');
     const score2_2 = watch('achievement2_2');
     const score3_1 = watch('achievement3_1');
+
     setValue(
       'newSubjects',
       newSubjects && newSubjects.filter((_, i) => idx - defaultSubjectLength !== i),
@@ -181,6 +217,7 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
 
   const handleFormSubmit: SubmitHandler<ScoreFormType> = (data) => {
     if (liberalSystem === 'freeSemester' && !freeSemester) return;
+    console.log(data);
 
     const {
       guardianName,
@@ -217,10 +254,7 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
       schoolAddress &&
       screening;
 
-    if (!isAllWrite) {
-      console.log(store);
-      return;
-    }
+    if (!isAllWrite) return;
 
     const isFreeSemester = liberalSystem === 'freeSemester';
 
@@ -277,6 +311,12 @@ const ScoreRegister = ({ data, memberId, setScoreWatch }: ScoreRegisterProps) =>
       screening: screening,
       middleSchoolAchievement: middleSchoolAchievement,
     };
+
+    if (type === 'admin') {
+      // mutatePostOneseo();
+
+      return;
+    }
 
     setOneseoBody(body);
 
