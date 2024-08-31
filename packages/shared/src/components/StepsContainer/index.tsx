@@ -78,6 +78,7 @@ const StepsContainer = ({ data, param, info }: Props) => {
 
   const [scoreWatch, setScoreWatch] = useState<ScoreFormType | null>(null);
   const [tempBody, setTempBody] = useState<PostOneseoType | null>(null);
+  const [isStep4Checkable, setIsStep4Checkable] = useState<boolean>(false);
 
   const defaultDetailData = data?.privacyDetail;
   const defaultMajors = data?.desiredMajors;
@@ -96,13 +97,20 @@ const StepsContainer = ({ data, param, info }: Props) => {
     defaultMajors?.thirdDesiredMajor ? ReverseMajorConvertor[defaultMajors.thirdDesiredMajor] : '',
   ];
 
+  const userBasicInfo = {
+    name: info.name,
+    birth: info.birth,
+    sex: sex,
+    phoneNumber: info.phoneNumber,
+  };
+
   const { register, handleSubmit, setValue, watch } = useForm<basicRegisterType>({
     resolver: zodResolver(basicRegisterSchema),
     defaultValues: {
       img: defaultDetailData?.profileImg || '',
       address: defaultDetailData?.address || '',
       detailAddress: defaultDetailData?.detailAddress || '',
-      phoneNumber: defaultDetailData?.phoneNumber || '',
+      phoneNumber: userBasicInfo.phoneNumber,
       category:
         defaultDetailData?.graduationType &&
         GraduationTypeConvertor[defaultDetailData.graduationType],
@@ -120,12 +128,6 @@ const StepsContainer = ({ data, param, info }: Props) => {
       schoolTeacherPhoneNumber: defaultDetailData?.schoolTeacherPhoneNumber || '',
     },
   });
-
-  const userBasicInfo = {
-    name: info.name,
-    birth: info.birth,
-    sex: sex,
-  };
 
   const { mutate: postTempStorage } = usePostTempStorage({
     onSuccess: () => {
@@ -217,7 +219,13 @@ const StepsContainer = ({ data, param, info }: Props) => {
         ])}
       >
         <div className={cn(['w-[66.5rem]', 'flex', 'flex-col', 'bg-white', 'rounded-[1.25rem]'])}>
-          <StepBar param={param} handleSubmit={handleSubmit} watch={watch} />
+          <StepBar
+            scoreWatch={scoreWatch!}
+            param={param}
+            handleSubmit={handleSubmit}
+            watch={watch}
+            isStep4Checkable={isStep4Checkable}
+          />
           <div
             className={cn([
               'flex',
@@ -233,6 +241,7 @@ const StepsContainer = ({ data, param, info }: Props) => {
               <BasicRegister
                 name={userBasicInfo.name}
                 birth={userBasicInfo.birth}
+                phoneNumber={userBasicInfo.phoneNumber}
                 sex={userBasicInfo.sex}
                 register={register}
                 setValue={setValue}
@@ -243,11 +252,24 @@ const StepsContainer = ({ data, param, info }: Props) => {
             {param === '3' && (
               <GuardianRegister register={register} setValue={setValue} watch={watch} />
             )}
-            {param === '4' && <ScoreRegister setScoreWatch={setScoreWatch} data={data} />}
+            {param === '4' && (
+              <ScoreRegister
+                type="client"
+                setScoreWatch={setScoreWatch}
+                scoreWatch={scoreWatch}
+                data={data}
+                isStep4Checkable={isStep4Checkable}
+                setIsStep4Checkable={setIsStep4Checkable}
+              />
+            )}
           </div>
         </div>
       </div>
-      <ConfirmBar temporarySave={temporarySave} id="scoreForm" />
+      <ConfirmBar
+        temporarySave={temporarySave}
+        id="scoreForm"
+        isStep4Checkable={isStep4Checkable}
+      />
     </>
   );
 };

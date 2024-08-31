@@ -1,3 +1,4 @@
+/* eslint-disable @rushstack/no-new-null */
 import {
   GradesInputMethodType,
   GraduationType,
