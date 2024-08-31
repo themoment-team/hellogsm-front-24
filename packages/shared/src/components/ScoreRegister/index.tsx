@@ -204,7 +204,7 @@ const ScoreRegister = ({
     onError: () => {},
   });
 
-  const { mutate: mutatePuttOneseo } = usePutOneseoByMemberId(memberId!, {
+  const { mutate: mutatePutOneseo } = usePutOneseoByMemberId(memberId!, {
     onSuccess: () => {
       alert('수정되었습니다');
     },
@@ -340,7 +340,7 @@ const ScoreRegister = ({
         profileImg: profileImg!,
       };
 
-      return mutatePuttOneseo(putBody);
+      return mutatePutOneseo(putBody);
     }
 
     setOneseoBody(body);
