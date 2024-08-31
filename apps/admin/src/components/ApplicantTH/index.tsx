@@ -1,3 +1,7 @@
+'use client';
+
+import { useState } from 'react';
+
 import { QuestionMark } from 'admin/assets';
 
 import { Table, TableBody, TableCell, TableRow } from 'shared/components';
@@ -5,6 +9,8 @@ import { cn } from 'shared/lib/utils';
 
 const ApplicantTH = () => {
   const defaultStyle = cn('font-semibold', 'text-zinc-500');
+
+  const [isMouseOver, setIsMouseOver] = useState<boolean>(false);
 
   return (
     <>
@@ -15,7 +21,30 @@ const ApplicantTH = () => {
             <TableCell className={cn(defaultStyle, 'w-[130px]')}>
               <div className={cn('flex', 'gap-1', 'items-center')}>
                 서류 제출 여부
-                <QuestionMark />
+                <div
+                  onMouseOver={() => setIsMouseOver(true)}
+                  onMouseLeave={() => setIsMouseOver(false)}
+                  className={cn('cursor-pointer', 'relative')}
+                >
+                  <QuestionMark />
+                  {isMouseOver && (
+                    <div
+                      className={cn(
+                        'px-3',
+                        'py-4',
+                        'rounded-lg',
+                        'bg-slate-900',
+                        'text-xs',
+                        'font-semibold',
+                        'fixed',
+                        'z-[5]',
+                        'text-white',
+                      )}
+                    >
+                      지원자가 실물 서류를 제출했다면 클릭하여 상태를 변경해주세요!
+                    </div>
+                  )}
+                </div>
               </div>
             </TableCell>
             <TableCell className={cn(defaultStyle, 'w-[154px]')}>지원자 정보</TableCell>
