@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { usePostImage, usePostTempStorage } from 'api';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import {
@@ -11,14 +12,15 @@ import {
   GetMyOneseoType,
   MyMemberInfoType,
   SexEnum,
-  PostOneseoType,
   ScoreFormType,
+  PostOneseoType,
 } from 'types';
 
 import {
   ApplyRegister,
   BasicRegister,
   ConfirmBar,
+  EditBar,
   GuardianRegister,
   ScoreRegister,
   StepBar,
@@ -28,12 +30,12 @@ import { basicRegisterSchema } from 'shared/schemas';
 import { useStore } from 'shared/stores';
 import { dataUrltoFile } from 'shared/utils';
 
-import { usePostImage, usePostTempStorage } from 'api/hooks';
-
 interface Props {
   data: GetMyOneseoType | undefined;
-  info: MyMemberInfoType;
+  info?: MyMemberInfoType;
   param: string;
+  memberId?: number;
+  type: 'client' | 'admin';
 }
 
 const GraduationTypeConvertor: { [key: string]: string } = {
@@ -42,16 +44,16 @@ const GraduationTypeConvertor: { [key: string]: string } = {
   GED: '검정고시',
 };
 
-const ReverseGraduationTypeConvertor: { [key: string]: string } = {
-  졸업예정: 'CANDIDATE',
-  졸업자: 'GRADUATE',
-  검정고시: 'GED',
-};
-
 const ReverseMajorConvertor: { [key: string]: string } = {
   SW: '소프트웨어개발과',
   AI: '인공지능과',
   IOT: '스마트IOT과',
+};
+
+const ReverseGraduationTypeConvertor: { [key: string]: string } = {
+  졸업예정: 'CANDIDATE',
+  졸업자: 'GRADUATE',
+  검정고시: 'GED',
 };
 
 const getScreeningTypeText = (screeningType: string) => {
@@ -74,11 +76,10 @@ const getScreeningTypeText = (screeningType: string) => {
   }
 };
 
-const StepsContainer = ({ data, param, info }: Props) => {
+const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
   const { push } = useRouter();
-  const store = useStore();
-
   const [scoreWatch, setScoreWatch] = useState<ScoreFormType | null>(null);
+
   const [tempBody, setTempBody] = useState<PostOneseoType | null>(null);
   const [isStep4Clickable, setIsStep4Clickable] = useState<boolean>(false);
 
@@ -88,8 +89,27 @@ const StepsContainer = ({ data, param, info }: Props) => {
 
   const relationshipWithGuardian = defaultDetailData?.relationshipWithGuardian || '';
   const isPrimaryRelationship = ['부', '모'].includes(relationshipWithGuardian);
+  const store = useStore();
 
-  const sex = SexEnum[info.sex];
+  const sex = info ? SexEnum[info.sex] : '';
+
+  const { mutate: postTempStorage } = usePostTempStorage({
+    onSuccess: () => {
+      alert('원서 제출 완료');
+    },
+    onError: () => {},
+  });
+
+  const { mutate: mutatePostImage } = usePostImage({
+    onSuccess: (data) => {
+      if (tempBody) {
+        const body: PostOneseoType = { ...tempBody, profileImg: data.url };
+
+        postTempStorage(body);
+      }
+    },
+    onError: () => {},
+  });
 
   const choices = [
     defaultMajors?.firstDesiredMajor ? ReverseMajorConvertor[defaultMajors.firstDesiredMajor] : '',
@@ -121,48 +141,6 @@ const StepsContainer = ({ data, param, info }: Props) => {
       schoolTeacherName: defaultDetailData?.schoolTeacherName || '',
       schoolTeacherPhoneNumber: defaultDetailData?.schoolTeacherPhoneNumber || '',
     },
-  });
-
-  const {
-    img,
-    address,
-    detailAddress,
-    category,
-    schoolName,
-    year,
-    month,
-    screening,
-    choice,
-    guardianName,
-    guardianPhoneNumber,
-    relationship,
-    schoolTeacherName,
-    schoolTeacherPhoneNumber,
-  } = watch();
-
-  const userBasicInfo = {
-    name: info.name,
-    birth: info.birth,
-    sex: sex,
-    phoneNumber: info.phoneNumber,
-  };
-
-  const { mutate: postTempStorage } = usePostTempStorage({
-    onSuccess: () => {
-      alert('원서 제출 완료');
-    },
-    onError: () => {},
-  });
-
-  const { mutate: mutatePostImage } = usePostImage({
-    onSuccess: (data) => {
-      if (tempBody) {
-        const body: PostOneseoType = { ...tempBody, profileImg: data.url };
-
-        postTempStorage(body);
-      }
-    },
-    onError: () => {},
   });
 
   const temporarySave = () => {
@@ -223,6 +201,37 @@ const StepsContainer = ({ data, param, info }: Props) => {
     postTempStorage(tempOneseo);
   };
 
+  const {
+    img,
+    address,
+    detailAddress,
+    category,
+    schoolName,
+    year,
+    month,
+    screening,
+    choice,
+    guardianName,
+    guardianPhoneNumber,
+    relationship,
+    schoolTeacherName,
+    schoolTeacherPhoneNumber,
+  } = watch();
+
+  const userBasicInfo = {
+    name: info?.name || '',
+    birth: info?.birth || '',
+    sex: sex,
+    phoneNumber: info?.phoneNumber || '',
+  };
+
+  const adminBasicInfo = {
+    name: data?.privacyDetail.name,
+    birth: data?.privacyDetail.birth,
+    sex: data?.privacyDetail.sex,
+    phoneNumber: data?.privacyDetail.phoneNumber,
+  };
+
   const isBasicInfoComplete = !img || !address || !detailAddress;
 
   const isApplyInfoComplete = !category || !schoolName || !year || !month || !screening || !choice;
@@ -235,14 +244,21 @@ const StepsContainer = ({ data, param, info }: Props) => {
     !!schoolTeacherPhoneNumber;
 
   useEffect(() => {
-    if (param === '1' && isBasicInfoComplete) {
-      push('/register?step=1');
-    } else if (param === '2' && isApplyInfoComplete) {
-      push('/register?step=2');
-    } else if (param === '3' && isGuardianInfoComplete) {
-      push('/register?step=3');
+    const baseRoute = memberId ? `/edit/${memberId}` : '/register';
+
+    if (param === '2' && isBasicInfoComplete) {
+      push(`${baseRoute}?step=1`);
+      return;
     }
-  }, [isBasicInfoComplete, isApplyInfoComplete, isGuardianInfoComplete, param, push]);
+    if (param === '3' && isBasicInfoComplete) {
+      push(`${baseRoute}?step=1`);
+      if (isApplyInfoComplete) {
+        push(`${baseRoute}?step=2`);
+        return;
+      }
+      return;
+    }
+  }, [isBasicInfoComplete, isApplyInfoComplete, isGuardianInfoComplete, param, push, memberId]);
 
   return (
     <>
@@ -278,10 +294,12 @@ const StepsContainer = ({ data, param, info }: Props) => {
           >
             {param === '1' && (
               <BasicRegister
-                name={userBasicInfo.name}
-                birth={userBasicInfo.birth}
-                sex={userBasicInfo.sex}
-                phoneNumber={userBasicInfo.phoneNumber}
+                name={type === 'client' ? userBasicInfo.name : adminBasicInfo.name!}
+                birth={type === 'client' ? userBasicInfo.birth : adminBasicInfo.birth!}
+                sex={type === 'client' ? userBasicInfo.sex : SexEnum[adminBasicInfo.sex!]}
+                phoneNumber={
+                  type === 'client' ? userBasicInfo.phoneNumber : adminBasicInfo.phoneNumber!
+                }
                 register={register}
                 setValue={setValue}
                 watch={watch}
@@ -293,10 +311,11 @@ const StepsContainer = ({ data, param, info }: Props) => {
             )}
             {param === '4' && (
               <ScoreRegister
-                type="client"
+                type={type}
                 setScoreWatch={setScoreWatch}
                 scoreWatch={scoreWatch}
                 data={data}
+                memberId={memberId}
                 isStep4Clickable={isStep4Clickable}
                 setIsStep4Clickable={setIsStep4Clickable}
               />
@@ -304,11 +323,16 @@ const StepsContainer = ({ data, param, info }: Props) => {
           </div>
         </div>
       </div>
-      <ConfirmBar
-        temporarySave={temporarySave}
-        id="scoreForm"
-        isStep4Clickable={isStep4Clickable}
-      />
+
+      {type === 'admin' ? (
+        <EditBar id="scoreForm" />
+      ) : (
+        <ConfirmBar
+          temporarySave={temporarySave}
+          id="scoreForm"
+          isStep4Clickable={isStep4Clickable}
+        />
+      )}
     </>
   );
 };

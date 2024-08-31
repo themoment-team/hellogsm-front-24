@@ -24,7 +24,7 @@ export const oneseoUrl = {
   postMyOneseo: () => '/oneseo/v3/oneseo/me',
   postImage: () => '/oneseo/v3/image',
   getOneseoByMemberId: (memberId: number) => `/oneseo/v3/oneseo/${memberId}`,
-  putOneseoByMemberId: (memberId: number) => `/oneseo/v3/oneseo/${memberId}}`,
+  putOneseoByMemberId: (memberId: number) => `/oneseo/v3/oneseo/${memberId}`,
   getSearchedOneseoList: (
     page: number,
     size: number,

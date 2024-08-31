@@ -1,6 +1,9 @@
-import { GetMyOneseoType } from 'types';
+import { redirect } from 'next/navigation';
+import { StepsContainer } from 'shared';
 
-import { EditStep4Page } from 'admin/pageContainer/Edit';
+import { getOneseoByMemberId } from 'admin/app/apis/oneseo/getOneseoById';
+
+const LAST_STEP = 4;
 
 interface EditProps {
   params: { memberId: string };
@@ -8,24 +11,13 @@ interface EditProps {
 }
 
 export default async function Edit({ params: { memberId }, searchParams }: EditProps) {
-  // const data = await getOneseoById(memberId);
-  const data = {} as GetMyOneseoType;
   const step = searchParams?.step;
+  const id = Number(memberId);
 
-  switch (step) {
-    case '1':
-      return <div></div>;
+  // const { data: memberInfo } = useGetMyMemberInfo();
+  if (!step || (step && Number(step) > LAST_STEP)) return redirect(`/edit/${memberId}?step=1`);
 
-    case '2':
-      return <div></div>;
+  const data = await getOneseoByMemberId(id);
 
-    case '3':
-      return <div></div>;
-
-    case '4':
-      return <EditStep4Page data={data} memberId={Number(memberId)} />;
-
-    default:
-      return <div></div>;
-  }
+  return <StepsContainer data={data} type="admin" param={step} memberId={Number(memberId)} />;
 }

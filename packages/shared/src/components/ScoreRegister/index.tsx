@@ -5,8 +5,8 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { usePostImage, usePostMyOneseo, usePutOneseoByMemberId, usePostMockScore } from 'api';
 // import { usePostMyOneseo, usePutOneseo } from 'api';
-import { usePostImage, usePostMockScore, usePostMyOneseo } from 'api';
 import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FreeSemesterType, GetMyOneseoType, MiddleSchoolAchievementType } from 'types';
@@ -153,11 +153,11 @@ const ScoreRegister = ({
       (store.graduationType === 'CANDIDATE' || store.graduationType === 'GRADUATE') &&
       scoreFormSchema.safeParse(watch()).success === true
     ) {
-      setIsStep4Clickable(true);
+      setIsStep4Clickable!(true);
     } else if (store.graduationType === 'GED' && Number(watch('gedTotalScore')) > 0) {
-      setIsStep4Clickable(true);
+      setIsStep4Clickable!(true);
     } else {
-      setIsStep4Clickable(false);
+      setIsStep4Clickable!(false);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -204,12 +204,12 @@ const ScoreRegister = ({
     onError: () => {},
   });
 
-  // const { mutate: mutatePostOneseo } = usePutOneseoByMemberId(memberId ? memberId : 0, {
-  //   onSuccess: () => {
-  //     alert('수정되었습니다');
-  //   },
-  //   onError: () => {},
-  // });
+  const { mutate: mutatePutOneseo } = usePutOneseoByMemberId(memberId!, {
+    onSuccess: () => {
+      alert('수정되었습니다');
+    },
+    onError: () => {},
+  });
 
   const handleDeleteSubjectClick = (idx: number) => {
     const filteredSubjects = subjectArray.filter((_, i) => i !== idx);
@@ -236,7 +236,6 @@ const ScoreRegister = ({
 
   const handleFormSubmit: SubmitHandler<ScoreFormType> = (data) => {
     if (liberalSystem === 'freeSemester' && !freeSemester) return;
-    console.log(data);
 
     const {
       guardianName,
@@ -336,9 +335,12 @@ const ScoreRegister = ({
     };
 
     if (type === 'admin') {
-      // mutatePostOneseo();
+      const putBody: PostOneseoType = {
+        ...body,
+        profileImg: profileImg!,
+      };
 
-      return;
+      return mutatePutOneseo(putBody);
     }
 
     setOneseoBody(body);
@@ -347,10 +349,6 @@ const ScoreRegister = ({
     formData.append('file', dataUrltoFile(profileImg!, 'img.png'));
 
     mutatePostImage(formData);
-
-    // if (type === 'client') return mutatePostMyOneseo(body);
-
-    // if (type === 'admin') return mutatePostOneseo(body);
   };
 
   const handleAddSubjectClick = (defaultSubject?: string) => {
@@ -381,16 +379,18 @@ const ScoreRegister = ({
     );
 
     if (store.graduationType === 'GED') {
-      setValue('absentDays', null);
-      setValue('achievement1_1', null);
-      setValue('achievement1_2', null);
-      setValue('achievement2_1', null);
-      setValue('achievement2_2', null);
-      setValue('achievement3_1', null);
-      setValue('artsPhysicalAchievement', null);
-      setValue('attendanceDays', null);
-      setValue('newSubjects', null);
-      setValue('volunteerTime', null);
+      setTimeout(() => {
+        setValue('absentDays', null);
+        setValue('achievement1_1', null);
+        setValue('achievement1_2', null);
+        setValue('achievement2_1', null);
+        setValue('achievement2_2', null);
+        setValue('achievement3_1', null);
+        setValue('artsPhysicalAchievement', null);
+        setValue('attendanceDays', null);
+        setValue('newSubjects', null);
+        setValue('volunteerTime', null);
+      }, 0);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
