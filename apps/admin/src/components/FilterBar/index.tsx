@@ -2,8 +2,9 @@
 
 import { useRouter } from 'next/navigation';
 
-import { SearchIcon, PrintIcon, FileIcon } from 'admin/assets';
+import { SearchIcon, FileIcon } from 'admin/assets';
 
+import { PrintIcon } from 'shared/assets';
 import {
   Input,
   Select,

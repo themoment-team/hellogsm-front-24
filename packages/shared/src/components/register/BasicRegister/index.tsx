@@ -135,7 +135,7 @@ const BasicRegister = ({
             </div>
 
             <CustomFormItem text={'휴대폰 번호'} className="gap-1" required={true} fullWidth={true}>
-              <Input placeholder={phoneNumber} width="full" disabled={true} />
+              <Input placeholder={phoneNumber} disabled width="full" />
             </CustomFormItem>
           </div>
         </div>

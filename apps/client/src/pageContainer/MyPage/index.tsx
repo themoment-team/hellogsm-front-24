@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { Button } from 'shared';
 
 import { AlertIcon, DocumentIcon, ParticleIcon, ProfileIcon } from 'client/assets';
@@ -14,6 +15,8 @@ interface MyInfoProps {
 }
 
 const MyPage = ({ name, number, admission, departments }: MyInfoProps) => {
+  const { push } = useRouter();
+
   const relatedDocuments = [
     { icon: <ParticleIcon />, text: '입학원서 다운로드' },
     { icon: <DocumentIcon />, text: '제출서류 다운로드' },
@@ -130,7 +133,9 @@ const MyPage = ({ name, number, admission, departments }: MyInfoProps) => {
                       </p>
                     </div>
 
-                    <Button variant="download">다운로드</Button>
+                    <Button onClick={() => push('/print')} variant="download">
+                      다운로드
+                    </Button>
                   </div>
                 ))}
               </div>

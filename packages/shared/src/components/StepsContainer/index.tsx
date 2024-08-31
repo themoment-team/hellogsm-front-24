@@ -144,7 +144,7 @@ const StepsContainer = ({ data, param, info }: Props) => {
     name: info.name,
     birth: info.birth,
     sex: sex,
-    phonNumber: info.phoneNumber,
+    phoneNumber: info.phoneNumber,
   };
 
   const { mutate: postTempStorage } = usePostTempStorage({
@@ -281,7 +281,7 @@ const StepsContainer = ({ data, param, info }: Props) => {
                 name={userBasicInfo.name}
                 birth={userBasicInfo.birth}
                 sex={userBasicInfo.sex}
-                phoneNumber={userBasicInfo.phonNumber}
+                phoneNumber={userBasicInfo.phoneNumber}
                 register={register}
                 setValue={setValue}
                 watch={watch}
