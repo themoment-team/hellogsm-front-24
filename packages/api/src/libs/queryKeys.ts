@@ -22,7 +22,7 @@ export const oneseoQueryKeys = {
   patchAptitudeScore: (memberId: number) => ['patch', 'aptitudeScore', memberId],
   patchInterviewScore: (memberId: number) => ['patch', 'interviewScore', memberId],
   getAdmissionTickets: () => ['tickets'],
-  getMyOneseo: () => ['ge', 'my', 'oneseo'],
+  getMyOneseo: () => ['get', 'my', 'oneseo'],
 } as const;
 
 export const memberQueryKeys = {
