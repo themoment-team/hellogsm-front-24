@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 // import { usePostMyOneseo, usePutOneseo } from 'api';
-import { usePostImage, usePostMyOneseo } from 'api';
+import { usePostImage, usePostMockScore, usePostMyOneseo } from 'api';
 import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FreeSemesterType, GetMyOneseoType, MiddleSchoolAchievementType } from 'types';
@@ -17,14 +17,16 @@ import {
   AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
+  AlertDialogTitle,
   ArtPhysicalForm,
+  EditBar,
   FormController,
   FreeGradeForm,
   FreeSemesterForm,
   Input,
   LiberalSystemSwitch,
   NonSubjectForm,
-  AlertDialogTitle,
+  ScoreCalculateDialog,
 } from 'shared/components';
 import { defaultSubjectArray } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
@@ -35,6 +37,7 @@ import { dataUrltoFile } from 'shared/utils';
 import type {
   GEDAchievementType,
   GradesInputMethodType,
+  MockScoreType,
   PostOneseoType,
   ScoreFormType,
   SemesterIdType,
@@ -77,11 +80,11 @@ const formWrapper = [
 interface ScoreRegisterProps {
   data: GetMyOneseoType | undefined;
   memberId?: number;
-  type: 'client' | 'admin';
+  type: 'client' | 'admin' | 'calculate';
   scoreWatch?: ScoreFormType | null;
   setScoreWatch?: Dispatch<SetStateAction<ScoreFormType | null>>;
-  isStep4Checkable: boolean;
-  setIsStep4Checkable?: Dispatch<SetStateAction<boolean>>;
+  isStep4Clickable?: boolean;
+  setIsStep4Clickable?: Dispatch<SetStateAction<boolean>>;
 }
 
 const ScoreRegister = ({
@@ -89,8 +92,8 @@ const ScoreRegister = ({
   memberId,
   setScoreWatch,
   type,
-  isStep4Checkable,
-  setIsStep4Checkable,
+  isStep4Clickable,
+  setIsStep4Clickable,
 }: ScoreRegisterProps) => {
   const store = useStore();
 
@@ -100,11 +103,14 @@ const ScoreRegister = ({
 
   const { setLiberalSystem, setFreeSemester, freeSemester, liberalSystem } = store;
 
-  const defaultData = data?.middleSchoolAchievement;
-
   const [oneseoBody, setOneseoBody] = useState<Omit<PostOneseoType, 'profileImg'> | null>(null);
-
   const [subjectArray, setSubjectArray] = useState<string[]>([...defaultSubjectArray]);
+  const [scoreCalculateDialogData, setScoreCalculateDialogData] = useState<MockScoreType | null>(
+    null,
+  );
+  const [isDialog, setIsDialog] = useState(false);
+
+  const defaultData = data?.middleSchoolAchievement;
   const defaultSubjectLength = defaultSubjectArray.length;
 
   const { register, handleSubmit, setValue, unregister, watch, control } = useForm<ScoreFormType>({
@@ -133,29 +139,25 @@ const ScoreRegister = ({
   });
 
   useEffect(() => {
-    console.log('setWatch');
-
     if (setScoreWatch && watch()) {
       setScoreWatch(watch());
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isStep4Checkable, watch('gedTotalScore')]);
+  }, [isStep4Clickable, watch('gedTotalScore')]);
 
   useEffect(() => {
-    if (!setIsStep4Checkable) return;
-
-    console.log('1211');
+    if (!setIsStep4Clickable) return;
 
     if (
       (store.graduationType === 'CANDIDATE' || store.graduationType === 'GRADUATE') &&
       scoreFormSchema.safeParse(watch()).success === true
     ) {
-      setIsStep4Checkable(true);
+      setIsStep4Clickable(true);
     } else if (store.graduationType === 'GED' && Number(watch('gedTotalScore')) > 0) {
-      setIsStep4Checkable(true);
+      setIsStep4Clickable(true);
     } else {
-      setIsStep4Checkable(false);
+      setIsStep4Clickable(false);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -171,6 +173,23 @@ const ScoreRegister = ({
     onSuccess: () => {
       setShowModal(true);
     },
+    onError: () => {},
+  });
+
+  const { mutate: postMockScore } = usePostMockScore(store.graduationType!, {
+    onSuccess: (data) => {
+      const scoreCalculateDialogData: MockScoreType = {
+        generalSubjectsScore: data.generalSubjectsScore,
+        artsPhysicalSubjectsScore: data.artsPhysicalSubjectsScore,
+        attendanceScore: data.attendanceScore,
+        volunteerScore: data.volunteerScore,
+        totalScore: data.totalScore,
+      };
+
+      setScoreCalculateDialogData(scoreCalculateDialogData);
+      setIsDialog(true);
+    },
+
     onError: () => {},
   });
 
@@ -254,7 +273,7 @@ const ScoreRegister = ({
       schoolAddress &&
       screening;
 
-    if (!isAllWrite) return;
+    if (type !== 'calculate' && !isAllWrite) return;
 
     const isFreeSemester = liberalSystem === 'freeSemester';
 
@@ -294,22 +313,26 @@ const ScoreRegister = ({
             artsPhysicalSubjects: ['체육', '음악', '미술'],
           };
 
+    if (type === 'calculate') {
+      return postMockScore(middleSchoolAchievement);
+    }
+
     const body: Omit<PostOneseoType, 'profileImg'> = {
-      guardianName: guardianName,
-      guardianPhoneNumber: guardianPhoneNumber,
-      relationshipWithGuardian: relationshipWithGuardian,
-      address: address,
-      detailAddress: detailAddress,
-      graduationType: graduationType,
-      schoolTeacherName: schoolTeacherName,
-      schoolTeacherPhoneNumber: schoolTeacherPhoneNumber,
-      firstDesiredMajor: firstDesiredMajor,
-      secondDesiredMajor: secondDesiredMajor,
-      thirdDesiredMajor: thirdDesiredMajor,
-      schoolName: schoolName,
-      schoolAddress: schoolAddress,
-      screening: screening,
-      middleSchoolAchievement: middleSchoolAchievement,
+      guardianName: guardianName!,
+      guardianPhoneNumber: guardianPhoneNumber!,
+      relationshipWithGuardian: relationshipWithGuardian!,
+      address: address!,
+      detailAddress: detailAddress!,
+      graduationType: graduationType!,
+      schoolTeacherName: schoolTeacherName!,
+      schoolTeacherPhoneNumber: schoolTeacherPhoneNumber!,
+      firstDesiredMajor: firstDesiredMajor!,
+      secondDesiredMajor: secondDesiredMajor!,
+      thirdDesiredMajor: thirdDesiredMajor!,
+      schoolName: schoolName!,
+      schoolAddress: schoolAddress!,
+      screening: screening!,
+      middleSchoolAchievement: middleSchoolAchievement!,
     };
 
     if (type === 'admin') {
@@ -321,7 +344,7 @@ const ScoreRegister = ({
     setOneseoBody(body);
 
     const formData = new FormData();
-    formData.append('file', dataUrltoFile(profileImg, 'img.png'));
+    formData.append('file', dataUrltoFile(profileImg!, 'img.png'));
 
     mutatePostImage(formData);
 
@@ -389,159 +412,146 @@ const ScoreRegister = ({
   }, [defaultSubjectLength, freeSemester, liberalSystem, setValue, subjectArray]);
 
   return (
-    <div className={cn(['w-[66.5rem]', 'flex', 'flex-col'])}>
-      {/* <div className={cn(['w-full', 'px-[2rem]', 'py-[1.5rem]', 'bg-white'])}> */}
-      <h1
-        className={cn([
-          'text-[1.25rem]',
-          'font-normal',
-          'font-semibold',
-          'leading-[1.75rem]',
-          'tracking-[-0.00625rem]',
-          'text-gray-900',
-        ])}
-      >
-        성적을 입력해 주세요.
-      </h1>
-      <p
-        className={cn(
-          'text-sm',
-          'font-normal',
-          'leading-5',
-          'text-gray-600',
-          'mt-[0.125rem]',
-          'mb-[2rem]',
-        )}
-      >
-        회원가입 시 입력한 기본 정보가 노출됩니다.
-      </p>
-      {store.graduationType === 'GED' ? (
-        <form
-          id={formId}
-          onSubmit={handleSubmit(handleFormSubmit, () => {
-            console.log(watch());
-          })}
+    <>
+      <div className={cn(['w-[66.5rem]', 'px-8', 'flex', 'flex-col', type === 'admin' && 'pb-20'])}>
+        {/* <div className={cn(['w-full', 'px-[2rem]', 'py-[1.5rem]', 'bg-white'])}> */}
+        <h1
+          className={cn([
+            'text-[1.25rem]',
+            'font-normal',
+            'font-semibold',
+            'leading-[1.75rem]',
+            'tracking-[-0.00625rem]',
+            'text-gray-900',
+          ])}
         >
-          <div className={cn('w-[18.75rem]', 'flex', 'flex-col', 'gap-1')}>
-            <p className={cn('text-slate-900', 'text-[0.875rem]/[1.25rem]')}>
-              검정고시 전과목 득점 합계 <span className={cn('text-red-600')}>*</span>
-            </p>
-            <Input {...register('gedTotalScore')} placeholder="점수 입력" />
-          </div>
-        </form>
-      ) : (
-        <div
+          성적을 입력해 주세요.
+        </h1>
+        <p
           className={cn(
-            'flex',
-            'h-lvh',
-            'justify-center',
-            'bg-white',
-            'w-full',
-            'h-fit',
-            'gap-[2.5rem]',
+            'text-sm',
+            'font-normal',
+            'leading-5',
+            'text-gray-600',
+            'mt-[0.125rem]',
+            'mb-[2rem]',
           )}
         >
-          <FormController className={cn(['mt-[5.625rem]'])} />
+          회원가입 시 입력한 기본 정보가 노출됩니다.
+        </p>
+        {store.graduationType === 'GED' ? (
           <form
             id={formId}
-            onSubmit={handleSubmit(handleFormSubmit)}
-            className={cn('flex', 'flex-col', 'items-center')}
+            onSubmit={handleSubmit(handleFormSubmit, () => {
+              console.log(watch());
+            })}
           >
-            <LiberalSystemSwitch
-              liberalSystem={liberalSystem}
-              setLiberalSystem={setLiberalSystem}
-              className={cn('mb-[3rem]')}
-            />
-            <div
-              className={cn(
-                'flex',
-                'flex-col',
-                'gap-[2.5rem]',
-                'items-center',
-                liberalSystem === 'freeGrade' ? 'w-[35.4375rem]' : 'w-[43.4375rem]',
-              )}
-            >
-              <div className={cn(...formWrapper)}>
-                일반교과 성적
-                {liberalSystem === 'freeGrade' && (
-                  <FreeGradeForm
-                    register={register}
-                    setValue={setValue}
-                    subjectArray={subjectArray}
-                    control={control}
-                    handleDeleteSubjectClick={handleDeleteSubjectClick}
-                  />
-                )}
-                {liberalSystem === 'freeSemester' && (
-                  <FreeSemesterForm
-                    register={register}
-                    setValue={setValue}
-                    subjectArray={subjectArray}
-                    control={control}
-                    handleDeleteSubjectClick={handleDeleteSubjectClick}
-                    freeSemester={freeSemester}
-                    setFreeSemester={setFreeSemester}
-                  />
-                )}
-                <button
-                  type="button"
-                  onClick={() => handleAddSubjectClick()}
-                  className={cn(
-                    'text-sm',
-                    'font-semibold',
-                    'leading-6',
-                    'text-[#0F172A]',
-                    'h-[2.5rem]',
-                    'w-full',
-                    'flex',
-                    'items-center',
-                    'justify-center',
-                    'rounded-md',
-                    'border-[0.0625rem]',
-                    'border-slate-200',
-                  )}
-                >
-                  + 과목 추가하기
-                </button>
-              </div>
-              <div className={cn(...formWrapper)}>
-                예체능 교과 성적
-                <ArtPhysicalForm
-                  setValue={setValue}
-                  control={control}
-                  liberalSystem={liberalSystem}
-                />
-              </div>
-              <div className={cn(...formWrapper)}>
-                비교과 내용
-                <NonSubjectForm register={register} liberalSystem={liberalSystem} />
-              </div>
-
-              {/* <button
-          type="submit"
-          className={cn(
-            'pointer',
-            'mt-[100px]',
-            'select-none',
-            'rounded-[10px]',
-            'border',
-            'border-[#0F0921]',
-            'px-[87.5px]',
-            'py-[10px]',
-            'text-[28px]/[40.54px]',
-            'font-[700]',
-            'text-[#0F0921]',
-            'bg-white',
-          )}
-        >
-          저장
-        </button> */}
+            <div className={cn('w-[18.75rem]', 'flex', 'flex-col', 'gap-1')}>
+              <p className={cn('text-slate-900', 'text-[0.875rem]/[1.25rem]')}>
+                검정고시 전과목 득점 합계 <span className={cn('text-red-600')}>*</span>
+              </p>
+              <Input {...register('gedTotalScore')} placeholder="점수 입력" />
             </div>
           </form>
-          {/* {type === 'admin' && <EditBar id={formId} />} */}
-        </div>
-      )}
-
+        ) : (
+          <div
+            className={cn(
+              'flex',
+              'h-lvh',
+              'justify-center',
+              'bg-white',
+              'w-full',
+              'h-fit',
+              'gap-[2.5rem]',
+            )}
+          >
+            <FormController className={cn(['mt-[5.625rem]'])} />
+            <form
+              id={formId}
+              onSubmit={handleSubmit(handleFormSubmit)}
+              className={cn('flex', 'flex-col', 'items-center')}
+            >
+              <LiberalSystemSwitch
+                liberalSystem={liberalSystem}
+                setLiberalSystem={setLiberalSystem}
+                className={cn('mb-[3rem]')}
+              />
+              <div
+                className={cn(
+                  'flex',
+                  'flex-col',
+                  'gap-[2.5rem]',
+                  'items-center',
+                  liberalSystem === 'freeGrade' ? 'w-[35.4375rem]' : 'w-[43.4375rem]',
+                )}
+              >
+                <div className={cn(...formWrapper)}>
+                  일반교과 성적
+                  {liberalSystem === 'freeGrade' && (
+                    <FreeGradeForm
+                      register={register}
+                      setValue={setValue}
+                      subjectArray={subjectArray}
+                      control={control}
+                      handleDeleteSubjectClick={handleDeleteSubjectClick}
+                    />
+                  )}
+                  {liberalSystem === 'freeSemester' && (
+                    <FreeSemesterForm
+                      register={register}
+                      setValue={setValue}
+                      subjectArray={subjectArray}
+                      control={control}
+                      handleDeleteSubjectClick={handleDeleteSubjectClick}
+                      freeSemester={freeSemester}
+                      setFreeSemester={setFreeSemester}
+                    />
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => handleAddSubjectClick()}
+                    className={cn(
+                      'text-sm',
+                      'font-semibold',
+                      'leading-6',
+                      'text-[#0F172A]',
+                      'h-[2.5rem]',
+                      'w-full',
+                      'flex',
+                      'items-center',
+                      'justify-center',
+                      'rounded-md',
+                      'border-[0.0625rem]',
+                      'border-slate-200',
+                    )}
+                  >
+                    + 과목 추가하기
+                  </button>
+                </div>
+                <div className={cn(...formWrapper)}>
+                  예체능 교과 성적
+                  <ArtPhysicalForm
+                    setValue={setValue}
+                    control={control}
+                    liberalSystem={liberalSystem}
+                  />
+                </div>
+                <div className={cn(...formWrapper)}>
+                  비교과 내용
+                  <NonSubjectForm register={register} liberalSystem={liberalSystem} />
+                </div>
+              </div>
+            </form>
+          </div>
+        )}
+      </div>
+      {type === 'admin' && <EditBar id={formId} />}
+      <ScoreCalculateDialog
+        isDialog={isDialog}
+        setIsDialog={setIsDialog}
+        scoreCalculateDialogData={scoreCalculateDialogData}
+        type="mock"
+      />
       <AlertDialog open={showModal}>
         <AlertDialogContent className="w-[400px]">
           <AlertDialogHeader>
@@ -566,7 +576,7 @@ const ScoreRegister = ({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+    </>
   );
 };
 
