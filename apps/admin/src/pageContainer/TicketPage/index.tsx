@@ -59,12 +59,7 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
                 <td rowSpan={6} className="h-[200px] w-[150px] border border-black">
                   {ticket.profileImg && (
                     <img
-                      src={
-                        // TODO 제거. 현재 프로필 이미지가 정상적이지 않아 예시 이미지를 넣었습니다.
-                        ticket.profileImg === 'https://asd'
-                          ? 'https://cdn.hankyung.com/photo/201904/01.19372617.1.jpg'
-                          : ticket.profileImg
-                      }
+                      src={ticket.profileImg}
                       alt="증명사진 오류"
                       className="block w-full h-full"
                     />

@@ -1,7 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
 import { SearchIcon, FileIcon } from 'admin/assets';
 
 import { PrintIcon } from 'shared/assets';
@@ -39,8 +37,6 @@ const FilterBar = ({
   setScreeningTag,
   screeningTag,
 }: FilterBarProps) => {
-  const { push } = useRouter();
-
   const handleSubmittedChange = (value: string) => {
     if (value === 'YES' || value === 'NO') {
       setIsSubmitted(value);
@@ -65,7 +61,7 @@ const FilterBar = ({
   };
 
   const handlePrintButtonClick = () => {
-    push('/print');
+    window.open('/print');
   };
 
   return (

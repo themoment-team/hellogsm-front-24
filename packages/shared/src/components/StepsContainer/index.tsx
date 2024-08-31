@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { usePostImage, usePostTempStorage } from 'api';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import {
@@ -12,11 +13,13 @@ import {
   MyMemberInfoType,
   SexEnum,
   ScoreFormType,
+  PostOneseoType,
 } from 'types';
 
 import {
   ApplyRegister,
   BasicRegister,
+  ConfirmBar,
   EditBar,
   GuardianRegister,
   ScoreRegister,
@@ -24,6 +27,8 @@ import {
 } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 import { basicRegisterSchema } from 'shared/schemas';
+import { useStore } from 'shared/stores';
+import { dataUrltoFile } from 'shared/utils';
 
 interface Props {
   data: GetMyOneseoType | undefined;
@@ -43,6 +48,12 @@ const ReverseMajorConvertor: { [key: string]: string } = {
   SW: '소프트웨어개발과',
   AI: '인공지능과',
   IOT: '스마트IOT과',
+};
+
+const ReverseGraduationTypeConvertor: { [key: string]: string } = {
+  졸업예정: 'CANDIDATE',
+  졸업자: 'GRADUATE',
+  검정고시: 'GED',
 };
 
 const getScreeningTypeText = (screeningType: string) => {
@@ -68,7 +79,9 @@ const getScreeningTypeText = (screeningType: string) => {
 const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
   const { push } = useRouter();
   const [scoreWatch, setScoreWatch] = useState<ScoreFormType | null>(null);
-  const [isStep4Checkable, setIsStep4Checkable] = useState<boolean>(false);
+
+  const [tempBody, setTempBody] = useState<PostOneseoType | null>(null);
+  const [isStep4Clickable, setIsStep4Clickable] = useState<boolean>(false);
 
   const defaultDetailData = data?.privacyDetail;
   const defaultMajors = data?.desiredMajors;
@@ -76,8 +89,27 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
 
   const relationshipWithGuardian = defaultDetailData?.relationshipWithGuardian || '';
   const isPrimaryRelationship = ['부', '모'].includes(relationshipWithGuardian);
+  const store = useStore();
 
   const sex = info ? SexEnum[info.sex] : '';
+
+  const { mutate: postTempStorage } = usePostTempStorage({
+    onSuccess: () => {
+      alert('원서 제출 완료');
+    },
+    onError: () => {},
+  });
+
+  const { mutate: mutatePostImage } = usePostImage({
+    onSuccess: (data) => {
+      if (tempBody) {
+        const body: PostOneseoType = { ...tempBody, profileImg: data.url };
+
+        postTempStorage(body);
+      }
+    },
+    onError: () => {},
+  });
 
   const choices = [
     defaultMajors?.firstDesiredMajor ? ReverseMajorConvertor[defaultMajors.firstDesiredMajor] : '',
@@ -110,6 +142,64 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
       schoolTeacherPhoneNumber: defaultDetailData?.schoolTeacherPhoneNumber || '',
     },
   });
+
+  const temporarySave = () => {
+    const middleSchoolAchievement: { [key: string]: any } = {
+      liberalSystem: store.liberalSystem ?? null,
+      freeSemester: store.freeSemester ?? null,
+      artsPhysicalSubjects: ['체육', '음악', '미술'],
+    };
+
+    if (param === '4') {
+      if (!scoreWatch) return;
+
+      middleSchoolAchievement.achievement1_1 = scoreWatch.achievement1_1 ?? null;
+      middleSchoolAchievement.achievement1_2 = scoreWatch.achievement1_2 ?? null;
+      middleSchoolAchievement.achievement2_1 = scoreWatch.achievement2_1 ?? null;
+      middleSchoolAchievement.achievement2_2 = scoreWatch.achievement2_2 ?? null;
+      middleSchoolAchievement.achievement3_1 = scoreWatch.achievement3_1 ?? null;
+      middleSchoolAchievement.newSubjects = scoreWatch.achievement3_1 ?? null;
+      middleSchoolAchievement.artsPhysicalAchievement = scoreWatch.artsPhysicalAchievement ?? null;
+      middleSchoolAchievement.absentDays = scoreWatch.absentDays ?? null;
+      middleSchoolAchievement.attendanceDays = scoreWatch.attendanceDays ?? null;
+      middleSchoolAchievement.volunteerTime = scoreWatch.volunteerTime ?? null;
+    }
+
+    const tempOneseo = {
+      guardianName: watch('guardianName') ? watch('guardianName') : null,
+      guardianPhoneNumber: watch('guardianPhoneNumber') ? watch('guardianPhoneNumber') : null,
+      relationshipWithGuardian: watch('relationship') ? watch('relationship') : null,
+      address: watch('address') ? watch('address') : null,
+      detailAddress: watch('detailAddress') ? watch('detailAddress') : null,
+      graduationType: watch('category') ? ReverseGraduationTypeConvertor[watch('category')] : null,
+      schoolTeacherName: watch('schoolTeacherName') ? watch('schoolTeacherName') : null,
+      schoolTeacherPhoneNumber: watch('schoolTeacherPhoneNumber')
+        ? watch('schoolTeacherPhoneNumber')
+        : null,
+      firstDesiredMajor: watch('choice')[0] ? ReverseMajorConvertor[watch('choice')[0]] : null,
+      secondDesiredMajor: watch('choice')[1] ? ReverseMajorConvertor[watch('choice')[1]] : null,
+      thirdDesiredMajor: watch('choice')[2] ? ReverseMajorConvertor[watch('choice')[2]] : null,
+      middleSchoolAchievement: middleSchoolAchievement,
+      schoolName: watch('schoolName') ? watch('schoolName') : null,
+      schoolAddress: watch('schoolAddress') ? watch('schoolAddress') : null,
+      screening: getScreeningTypeText(watch('screening'))
+        ? getScreeningTypeText(watch('screening'))
+        : null,
+      step: Number(param),
+    } as PostOneseoType;
+
+    if (watch('img')) {
+      const formData = new FormData();
+      formData.append('file', dataUrltoFile(watch('img'), 'img.png'));
+
+      setTempBody(tempOneseo);
+      mutatePostImage(formData);
+
+      return;
+    }
+
+    postTempStorage(tempOneseo);
+  };
 
   const {
     img,
@@ -189,7 +279,7 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
             param={param}
             handleSubmit={handleSubmit}
             watch={watch}
-            isStep4Checkable={isStep4Checkable}
+            isStep4Clickable={isStep4Clickable}
           />
           <div
             className={cn([
@@ -226,14 +316,23 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
                 scoreWatch={scoreWatch}
                 data={data}
                 memberId={memberId}
-                isStep4Checkable={isStep4Checkable}
-                setIsStep4Checkable={setIsStep4Checkable}
+                isStep4Clickable={isStep4Clickable}
+                setIsStep4Clickable={setIsStep4Clickable}
               />
             )}
           </div>
         </div>
       </div>
-      <EditBar id="scoreForm" />
+
+      {type === 'admin' ? (
+        <EditBar id="scoreForm" />
+      ) : (
+        <ConfirmBar
+          temporarySave={temporarySave}
+          id="scoreForm"
+          isStep4Clickable={isStep4Clickable}
+        />
+      )}
     </>
   );
 };

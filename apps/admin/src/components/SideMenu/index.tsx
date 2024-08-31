@@ -100,6 +100,9 @@ const SideMenu = ({ isOpen, setIsOpen, testResultTag, setTestResultTag }: SideMe
       className={cn(
         'w-60',
         'h-dvh',
+        'border-r-gray-30',
+        'border-r',
+        'border-solid',
         'py-8',
         'px-4',
         'bg-white',
