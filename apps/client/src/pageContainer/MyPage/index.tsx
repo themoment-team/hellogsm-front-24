@@ -1,23 +1,49 @@
 'use client';
 
+import { useGetMyOneseo } from 'api';
+import { useRouter } from 'next/navigation';
 import { Button } from 'shared';
+import { GetMyOneseoType } from 'types';
 
 import { AlertIcon, DocumentIcon, ParticleIcon, ProfileIcon } from 'client/assets';
 
 import { cn } from 'shared/lib/utils';
 
 interface MyInfoProps {
-  name: string;
-  number: number;
-  admission: string;
-  departments: string[];
+  initialData: GetMyOneseoType | undefined;
 }
 
-const MyPage = ({ name, number, admission, departments }: MyInfoProps) => {
+const MyPage = ({ initialData }: MyInfoProps) => {
+  const { push } = useRouter();
+
+  const { data } = useGetMyOneseo({
+    initialData: initialData,
+  });
+
+  const submitCode = data?.submitCode;
+  const wantedScreening = data?.wantedScreening;
+  const desiredMajors = data?.desiredMajors;
+  const name = data?.privacyDetail.name;
+
+  const departments = [
+    desiredMajors?.firstDesiredMajor,
+    desiredMajors?.secondDesiredMajor,
+    desiredMajors?.thirdDesiredMajor,
+  ];
+
   const relatedDocuments = [
     { icon: <ParticleIcon />, text: '입학원서 다운로드' },
     { icon: <DocumentIcon />, text: '제출서류 다운로드' },
   ];
+
+  const screeningLabels: Record<string, string> = {
+    GENERAL: '일반전형',
+    SPECIAL: '특별전형',
+    EXTRA_VETERANS: '정원 외 특별전형',
+    EXTRA_ADMISSION: '정원 외 특별전형',
+  };
+
+  const screeningLabel = wantedScreening ? screeningLabels[wantedScreening] : '전형 없음';
 
   return (
     <div className={cn('flex', 'w-full', 'h-[100vh]', 'justify-center', 'bg-white')}>
@@ -54,7 +80,7 @@ const MyPage = ({ name, number, admission, departments }: MyInfoProps) => {
                   )}
                 >
                   <p className={cn('text-slate-500', 'text-[0.875rem]/[1.25rem]', 'font-normal')}>
-                    접수번호 {number}
+                    접수번호 {submitCode}
                   </p>
                 </div>
                 <div
@@ -69,7 +95,7 @@ const MyPage = ({ name, number, admission, departments }: MyInfoProps) => {
                   )}
                 >
                   <p className={cn('text-slate-500', 'text-[0.875rem]/[1.25rem]', 'font-normal')}>
-                    {admission}
+                    {screeningLabel}
                   </p>
                 </div>
               </div>
@@ -130,7 +156,9 @@ const MyPage = ({ name, number, admission, departments }: MyInfoProps) => {
                       </p>
                     </div>
 
-                    <Button variant="download">다운로드</Button>
+                    <Button onClick={() => push('/print')} variant="download">
+                      다운로드
+                    </Button>
                   </div>
                 ))}
               </div>

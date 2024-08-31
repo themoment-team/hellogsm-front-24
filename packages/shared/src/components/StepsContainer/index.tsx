@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import {
   basicRegisterType,
@@ -74,10 +75,12 @@ const getScreeningTypeText = (screeningType: string) => {
 };
 
 const StepsContainer = ({ data, param, info }: Props) => {
+  const { push } = useRouter();
   const store = useStore();
 
   const [scoreWatch, setScoreWatch] = useState<ScoreFormType | null>(null);
   const [tempBody, setTempBody] = useState<PostOneseoType | null>(null);
+  const [isStep4Checkable, setIsStep4Checkable] = useState<boolean>(false);
 
   const defaultDetailData = data?.privacyDetail;
   const defaultMajors = data?.desiredMajors;
@@ -88,7 +91,7 @@ const StepsContainer = ({ data, param, info }: Props) => {
 
   const sex = SexEnum[info.sex];
 
-  const choice = [
+  const choices = [
     defaultMajors?.firstDesiredMajor ? ReverseMajorConvertor[defaultMajors.firstDesiredMajor] : '',
     defaultMajors?.secondDesiredMajor
       ? ReverseMajorConvertor[defaultMajors.secondDesiredMajor]
@@ -102,7 +105,6 @@ const StepsContainer = ({ data, param, info }: Props) => {
       img: defaultDetailData?.profileImg || '',
       address: defaultDetailData?.address || '',
       detailAddress: defaultDetailData?.detailAddress || '',
-      phoneNumber: defaultDetailData?.phoneNumber || '',
       category:
         defaultDetailData?.graduationType &&
         GraduationTypeConvertor[defaultDetailData.graduationType],
@@ -111,7 +113,7 @@ const StepsContainer = ({ data, param, info }: Props) => {
       year: '',
       month: '',
       screening: getScreeningTypeText(defaultScreening || ''),
-      choice: choice,
+      choice: choices,
       guardianName: defaultDetailData?.guardianName || '',
       guardianPhoneNumber: defaultDetailData?.guardianPhoneNumber || '',
       relationship: isPrimaryRelationship ? relationshipWithGuardian : '',
@@ -121,10 +123,28 @@ const StepsContainer = ({ data, param, info }: Props) => {
     },
   });
 
+  const {
+    img,
+    address,
+    detailAddress,
+    category,
+    schoolName,
+    year,
+    month,
+    screening,
+    choice,
+    guardianName,
+    guardianPhoneNumber,
+    relationship,
+    schoolTeacherName,
+    schoolTeacherPhoneNumber,
+  } = watch();
+
   const userBasicInfo = {
     name: info.name,
     birth: info.birth,
     sex: sex,
+    phoneNumber: info.phoneNumber,
   };
 
   const { mutate: postTempStorage } = usePostTempStorage({
@@ -203,6 +223,27 @@ const StepsContainer = ({ data, param, info }: Props) => {
     postTempStorage(tempOneseo);
   };
 
+  const isBasicInfoComplete = !img || !address || !detailAddress;
+
+  const isApplyInfoComplete = !category || !schoolName || !year || !month || !screening || !choice;
+
+  const isGuardianInfoComplete =
+    !guardianName ||
+    !guardianPhoneNumber ||
+    !relationship ||
+    !schoolTeacherName ||
+    !!schoolTeacherPhoneNumber;
+
+  useEffect(() => {
+    if (param === '1' && isBasicInfoComplete) {
+      push('/register?step=1');
+    } else if (param === '2' && isApplyInfoComplete) {
+      push('/register?step=2');
+    } else if (param === '3' && isGuardianInfoComplete) {
+      push('/register?step=3');
+    }
+  }, [isBasicInfoComplete, isApplyInfoComplete, isGuardianInfoComplete, param, push]);
+
   return (
     <>
       <div
@@ -217,7 +258,13 @@ const StepsContainer = ({ data, param, info }: Props) => {
         ])}
       >
         <div className={cn(['w-[66.5rem]', 'flex', 'flex-col', 'bg-white', 'rounded-[1.25rem]'])}>
-          <StepBar param={param} handleSubmit={handleSubmit} watch={watch} />
+          <StepBar
+            scoreWatch={scoreWatch!}
+            param={param}
+            handleSubmit={handleSubmit}
+            watch={watch}
+            isStep4Checkable={isStep4Checkable}
+          />
           <div
             className={cn([
               'flex',
@@ -234,6 +281,7 @@ const StepsContainer = ({ data, param, info }: Props) => {
                 name={userBasicInfo.name}
                 birth={userBasicInfo.birth}
                 sex={userBasicInfo.sex}
+                phoneNumber={userBasicInfo.phoneNumber}
                 register={register}
                 setValue={setValue}
                 watch={watch}
@@ -243,11 +291,24 @@ const StepsContainer = ({ data, param, info }: Props) => {
             {param === '3' && (
               <GuardianRegister register={register} setValue={setValue} watch={watch} />
             )}
-            {param === '4' && <ScoreRegister setScoreWatch={setScoreWatch} data={data} />}
+            {param === '4' && (
+              <ScoreRegister
+                type="client"
+                setScoreWatch={setScoreWatch}
+                scoreWatch={scoreWatch}
+                data={data}
+                isStep4Checkable={isStep4Checkable}
+                setIsStep4Checkable={setIsStep4Checkable}
+              />
+            )}
           </div>
         </div>
       </div>
-      <ConfirmBar temporarySave={temporarySave} id="scoreForm" />
+      <ConfirmBar
+        temporarySave={temporarySave}
+        id="scoreForm"
+        isStep4Checkable={isStep4Checkable}
+      />
     </>
   );
 };

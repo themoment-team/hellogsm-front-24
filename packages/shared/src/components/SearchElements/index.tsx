@@ -48,7 +48,9 @@ const SearchElements = ({ schools, onSelectSchool }: SearchElementsProps) => {
           )}
           onClick={() => onSelectSchool(school)}
         >
-          <p className={cn('text-zinc-950', 'text-body1', 'font-normal')}>{school.SCHUL_NM}</p>
+          <p className={cn('text-zinc-950', 'text-body1', 'font-normal')}>
+            {school.SCHUL_NM} ({school.ORG_RDNMA})
+          </p>
         </div>
       ))}
     </div>

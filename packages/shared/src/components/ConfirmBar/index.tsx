@@ -18,13 +18,15 @@ import { cn } from 'shared/lib/utils';
 interface ConfirmBarProps {
   id: string;
   temporarySave: () => void;
+  isStep4Checkable: boolean;
 }
 
 interface FinalSubmitDialogProps {
   id: string;
+  isStep4Checkable: boolean;
 }
 
-const FinalSubmitDialog = ({ id }: FinalSubmitDialogProps) => {
+const FinalSubmitDialog = ({ id, isStep4Checkable }: FinalSubmitDialogProps) => {
   const searchParams = useSearchParams();
   const step = Number(searchParams.get('step'));
 
@@ -32,8 +34,8 @@ const FinalSubmitDialog = ({ id }: FinalSubmitDialogProps) => {
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          disabled={step !== 4}
-          variant="submit"
+          disabled={step !== 4 || !isStep4Checkable}
+          variant={step === 4 && isStep4Checkable ? 'next' : 'submit'}
           className={cn('flex', 'gap-2', 'items-center')}
         >
           <MouseIcon />
@@ -79,7 +81,7 @@ const FinalSubmitDialog = ({ id }: FinalSubmitDialogProps) => {
   );
 };
 
-const ConfirmBar = ({ id, temporarySave }: ConfirmBarProps) => {
+const ConfirmBar = ({ id, temporarySave, isStep4Checkable }: ConfirmBarProps) => {
   return (
     <>
       <div
@@ -108,7 +110,7 @@ const ConfirmBar = ({ id, temporarySave }: ConfirmBarProps) => {
           <Button onClick={temporarySave} variant="outline">
             임시저장
           </Button>
-          <FinalSubmitDialog id={id} />
+          <FinalSubmitDialog id={id} isStep4Checkable={isStep4Checkable} />
         </div>
       </div>
     </>

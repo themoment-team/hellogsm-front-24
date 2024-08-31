@@ -1,5 +1,7 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { BottomArrow } from 'client/assets';
 import { RECRUITMENT_PERIOD } from 'client/constants';
 
@@ -11,6 +13,8 @@ import Video from './Video';
 const flexColStyle = ['flex', 'flex-col', 'items-center'];
 
 const Section1 = () => {
+  const { push } = useRouter();
+
   const scrollToSection2 = () => {
     scrollToElement('#section2');
   };
@@ -79,6 +83,7 @@ const Section1 = () => {
           </div>
 
           <button
+            onClick={() => push('/guide')}
             className={cn(
               'text-[#F7F7F7]',
               'text-2xl',
