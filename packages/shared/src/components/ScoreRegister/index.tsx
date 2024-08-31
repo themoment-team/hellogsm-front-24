@@ -7,10 +7,17 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 // import { usePostMyOneseo, usePutOneseo } from 'api';
 import { usePostImage, usePostMockScore, usePostMyOneseo } from 'api';
+import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FreeSemesterType, GetMyOneseoType, MiddleSchoolAchievementType } from 'types';
 
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
   ArtPhysicalForm,
   EditBar,
   FormController,
@@ -89,6 +96,11 @@ const ScoreRegister = ({
   setIsStep4Clickable,
 }: ScoreRegisterProps) => {
   const store = useStore();
+
+  const { push } = useRouter();
+
+  const [showModal, setShowModal] = useState<boolean>(false);
+
   const { setLiberalSystem, setFreeSemester, freeSemester, liberalSystem } = store;
 
   const [oneseoBody, setOneseoBody] = useState<Omit<PostOneseoType, 'profileImg'> | null>(null);
@@ -159,7 +171,7 @@ const ScoreRegister = ({
 
   const { mutate: mutatePostMyOneseo } = usePostMyOneseo({
     onSuccess: () => {
-      alert('원서 제출 완료');
+      setShowModal(true);
     },
     onError: () => {},
   });
@@ -428,7 +440,12 @@ const ScoreRegister = ({
           회원가입 시 입력한 기본 정보가 노출됩니다.
         </p>
         {store.graduationType === 'GED' ? (
-          <form id={formId} onSubmit={handleSubmit(handleFormSubmit)}>
+          <form
+            id={formId}
+            onSubmit={handleSubmit(handleFormSubmit, () => {
+              console.log(watch());
+            })}
+          >
             <div className={cn('w-[18.75rem]', 'flex', 'flex-col', 'gap-1')}>
               <p className={cn('text-slate-900', 'text-[0.875rem]/[1.25rem]')}>
                 검정고시 전과목 득점 합계 <span className={cn('text-red-600')}>*</span>
@@ -439,13 +456,13 @@ const ScoreRegister = ({
         ) : (
           <div
             className={cn(
+              'flex',
               'h-lvh',
               'justify-center',
               'bg-white',
               'w-full',
               'h-fit',
               'gap-[2.5rem]',
-              'flex',
             )}
           >
             <FormController className={cn(['mt-[5.625rem]'])} />
@@ -523,39 +540,42 @@ const ScoreRegister = ({
                   비교과 내용
                   <NonSubjectForm register={register} liberalSystem={liberalSystem} />
                 </div>
-
-                {/* <button
-          type="submit"
-          className={cn(
-            'pointer',
-            'mt-[100px]',
-            'select-none',
-            'rounded-[10px]',
-            'border',
-            'border-[#0F0921]',
-            'px-[87.5px]',
-            'py-[10px]',
-            'text-[28px]/[40.54px]',
-            'font-[700]',
-            'text-[#0F0921]',
-            'bg-white',
-          )}
-        >
-          저장
-        </button> */}
               </div>
             </form>
-            {type === 'admin' && <EditBar id={formId} />}
           </div>
         )}
       </div>
-      {/* </div> */}
+      {type === 'admin' && <EditBar id={formId} />}
       <ScoreCalculateDialog
         isDialog={isDialog}
         setIsDialog={setIsDialog}
         scoreCalculateDialogData={scoreCalculateDialogData}
         type="mock"
       />
+      <AlertDialog open={showModal}>
+        <AlertDialogContent className="w-[400px]">
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              원서가 제출되었습니다!
+              <br />
+              {
+                // TODO 연락처 수정 필요
+              }
+              문제가 있다면 blabla로 연락주세요.
+            </AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction
+              onClick={() => {
+                push('/mypage');
+                setShowModal(false);
+              }}
+            >
+              확인
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };

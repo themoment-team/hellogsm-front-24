@@ -3,8 +3,7 @@
 import { ScreeningEnum } from 'types';
 import { TicketType } from 'types';
 
-import { PrintIcon } from 'admin/assets';
-
+import { PrintIcon } from 'shared/assets';
 import { Button } from 'shared/components';
 import {
   visionCampDate,

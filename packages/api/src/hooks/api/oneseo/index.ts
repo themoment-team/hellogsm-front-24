@@ -7,4 +7,5 @@ export * from './usePatchArrivedStatus';
 export * from './usePatchInterviewScore';
 export * from './useGetAdmissionTickets';
 export * from './usePutOneseoById';
+export * from './useGetMyOneseo';
 export * from './usePostImage';

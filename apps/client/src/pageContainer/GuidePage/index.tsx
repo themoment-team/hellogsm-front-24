@@ -1,9 +1,20 @@
 'use client';
 
-import Link from 'next/link';
-import { Button } from 'shared';
+import { useState } from 'react';
+
+import { useRouter } from 'next/navigation';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  Button,
+} from 'shared';
 
 import { BlueStarIcon, CloverIcon } from 'client/assets';
+import { LoginDialog } from 'client/components';
 
 import { cn } from 'shared/lib/utils';
 
@@ -145,6 +156,10 @@ const GuidePage = () => {
   const { data: authInfo } = useGetMyAuthInfo();
   const { data: memberInfo } = useGetMyMemberInfo();
 
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  const { push } = useRouter();
+
   return (
     <div className={cn('w-full', 'flex', 'flex-col', 'justify-center', 'items-center')}>
       <div
@@ -217,14 +232,42 @@ const GuidePage = () => {
           </div>
         </div>
       </div>
-      <Link href={authInfo?.authReferrerType && memberInfo?.name ? '/signup' : '/register?step=1'}>
-        <Button
-          variant="fill"
-          className={cn('sticky', 'bottom-10', 'w-[21.25rem]', 'z-10', 'mb-[10rem]')}
-        >
-          원서 작성하기
-        </Button>
-      </Link>
+
+      <Button
+        variant="fill"
+        className={cn('sticky', 'bottom-10', 'w-[21.25rem]', 'z-10', 'mb-[10rem]')}
+        onClick={() => {
+          if (!authInfo?.authReferrerType) {
+            setShowModal(true);
+            return;
+          }
+          if (!memberInfo?.name) {
+            push('/signup');
+            return;
+          }
+          push('/register?step=1');
+        }}
+      >
+        원서 작성하기
+      </Button>
+
+      <AlertDialog open={showModal}>
+        <AlertDialogContent className="w-[400px]">
+          <AlertDialogHeader>
+            <AlertDialogTitle>로그인을 먼저 진행해주세요</AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <LoginDialog />
+            <AlertDialogAction
+              onClick={() => {
+                setShowModal(false);
+              }}
+            >
+              다음에
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

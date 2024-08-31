@@ -14,17 +14,44 @@ export type SexType = "MALE" | "FEMALE";
 
 export type YesNo = "YES" | "NO";
 
-export enum SexEnum {
-  MALE = "남자",
-  FEMALE = "여자",
-}
-
 export enum ScreeningEnum {
   GENERAL = "일반전형",
   SPECIAL = "특별전형",
   EXTRA_VETERANS = "국가보훈",
   EXTRA_ADMISSION = "특례입학",
 }
+
+export enum GraduationEnum {
+  CANDIDATE = "졸업",
+  GRADUATE = "졸업예정",
+  GED = "검정고시",
+}
+
+export enum MajorEnum {
+  SW = "소프트웨어개발과",
+  IOT = "스마트 IoT과",
+  AI = "인공지능과",
+}
+
+export enum SexEnum {
+  MALE = "남자",
+  FEMALE = "여자",
+}
+
+export type AchievementGradeType =
+  | "achievement1_1"
+  | "achievement1_2"
+  | "achievement2_1"
+  | "achievement2_2"
+  | "achievement3_1";
+
+export const achievementGradeValues = [
+  "achievement1_1",
+  "achievement1_2",
+  "achievement2_1",
+  "achievement2_2",
+  "achievement3_1",
+] as const;
 
 export enum MajorEnum {
   소프트웨어개발과 = "SW",
@@ -60,7 +87,7 @@ export interface DesireMajorsType {
 
 export interface PrivacyDetailType {
   name: string;
-  sex: string;
+  sex: SexType;
   birth: string;
   phoneNumber: string;
   graduationType: GraduationType;

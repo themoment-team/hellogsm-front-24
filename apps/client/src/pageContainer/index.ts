@@ -3,5 +3,6 @@ export { default as MainPage } from './MainPage';
 export * from './RegisterPage';
 export { default as GuidePage } from './GuidePage';
 export { default as MyPage } from './MyPage';
+export { default as PrintPage } from './PrintPage';
 export { default as FaqPage } from './FaqPage';
 export { default as CalculatePage } from './CalculatePage';
