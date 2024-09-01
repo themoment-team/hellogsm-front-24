@@ -77,7 +77,7 @@ const Header = () => {
       </nav>
 
       {authInfo?.authReferrerType && memberInfo?.name ? (
-        <Link href="/" className={cn(...loginLinkStyle)}>
+        <Link href="/mypage" className={cn(...loginLinkStyle)}>
           <I.HeaderProfileIcon /> {memberInfo.name} 님
         </Link>
       ) : authInfo?.authReferrerType && !memberInfo?.name ? (
