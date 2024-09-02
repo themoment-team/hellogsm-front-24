@@ -32,7 +32,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from 'shared/components';
 import { useDebounce } from 'shared/hooks';
 import { cn } from 'shared/lib/utils';
@@ -383,7 +382,6 @@ const SignUpPage = () => {
       </AlertDialog>
 
       <AlertDialog open={showModal === 'success'}>
-        <AlertDialogTrigger>Open</AlertDialogTrigger>
         <AlertDialogContent className="w-[400px]">
           <AlertDialogHeader>
             <AlertDialogTitle>회원가입에 성공했습니다!</AlertDialogTitle>
