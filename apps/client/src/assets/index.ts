@@ -15,3 +15,6 @@ export { default as ParticleIcon } from './ParticleIcon';
 export { default as DocumentIcon } from './DocumentIcon';
 export { default as AlertIcon } from './AlertIcon';
 export { default as BottomArrow } from './Section1/BottomArrow';
+export { default as NotFoundIcon1 } from './NotFoundIcon1';
+export { default as NotFoundIcon2 } from './NotFoundIcon2';
+export { default as BackIcon } from './BackIcon';
