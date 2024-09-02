@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 import { cn } from 'shared/lib/utils';
-import { scrollToLocation } from 'shared/utils';
+import { scrollToElement } from 'shared/utils';
 
 const formArray = ['일반교과', '예체능 교과', '비교과'] as const;
 
@@ -13,13 +13,19 @@ interface FormControllerProps {
   className?: string;
 }
 
+const formTypeToElementId = {
+  일반교과: '#generalSubject',
+  '예체능 교과': '#artPhysicalSubject',
+  비교과: '#nonSubject',
+};
+
 const FormController = ({ className }: FormControllerProps) => {
   const [isSelected, setIsSelected] = useState<FormType | null>(null);
 
   const handleButtonClick = (formName: FormType) => {
     setIsSelected(formName);
 
-    scrollToLocation(formName === '일반교과' ? 300 : 700, 'smooth');
+    scrollToElement(formTypeToElementId[formName]);
   };
 
   return (

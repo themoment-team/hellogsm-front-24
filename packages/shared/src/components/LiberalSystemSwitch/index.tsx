@@ -24,6 +24,7 @@ const LiberalSystemSwitch = ({
   className,
 }: LiberalSystemSwitchProps) => (
   <div
+    id="generalSubject"
     className={cn(
       'bg-slate-100',
       'subtle-medium',
