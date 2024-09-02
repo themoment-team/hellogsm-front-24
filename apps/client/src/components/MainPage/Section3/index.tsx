@@ -118,7 +118,7 @@ const Section3 = () => {
                 최종 합격 하려면 중학교 내신 성적이
                 <br /> 최소 몇 %가 되어야 할까?&nbsp; 🤷🏻‍♀️
               </p>
-              <Link href="/" className={cn(...buttonStyle, 'self-end')}>
+              <Link href="/faq" className={cn(...buttonStyle, 'self-end')}>
                 FAQ 바로가기
               </Link>
             </div>
@@ -143,7 +143,7 @@ const Section3 = () => {
                   여러 계정으로 로그인 하는 방법을 알려드릴게요!
                 </p>
               </div>
-              <Link href="/" className={cn(...buttonStyle, 'self-end')}>
+              <Link href="/faq" className={cn(...buttonStyle, 'self-end')}>
                 바로가기
               </Link>
             </div>
@@ -170,7 +170,7 @@ const Section3 = () => {
                   계산해 보세요!
                 </p>
               </div>
-              <Link href="/" className={cn(...buttonStyle, 'self-end')}>
+              <Link href="/oneseo/calculate" className={cn(...buttonStyle, 'self-end')}>
                 바로가기
               </Link>
             </div>

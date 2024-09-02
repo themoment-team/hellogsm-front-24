@@ -1,5 +1,7 @@
+import { getMyOneseo } from 'client/app/apis';
 import { GuidePage } from 'client/pageContainer';
 
-export default function Guide() {
-  return <GuidePage />;
+export default async function Guide() {
+  const data = await getMyOneseo();
+  return <GuidePage initialData={data} />;
 }
