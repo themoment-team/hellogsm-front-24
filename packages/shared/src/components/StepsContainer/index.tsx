@@ -14,6 +14,7 @@ import {
   SexEnum,
   ScoreFormType,
   PostOneseoType,
+  GradesInputMethodType,
 } from 'types';
 
 import {
@@ -78,10 +79,9 @@ const getScreeningTypeText = (screeningType: string) => {
 
 const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
   const { push } = useRouter();
-  const [scoreWatch, setScoreWatch] = useState<ScoreFormType | null>(null);
-
   const [tempBody, setTempBody] = useState<PostOneseoType | null>(null);
   const [isStep4Clickable, setIsStep4Clickable] = useState<boolean>(false);
+  const [isButtonClick, setIsButtonClick] = useState<boolean>(false);
 
   const defaultDetailData = data?.privacyDetail;
   const defaultMajors = data?.desiredMajors;
@@ -93,7 +93,7 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
 
   const sex = info ? SexEnum[info.sex] : '';
 
-  const { mutate: postTempStorage } = usePostTempStorage({
+  const { mutate: postTempStorage } = usePostTempStorage(Number(param), {
     onSuccess: () => {
       alert('원서 제출 완료');
     },
@@ -144,26 +144,37 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
   });
 
   const temporarySave = () => {
-    const middleSchoolAchievement: { [key: string]: any } = {
-      liberalSystem: store.liberalSystem ?? null,
-      freeSemester: store.freeSemester ?? null,
-      artsPhysicalSubjects: ['체육', '음악', '미술'],
+    const reverseLiberalSystemConvertor = {
+      freeSemester: '자유학기제',
+      freeGrade: '자유학년제',
     };
 
-    if (param === '4') {
-      if (!scoreWatch) return;
+    const freeSemesterConvertor = {
+      achievement1_1: '1-1',
+      achievement1_2: '1-2',
+      achievement2_1: '2-1',
+      achievement2_2: '2-2',
+      achievement3_1: '3-1',
+    } as const;
 
-      middleSchoolAchievement.achievement1_1 = scoreWatch.achievement1_1 ?? null;
-      middleSchoolAchievement.achievement1_2 = scoreWatch.achievement1_2 ?? null;
-      middleSchoolAchievement.achievement2_1 = scoreWatch.achievement2_1 ?? null;
-      middleSchoolAchievement.achievement2_2 = scoreWatch.achievement2_2 ?? null;
-      middleSchoolAchievement.achievement3_1 = scoreWatch.achievement3_1 ?? null;
-      middleSchoolAchievement.newSubjects = scoreWatch.achievement3_1 ?? null;
-      middleSchoolAchievement.artsPhysicalAchievement = scoreWatch.artsPhysicalAchievement ?? null;
-      middleSchoolAchievement.absentDays = scoreWatch.absentDays ?? null;
-      middleSchoolAchievement.attendanceDays = scoreWatch.attendanceDays ?? null;
-      middleSchoolAchievement.volunteerTime = scoreWatch.volunteerTime ?? null;
-    }
+    const middleSchoolAchievement: { [key: string]: any } = {
+      liberalSystem: store.liberalSystem
+        ? reverseLiberalSystemConvertor[store.liberalSystem]
+        : null,
+      freeSemester: store.freeSemester ? freeSemesterConvertor[store.freeSemester] : null,
+      artsPhysicalSubjects: ['체육', '음악', '미술'],
+      achievement1_1: store.scoreForm?.achievement1_1?.map((value) => Number(value)) ?? null,
+      achievement1_2: store.scoreForm?.achievement1_2?.map((value) => Number(value)) ?? null,
+      achievement2_1: store.scoreForm?.achievement2_1?.map((value) => Number(value)) ?? null,
+      achievement2_2: store.scoreForm?.achievement2_2?.map((value) => Number(value)) ?? null,
+      achievement3_1: store.scoreForm?.achievement3_1?.map((value) => Number(value)) ?? null,
+      newSubjects: store.scoreForm?.newSubjects ?? null,
+      artsPhysicalAchievement:
+        store.scoreForm?.artsPhysicalAchievement?.map((value) => Number(value)) ?? null,
+      absentDays: store.scoreForm?.absentDays?.map((value) => Number(value)) ?? null,
+      attendanceDays: store.scoreForm?.attendanceDays?.map((value) => Number(value)) ?? null,
+      volunteerTime: store.scoreForm?.volunteerTime?.map((value) => Number(value)) ?? null,
+    };
 
     const tempOneseo = {
       guardianName: watch('guardianName') ? watch('guardianName') : null,
@@ -187,8 +198,9 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
         : null,
       step: Number(param),
     } as PostOneseoType;
+    setIsButtonClick(false);
 
-    if (watch('img')) {
+    if (watch('img') && watch('img').includes('data:image')) {
       const formData = new FormData();
       formData.append('file', dataUrltoFile(watch('img'), 'img.png'));
 
@@ -275,11 +287,11 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
       >
         <div className={cn(['w-[66.5rem]', 'flex', 'flex-col', 'bg-white', 'rounded-[1.25rem]'])}>
           <StepBar
-            scoreWatch={scoreWatch!}
             param={param}
             handleSubmit={handleSubmit}
             watch={watch}
             isStep4Clickable={isStep4Clickable}
+            setIsButtonClick={setIsButtonClick}
           />
           <div
             className={cn([
@@ -312,12 +324,11 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
             {param === '4' && (
               <ScoreRegister
                 type={type}
-                setScoreWatch={setScoreWatch}
-                scoreWatch={scoreWatch}
                 data={data}
                 memberId={memberId}
                 isStep4Clickable={isStep4Clickable}
                 setIsStep4Clickable={setIsStep4Clickable}
+                isButtonClick={isButtonClick}
               />
             )}
           </div>
@@ -331,6 +342,7 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
           temporarySave={temporarySave}
           id="scoreForm"
           isStep4Clickable={isStep4Clickable}
+          setIsButtonClick={setIsButtonClick}
         />
       )}
     </>
