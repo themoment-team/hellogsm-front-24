@@ -18,41 +18,100 @@ const buttonStyle = [
 const Section3 = () => {
   return (
     <div className={cn('w-full', 'bg-white', 'relative', 'py-[11.25rem]')}>
-      <div className={cn('container', 'mx-auto', 'flex', 'justify-between', 'px-32')}>
-        <div className={cn('text-left')}>
+      <div
+        className={cn(
+          'container',
+          'mx-auto',
+          'flex',
+          'justify-between',
+          'px-32',
+          'flex-col',
+          'gap-[6.25rem]',
+          'xl:flex-row',
+          'xl:gap-0',
+        )}
+      >
+        <div className={cn('text-left', 'flex', 'justify-between', 'xl:inline')}>
           <h1 className={cn('text-2xl', 'font-semibold', 'text-gray-900')}>
             광주소프트웨어마이스터고등학교
             <br />
             2025 신입생 모집
           </h1>
-          <p className={cn('mb-[2rem]', 'mt-[1rem]', 'text-gray-500')}>
-            접수기간: {RECRUITMENT_PERIOD.startDate} {RECRUITMENT_PERIOD.endDate}
+          <p
+            className={cn(
+              'mb-[2rem]',
+              'mt-0',
+              'xl:mt-[1rem]',
+              'hidden',
+              'md:flex',
+              'text-gray-500',
+            )}
+          >
+            접수기간: {RECRUITMENT_PERIOD.startDate}
+            <br className={cn('inline', 'xl:hidden')} />
+            {RECRUITMENT_PERIOD.endDate}
           </p>
           <Link
             href="/"
-            className={cn(...buttonStyle, 'text-sky-900', 'border-sky-900', 'px-4', 'py-[9px]')}
+            className={cn(
+              ...buttonStyle,
+              'text-sky-900',
+              'border-sky-900',
+              'px-4',
+              'py-[9px]',
+              'hidden',
+              'xl:inline',
+            )}
           >
             원서접수 바로가기
           </Link>
         </div>
-        <div className={cn('h-full', 'w-[43.5625rem]', 'text-white')}>
+        <div
+          className={cn(
+            'h-full',
+            'w-full',
+            'xl:w-[43.5625rem]',
+            'min-[600px]:w-full',
+            'text-white',
+          )}
+        >
           <div
-            className={cn('grid', 'grid-cols-6', 'grid-rows-3', 'gap-[0.75rem]', 'min-h-[39rem]')}
+            className={cn(
+              'grid',
+              'grid-cols-1',
+              'grid-rows-[repeat(3, auto)]',
+              'md:grid-cols-6',
+              'md:grid-rows-3',
+              'gap-[0.75rem]',
+              'min-h-[39rem]',
+            )}
           >
-            <div className={cn('col-span-2', 'row-span-1', 'rounded-3xl', 'bg-lime-400 p-6')}>
+            <div
+              className={cn(
+                'hidden',
+                'md:inline',
+                'col-span-2',
+                'row-span-1',
+                'rounded-3xl',
+                'bg-lime-400 p-6',
+              )}
+            >
               <div className={cn('flex', 'h-full', 'w-full', 'items-center', 'justify-center')}>
                 <I.StarIcon />
               </div>
             </div>
             <div
               className={cn(
-                'col-span-4',
+                'col-span-3',
+                'md:col-span-4',
                 'row-span-1',
                 'flex',
                 'flex-col',
                 'justify-between',
                 'rounded-3xl',
-                'bg-sky-800 p-6',
+                'p-6',
+                'md:bg-sky-800',
+                'bg-[#92DA1A]',
               )}
             >
               <p className={cn('self-start', 'text-xl', 'font-medium', 'text-white')}>
@@ -117,9 +176,10 @@ const Section3 = () => {
             </div>
             <div
               className={cn(
+                'hidden',
+                'md:flex',
                 'col-span-4',
                 'row-span-1',
-                'flex',
                 'flex-col',
                 'justify-between',
                 'rounded-3xl',
@@ -155,7 +215,17 @@ const Section3 = () => {
                 </p>
               </div>
             </div>
-            <div className={cn('col-span-2', 'row-span-1', 'rounded-3xl', 'bg-lime-400', 'p-6')}>
+            <div
+              className={cn(
+                'col-span-2',
+                'hidden',
+                'md:inline',
+                'row-span-1',
+                'rounded-3xl',
+                'bg-lime-400',
+                'p-6',
+              )}
+            >
               <div className={cn('flex', 'h-full', 'w-full', 'items-center', 'justify-center')}>
                 <I.Star2Icon />
               </div>
