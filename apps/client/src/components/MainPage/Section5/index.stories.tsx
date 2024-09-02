@@ -3,7 +3,7 @@ import Section5 from '.';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Section5> = {
-  title: 'Client/Sections/Section5',
+  title: 'Client/MainPage/Section5',
   component: Section5,
 };
 

@@ -50,12 +50,12 @@ const Section5 = () => {
         'gap-[4.25rem]',
         'bg-white',
         'items-center',
-        'px-[20rem]',
         'py-[11.25rem]',
+        'w-full',
       )}
     >
       <div className={cn('flex', 'justify-center', 'gap-[4.25rem]', 'flex-col')}>
-        <div className={cn('flex', 'flex-col', 'items-start', 'w-[25.4375rem]')}>
+        <div className={cn('flex', 'flex-col', 'items-start', 'pl-[8rem]')}>
           <div className={cn('flex', 'items-end')}>
             <span className={cn('text-gray-900', 'text-[2rem]/[2.75rem]', 'font-semibold')}>
               창의 융합력을 갖춘 <br />
@@ -67,11 +67,21 @@ const Section5 = () => {
           </span>
         </div>
 
-        <div className={cn('flex', 'items-center', 'gap-[0.8125rem]')}>
+        <div
+          className={cn(
+            'flex',
+            'flex-wrap',
+            'w-full',
+            'justify-center',
+            'items-start',
+            'gap-[0.8125rem]',
+            'px-[8rem]',
+          )}
+        >
           {Elements.map((element, index) => (
             <div
               key={index}
-              className={cn('flex', 'w-[26.125rem]', 'flex-col', 'items-start', 'gap-6')}
+              className={cn('flex', 'w-[26rem]', 'flex-col', 'items-start', 'gap-6')}
             >
               <Image
                 src={element.Img}
@@ -84,7 +94,7 @@ const Section5 = () => {
                   <p className={cn('text-gray-900', 'text-[1.5rem]/[2rem]', 'font-semibold')}>
                     {element.department}
                   </p>
-                  <div className={cn('flex', 'items-center', 'gap-2')}>
+                  <div className={cn('flex', 'w-full', 'items-center', 'gap-2')}>
                     {element.learn.map((item, idx) => (
                       <div
                         key={idx}
