@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/naming-convention */
 'use client';
 
@@ -149,15 +148,24 @@ const ScoreRegister = ({
   useEffect(() => {
     if (!setIsStep4Clickable) return;
 
+    const getAchievementValue = (key: 'achievement1_1' | 'achievement1_2') =>
+      liberalSystem === 'freeGrade' ? null : watch(key);
+
     if (
       (store.graduationType === 'CANDIDATE' || store.graduationType === 'GRADUATE') &&
-      scoreFormSchema.safeParse(watch()).success === true
+      scoreFormSchema.safeParse({
+        ...watch(),
+        ...{
+          achievement1_1: getAchievementValue('achievement1_1'),
+          achievement1_2: getAchievementValue('achievement1_2'),
+        },
+      }).success === true
     ) {
-      setIsStep4Clickable!(true);
+      return setIsStep4Clickable!(true);
     } else if (store.graduationType === 'GED' && Number(watch('gedTotalScore')) > 0) {
-      setIsStep4Clickable!(true);
+      return setIsStep4Clickable!(true);
     } else {
-      setIsStep4Clickable!(false);
+      return setIsStep4Clickable!(false);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -358,14 +366,6 @@ const ScoreRegister = ({
     setSubjectArray((prev) => [...prev, newSubject]);
   };
 
-  // const handleAddSubjectClick = (newSubjectsLength: number) => {
-  //   const newSubject = Array.from(
-  //     { length: newSubjectsLength },
-  //     (_, index) => `추가과목 ${subjectArray.length - defaultSubjectLength + index}`,
-  //   );
-  //   setSubjectArray((prev) => [...prev, ...newSubject]);
-  // };
-
   useEffect(() => {
     if (defaultData?.newSubjects?.length) {
       [...defaultData.newSubjects].forEach((subject) => handleAddSubjectClick(subject));
@@ -401,20 +401,14 @@ const ScoreRegister = ({
       setValue('newSubjects', null);
     }
 
-    if (liberalSystem === 'freeGrade') {
-      setValue('achievement1_1', null);
-      setValue('achievement1_2', null);
-    }
-
     if (freeSemester) {
       setValue(freeSemester, null);
     }
-  }, [defaultSubjectLength, freeSemester, liberalSystem, setValue, subjectArray]);
+  }, [defaultSubjectLength, freeSemester, setValue, subjectArray]);
 
   return (
     <>
       <div className={cn(['w-[66.5rem]', 'px-8', 'flex', 'flex-col', type === 'admin' && 'pb-20'])}>
-        {/* <div className={cn(['w-full', 'px-[2rem]', 'py-[1.5rem]', 'bg-white'])}> */}
         <h1
           className={cn([
             'text-[1.25rem]',
@@ -468,7 +462,14 @@ const ScoreRegister = ({
             <FormController className={cn(['mt-[5.625rem]'])} />
             <form
               id={formId}
-              onSubmit={handleSubmit(handleFormSubmit)}
+              onSubmit={() => {
+                if (liberalSystem === 'freeGrade') {
+                  setValue('achievement1_1', null);
+                  setValue('achievement1_2', null);
+                }
+
+                handleSubmit(handleFormSubmit, () => console.log('에러 뜸'))();
+              }}
               className={cn('flex', 'flex-col', 'items-center')}
             >
               <LiberalSystemSwitch
