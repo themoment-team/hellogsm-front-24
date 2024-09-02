@@ -18,9 +18,9 @@ export const getOneseoByMemberId = async (memberId: number): Promise<GetMyOneseo
     },
   );
 
-  const oneseo = await response.json();
-
   const isNotFound = response.status === 404;
+
+  const oneseo = await response.json();
 
   if (isNotFound || oneseo.data === undefined) {
     return redirect('/');

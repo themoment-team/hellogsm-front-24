@@ -20,7 +20,7 @@ export const authUrl = {
 export const oneseoUrl = {
   postMockScore: (type: GraduationType) => `/oneseo/v3/calculate-mock-score?graduationType=${type}`,
   getMyOneseo: () => '/oneseo/v3/oneseo/me',
-  postTempStorage: () => '/oneseo/v3/temp-storage',
+  postTempStorage: (step: number) => `/oneseo/v3/temp-storage?step=${step}`,
   postMyOneseo: () => '/oneseo/v3/oneseo/me',
   postImage: () => '/oneseo/v3/image',
   getOneseoByMemberId: (memberId: number) => `/oneseo/v3/oneseo/${memberId}`,

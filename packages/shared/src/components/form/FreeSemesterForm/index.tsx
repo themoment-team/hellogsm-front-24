@@ -4,12 +4,14 @@
 /* eslint-disable @rushstack/no-new-null */
 
 import { XIcon } from 'lucide-react';
+import { useEffect } from 'react';
 import { Control, Controller, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 
 import { PinIcon } from 'shared/assets';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared/components';
 import { defaultSubjectArray, scoreArray } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
+import { useStore } from 'shared/stores';
 
 import type { ScoreFormType, SemesterIdType, SemesterType } from 'types';
 
@@ -117,124 +119,140 @@ const FreeSemesterForm = ({
   setValue,
   freeSemester,
   setFreeSemester,
-}: FreeSemesterFormProps) => (
-  <div className={cn('flex', 'flex-col')}>
-    <div
-      className={cn(
-        ...rowStyle,
-        'bg-zinc-50',
-        'rounded-t-[0.375rem]',
-        'h-[3rem]',
-        'border-t-[0.0625rem]',
-        'justify-start',
-      )}
-    >
-      <h1 className={cn(...itemStyle, 'w-[6.75rem]')}>과목명</h1>
-      <div className={cn('flex')}>
-        {freeSemesterArray.map(({ id, title }) => (
-          <h1 key={id} className={cn(...itemStyle, 'w-[7.3375rem]')}>
-            {title}
-          </h1>
-        ))}
-      </div>
-    </div>
+}: FreeSemesterFormProps) => {
+  const store = useStore();
 
-    <div className={cn(...rowStyle, 'bg-white', 'h-[3rem]')}>
-      <h1 className={cn(...itemStyle, 'w-[6.75rem]')}>자유학기제</h1>
-      <div className={cn('flex')}>
-        {freeSemesterArray.map(({ id }) => (
-          <div key={id} className={cn(...itemStyle, 'w-[7.3375rem]')}>
-            {freeSemester === id ? (
-              <button
-                className={cn(...freeSemesterButtonStyle, 'border-emerald-500', 'text-emerald-500')}
-                type="button"
-              >
-                <PinIcon type="ON" />
-                on
-              </button>
-            ) : (
-              <button
-                className={cn(...freeSemesterButtonStyle)}
-                type="button"
-                onClick={() => setFreeSemester(id)}
-              >
-                <PinIcon type="OFF" />
-                off
-              </button>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-    {subjectArray.map((subject, idx) => (
+  useEffect(() => {
+    console.log(store);
+
+    return () => {
+      console.log(store);
+    };
+  }, [freeSemester]);
+
+  return (
+    <div className={cn('flex', 'flex-col')}>
       <div
-        key={subject}
         className={cn(
           ...rowStyle,
-          'bg-white',
-          'h-[3.5rem]',
-          'relative',
-          idx === subjectArray.length - 1 && 'rounded-b-[0.375rem]',
+          'bg-zinc-50',
+          'rounded-t-[0.375rem]',
+          'h-[3rem]',
+          'border-t-[0.0625rem]',
+          'justify-start',
         )}
       >
-        <div className={cn('h-full', 'w-[6.25rem]', 'flex', 'items-center', 'justify-center')}>
-          {idx < defaultSubjectLength ? (
-            <h1 className={cn(...itemStyle, 'w-full')}>{subject}</h1>
-          ) : (
-            <input
-              type="text"
-              className={cn(
-                'w-[5.25rem]',
-                'h-[2rem]',
-                'text-center',
-                'placeholder:text-slate-400',
-                'text-slate-900',
-                'border-[0.0625rem]',
-                'border-slate-300',
-                'rounded-md',
-                'text-[0.875rem]',
-                'font-normal',
-                'leading-[1.25rem]',
-              )}
-              {...register(`newSubjects.${idx - defaultSubjectLength}`)}
-            />
-          )}
+        <h1 className={cn(...itemStyle, 'w-[6.75rem]')}>과목명</h1>
+        <div className={cn('flex')}>
+          {freeSemesterArray.map(({ id, title }) => (
+            <h1 key={id} className={cn(...itemStyle, 'w-[7.3375rem]')}>
+              {title}
+            </h1>
+          ))}
         </div>
-        <div className={cn('flex', 'items-center')}>
+      </div>
+
+      <div className={cn(...rowStyle, 'bg-white', 'h-[3rem]')}>
+        <h1 className={cn(...itemStyle, 'w-[6.75rem]')}>자유학기제</h1>
+        <div className={cn('flex')}>
           {freeSemesterArray.map(({ id }) => (
-            <div key={id} className={cn(...itemStyle, 'w-[7.47917rem]')}>
+            <div key={id} className={cn(...itemStyle, 'w-[7.3375rem]')}>
               {freeSemester === id ? (
-                <div
+                <button
                   className={cn(
-                    'px-[0.25rem]',
-                    'py-[0.125rem]',
-                    'text-gray-500',
-                    'text-sm',
-                    'font-medium',
-                    'leading-5',
-                    'rounded-[0.25rem]',
-                    'bg-gray-100',
+                    ...freeSemesterButtonStyle,
+                    'border-emerald-500',
+                    'text-emerald-500',
                   )}
+                  type="button"
                 >
-                  자유학기제
-                </div>
+                  <PinIcon type="ON" />
+                  on
+                </button>
               ) : (
-                <ScoreSelect name={`${id}.${idx}`} control={control} setValue={setValue} />
+                <button
+                  className={cn(...freeSemesterButtonStyle)}
+                  type="button"
+                  onClick={() => setFreeSemester(id)}
+                >
+                  <PinIcon type="OFF" />
+                  off
+                </button>
               )}
             </div>
           ))}
         </div>
-        {idx >= defaultSubjectLength && (
-          <button
-            className={cn('absolute', 'right-[-1.97rem]')}
-            onClick={() => handleDeleteSubjectClick(idx)}
-          >
-            <XIcon className={cn('stroke-slate-300', 'w-[1rem]', 'hover:stroke-slate-500')} />
-          </button>
-        )}
       </div>
-    ))}
-  </div>
-);
+      {subjectArray.map((subject, idx) => (
+        <div
+          key={subject}
+          className={cn(
+            ...rowStyle,
+            'bg-white',
+            'h-[3.5rem]',
+            'relative',
+            idx === subjectArray.length - 1 && 'rounded-b-[0.375rem]',
+          )}
+        >
+          <div className={cn('h-full', 'w-[6.25rem]', 'flex', 'items-center', 'justify-center')}>
+            {idx < defaultSubjectLength ? (
+              <h1 className={cn(...itemStyle, 'w-full')}>{subject}</h1>
+            ) : (
+              <input
+                type="text"
+                className={cn(
+                  'w-[5.25rem]',
+                  'h-[2rem]',
+                  'text-center',
+                  'placeholder:text-slate-400',
+                  'text-slate-900',
+                  'border-[0.0625rem]',
+                  'border-slate-300',
+                  'rounded-md',
+                  'text-[0.875rem]',
+                  'font-normal',
+                  'leading-[1.25rem]',
+                )}
+                {...register(`newSubjects.${idx - defaultSubjectLength}`)}
+              />
+            )}
+          </div>
+          <div className={cn('flex', 'items-center')}>
+            {freeSemesterArray.map(({ id }) => (
+              <div key={id} className={cn(...itemStyle, 'w-[7.47917rem]')}>
+                {freeSemester === id ? (
+                  <div
+                    className={cn(
+                      'px-[0.25rem]',
+                      'py-[0.125rem]',
+                      'text-gray-500',
+                      'text-sm',
+                      'font-medium',
+                      'leading-5',
+                      'rounded-[0.25rem]',
+                      'bg-gray-100',
+                    )}
+                  >
+                    자유학기제
+                  </div>
+                ) : (
+                  <ScoreSelect name={`${id}.${idx}`} control={control} setValue={setValue} />
+                )}
+              </div>
+            ))}
+          </div>
+          {idx >= defaultSubjectLength && (
+            <button
+              className={cn('absolute', 'right-[-1.97rem]')}
+              onClick={() => handleDeleteSubjectClick(idx)}
+            >
+              <XIcon className={cn('stroke-slate-300', 'w-[1rem]', 'hover:stroke-slate-500')} />
+            </button>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};
 
 export default FreeSemesterForm;

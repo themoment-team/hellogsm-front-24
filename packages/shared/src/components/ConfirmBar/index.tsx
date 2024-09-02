@@ -1,6 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
+import { Dispatch, SetStateAction } from 'react';
 
 import { MouseIcon } from 'shared/assets';
 import {
@@ -19,6 +20,7 @@ interface ConfirmBarProps {
   id: string;
   temporarySave: () => void;
   isStep4Clickable: boolean;
+  setIsButtonClick: Dispatch<SetStateAction<boolean>>;
 }
 
 interface FinalSubmitDialogProps {
@@ -81,7 +83,7 @@ const FinalSubmitDialog = ({ id, isStep4Clickable }: FinalSubmitDialogProps) => 
   );
 };
 
-const ConfirmBar = ({ id, temporarySave, isStep4Clickable }: ConfirmBarProps) => {
+const ConfirmBar = ({ id, temporarySave, isStep4Clickable, setIsButtonClick }: ConfirmBarProps) => {
   return (
     <>
       <div
@@ -107,7 +109,13 @@ const ConfirmBar = ({ id, temporarySave, isStep4Clickable }: ConfirmBarProps) =>
           <span className={cn('text-body1', 'text-slate-900')}>정확히 입력 후 제출해주세요!</span>
         </div>
         <div className={cn('flex', 'items-center', 'gap-[0.5rem]')}>
-          <Button onClick={temporarySave} variant="outline">
+          <Button
+            onClick={() => {
+              setIsButtonClick(true);
+              temporarySave();
+            }}
+            variant="outline"
+          >
             임시저장
           </Button>
           <FinalSubmitDialog id={id} isStep4Clickable={isStep4Clickable} />
