@@ -46,8 +46,8 @@ const MyPage = ({ initialData }: MyInfoProps) => {
   ];
 
   const relatedDocuments = [
-    { icon: <ParticleIcon />, text: '입학원서 다운로드' },
-    { icon: <DocumentIcon />, text: '제출서류 다운로드' },
+    { icon: <ParticleIcon />, text: '입학원서 다운로드', path: '/print' },
+    { icon: <DocumentIcon />, text: '제출서류 다운로드', path: '/입학제출서류.hwp' },
   ];
 
   const screeningLabels: Record<string, string> = {
@@ -60,7 +60,7 @@ const MyPage = ({ initialData }: MyInfoProps) => {
   const screeningLabel = wantedScreening ? screeningLabels[wantedScreening] : '전형 없음';
 
   return (
-    <div className={cn('flex', 'w-full', 'h-[calc(100vh-4.625rem)]', 'justify-center', 'bg-white')}>
+    <div className={cn('flex', 'w-full', 'h-[100vh]', 'justify-center', 'bg-white')}>
       <div className="mt-20">
         <div
           className={cn('flex', 'flex-col', '33.5rem', 'gap-10', 'justify-center', 'items-center')}
@@ -207,7 +207,7 @@ const MyPage = ({ initialData }: MyInfoProps) => {
                           </p>
                         </div>
 
-                        <Button onClick={() => push('/print')} variant="download">
+                        <Button onClick={() => push(doc.path)} variant="download">
                           다운로드
                         </Button>
                       </div>
