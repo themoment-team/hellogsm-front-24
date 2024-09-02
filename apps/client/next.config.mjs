@@ -2,6 +2,16 @@
 const nextConfig = {
   transpilePackages: ['shared', 'types', 'api', 'tailwind-config', 'code-style-config'],
   reactStrictMode: false,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: process.env.NEXT_PUBLIC_IMAGE_URL,
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
   rewrites: async () => [
     {
       source: '/api/:path*',
