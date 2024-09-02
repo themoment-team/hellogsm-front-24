@@ -1,9 +1,12 @@
 'use client';
 
+import { useState } from 'react';
+
 import Link from 'next/link';
 
 import * as I from 'client/assets';
 import { ActiveLink, LoginDialog } from 'client/components';
+import { useLogout } from 'client/hooks';
 import { cn } from 'client/lib/utils';
 
 import { useGetMyAuthInfo, useGetMyMemberInfo } from 'api/hooks';
@@ -34,6 +37,9 @@ const loginLinkStyle = [
 const Header = () => {
   const { data: authInfo } = useGetMyAuthInfo();
   const { data: memberInfo } = useGetMyMemberInfo();
+  const handleLogout = useLogout();
+
+  const [isClicked, setIsClicked] = useState(false);
 
   return (
     <header
@@ -77,9 +83,69 @@ const Header = () => {
       </nav>
 
       {authInfo?.authReferrerType && memberInfo?.name ? (
-        <Link href="/mypage" className={cn(...loginLinkStyle)}>
-          <I.HeaderProfileIcon /> {memberInfo.name} 님
-        </Link>
+        <div className={cn('relative')}>
+          <button
+            className={cn(...loginLinkStyle, 'gap-2', 'relative')}
+            onClick={() => setIsClicked(!isClicked)}
+          >
+            <div className={cn('flex', 'items-center', 'gap-[0.125rem]')}>
+              <I.HeaderProfileIcon /> {memberInfo.name} 님
+            </div>
+            <I.ChevronIcon />
+          </button>
+          {isClicked === true && (
+            <div
+              className={cn(
+                'absolute',
+                'top-full',
+                'left-[-15%]',
+                'mt-2',
+                'flex',
+                'w-[10rem]',
+                'flex-col',
+                'items-start',
+                'shadow-sm',
+                'rounded-md',
+                'bg-white',
+              )}
+            >
+              <Link
+                href="mypage"
+                className={cn(
+                  'flex',
+                  'py-2',
+                  'pl-[0.75rem]',
+                  'justify-center',
+                  'items-center',
+                  'gap-2',
+                  'text-slate-700',
+                  'text-[1rem]/[1.75rem]',
+                  'font-normal',
+                )}
+                onClick={() => setIsClicked(!isClicked)}
+              >
+                <I.HomeIcon /> 내 정보 페이지
+              </Link>
+              <button
+                className={cn(
+                  'flex',
+                  'py-2',
+                  'pl-[0.75rem]',
+                  'pr-[1.8125rem]',
+                  'justify-center',
+                  'items-center',
+                  'gap-2',
+                  'text-red-600',
+                  'text-[1rem]/[1.75rem]',
+                  'font-normal',
+                )}
+                onClick={handleLogout}
+              >
+                <I.LogoutIcon /> 로그아웃
+              </button>
+            </div>
+          )}
+        </div>
       ) : authInfo?.authReferrerType && !memberInfo?.name ? (
         '회원가입을 진행해주세요'
       ) : (

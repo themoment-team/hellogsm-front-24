@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 import { ChevronIcon } from 'client/assets';
 
 import { cn } from 'shared/lib/utils';
@@ -10,11 +8,11 @@ interface FaqProps {
   title: string;
   content: string;
   keyword: string;
+  showContent: boolean;
+  onToggle: () => void;
 }
 
-const FaqElement = ({ title, content, keyword }: FaqProps) => {
-  const [showContent, setShowContent] = useState<boolean>(false);
-
+const FaqElement = ({ title, content, keyword, showContent, onToggle }: FaqProps) => {
   const getHighlightedText = (text: string, keyword: string) => {
     if (!keyword) return text;
     const lowerCaseText = text.toLowerCase();
@@ -51,7 +49,7 @@ const FaqElement = ({ title, content, keyword }: FaqProps) => {
         'rounded-2xl',
         'flex-col',
       )}
-      onClick={() => setShowContent(!showContent)}
+      onClick={onToggle}
     >
       <div className={cn('flex', 'w-full', 'items-center', 'justify-between')}>
         <div className={cn('flex', 'items-center')}>
