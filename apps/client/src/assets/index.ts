@@ -15,3 +15,5 @@ export { default as ParticleIcon } from './ParticleIcon';
 export { default as DocumentIcon } from './DocumentIcon';
 export { default as AlertIcon } from './AlertIcon';
 export { default as BottomArrow } from './Section1/BottomArrow';
+export { default as HomeIcon } from './HomeIcon';
+export { default as LogoutIcon } from './LogoutIcon';
