@@ -242,7 +242,7 @@ const ScoreRegister = ({
 
   const { mutate: mutatePutOneseo } = usePutOneseoByMemberId(memberId!, {
     onSuccess: () => {
-      alert('수정되었습니다');
+      setShowModal(true);
     },
     onError: () => {},
   });
@@ -306,6 +306,7 @@ const ScoreRegister = ({
       thirdDesiredMajor &&
       schoolName &&
       schoolAddress &&
+      liberalSystem &&
       screening;
 
     if (type !== 'calculate' && !isAllWrite) return;
@@ -341,7 +342,7 @@ const ScoreRegister = ({
             attendanceDays: attendanceDays!.map((i) => Number(i)),
             volunteerTime: volunteerTime!.map((i) => Number(i)),
             newSubjects: newSubjects,
-            liberalSystem: isFreeSemester ? '자유학년제' : '자유학기제',
+            liberalSystem: liberalSystem === 'freeGrade' ? '자유학년제' : '자유학기제',
             freeSemester: (isFreeSemester
               ? freeSemesterConvertor[freeSemester!]
               : null) as FreeSemesterType,
@@ -494,13 +495,15 @@ const ScoreRegister = ({
             <FormController className={cn(['mt-[5.625rem]'])} />
             <form
               id={formId}
-              onSubmit={() => {
+              onSubmit={(e) => {
+                e.preventDefault();
+
                 if (liberalSystem === 'freeGrade') {
                   setValue('achievement1_1', null);
                   setValue('achievement1_2', null);
                 }
 
-                handleSubmit(handleFormSubmit, () => console.log('에러 뜸'))();
+                handleSubmit(handleFormSubmit)();
               }}
               className={cn('flex', 'flex-col', 'items-center')}
             >
@@ -589,18 +592,24 @@ const ScoreRegister = ({
         <AlertDialogContent className="w-[400px]">
           <AlertDialogHeader>
             <AlertDialogTitle>
-              원서가 제출되었습니다!
-              <br />
-              {
-                // TODO 연락처 수정 필요
-              }
-              문제가 있다면 blabla로 연락주세요.
+              {type === 'client' ? (
+                <>
+                  원서가 제출되었습니다!
+                  <br />
+                  {
+                    // TODO 연락처 수정 필요
+                  }
+                  문제가 있다면 blabla로 연락주세요.
+                </>
+              ) : (
+                <>원서가 수정되었습니다!</>
+              )}
             </AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogAction
               onClick={() => {
-                push('/mypage');
+                push(type === 'client' ? '/mypage' : '/');
                 setShowModal(false);
               }}
             >

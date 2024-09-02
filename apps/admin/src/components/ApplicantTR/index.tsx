@@ -33,6 +33,7 @@ import { cn } from 'shared/lib/utils';
 import { formatScore } from 'shared/utils';
 
 import { usePatchArrivedStatus, usePatchAptitudeScore, usePatchInterviewScore } from 'api/hooks';
+import { useRouter } from 'next/navigation';
 
 interface ApplicationTRProps extends OneseoType {
   refetch: (
@@ -57,6 +58,8 @@ const ApplicantTR = ({
   submitCode,
 }: ApplicationTRProps) => {
   const [dialogOpen, setDialogOpen] = useState<'' | 'submit'>('');
+
+  const { push } = useRouter();
 
   const 직무적성처리시작일자 = new Date(직무적성일자);
   const 심층면접처리시작일자 = new Date(심층면접일자);
@@ -215,7 +218,11 @@ const ApplicantTR = ({
             <Badge variant={secondTestResult}>{secondTestResult}</Badge>
           </TableCell>
           <TableCell className="w-[149px]">
-            <Button className="ml-[33.24px]" variant="outline">
+            <Button
+              onClick={() => push(`/edit/${memberId}?step=1`)}
+              className="ml-[33.24px]"
+              variant="outline"
+            >
               원서수정
             </Button>
           </TableCell>
