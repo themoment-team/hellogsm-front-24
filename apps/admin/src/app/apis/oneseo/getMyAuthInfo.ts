@@ -31,11 +31,11 @@ export const getMyAuthInfo = async ({
     },
   );
 
-  const authInfo = await response.json();
-
   if (!response.ok) {
     return redirect(redirectUrl);
   }
+
+  const authInfo = await response.json();
 
   return authInfo.data;
 };

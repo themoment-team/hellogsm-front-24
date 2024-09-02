@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 
 import { usePostMockScore } from 'api';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -77,10 +77,16 @@ interface StepBarType {
   handleSubmit: UseFormHandleSubmit<basicRegisterType>;
   watch: UseFormWatch<basicRegisterType>;
   isStep4Clickable: boolean;
-  scoreWatch?: ScoreFormType;
+  setIsButtonClick: Dispatch<SetStateAction<boolean>>;
 }
 
-const StepBar = ({ param, handleSubmit, watch, isStep4Clickable, scoreWatch }: StepBarType) => {
+const StepBar = ({
+  param,
+  handleSubmit,
+  watch,
+  isStep4Clickable,
+  setIsButtonClick,
+}: StepBarType) => {
   const { push } = useRouter();
   const params = useSearchParams();
   const path = usePathname();
@@ -392,39 +398,39 @@ const StepBar = ({ param, handleSubmit, watch, isStep4Clickable, scoreWatch }: S
   };
 
   const handleCheckScoreButtonClick = () => {
-    if (!scoreWatch) return;
-
     const middleSchoolAchievement: MiddleSchoolAchievementType | GEDAchievementType =
       store.graduationType === 'GED'
         ? {
-            gedTotalScore: scoreWatch.gedTotalScore ? Number(scoreWatch.gedTotalScore) : 0,
+            gedTotalScore: store.scoreForm?.gedTotalScore
+              ? Number(store.scoreForm.gedTotalScore)
+              : 0,
           }
         : {
             liberalSystem: store.liberalSystem === 'freeGrade' ? '자유학년제' : '자유학기제',
             freeSemester: store.freeSemester ? freeSemesterConvertor[store.freeSemester] : null,
             artsPhysicalSubjects: ['체육', '음악', '미술'],
-            achievement1_1: scoreWatch.achievement1_1
-              ? scoreWatch.achievement1_1.map((score) => Number(score))
+            achievement1_1: store.scoreForm?.achievement1_1
+              ? store.scoreForm.achievement1_1.map((score) => Number(score))
               : null,
-            achievement1_2: scoreWatch.achievement1_2
-              ? scoreWatch.achievement1_2.map((score) => Number(score))
+            achievement1_2: store.scoreForm?.achievement1_2
+              ? store.scoreForm.achievement1_2.map((score) => Number(score))
               : null,
-            achievement2_1: scoreWatch.achievement2_1
-              ? scoreWatch.achievement2_1.map((score) => Number(score))
+            achievement2_1: store.scoreForm?.achievement2_1
+              ? store.scoreForm.achievement2_1.map((score) => Number(score))
               : null,
-            achievement2_2: scoreWatch.achievement2_2
-              ? scoreWatch.achievement2_2.map((score) => Number(score))
+            achievement2_2: store.scoreForm?.achievement2_2
+              ? store.scoreForm.achievement2_2.map((score) => Number(score))
               : null,
-            achievement3_1: scoreWatch.achievement3_1
-              ? scoreWatch.achievement3_1.map((score) => Number(score))
+            achievement3_1: store.scoreForm?.achievement3_1
+              ? store.scoreForm?.achievement3_1.map((score) => Number(score))
               : null,
-            newSubjects: scoreWatch.newSubjects,
-            artsPhysicalAchievement: scoreWatch.artsPhysicalAchievement!.map((score) =>
+            newSubjects: store.scoreForm!.newSubjects,
+            artsPhysicalAchievement: store.scoreForm!.artsPhysicalAchievement!.map((score) =>
               Number(score),
             ),
-            absentDays: scoreWatch.absentDays!.map((score) => Number(score)),
-            attendanceDays: scoreWatch.attendanceDays!.map((score) => Number(score)),
-            volunteerTime: scoreWatch.volunteerTime!.map((score) => Number(score)),
+            absentDays: store.scoreForm!.absentDays!.map((score) => Number(score)),
+            attendanceDays: store.scoreForm!.attendanceDays!.map((score) => Number(score)),
+            volunteerTime: store.scoreForm!.volunteerTime!.map((score) => Number(score)),
           };
 
     postMockScore(middleSchoolAchievement);

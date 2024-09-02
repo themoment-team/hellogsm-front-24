@@ -31,13 +31,13 @@ export const getAdmissionTickets = async ({
     },
   );
 
-  const tickets = await response.json();
-
   const isNotFound = response.status === 404;
 
   if (isNotFound) {
     return [];
   }
+
+  const tickets = await response.json();
 
   if (!response.ok) {
     return redirect(redirectUrl);

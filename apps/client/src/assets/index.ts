@@ -18,3 +18,5 @@ export { default as BottomArrow } from './Section1/BottomArrow';
 export { default as NotFoundIcon1 } from './NotFoundIcon1';
 export { default as NotFoundIcon2 } from './NotFoundIcon2';
 export { default as BackIcon } from './BackIcon';
+export { default as HomeIcon } from './HomeIcon';
+export { default as LogoutIcon } from './LogoutIcon';

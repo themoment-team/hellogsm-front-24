@@ -81,27 +81,23 @@ interface ScoreRegisterProps {
   memberId?: number;
   type: 'client' | 'admin' | 'calculate';
   scoreWatch?: ScoreFormType | null;
-  setScoreWatch?: Dispatch<SetStateAction<ScoreFormType | null>>;
   isStep4Clickable?: boolean;
   setIsStep4Clickable?: Dispatch<SetStateAction<boolean>>;
+  isButtonClick?: boolean;
 }
 
 const ScoreRegister = ({
   data,
   memberId,
-  setScoreWatch,
   type,
   isStep4Clickable,
   setIsStep4Clickable,
+  isButtonClick,
 }: ScoreRegisterProps) => {
   const store = useStore();
-
   const { push } = useRouter();
-
   const [showModal, setShowModal] = useState<boolean>(false);
-
-  const { setLiberalSystem, setFreeSemester, freeSemester, liberalSystem } = store;
-
+  const { setLiberalSystem, setFreeSemester, freeSemester, liberalSystem, setScoreForm } = store;
   const [oneseoBody, setOneseoBody] = useState<Omit<PostOneseoType, 'profileImg'> | null>(null);
   const [subjectArray, setSubjectArray] = useState<string[]>([...defaultSubjectArray]);
   const [scoreCalculateDialogData, setScoreCalculateDialogData] = useState<MockScoreType | null>(
@@ -115,35 +111,66 @@ const ScoreRegister = ({
   const { register, handleSubmit, setValue, unregister, watch, control } = useForm<ScoreFormType>({
     resolver: zodResolver(scoreFormSchema),
     defaultValues: {
-      achievement1_1:
-        defaultData?.achievement1_1 && defaultData.achievement1_1.map((i) => String(i)),
-      achievement1_2:
-        defaultData?.achievement1_2 && defaultData.achievement1_2.map((i) => String(i)),
-      achievement2_1:
-        defaultData?.achievement2_1 && defaultData.achievement2_1.map((i) => String(i)),
-      achievement2_2:
-        defaultData?.achievement2_2 && defaultData.achievement2_2.map((i) => String(i)),
-      achievement3_1:
-        defaultData?.achievement3_1 && defaultData.achievement3_1.map((i) => String(i)),
-      artsPhysicalAchievement:
-        defaultData?.artsPhysicalAchievement &&
-        defaultData.artsPhysicalAchievement.map((i) => String(i)),
-      newSubjects: defaultData?.newSubjects && [...defaultData.newSubjects],
-      absentDays: defaultData?.absentDays && defaultData.absentDays.map((i) => String(i)),
-      attendanceDays:
-        defaultData?.attendanceDays && defaultData.attendanceDays.map((i) => String(i)),
-      volunteerTime: defaultData?.volunteerTime && defaultData.volunteerTime.map((i) => String(i)),
-      gedTotalScore: defaultData?.gedTotalScore ? String(defaultData.gedTotalScore) : '',
+      achievement1_1: store.scoreForm?.achievement1_1
+        ? store.scoreForm.achievement1_1
+        : defaultData?.achievement1_1 && defaultData.achievement1_1.map((i) => String(i)),
+      achievement1_2: store.scoreForm?.achievement1_2
+        ? store.scoreForm.achievement1_2
+        : defaultData?.achievement1_2 && defaultData.achievement1_2.map((i) => String(i)),
+      achievement2_1: store.scoreForm?.achievement2_1
+        ? store.scoreForm.achievement2_1
+        : defaultData?.achievement2_1 && defaultData.achievement2_1.map((i) => String(i)),
+      achievement2_2: store.scoreForm?.achievement2_2
+        ? store.scoreForm.achievement2_2
+        : defaultData?.achievement2_2 && defaultData.achievement2_2.map((i) => String(i)),
+      achievement3_1: store.scoreForm?.achievement3_1
+        ? store.scoreForm.achievement3_1
+        : defaultData?.achievement3_1 && defaultData.achievement3_1.map((i) => String(i)),
+      artsPhysicalAchievement: store.scoreForm?.artsPhysicalAchievement
+        ? store.scoreForm.artsPhysicalAchievement
+        : defaultData?.artsPhysicalAchievement &&
+          defaultData.artsPhysicalAchievement.map((i) => String(i)),
+      newSubjects: store.scoreForm?.newSubjects
+        ? store.scoreForm.newSubjects
+        : defaultData?.newSubjects && [...defaultData.newSubjects],
+      absentDays: store.scoreForm?.absentDays
+        ? store.scoreForm.absentDays
+        : defaultData?.absentDays && defaultData.absentDays.map((i) => String(i)),
+      attendanceDays: store.scoreForm?.attendanceDays
+        ? store.scoreForm.attendanceDays
+        : defaultData?.attendanceDays && defaultData.attendanceDays.map((i) => String(i)),
+      volunteerTime: store.scoreForm?.volunteerTime
+        ? store.scoreForm.volunteerTime
+        : defaultData?.volunteerTime && defaultData.volunteerTime.map((i) => String(i)),
+      gedTotalScore: store.scoreForm?.gedTotalScore
+        ? store.scoreForm.gedTotalScore
+        : defaultData?.gedTotalScore
+          ? String(defaultData.gedTotalScore)
+          : '',
     },
   });
 
   useEffect(() => {
-    if (setScoreWatch && watch()) {
-      setScoreWatch(watch());
+    if (watch) {
+      const { isArray } = Array;
+
+      setScoreForm({
+        achievement1_1: isArray(watch('achievement1_1')) ? watch('achievement1_1') : null,
+        achievement1_2: isArray(watch('achievement1_2')) ? watch('achievement1_2') : null,
+        achievement2_1: isArray(watch('achievement2_1')) ? watch('achievement2_1') : null,
+        achievement2_2: isArray(watch('achievement2_2')) ? watch('achievement2_2') : null,
+        achievement3_1: isArray(watch('achievement3_1')) ? watch('achievement3_1') : null,
+        newSubjects: watch('newSubjects'),
+        artsPhysicalAchievement: watch('artsPhysicalAchievement'),
+        absentDays: watch('absentDays'),
+        attendanceDays: watch('attendanceDays'),
+        volunteerTime: watch('volunteerTime'),
+        gedTotalScore: watch('gedTotalScore'),
+      });
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isStep4Clickable, watch('gedTotalScore')]);
+  }, [isStep4Clickable, isButtonClick]);
 
   useEffect(() => {
     if (!setIsStep4Clickable) return;
@@ -172,10 +199,11 @@ const ScoreRegister = ({
   }, [watch()]);
 
   useEffect(() => {
-    setFreeSemester(
-      defaultData?.freeSemester ? reversedFreeSemesterConvertor[defaultData.freeSemester] : null,
-    );
-  }, [defaultData, setFreeSemester]);
+    if (!freeSemester && defaultData?.freeSemester)
+      return setFreeSemester(reversedFreeSemesterConvertor[defaultData.freeSemester]);
+
+    if (liberalSystem === 'freeGrade') return setFreeSemester(null);
+  }, [defaultData, setFreeSemester, liberalSystem]);
 
   const { mutate: mutatePostMyOneseo } = usePostMyOneseo({
     onSuccess: () => {
@@ -375,7 +403,11 @@ const ScoreRegister = ({
     }
 
     setLiberalSystem(
-      defaultData?.liberalSystem ? LiberalSystemConvertor[defaultData.liberalSystem] : 'freeGrade',
+      store.liberalSystem
+        ? store.liberalSystem
+        : defaultData?.liberalSystem
+          ? LiberalSystemConvertor[defaultData.liberalSystem]
+          : 'freeGrade',
     );
 
     if (store.graduationType === 'GED') {
@@ -401,9 +433,9 @@ const ScoreRegister = ({
       setValue('newSubjects', null);
     }
 
-    if (freeSemester) {
-      setValue(freeSemester, null);
-    }
+    // if (liberalSystem === 'freeGrade' && freeSemester) {
+    //   setValue(freeSemester, null);
+    // }
   }, [defaultSubjectLength, freeSemester, setValue, subjectArray]);
 
   return (
@@ -529,7 +561,7 @@ const ScoreRegister = ({
                     + 과목 추가하기
                   </button>
                 </div>
-                <div className={cn(...formWrapper)}>
+                <div id="artPhysicalSubject" className={cn(...formWrapper)}>
                   예체능 교과 성적
                   <ArtPhysicalForm
                     setValue={setValue}
@@ -537,7 +569,7 @@ const ScoreRegister = ({
                     liberalSystem={liberalSystem}
                   />
                 </div>
-                <div className={cn(...formWrapper)}>
+                <div id="nonSubject" className={cn(...formWrapper)}>
                   비교과 내용
                   <NonSubjectForm register={register} liberalSystem={liberalSystem} />
                 </div>

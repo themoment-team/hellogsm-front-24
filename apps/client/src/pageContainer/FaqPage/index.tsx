@@ -22,6 +22,7 @@ const ITEMS_PER_PAGE = 10;
 const FaqPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [keyword, setKeyword] = useState<string>('');
+  const [faqStates, setFaqStates] = useState<{ [key: number]: boolean }>({});
 
   const totalItems = Element.filter((item) => item.title.toLowerCase().includes(keyword));
   const totalPages = Math.ceil(totalItems.length / ITEMS_PER_PAGE);
@@ -29,17 +30,26 @@ const FaqPage = () => {
   const handlePageChange = (pageNumber: number) => {
     const newPageNumber = Math.max(1, Math.min(pageNumber, totalPages));
     setCurrentPage(newPageNumber);
+    setFaqStates({});
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(event.target.value);
     setCurrentPage(1);
+    setFaqStates({});
   };
 
   const currentItems = totalItems.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE,
   );
+
+  const toggleFaqContent = (index: number) => {
+    setFaqStates((prevStates) => ({
+      ...prevStates,
+      [index]: !prevStates[index],
+    }));
+  };
 
   return (
     <div className={cn('flex', 'flex-col', 'h-[100vh]', 'justify-between', 'bg-white')}>
@@ -93,7 +103,14 @@ const FaqPage = () => {
             <div className={cn('w-full', 'h-[0.0625rem]', 'bg-slate-300')} />
             <div className={cn('flex', 'flex-col', 'gap-4', 'pt-8')}>
               {currentItems.map((faq, index) => (
-                <FaqElement key={index} title={faq.title} content={faq.content} keyword={keyword} />
+                <FaqElement
+                  key={index}
+                  title={faq.title}
+                  content={faq.content}
+                  keyword={keyword}
+                  showContent={!!faqStates[index]}
+                  onToggle={() => toggleFaqContent(index)}
+                />
               ))}
             </div>
           </div>
