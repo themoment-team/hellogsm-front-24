@@ -1,10 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { cn } from 'client/lib/utils';
-
-import ProgressIndicator from './ProgressIndicator';
 
 const stepsData = [
   { icon: '📃', title: '원서 접수 및 증빙서류 제출', date: '2024.10.14. (월) ~ 17(목)' },
@@ -15,98 +13,193 @@ const stepsData = [
 ] as const;
 
 const Section2 = () => {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [clickedIndex, setClickedIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveStep((prevStep) => (prevStep + 1) % stepsData.length);
+      setActiveIndex((prevIndex) => (prevIndex + 1) % stepsData.length);
     }, 2000);
 
     return () => clearInterval(interval);
   }, []);
 
-  const stepStyle = ['text-h4', 'font-semibold', 'text-gray-400'];
-  const activeStyle = ['text-h4', 'font-semibold', 'text-sky-700'];
-
-  const boxStyle = [
-    'border',
-    'rounded-lg',
-    'shadow-sm',
-    'w-[15.375rem]',
-    'h-[7.25rem]',
-    'flex',
-    'flex-col',
-    'py-[1.25rem]',
-    'px-[1rem]',
-  ];
-  const activeBoxStyle = ['border-sky-700'];
-  const inactiveBoxStyle = ['border-gray-400'];
-
   return (
-    <div
-      id="section2"
-      className={cn('w-full', 'bg-white', 'relative', 'h-[50.375rem]', 'py-[11.25rem]')}
-    >
-      <div className={cn('flex', 'flex-col', 'justify-between', 'items-center', 'h-[27.875rem]')}>
-        <div className={cn('flex', 'justify-between', 'items-center', 'w-[80rem]')}>
-          <h1 className={cn('text-2xl', 'font-bold')}>
+    <div id="section2" className={cn('w-full', 'bg-white', 'relative', 'py-[11.25rem]')}>
+      <div
+        className={cn(
+          'flex',
+          'flex-col',
+          'justify-between',
+          'items-center',
+          'gap-[1.5rem]',
+          'md:gap-[7.5rem]',
+        )}
+      >
+        <div
+          className={cn(
+            'flex',
+            'flex-col',
+            'md:flex-row',
+            'justify-between',
+            'items-center',
+            'w-full',
+            'px-24',
+            'gap-8',
+            'md:gap-0',
+          )}
+        >
+          <h1
+            className={cn(
+              'text-[#0F2E4D]',
+              'text-[2rem]/[2.5rem]',
+              'font-semibold',
+              'text-center',
+              'md:text-left',
+            )}
+          >
             광주소프트웨어마이스터고등학교
             <br />
             2025 신입생 모집절차
           </h1>
-          <p className={cn('mt-4', 'text-gray-600', 'font-normal')}>
+          <p className={cn('text-gray-600', 'font-normal', 'hidden', 'md:inline')}>
             우리 학교에 입학하기 위해 필요한
             <br />
             다섯 가지 절차를 소개해드릴게요!
           </p>
-        </div>
-        <div>
-          <div className={cn('flex', 'gap-[0.625rem]', 'text-h4')}>
-            {stepsData.map((step, index) => (
-              <div
+          <div
+            className={cn(
+              'flex',
+              'md:hidden',
+              'items-center',
+              'px-2',
+              'py-1',
+              'gap-1',
+              'rounded-md',
+              'bg-slate-100',
+            )}
+          >
+            {stepsData.map((_, index) => (
+              <button
                 key={index}
                 className={cn(
                   'flex',
+                  'px-5',
+                  'py-[0.375rem]',
                   'flex-col',
-                  'justify-center',
                   'items-center',
-                  'w-[15.375rem]',
+                  'justify-center',
+                  'gap-2',
+                  'rounded-md',
+                  index === clickedIndex ? 'bold text-slate-600' : 'text-slate-400',
+                  index === clickedIndex ? 'bg-white' : '',
+                  'text-[1rem]/[1.5rem]',
+                  'font-normal',
                 )}
+                onClick={() => setClickedIndex(index)}
               >
-                <div className={cn('mb-2')}>{step.icon}</div>
-                <p className={cn(index === activeStep ? activeStyle : stepStyle)}>{step.title}</p>
-              </div>
+                {`${index + 1}차`}
+              </button>
             ))}
           </div>
-          <ProgressIndicator steps={stepsData.length} activeStep={activeStep} />
-
-          <div
-            className={cn(
-              'flex w-full',
-              'max-w-7xl',
-              'items-center',
-              'justify-between',
-              'mt-8',
-              'gap-[0.75rem]',
-            )}
-          >
-            {stepsData.map((step, index) => (
-              <div
-                key={index}
-                className={cn(
-                  ...boxStyle,
-                  ...(index === activeStep ? activeBoxStyle : inactiveBoxStyle),
-                )}
-              >
-                <p className={cn(index === activeStep ? activeStyle : stepStyle)}>{step.title}</p>
+        </div>
+        <div className={cn('hidden', 'md:flex', 'items-center', 'justify-center', 'flex-wrap')}>
+          {stepsData.map((step, index) => (
+            <div key={index} className={cn('flex', 'gap-5', 'items-center', 'flex-col', 'pb-10')}>
+              <div className={cn('flex', 'flex-col', 'items-center', 'gap-3')}>
+                <p className={cn('text-gray-600', 'text-[1.875rem]/[2.25rem]', 'font-semibold')}>
+                  {step.icon}
+                </p>
                 <p
-                  className={cn('text-sm', index === activeStep ? 'text-sky-700' : 'text-gray-400')}
+                  className={cn(
+                    index === activeIndex ? 'text-sky-900' : 'text-gray-400',
+                    'text-[1.25rem]/[1.75rem]',
+                    'font-semibold',
+                  )}
                 >
-                  {step.date}
+                  {step.title}
                 </p>
               </div>
-            ))}
+
+              {index < stepsData.length && (
+                <div className={cn('flex', 'items-center', 'gap-2')}>
+                  <div className={cn('w-[7.5rem]', 'h-px', 'bg-gray-300')}></div>{' '}
+                  <div
+                    className={cn(
+                      'w-3',
+                      'h-3',
+                      'rounded-full',
+                      index === activeIndex
+                        ? 'border-2 border-white bg-white shadow-[0_0_0_4px_rgba(0,116,217,1)]'
+                        : 'bg-gray-300',
+                    )}
+                  ></div>
+                  <div className={cn('w-[7.5rem]', 'h-px', 'bg-gray-300')}></div>{' '}
+                </div>
+              )}
+
+              <div
+                className={cn(
+                  'flex',
+                  'flex-col',
+                  'w-[15.25rem]',
+                  'pt-[1.25rem]',
+                  'pb-[2.75rem]',
+                  'pr-[1.25rem]',
+                  'pl-[0.75rem]',
+                  'border',
+                  'rounded-[0.75rem]',
+                  index === activeIndex ? 'border-sky-900' : 'border-gray-400',
+                  index === activeIndex ? 'text-sky-900' : 'text-gray-400',
+                  'text-[1.25rem]/[1.75rem]',
+                  'font-semibold',
+                )}
+              >
+                {step.title}
+                <p className={cn('text-[0.875rem]/[1.5rem]', 'font-normal')}>{step.date}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div
+          className={cn(
+            'flex',
+            'md:hidden',
+            'px-[2.5rem]',
+            'py-[2rem]',
+            'flex-col',
+            'items-center',
+            'gap-[1.125rem]',
+            'rounded-xl',
+            'bg-slate-50',
+          )}
+        >
+          <div className={cn('flex', 'flex-col', 'gap-1', 'items-center')}>
+            <div
+              className={cn(
+                'flex',
+                'flex-col',
+                'items-center',
+                'gap-3',
+                'text-sky-800',
+                'text-[1.5rem]/[2rem]',
+                'font-semibold',
+              )}
+            >
+              <p className={cn('text-[1.875rem]/[2.25rem]')}>{stepsData[clickedIndex].icon}</p>
+              {stepsData[clickedIndex].title}
+            </div>
+            <p className={cn('text-sky-900', 'text-[0.875rem]/[1.5rem]', 'font-normal')}>
+              {stepsData[clickedIndex].date}
+            </p>
           </div>
+
+          <p className={cn('w-[25rem]', 'text-slate-600', 'text-[1rem]/[1.5rem]', 'font-normal')}>
+            직무적성소양평가는 학생들의 역량을 직무적성소양평가는 학생들의 역량을직무적성소양평가는
+            학생들의 역량을직무적성소양평가는 학생들의 역량을직무적성소양평가는 학생들의
+            역량을직무적성소양평가는 학생들의 역량을직무적성
+          </p>
         </div>
       </div>
     </div>

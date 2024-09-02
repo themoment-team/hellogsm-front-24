@@ -97,9 +97,10 @@ const Section4 = () => {
         'flex-col',
         'bg-[#F5F9FB]',
         'py-[11.25rem]',
+        'w-full',
       )}
     >
-      <div className={cn('flex', 'flex-col', 'items-center')}>
+      <div className={cn('flex', 'flex-col', 'items-center', 'w-full')}>
         <div className={cn('flex', 'items-end')}>
           <DotWithText color="#84CC16" text="인성" textColor="text-[#84CC16]" />
           <p className={cn(...textStyle)}>과 &nbsp;</p>
@@ -110,7 +111,17 @@ const Section4 = () => {
         </div>
         <p className={cn(...textStyle)}>광주소프트웨어마이스터고등학교</p>
       </div>
-      <div className={cn('flex', 'items-center', 'gap-[0.75rem]')}>
+      <div
+        className={cn(
+          'flex',
+          'flex-wrap',
+          'w-full',
+          'items-center',
+          'gap-[0.75rem]',
+          'justify-center',
+          'px-[8rem]',
+        )}
+      >
         {TITLES.map(({ firstText, lastText, icon }) => (
           <TitleCard key={firstText} firstText={firstText} lastText={lastText} icon={icon} />
         ))}
