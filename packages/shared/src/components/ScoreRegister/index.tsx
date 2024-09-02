@@ -561,7 +561,7 @@ const ScoreRegister = ({
                     + 과목 추가하기
                   </button>
                 </div>
-                <div className={cn(...formWrapper)}>
+                <div id="artPhysicalSubject" className={cn(...formWrapper)}>
                   예체능 교과 성적
                   <ArtPhysicalForm
                     setValue={setValue}
@@ -569,7 +569,7 @@ const ScoreRegister = ({
                     liberalSystem={liberalSystem}
                   />
                 </div>
-                <div className={cn(...formWrapper)}>
+                <div id="nonSubject" className={cn(...formWrapper)}>
                   비교과 내용
                   <NonSubjectForm register={register} liberalSystem={liberalSystem} />
                 </div>
