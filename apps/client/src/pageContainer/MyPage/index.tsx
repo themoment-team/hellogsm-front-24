@@ -60,7 +60,7 @@ const MyPage = ({ initialData }: MyInfoProps) => {
   const screeningLabel = wantedScreening ? screeningLabels[wantedScreening] : '전형 없음';
 
   return (
-    <div className={cn('flex', 'w-full', 'h-[100vh]', 'justify-center', 'bg-white')}>
+    <div className={cn('flex', 'w-full', 'h-[calc(100vh-4.625rem)]', 'justify-center', 'bg-white')}>
       <div className="mt-20">
         <div
           className={cn('flex', 'flex-col', '33.5rem', 'gap-10', 'justify-center', 'items-center')}

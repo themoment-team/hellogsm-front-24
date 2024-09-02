@@ -16,7 +16,6 @@ import {
   MajorType,
   MiddleSchoolAchievementType,
   MockScoreType,
-  ScoreFormType,
   ScreeningType,
   GEDAchievementType,
 } from 'types';
