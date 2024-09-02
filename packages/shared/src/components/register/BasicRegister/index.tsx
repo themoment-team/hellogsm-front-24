@@ -78,7 +78,7 @@ const BasicRegister = ({
 
         <div className={cn('flex', 'items-end', 'gap-[3rem]')}>
           <div className={cn('flex', 'w-[29.75rem]', 'flex-col', 'items-start', 'gap-[2rem]')}>
-            <UploadPhoto setValue={setValue} />
+            <UploadPhoto setValue={setValue} watch={watch} />
             <CustomFormItem text={'이름'} className="gap-1" required={true} fullWidth={true}>
               <Input placeholder={name} disabled={true} />
             </CustomFormItem>
@@ -119,6 +119,7 @@ const BasicRegister = ({
                   <Input
                     placeholder={userAddress}
                     width="full"
+                    disabled={true}
                     {...register('address')}
                     value={watch('address')}
                   />

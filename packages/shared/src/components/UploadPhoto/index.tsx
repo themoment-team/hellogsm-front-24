@@ -3,19 +3,25 @@
 import { useState } from 'react';
 
 import Image from 'next/image';
-import { UseFormSetValue } from 'react-hook-form';
+import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { basicRegisterType } from 'types';
 
 import { UploadIcon } from 'shared/assets';
 import { CustomFormItem } from 'shared/components';
 import { cn } from 'shared/lib/utils';
+import { useStore } from 'shared/stores';
+import { dataUrltoFile } from 'shared/utils';
 
 interface UploadPhotoProps {
   setValue: UseFormSetValue<basicRegisterType>;
+  watch: UseFormWatch<basicRegisterType>;
 }
 
-const UploadPhoto = ({ setValue }: UploadPhotoProps) => {
-  const [imageSrc, setImageSrc] = useState<string | null>(null);
+const UploadPhoto = ({ setValue, watch }: UploadPhotoProps) => {
+  const store = useStore();
+  const { profileImg, setProfileImg } = store;
+
+  const [imageSrc, setImageSrc] = useState<string | null>(profileImg ? profileImg : null);
 
   const PhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -25,6 +31,8 @@ const UploadPhoto = ({ setValue }: UploadPhotoProps) => {
         if (typeof reader.result === 'string') {
           setImageSrc(reader.result);
           setValue('img', reader.result);
+          setProfileImg(reader.result);
+          dataUrltoFile(watch('img'), 'img.png');
         }
       };
     }
@@ -61,7 +69,7 @@ const UploadPhoto = ({ setValue }: UploadPhotoProps) => {
           >
             {imageSrc ? (
               <Image
-                src={imageSrc}
+                src={profileImg || imageSrc}
                 alt="Uploaded"
                 className={cn('w-[8.75rem]', 'h-[10rem]', 'object-cover', 'rounded-lg')}
                 height={160}
@@ -81,7 +89,7 @@ const UploadPhoto = ({ setValue }: UploadPhotoProps) => {
         </CustomFormItem>
       </div>
       <ul className={cn('text-slate-600', 'text-[0.75rem]/[1.125rem]', 'font-[400]')}>
-        <li>&middot; 20MB 이하</li>
+        <li>&middot; 5MB 이하</li>
         <li>&middot; 3개월 이내의 3x4 cm 증명사진</li>
       </ul>
     </div>
