@@ -1,8 +1,11 @@
 /* eslint-disable @rushstack/no-new-null */
 import {
+  GEDAchievementType,
   GradesInputMethodType,
   GraduationType,
   MajorType,
+  MiddleSchoolAchievementType,
+  ScoreFormType,
   ScreeningType,
   SemesterIdType,
 } from 'types';
@@ -26,6 +29,7 @@ interface StoreType {
   screening: ScreeningType | undefined;
   liberalSystem: GradesInputMethodType | undefined;
   freeSemester: SemesterIdType | null | undefined;
+  scoreForm: ScoreFormType | undefined;
   setGuardianName: (guardianName: string) => void;
   setGuardianPhoneNumber: (guardianPhoneNumber: string) => void;
   setRelationshipWithGuardian: (relationship: string) => void;
@@ -43,6 +47,7 @@ interface StoreType {
   setScreening: (screening: ScreeningType) => void;
   setLiberalSystem: (system: GradesInputMethodType) => void;
   setFreeSemester: (semester: SemesterIdType | null) => void;
+  setScoreForm: (scoreForm: ScoreFormType) => void;
 }
 
 const useStore = create<StoreType>((set) => ({
@@ -63,6 +68,7 @@ const useStore = create<StoreType>((set) => ({
   screening: undefined,
   liberalSystem: undefined,
   freeSemester: undefined,
+  scoreForm: undefined,
   setGuardianName: (guardianName) => set(() => ({ guardianName: guardianName })),
   setGuardianPhoneNumber: (guardianPhoneNumber) =>
     set(() => ({ guardianPhoneNumber: guardianPhoneNumber })),
@@ -83,6 +89,7 @@ const useStore = create<StoreType>((set) => ({
   setScreening: (screening) => set(() => ({ screening: screening })),
   setLiberalSystem: (system) => set(() => ({ liberalSystem: system })),
   setFreeSemester: (semester) => set(() => ({ freeSemester: semester })),
+  setScoreForm: (scoreForm) => set(() => ({ scoreForm: scoreForm })),
 }));
 
 export default useStore;
