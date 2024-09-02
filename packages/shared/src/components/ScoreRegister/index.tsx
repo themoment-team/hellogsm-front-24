@@ -80,6 +80,7 @@ interface ScoreRegisterProps {
   data: GetMyOneseoType | undefined;
   memberId?: number;
   type: 'client' | 'admin' | 'calculate';
+  // eslint-disable-next-line @rushstack/no-new-null
   scoreWatch?: ScoreFormType | null;
   isStep4Clickable?: boolean;
   setIsStep4Clickable?: Dispatch<SetStateAction<boolean>>;
@@ -203,6 +204,7 @@ const ScoreRegister = ({
       return setFreeSemester(reversedFreeSemesterConvertor[defaultData.freeSemester]);
 
     if (liberalSystem === 'freeGrade') return setFreeSemester(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultData, setFreeSemester, liberalSystem]);
 
   const { mutate: mutatePostMyOneseo } = usePostMyOneseo({
@@ -467,12 +469,7 @@ const ScoreRegister = ({
           회원가입 시 입력한 기본 정보가 노출됩니다.
         </p>
         {store.graduationType === 'GED' ? (
-          <form
-            id={formId}
-            onSubmit={handleSubmit(handleFormSubmit, () => {
-              console.log(watch());
-            })}
-          >
+          <form id={formId} onSubmit={handleSubmit(handleFormSubmit)}>
             <div className={cn('w-[18.75rem]', 'flex', 'flex-col', 'gap-1')}>
               <p className={cn('text-slate-900', 'text-[0.875rem]/[1.25rem]')}>
                 검정고시 전과목 득점 합계 <span className={cn('text-red-600')}>*</span>
