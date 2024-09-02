@@ -12,9 +12,7 @@ import {
   GetMyOneseoType,
   MyMemberInfoType,
   SexEnum,
-  ScoreFormType,
   PostOneseoType,
-  GradesInputMethodType,
 } from 'types';
 
 import {
@@ -266,6 +264,17 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
       push(`${baseRoute}?step=1`);
       if (isApplyInfoComplete) {
         push(`${baseRoute}?step=2`);
+        return;
+      }
+      return;
+    }
+    if (param === '4' && isBasicInfoComplete) {
+      push(`${baseRoute}?step=1`);
+      if (isApplyInfoComplete) {
+        push(`${baseRoute}?step=2`);
+        if (isGuardianInfoComplete) {
+          push(`${baseRoute}?step=3`);
+        }
         return;
       }
       return;
