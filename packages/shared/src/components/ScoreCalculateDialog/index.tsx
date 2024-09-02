@@ -1,6 +1,6 @@
 'use client';
 
-import { MockScoreType } from 'types';
+import { GraduationType, MockScoreType } from 'types';
 
 import {
   AlertDialog,
@@ -18,6 +18,7 @@ interface ScoreCalculateDialogProps {
   setIsDialog: React.Dispatch<React.SetStateAction<boolean>>;
   scoreCalculateDialogData: MockScoreType | null; // todo 타입 변경될수도 있음
   type: 'score' | 'mock';
+  graduationType: GraduationType;
 }
 
 const SUBJECT = '교과';
@@ -28,6 +29,7 @@ const ScoreCalculateDialog = ({
   setIsDialog,
   scoreCalculateDialogData,
   type,
+  graduationType,
 }: ScoreCalculateDialogProps) => {
   const scoreArray = [
     { title: '교과', score: scoreCalculateDialogData?.generalSubjectsScore },
