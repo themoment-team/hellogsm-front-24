@@ -1,6 +1,6 @@
 'use client';
 
-import { GraduationType, MockScoreType } from 'types';
+import { MockScoreType } from 'types';
 
 import {
   AlertDialog,
@@ -18,10 +18,9 @@ interface ScoreCalculateDialogProps {
   setIsDialog: React.Dispatch<React.SetStateAction<boolean>>;
   scoreCalculateDialogData: MockScoreType | null; // todo 타입 변경될수도 있음
   type: 'score' | 'mock';
-  graduationType: GraduationType;
 }
 
-const SUBJECT = '교과';
+const SUBJECT: string[] = ['교과', '일반교과'] as const;
 const TOTAL = '총합';
 
 const ScoreCalculateDialog = ({
@@ -29,15 +28,22 @@ const ScoreCalculateDialog = ({
   setIsDialog,
   scoreCalculateDialogData,
   type,
-  graduationType,
 }: ScoreCalculateDialogProps) => {
-  const scoreArray = [
-    { title: '교과', score: scoreCalculateDialogData?.generalSubjectsScore },
-    { title: '출석', score: scoreCalculateDialogData?.attendanceScore },
-    { title: '봉사', score: scoreCalculateDialogData?.volunteerScore },
-    { title: '총합', score: scoreCalculateDialogData?.totalScore },
-    // todo
-  ] as const;
+  const scoreArray =
+    scoreCalculateDialogData?.totalSubjectsScore === undefined
+      ? [
+          { title: '일반교과', score: scoreCalculateDialogData?.generalSubjectsScore },
+          { title: '예체능', score: scoreCalculateDialogData?.artsPhysicalSubjectsScore },
+          { title: '출석', score: scoreCalculateDialogData?.attendanceScore },
+          { title: '봉사', score: scoreCalculateDialogData?.volunteerScore },
+          { title: '총합', score: scoreCalculateDialogData?.totalScore },
+        ]
+      : [
+          { title: '교과', score: scoreCalculateDialogData?.totalSubjectsScore },
+          { title: '출석', score: scoreCalculateDialogData?.attendanceScore },
+          { title: '봉사', score: scoreCalculateDialogData?.volunteerScore },
+          { title: '총합', score: scoreCalculateDialogData?.totalScore },
+        ];
 
   return (
     <AlertDialog open={isDialog}>
@@ -59,13 +65,14 @@ const ScoreCalculateDialog = ({
                 'flex-col',
                 'border-zinc-200',
                 'border-y-[0.0625rem]',
-                title === SUBJECT && ['border-l-[0.0625rem]', 'rounded-l-md'],
+                scoreArray.length === 5 ? 'w-[5.9rem]' : 'w-[7.375rem]',
+                SUBJECT.includes(title) && ['border-l-[0.0625rem]', 'rounded-l-md'],
                 title === TOTAL && ['border-r-[0.0625rem]', 'rounded-r-md'],
               )}
             >
               <h1
                 className={cn(
-                  'w-[7.375rem]',
+                  'w-full',
                   'h-[3rem]',
                   'flex',
                   'justify-center',
@@ -76,7 +83,7 @@ const ScoreCalculateDialog = ({
                   'text-[0.875rem]/[1.5rem]',
                   'font-semibold',
                   'bg-zinc-50',
-                  title === SUBJECT && 'rounded-tl-md',
+                  SUBJECT.includes(title) && 'rounded-tl-md',
                   title === TOTAL && 'rounded-tr-md',
                 )}
               >
@@ -84,16 +91,14 @@ const ScoreCalculateDialog = ({
               </h1>
               <p
                 className={cn(
-                  'w-[7.375rem]',
+                  'w-full',
                   'h-[3.5rem]',
                   'flex',
                   'justify-center',
                   'items-center',
                   'text-[0.875rem]/[1.25rem]',
-                  title === SUBJECT
-                    ? ['font-semibold', 'text-blue-600', 'rounded-tr-md']
-                    : ['font-normal', 'text-slate-700'],
-                  title === TOTAL && 'rounded-tl-md',
+                  SUBJECT.includes(title) ? ['rounded-tr-md'] : ['font-normal', 'text-slate-700'],
+                  title === TOTAL && ['rounded-tl-md', 'text-blue-600', 'font-semibold'],
                 )}
               >
                 {score}
