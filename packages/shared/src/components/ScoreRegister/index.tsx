@@ -188,7 +188,10 @@ const ScoreRegister = ({
         },
       }).success === true
     ) {
-      return setIsStep4Clickable!(true);
+      if (liberalSystem === 'freeSemester' && freeSemester) return setIsStep4Clickable!(true);
+      else if (liberalSystem === 'freeGrade' && !freeSemester) return setIsStep4Clickable!(true);
+
+      return setIsStep4Clickable!(false);
     } else if (store.graduationType === 'GED' && Number(watch('gedTotalScore')) > 0) {
       return setIsStep4Clickable!(true);
     } else {
@@ -214,15 +217,7 @@ const ScoreRegister = ({
 
   const { mutate: postMockScore } = usePostMockScore(store.graduationType!, {
     onSuccess: (data) => {
-      const scoreCalculateDialogData: MockScoreType = {
-        generalSubjectsScore: data.generalSubjectsScore,
-        artsPhysicalSubjectsScore: data.artsPhysicalSubjectsScore,
-        attendanceScore: data.attendanceScore,
-        volunteerScore: data.volunteerScore,
-        totalScore: data.totalScore,
-      };
-
-      setScoreCalculateDialogData(scoreCalculateDialogData);
+      setScoreCalculateDialogData(data);
       setIsDialog(true);
     },
 
@@ -466,12 +461,7 @@ const ScoreRegister = ({
           회원가입 시 입력한 기본 정보가 노출됩니다.
         </p>
         {store.graduationType === 'GED' ? (
-          <form
-            id={formId}
-            onSubmit={handleSubmit(handleFormSubmit, () => {
-              console.log(watch());
-            })}
-          >
+          <form id={formId} onSubmit={handleSubmit(handleFormSubmit, () => {})}>
             <div className={cn('w-[18.75rem]', 'flex', 'flex-col', 'gap-1')}>
               <p className={cn('text-slate-900', 'text-[0.875rem]/[1.25rem]')}>
                 검정고시 전과목 득점 합계 <span className={cn('text-red-600')}>*</span>
@@ -494,13 +484,15 @@ const ScoreRegister = ({
             <FormController className={cn(['mt-[5.625rem]'])} />
             <form
               id={formId}
-              onSubmit={() => {
+              onSubmit={(e) => {
+                e.preventDefault();
+
                 if (liberalSystem === 'freeGrade') {
                   setValue('achievement1_1', null);
                   setValue('achievement1_2', null);
                 }
 
-                handleSubmit(handleFormSubmit, () => console.log('에러 뜸'))();
+                handleSubmit(handleFormSubmit)();
               }}
               className={cn('flex', 'flex-col', 'items-center')}
             >
