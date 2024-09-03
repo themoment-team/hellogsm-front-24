@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useGetMyAuthInfo, useGetMyMemberInfo } from 'api';
 import { useRouter } from 'next/navigation';
 import { useForm, FormProvider } from 'react-hook-form';
 import { MemberRegisterType, SexType, SendCodeType } from 'types';
@@ -47,7 +48,7 @@ const SignUpPage = () => {
   const [lastSubmittedCode, setLastSubmittedCode] = useState<string>('');
   const [isSuccess, setIsSuccess] = useState<boolean | undefined>(undefined);
 
-  const [showModal, setShowModal] = useState<'code' | 'success' | ''>('');
+  const [showModal, setShowModal] = useState<'code' | 'success' | 'error' | ''>('');
 
   const formMethods = useForm({
     resolver: zodResolver(signupFormSchema),
@@ -97,9 +98,14 @@ const SignUpPage = () => {
 
   const targetYear = new Date().getFullYear();
 
+  const { refetch: refetchGetMyAuthInfo } = useGetMyAuthInfo();
+  const { refetch: refetchGetMyMemberInfo } = useGetMyMemberInfo();
+
   const { mutate: mutateMemberRegister } = usePostMemberRegister({
-    onError: () => alert('멘토 등록에 실패하였습니다.'),
+    onError: () => setShowModal('error'),
     onSuccess: () => {
+      refetchGetMyAuthInfo();
+      refetchGetMyMemberInfo();
       setShowModal('success');
     },
   });
@@ -392,16 +398,18 @@ const SignUpPage = () => {
         </AlertDialogContent>
       </AlertDialog>
 
-      <AlertDialog open={showModal === 'success'}>
+      <AlertDialog open={showModal === 'success' || showModal === 'error'}>
         <AlertDialogContent className="w-[400px]">
           <AlertDialogHeader>
-            <AlertDialogTitle>회원가입에 성공했습니다!</AlertDialogTitle>
+            <AlertDialogTitle>
+              {showModal === 'success' ? '회원가입에 성공했습니다!' : '오류가 발생했습니다.'}
+            </AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogAction
               onClick={() => {
                 setShowModal('');
-                push('/');
+                if (showModal === 'success') push('/');
               }}
             >
               확인

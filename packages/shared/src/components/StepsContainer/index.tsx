@@ -273,13 +273,30 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
       push(`${baseRoute}?step=1`);
       return;
     }
-    if (param === '3' && isBasicInfoComplete) {
-      push(`${baseRoute}?step=1`);
+
+    if (param === '3') {
+      if (isBasicInfoComplete) {
+        push(`${baseRoute}?step=1`);
+        return;
+      }
       if (isApplyInfoComplete) {
         push(`${baseRoute}?step=2`);
         return;
       }
-      return;
+    }
+
+    if (param === '4') {
+      if (isBasicInfoComplete) {
+        push(`${baseRoute}?step=1`);
+        return;
+      }
+      if (isApplyInfoComplete) {
+        push(`${baseRoute}?step=2`);
+        return;
+      }
+      if (isGuardianInfoComplete) {
+        push(`${baseRoute}?step=3`);
+      }
     }
   }, [isBasicInfoComplete, isApplyInfoComplete, isGuardianInfoComplete, param, push, memberId]);
 

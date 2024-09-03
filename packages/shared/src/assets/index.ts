@@ -9,3 +9,4 @@ export { default as UploadIcon } from './icon/UploadPhoto/UploadIcon';
 export { default as MouseIcon } from './icon/Confirm/MouseIcon';
 export { default as EditCheckIcon } from './icon/EditBar/EditCheckIcon';
 export { default as PrintIcon } from './icon/Print/PrintIcon';
+export { default as InspectionIcon } from './icon/Inspection/InspectionIcon';

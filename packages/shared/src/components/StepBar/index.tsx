@@ -23,6 +23,7 @@ import {
 import { StepCheckIcon, ProgressBarIcon } from 'shared/assets';
 import { Button, ScoreCalculateDialog } from 'shared/components';
 import { cn } from 'shared/lib/utils';
+import { basicRegisterSchema } from 'shared/schemas';
 import { useStore } from 'shared/stores';
 
 const freeSemesterConvertor = {
@@ -134,24 +135,43 @@ const StepBar = ({
 
     if (param === '3') {
       const {
+        img,
+        address,
+        detailAddress,
+        category,
+        schoolName,
+        schoolAddress,
+        month,
+        year,
+        choice,
+        screening,
         guardianName,
         guardianPhoneNumber,
         schoolTeacherName,
         schoolTeacherPhoneNumber,
-        otherRelationship,
         relationship,
       } = watch();
 
-      const step3IsClickable =
-        guardianName &&
-        guardianPhoneNumber &&
-        schoolTeacherName &&
-        schoolTeacherPhoneNumber &&
-        (otherRelationship || relationship)
-          ? true
-          : false;
-
-      return setIsClickable(step3IsClickable);
+      const validationResult = basicRegisterSchema.safeParse({
+        img,
+        address,
+        detailAddress,
+        category,
+        schoolName,
+        schoolAddress,
+        month,
+        year,
+        choice,
+        screening,
+        guardianName,
+        guardianPhoneNumber,
+        schoolTeacherName,
+        schoolTeacherPhoneNumber,
+        relationship,
+      });
+      // console.error('Validation failed:', validationResult?.error.errors);
+      console.log(validationResult.success);
+      setIsClickable(validationResult.success);
     }
 
     if (param === '4') {
