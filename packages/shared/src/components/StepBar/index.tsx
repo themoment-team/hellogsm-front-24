@@ -150,6 +150,7 @@ const StepBar = ({
         schoolTeacherName,
         schoolTeacherPhoneNumber,
         relationship,
+        otherRelationship,
       } = watch();
 
       const validationResult = basicRegisterSchema.safeParse({
@@ -168,9 +169,9 @@ const StepBar = ({
         schoolTeacherName,
         schoolTeacherPhoneNumber,
         relationship,
+        otherRelationship,
       });
-      // console.error('Validation failed:', validationResult?.error.errors);
-      console.log(validationResult.success);
+
       setIsClickable(validationResult.success);
     }
 
@@ -371,12 +372,12 @@ const StepBar = ({
       setSchoolAddress(schoolAddress);
       setGuardianName(guardianName);
       setGuardianPhoneNumber(guardianPhoneNumber);
-      setRelationshipWithGuardian(relationship ? relationship : otherRelationship!);
+      setRelationshipWithGuardian(
+        relationship === '기타 (직접입력)' ? otherRelationship ?? '' : relationship ?? '',
+      );
       setSchoolTeacherName(schoolTeacherName);
       setSchoolTeacherPhoneNumber(schoolTeacherPhoneNumber);
-
       updateStep(Math.min(currentStep + 1, Steps.FOUR));
-
       const nextStep = Math.min(currentStep + 1, Steps.FOUR);
       updateStep(nextStep);
     }

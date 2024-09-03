@@ -24,6 +24,9 @@ const GuardianRegister = ({ register, setValue, watch }: GuardianType) => {
     if (value === '부' || value === '모' || value === '기타 (직접입력)') {
       setSelectedRelationship(value);
       setValue('relationship', value);
+      if (value !== '기타 (직접입력)') {
+        setValue('otherRelationship', '');
+      }
     }
   };
 
