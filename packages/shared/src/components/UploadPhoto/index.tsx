@@ -46,7 +46,6 @@ const UploadPhoto = ({ setValue, watch }: UploadPhotoProps) => {
           if (typeof reader.result === 'string') {
             setProfileImg(reader.result);
             setValue('img', reader.result);
-            setProfileImg(reader.result);
           }
         };
       }
