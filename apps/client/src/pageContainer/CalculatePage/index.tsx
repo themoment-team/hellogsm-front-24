@@ -35,7 +35,7 @@ const CalculatePage = () => {
                 'gap-2',
               )}
             >
-              <Button onClick={() => {}} variant="ghost">
+              <Button onClick={() => setGraduationType(undefined)} variant="ghost">
                 이전
               </Button>
               <Button

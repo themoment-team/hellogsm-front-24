@@ -1,7 +1,8 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
 import { Dispatch, SetStateAction } from 'react';
+
+import { useSearchParams } from 'next/navigation';
 
 import { MouseIcon } from 'shared/assets';
 import {

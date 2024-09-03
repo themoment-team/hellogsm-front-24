@@ -189,7 +189,10 @@ const ScoreRegister = ({
         },
       }).success === true
     ) {
-      return setIsStep4Clickable!(true);
+      if (liberalSystem === 'freeSemester' && freeSemester) return setIsStep4Clickable!(true);
+      else if (liberalSystem === 'freeGrade' && !freeSemester) return setIsStep4Clickable!(true);
+
+      return setIsStep4Clickable!(false);
     } else if (store.graduationType === 'GED' && Number(watch('gedTotalScore')) > 0) {
       return setIsStep4Clickable!(true);
     } else {
@@ -216,15 +219,7 @@ const ScoreRegister = ({
 
   const { mutate: postMockScore } = usePostMockScore(store.graduationType!, {
     onSuccess: (data) => {
-      const scoreCalculateDialogData: MockScoreType = {
-        generalSubjectsScore: data.generalSubjectsScore,
-        artsPhysicalSubjectsScore: data.artsPhysicalSubjectsScore,
-        attendanceScore: data.attendanceScore,
-        volunteerScore: data.volunteerScore,
-        totalScore: data.totalScore,
-      };
-
-      setScoreCalculateDialogData(scoreCalculateDialogData);
+      setScoreCalculateDialogData(data);
       setIsDialog(true);
     },
 

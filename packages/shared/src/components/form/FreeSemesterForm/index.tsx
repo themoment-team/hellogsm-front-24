@@ -4,14 +4,12 @@
 /* eslint-disable @rushstack/no-new-null */
 
 import { XIcon } from 'lucide-react';
-import { useEffect } from 'react';
 import { Control, Controller, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 
 import { PinIcon } from 'shared/assets';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared/components';
 import { defaultSubjectArray, scoreArray } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
-import { useStore } from 'shared/stores';
 
 import type { ScoreFormType, SemesterIdType, SemesterType } from 'types';
 
@@ -120,16 +118,6 @@ const FreeSemesterForm = ({
   freeSemester,
   setFreeSemester,
 }: FreeSemesterFormProps) => {
-  const store = useStore();
-
-  useEffect(() => {
-    console.log(store);
-
-    return () => {
-      console.log(store);
-    };
-  }, [freeSemester]);
-
   return (
     <div className={cn('flex', 'flex-col')}>
       <div
