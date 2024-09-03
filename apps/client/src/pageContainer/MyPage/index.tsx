@@ -123,7 +123,7 @@ const MyPage = ({ initialData }: MyInfoProps) => {
           </div>
           {data === undefined ? (
             <div className={cn('flex', 'items-center', 'gap-2')}>
-              <Button variant="outline">원서 작성하기</Button>
+              <Button variant="outline" onClick={() => push('/register?step=1')}>원서 작성하기</Button>
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="outline" className={cn('text-red-600')}>
