@@ -36,12 +36,7 @@ const Elements: ElementType[] = [
   {
     background: 'bg-blue-200',
     title: '원서 및 성적 입력',
-    description: (
-      <>
-        절차를 읽고 원서와 성적을 작성한 후 <strong>마이페이지에서 최종 제출 버튼</strong>을 눌러야
-        입학 신청이 완료됩니다.
-      </>
-    ),
+    description: <>절차를 읽고 원서와 성적을 작성해 주시면 입학 신청이 완료됩니다.</>,
   },
   {
     background: 'bg-blue-300',
@@ -84,8 +79,8 @@ const Elements: ElementType[] = [
     title: '결과 발표',
     description: (
       <>
-        <strong>1차 서류심사(50%)와 2차 직무적성 소양평가(50%)</strong>를 통해 최종 합격자를
-        선발합니다.
+        <strong>1차 서류심사(50%)와 2차 직무적성 소양평가, 심층면접(50%)</strong>를 통해 최종
+        합격자를 선발합니다.
       </>
     ),
   },
