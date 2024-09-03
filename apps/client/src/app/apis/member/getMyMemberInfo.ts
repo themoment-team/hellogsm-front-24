@@ -15,29 +15,27 @@ export const getMyMemberInfo = async (
 ): Promise<MyMemberInfoType | undefined> => {
   const session = cookies().get('SESSION')?.value;
 
-  const response = await fetch(
-    new URL(memberUrl.getMyMemberInfo(), process.env.NEXT_PUBLIC_API_BASE_URL),
-    {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        Cookie: `SESSION=${session}`,
+  try {
+    const response = await fetch(
+      new URL(memberUrl.getMyMemberInfo(), process.env.NEXT_PUBLIC_API_BASE_URL),
+      {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Cookie: `SESSION=${session}`,
+        },
       },
-    },
-  );
+    );
 
-  const memberInfo = await response.json();
-  const isUnauthorized = response.status === 401;
-  const isNotFound = response.status === 404;
+    const memberInfo = await response.json();
 
-  if (isNotFound || isUnauthorized) {
+    if (!response.ok) {
+      return redirect(redirectUrl);
+    }
+
+    return memberInfo.data;
+  } catch {
     return undefined;
   }
-
-  if (!response.ok) {
-    return redirect(redirectUrl);
-  }
-
-  return memberInfo.data;
 };
