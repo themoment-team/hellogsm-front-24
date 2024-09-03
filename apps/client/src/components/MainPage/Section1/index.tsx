@@ -78,7 +78,7 @@ const Section1 = () => {
             </h1>
 
             <p className={cn('text-2xl', 'font-normal', 'text-white')}>
-              접수기간 : {RECRUITMENT_PERIOD.startDate} {RECRUITMENT_PERIOD.endDate}
+              접수기간 : {RECRUITMENT_PERIOD.startDate} ~ {RECRUITMENT_PERIOD.endDate}
             </p>
           </div>
 
