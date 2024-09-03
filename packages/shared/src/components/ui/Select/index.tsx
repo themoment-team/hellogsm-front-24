@@ -28,7 +28,7 @@ const SelectTrigger = React.forwardRef<
       'rounded-md',
       'border',
       'border-input',
-      'bg-background',
+      'bg-white',
       'px-3',
       'py-2',
       'text-sm',

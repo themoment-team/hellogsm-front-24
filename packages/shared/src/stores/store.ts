@@ -1,10 +1,8 @@
 /* eslint-disable @rushstack/no-new-null */
 import {
-  GEDAchievementType,
   GradesInputMethodType,
   GraduationType,
   MajorType,
-  MiddleSchoolAchievementType,
   ScoreFormType,
   ScreeningType,
   SemesterIdType,
@@ -36,7 +34,7 @@ interface StoreType {
   setProfileImg: (img: string) => void;
   setAddress: (address: string) => void;
   setDetailAddress: (detail: string) => void;
-  setGraduationType: (type: GraduationType) => void;
+  setGraduationType: (type: GraduationType | undefined) => void;
   setSchoolTeacherName: (teacherName: string) => void;
   setSchoolTeacherPhoneNumber: (teacherPhoneNumber: string) => void;
   setFirstDesiredMajor: (major: MajorType) => void;

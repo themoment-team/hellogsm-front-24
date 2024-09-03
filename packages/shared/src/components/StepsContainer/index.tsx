@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePostImage, usePostTempStorage } from 'api';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import {
@@ -16,6 +17,12 @@ import {
 } from 'types';
 
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
   ApplyRegister,
   BasicRegister,
   ConfirmBar,
@@ -80,6 +87,10 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
   const [tempBody, setTempBody] = useState<PostOneseoType | null>(null);
   const [isStep4Clickable, setIsStep4Clickable] = useState<boolean>(false);
   const [isButtonClick, setIsButtonClick] = useState<boolean>(false);
+  const [isTempModal, setIsTempModal] = useState<[boolean, 'success' | 'error' | null]>([
+    false,
+    null,
+  ]);
 
   const defaultDetailData = data?.privacyDetail;
   const defaultMajors = data?.desiredMajors;
@@ -92,10 +103,8 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
   const sex = info ? SexEnum[info.sex] : '';
 
   const { mutate: postTempStorage } = usePostTempStorage(Number(param), {
-    onSuccess: () => {
-      alert('원서 제출 완료');
-    },
-    onError: () => {},
+    onSuccess: () => setIsTempModal([true, 'success']),
+    onError: () => setIsTempModal([true, 'error']),
   });
 
   const { mutate: mutatePostImage } = usePostImage({
@@ -198,7 +207,7 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
     } as PostOneseoType;
     setIsButtonClick(false);
 
-    if (watch('img') && watch('img').includes('data:image')) {
+    if (store?.profileImg && store.profileImg.includes('data:image')) {
       const formData = new FormData();
       formData.append('file', dataUrltoFile(watch('img'), 'img.png'));
 
@@ -206,6 +215,10 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
       mutatePostImage(formData);
 
       return;
+    }
+
+    if (store?.profileImg && !store.profileImg.includes('data:image')) {
+      tempOneseo.profileImg = store.profileImg;
     }
 
     postTempStorage(tempOneseo);
@@ -360,6 +373,22 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
           setIsButtonClick={setIsButtonClick}
         />
       )}
+      <AlertDialog open={isTempModal[0]}>
+        <AlertDialogContent className="w-[400px]">
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {isTempModal[1] === 'success'
+                ? '원서가 임시저장 되었습니다!'
+                : '임시저장에 실패하였습니다.'}
+            </AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <Link href="/">
+              <AlertDialogAction>확인</AlertDialogAction>
+            </Link>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };

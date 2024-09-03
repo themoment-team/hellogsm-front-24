@@ -12,13 +12,14 @@ import {
   AlertDialogTitle,
   Button,
 } from 'shared';
+import { GetMyOneseoType } from 'types';
 
 import { BlueStarIcon, CloverIcon } from 'client/assets';
 import { LoginDialog } from 'client/components';
 
 import { cn } from 'shared/lib/utils';
 
-import { useGetMyAuthInfo, useGetMyMemberInfo } from 'api/hooks';
+import { useGetMyAuthInfo, useGetMyMemberInfo, useGetMyOneseo } from 'api/hooks';
 
 const textStyle = ['text-[1.25rem]/[1.75rem]', 'font-semibold'];
 
@@ -152,9 +153,17 @@ const List = ({
   );
 };
 
-const GuidePage = () => {
+interface GuideProps {
+  initialData: GetMyOneseoType | undefined;
+}
+
+const GuidePage = ({ initialData }: GuideProps) => {
   const { data: authInfo } = useGetMyAuthInfo();
   const { data: memberInfo } = useGetMyMemberInfo();
+
+  const { data } = useGetMyOneseo({
+    initialData: initialData,
+  });
 
   const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -234,7 +243,8 @@ const GuidePage = () => {
       </div>
 
       <Button
-        variant="fill"
+        variant={data && !data.step ? 'disabled' : 'fill'}
+        disabled={data && !data.step ? true : false}
         className={cn('sticky', 'bottom-10', 'w-[21.25rem]', 'z-10', 'mb-[10rem]')}
         onClick={() => {
           if (!authInfo?.authReferrerType) {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
@@ -21,15 +21,13 @@ const UploadPhoto = ({ setValue, watch }: UploadPhotoProps) => {
   const store = useStore();
   const { profileImg, setProfileImg } = store;
 
-  const [imageSrc, setImageSrc] = useState<string | null>(profileImg ? profileImg : null);
-
   const PhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
       reader.onload = () => {
         if (typeof reader.result === 'string') {
-          setImageSrc(reader.result);
+          setProfileImg(reader.result);
           setValue('img', reader.result);
           setProfileImg(reader.result);
           dataUrltoFile(watch('img'), 'img.png');
@@ -37,6 +35,10 @@ const UploadPhoto = ({ setValue, watch }: UploadPhotoProps) => {
       };
     }
   };
+
+  useEffect(() => {
+    if (watch('img')) setProfileImg(watch('img'));
+  }, []);
 
   return (
     <div className={cn('flex', 'items-end', 'gap-[0.5rem]')}>
@@ -67,9 +69,9 @@ const UploadPhoto = ({ setValue, watch }: UploadPhotoProps) => {
             )}
             htmlFor="file-input"
           >
-            {imageSrc ? (
+            {profileImg ? (
               <Image
-                src={profileImg || imageSrc}
+                src={profileImg}
                 alt="Uploaded"
                 className={cn('w-[8.75rem]', 'h-[10rem]', 'object-cover', 'rounded-lg')}
                 height={160}

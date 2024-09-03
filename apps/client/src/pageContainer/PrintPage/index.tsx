@@ -6,6 +6,7 @@ import { plusAll } from 'shared';
 import { GetMyOneseoType, SexEnum } from 'types';
 
 import { OneseoStatus } from 'client/components';
+import { cn } from 'client/lib/utils';
 
 import { PrintIcon } from 'shared/assets';
 import { Button } from 'shared/components';
@@ -150,15 +151,13 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                   <td className={tdStyle}>{SexEnum[oneseo.privacyDetail.sex ?? 'MALE']}</td>
                   <th className={thStyle}>생년월일</th>
                   <td className={tdStyle}>{oneseo.privacyDetail.birth}</td>
-                  <td
-                    rowSpan={6}
-                    className={tdStyle + 'h-[25vh] w-[18vh]'}
-                    style={{
-                      backgroundImage: `url(${oneseo.privacyDetail.profileImg})`,
-                      backgroundSize: '18vh 25vh',
-                      backgroundRepeat: 'no-repeat',
-                    }}
-                  ></td>
+                  <td rowSpan={6} className={tdStyle + 'h-[25vh] w-[18vh]'}>
+                    <img
+                      src={oneseo.privacyDetail.profileImg}
+                      alt="증명사진"
+                      className={cn('h-[25vh]', 'w-[18vh]')}
+                    />
+                  </td>
                 </tr>
                 <tr>
                   <th className={thStyle}>주 소</th>

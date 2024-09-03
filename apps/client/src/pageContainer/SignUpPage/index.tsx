@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useGetMyAuthInfo, useGetMyMemberInfo } from 'api';
 import { useRouter } from 'next/navigation';
 import { useForm, FormProvider } from 'react-hook-form';
 import { MemberRegisterType, SexType, SendCodeType } from 'types';
@@ -47,7 +48,7 @@ const SignUpPage = () => {
   const [lastSubmittedCode, setLastSubmittedCode] = useState<string>('');
   const [isSuccess, setIsSuccess] = useState<boolean | undefined>(undefined);
 
-  const [showModal, setShowModal] = useState<'code' | 'success' | ''>('');
+  const [showModal, setShowModal] = useState<'code' | 'success' | 'error' | ''>('');
 
   const formMethods = useForm({
     resolver: zodResolver(signupFormSchema),
@@ -97,9 +98,14 @@ const SignUpPage = () => {
 
   const targetYear = new Date().getFullYear();
 
+  const { refetch: refetchGetMyAuthInfo } = useGetMyAuthInfo();
+  const { refetch: refetchGetMyMemberInfo } = useGetMyMemberInfo();
+
   const { mutate: mutateMemberRegister } = usePostMemberRegister({
-    onError: () => alert('멘토 등록에 실패하였습니다.'),
+    onError: () => setShowModal('error'),
     onSuccess: () => {
+      refetchGetMyAuthInfo();
+      refetchGetMyMemberInfo();
       setShowModal('success');
     },
   });
@@ -154,7 +160,17 @@ const SignUpPage = () => {
 
   return (
     <>
-      <main className={cn('flex', 'flex-col', 'items-center', 'gap-10', 'pb-40', 'pt-[7.5rem]')}>
+      <main
+        className={cn(
+          'flex',
+          'flex-col',
+          'items-center',
+          'gap-10',
+          'pb-40',
+          'pt-[7.5rem]',
+          'bg-white',
+        )}
+      >
         <div className={cn('flex', 'flex-col', 'gap-3', 'items-center')}>
           <h1 className={cn('text-2xl', 'font-semibold')}>회원가입</h1>
           <p className={cn('text-sm', 'font-normal', 'text-gray-600')}>
@@ -342,15 +358,16 @@ const SignUpPage = () => {
                     'font-normal',
                     'h-[8.25rem]',
                     'overflow-scroll',
+                    'w-[23.75rem]',
                   )}
                 >
                   1. 개인정보의 수집항목 및 수집방법
                   <br />
                   통계청 나라통계사이트에서는 기본적인 회원 서비스 제공을 위한 필수정보로 실명
                   <br />
-                  인증정보와 가입정보로 구분하여 다음의 정보를 수집하고 있습니다. 필수정보를 입
+                  인증정보와 가입정보로 구분하여 다음의 정보를 수집하고 있습니다. 필수정보를
                   <br />
-                  력해주셔야 회원 서비스 이용이 가능합니다
+                  입력해주셔야 회원 서비스 이용이 가능합니다
                 </div>
               )}
             </div>
@@ -381,16 +398,18 @@ const SignUpPage = () => {
         </AlertDialogContent>
       </AlertDialog>
 
-      <AlertDialog open={showModal === 'success'}>
+      <AlertDialog open={showModal === 'success' || showModal === 'error'}>
         <AlertDialogContent className="w-[400px]">
           <AlertDialogHeader>
-            <AlertDialogTitle>회원가입에 성공했습니다!</AlertDialogTitle>
+            <AlertDialogTitle>
+              {showModal === 'success' ? '회원가입에 성공했습니다!' : '오류가 발생했습니다.'}
+            </AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogAction
               onClick={() => {
                 setShowModal('');
-                push('/');
+                if (showModal === 'success') push('/');
               }}
             >
               확인

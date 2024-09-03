@@ -14,7 +14,6 @@ export default async function Edit({ params: { memberId }, searchParams }: EditP
   const step = searchParams?.step;
   const id = Number(memberId);
 
-  // const { data: memberInfo } = useGetMyMemberInfo();
   if (!step || (step && Number(step) > LAST_STEP)) return redirect(`/edit/${memberId}?step=1`);
 
   const data = await getOneseoByMemberId(id);

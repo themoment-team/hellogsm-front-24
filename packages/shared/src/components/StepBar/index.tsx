@@ -100,15 +100,7 @@ const StepBar = ({
 
   const { mutate: postMockScore } = usePostMockScore(store.graduationType!, {
     onSuccess: (data) => {
-      const scoreCalculateDialogData: MockScoreType = {
-        generalSubjectsScore: data.generalSubjectsScore,
-        artsPhysicalSubjectsScore: data.artsPhysicalSubjectsScore,
-        attendanceScore: data.attendanceScore,
-        volunteerScore: data.volunteerScore,
-        totalScore: data.totalScore,
-      };
-
-      setScoreCalculateDialogData(scoreCalculateDialogData);
+      setScoreCalculateDialogData(data);
       setIsDialog(true);
     },
     onError: () => {},
