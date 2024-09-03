@@ -60,7 +60,7 @@ const Header = () => {
         'border-gray-100',
       )}
     >
-      <div className={cn('text-2xl', 'font-bold')}>Hello, GSM </div>
+      <I.HelloGSMLogo />
       <nav
         className={cn(
           'w-[18.75rem]',

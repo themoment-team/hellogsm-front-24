@@ -20,3 +20,4 @@ export { default as NotFoundZeorIcon } from './NotFoundZeorIcon';
 export { default as BackIcon } from './BackIcon';
 export { default as HomeIcon } from './HomeIcon';
 export { default as LogoutIcon } from './LogoutIcon';
+export { default as HelloGSMLogo } from './HelloGSMLogo';
