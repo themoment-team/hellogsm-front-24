@@ -48,6 +48,8 @@ const Section3 = () => {
             )}
           >
             접수기간: {RECRUITMENT_PERIOD.startDate}
+            <br />
+            {' ~ '}
             <br className={cn('inline', 'xl:hidden')} />
             {RECRUITMENT_PERIOD.endDate}
           </p>

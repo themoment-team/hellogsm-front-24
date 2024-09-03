@@ -350,7 +350,7 @@ const ScoreRegister = ({
       return postMockScore(middleSchoolAchievement);
     }
 
-    const body: Omit<PostOneseoType, 'profileImg'> = {
+    const body: PostOneseoType = {
       guardianName: guardianName!,
       guardianPhoneNumber: guardianPhoneNumber!,
       relationshipWithGuardian: relationshipWithGuardian!,
@@ -366,6 +366,7 @@ const ScoreRegister = ({
       schoolAddress: schoolAddress!,
       screening: screening!,
       middleSchoolAchievement: middleSchoolAchievement!,
+      profileImg: profileImg,
     };
 
     if (type === 'admin') {
@@ -379,10 +380,14 @@ const ScoreRegister = ({
 
     setOneseoBody(body);
 
-    const formData = new FormData();
-    formData.append('file', dataUrltoFile(profileImg!, 'img.png'));
+    if (profileImg && profileImg.includes('data:image')) {
+      const formData = new FormData();
+      formData.append('file', dataUrltoFile(profileImg!, 'img.png'));
 
-    mutatePostImage(formData);
+      return mutatePostImage(formData);
+    }
+
+    mutatePostMyOneseo(body);
   };
 
   const handleAddSubjectClick = (defaultSubject?: string) => {

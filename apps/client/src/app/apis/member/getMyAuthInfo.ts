@@ -13,29 +13,27 @@ import type { MyAuthInfoType } from 'types';
 export const getMyAuthInfo = async (redirectUrl: string): Promise<MyAuthInfoType | undefined> => {
   const session = cookies().get('SESSION')?.value;
 
-  const response = await fetch(
-    new URL(memberUrl.getMyAuthInfo(), process.env.NEXT_PUBLIC_API_BASE_URL),
-    {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        Cookie: `SESSION=${session}`,
+  try {
+    const response = await fetch(
+      new URL(memberUrl.getMyAuthInfo(), process.env.NEXT_PUBLIC_API_BASE_URL),
+      {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Cookie: `SESSION=${session}`,
+        },
       },
-    },
-  );
+    );
 
-  const authInfo = await response.json();
-  const isUnauthorized = response.status === 401;
-  const isNotFound = response.status === 404;
+    const authInfo = await response.json();
 
-  if (isNotFound || isUnauthorized) {
+    if (!response.ok) {
+      return redirect(redirectUrl);
+    }
+
+    return authInfo.data;
+  } catch {
     return undefined;
   }
-
-  if (!response.ok) {
-    return redirect(redirectUrl);
-  }
-
-  return authInfo.data;
 };

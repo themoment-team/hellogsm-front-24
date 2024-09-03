@@ -107,7 +107,7 @@ export interface PostOneseoType {
   guardianName: string | null;
   guardianPhoneNumber: string | null;
   relationshipWithGuardian: string | null;
-  profileImg: string | null;
+  profileImg: string | null | undefined;
   address: string | null;
   detailAddress: string | null;
   graduationType: GraduationType | null;
