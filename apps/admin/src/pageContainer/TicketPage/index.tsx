@@ -48,7 +48,7 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
                 </td>
               </tr>
               <tr>
-                <td className="font-normal border border-black w-28">
+                <td className="w-28 border border-black font-normal">
                   2-1차 전형 <br />
                   (직무적성소양평가)
                 </td>
@@ -58,10 +58,11 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
 
                 <td rowSpan={6} className="h-[200px] w-[150px] border border-black">
                   {ticket.profileImg && (
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={ticket.profileImg}
                       alt="증명사진 오류"
-                      className="block w-full h-full"
+                      className="block h-full w-full"
                     />
                   )}
                 </td>
@@ -71,12 +72,12 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
                 >
                   접수번호
                 </td>
-                <td rowSpan={2} className="font-normal border border-black">
+                <td rowSpan={2} className="border border-black font-normal">
                   {ticket.oneseoSubmitCode}
                 </td>
               </tr>
               <tr>
-                <td className="font-normal border border-black w-28">
+                <td className="w-28 border border-black font-normal">
                   2-2차 전형 <br />
                   (심층면접)
                 </td>
@@ -85,7 +86,7 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
                 </td>
               </tr>
               <tr>
-                <td rowSpan={2} className="font-normal border border-black">
+                <td rowSpan={2} className="border border-black font-normal">
                   합격자 발표
                 </td>
                 <td className="border border-black pl-[0.625rem] text-left font-normal">
@@ -104,12 +105,12 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
                 >
                   생년월일
                 </td>
-                <td className="font-normal border border-black" rowSpan={2}>
+                <td className="border border-black font-normal" rowSpan={2}>
                   {ticket.memberBirth}
                 </td>
               </tr>
               <tr>
-                <td rowSpan={2} className="font-normal border border-black">
+                <td rowSpan={2} className="border border-black font-normal">
                   합격자 등록 및<br /> 서류 제출
                 </td>
                 <td className="border border-black pl-[0.625rem] text-left font-normal">
@@ -132,7 +133,7 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
                 )}
               </tr>
               <tr>
-                <td className="font-normal border border-black">합격자 서류</td>
+                <td className="border border-black font-normal">합격자 서류</td>
                 <td className="border border-black pl-[0.625rem] text-left font-normal">
                   공고문 참조
                 </td>
@@ -142,12 +143,12 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
                 >
                   전형구분
                 </td>
-                <td className="font-normal border border-black">
+                <td className="border border-black font-normal">
                   {ScreeningEnum[ticket.appliedScreening]}
                 </td>
               </tr>
               <tr>
-                <td className="font-normal border border-black">신입생 비전캠프</td>
+                <td className="border border-black font-normal">신입생 비전캠프</td>
                 <td className="border border-black pl-[0.625rem] text-left font-normal">
                   {visionCampDate.startDate} ~ {visionCampDate.endDate} 예정
                 </td>
@@ -166,14 +167,14 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
                 <td colSpan={2} className="border border-black pl-[0.625rem] text-left font-normal">
                   * 공지 사항: 홈페이지(gsm.gen.hs.kr)-입학 안내 <br />* 문의:062-949-6800
                 </td>
-                <td className="font-normal border border-black">(인)</td>
+                <td className="border border-black font-normal">(인)</td>
               </tr>
             </tbody>
           </table>
         </div>
       ))}
       <Button
-        className="fixed items-center gap-2 bottom-10 right-10 print:hidden"
+        className="fixed bottom-10 right-10 items-center gap-2 print:hidden"
         onClick={handlePrint}
       >
         <PrintIcon />

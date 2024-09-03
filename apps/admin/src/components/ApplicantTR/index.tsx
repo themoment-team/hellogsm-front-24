@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 
+import { useRouter } from 'next/navigation';
 import { useForm, Controller } from 'react-hook-form';
 import { checkIsPassedDate } from 'shared';
 import { OneseoListType, OneseoType, ScreeningEnum } from 'types';
@@ -57,6 +58,8 @@ const ApplicantTR = ({
   submitCode,
 }: ApplicationTRProps) => {
   const [dialogOpen, setDialogOpen] = useState<'' | 'submit'>('');
+
+  const { push } = useRouter();
 
   const 직무적성처리시작일자 = new Date(직무적성일자);
   const 심층면접처리시작일자 = new Date(심층면접일자);
@@ -215,7 +218,11 @@ const ApplicantTR = ({
             <Badge variant={secondTestResult}>{secondTestResult}</Badge>
           </TableCell>
           <TableCell className="w-[149px]">
-            <Button className="ml-[33.24px]" variant="outline">
+            <Button
+              onClick={() => push(`/edit/${memberId}?step=1`)}
+              className="ml-[33.24px]"
+              variant="outline"
+            >
               원서수정
             </Button>
           </TableCell>

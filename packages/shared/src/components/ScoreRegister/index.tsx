@@ -80,6 +80,7 @@ interface ScoreRegisterProps {
   data: GetMyOneseoType | undefined;
   memberId?: number;
   type: 'client' | 'admin' | 'calculate';
+  // eslint-disable-next-line @rushstack/no-new-null
   scoreWatch?: ScoreFormType | null;
   isStep4Clickable?: boolean;
   setIsStep4Clickable?: Dispatch<SetStateAction<boolean>>;
@@ -203,6 +204,7 @@ const ScoreRegister = ({
       return setFreeSemester(reversedFreeSemesterConvertor[defaultData.freeSemester]);
 
     if (liberalSystem === 'freeGrade') return setFreeSemester(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultData, setFreeSemester, liberalSystem]);
 
   const { mutate: mutatePostMyOneseo } = usePostMyOneseo({
@@ -242,7 +244,7 @@ const ScoreRegister = ({
 
   const { mutate: mutatePutOneseo } = usePutOneseoByMemberId(memberId!, {
     onSuccess: () => {
-      alert('수정되었습니다');
+      setShowModal(true);
     },
     onError: () => {},
   });
@@ -306,6 +308,7 @@ const ScoreRegister = ({
       thirdDesiredMajor &&
       schoolName &&
       schoolAddress &&
+      liberalSystem &&
       screening;
 
     if (type !== 'calculate' && !isAllWrite) return;
@@ -341,7 +344,7 @@ const ScoreRegister = ({
             attendanceDays: attendanceDays!.map((i) => Number(i)),
             volunteerTime: volunteerTime!.map((i) => Number(i)),
             newSubjects: newSubjects,
-            liberalSystem: isFreeSemester ? '자유학년제' : '자유학기제',
+            liberalSystem: liberalSystem === 'freeGrade' ? '자유학년제' : '자유학기제',
             freeSemester: (isFreeSemester
               ? freeSemesterConvertor[freeSemester!]
               : null) as FreeSemesterType,
@@ -466,12 +469,7 @@ const ScoreRegister = ({
           회원가입 시 입력한 기본 정보가 노출됩니다.
         </p>
         {store.graduationType === 'GED' ? (
-          <form
-            id={formId}
-            onSubmit={handleSubmit(handleFormSubmit, () => {
-              console.log(watch());
-            })}
-          >
+          <form id={formId} onSubmit={handleSubmit(handleFormSubmit)}>
             <div className={cn('w-[18.75rem]', 'flex', 'flex-col', 'gap-1')}>
               <p className={cn('text-slate-900', 'text-[0.875rem]/[1.25rem]')}>
                 검정고시 전과목 득점 합계 <span className={cn('text-red-600')}>*</span>
@@ -494,13 +492,15 @@ const ScoreRegister = ({
             <FormController className={cn(['mt-[5.625rem]'])} />
             <form
               id={formId}
-              onSubmit={() => {
+              onSubmit={(e) => {
+                e.preventDefault();
+
                 if (liberalSystem === 'freeGrade') {
                   setValue('achievement1_1', null);
                   setValue('achievement1_2', null);
                 }
 
-                handleSubmit(handleFormSubmit, () => console.log('에러 뜸'))();
+                handleSubmit(handleFormSubmit)();
               }}
               className={cn('flex', 'flex-col', 'items-center')}
             >
@@ -589,18 +589,24 @@ const ScoreRegister = ({
         <AlertDialogContent className="w-[400px]">
           <AlertDialogHeader>
             <AlertDialogTitle>
-              원서가 제출되었습니다!
-              <br />
-              {
-                // TODO 연락처 수정 필요
-              }
-              문제가 있다면 blabla로 연락주세요.
+              {type === 'client' ? (
+                <>
+                  원서가 제출되었습니다!
+                  <br />
+                  {
+                    // TODO 연락처 수정 필요
+                  }
+                  문제가 있다면 blabla로 연락주세요.
+                </>
+              ) : (
+                <>원서가 수정되었습니다!</>
+              )}
             </AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogAction
               onClick={() => {
-                push('/mypage');
+                push(type === 'client' ? '/mypage' : '/');
                 setShowModal(false);
               }}
             >
