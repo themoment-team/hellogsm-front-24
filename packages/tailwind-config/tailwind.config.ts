@@ -24,9 +24,7 @@ const config: Config = {
     container: {
       center: true,
       padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
+      screens: {},
     },
     extend: {
       backgroundImage: {
@@ -111,11 +109,11 @@ const config: Config = {
         310: "77.5rem",
       },
       screens: {
-        600: "(max-width: 600px)",
-        1024: "(max-width: 1024px)",
-        1440: "(max-width: 1440px)",
-        1728: "(max-width: 1728px)",
-        1920: "(max-width: 1920px)",
+        "600": "(max-width: 600px)",
+        "1024": "(max-width: 1024px)",
+        "1440": "(max-width: 1440px)",
+        "1728": "(max-width: 1728px)",
+        "1920": "(max-width: 1920px)",
       },
       borderRadius: {
         lg: "var(--radius)",

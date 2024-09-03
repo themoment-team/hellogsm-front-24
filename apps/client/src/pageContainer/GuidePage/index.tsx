@@ -15,7 +15,7 @@ import {
 import { GetMyOneseoType } from 'types';
 
 import { BlueStarIcon, CloverIcon } from 'client/assets';
-import { LoginDialog } from 'client/components';
+import { Footer, LoginDialog } from 'client/components';
 
 import { cn } from 'shared/lib/utils';
 
@@ -104,8 +104,10 @@ const Steps = ({
         'items-center',
         'rounded-full',
         background,
-        'w-[12.3125rem]',
-        'h-[12.3125rem]',
+        'sm:w-[12.3125rem]',
+        'sm:h-[12.3125rem]',
+        'w-[9.25rem]',
+        'h-[9.25rem]',
       )}
     >
       <p className={cn('text-white', 'text-[1.5rem]/[2rem]', 'font-semibold')}>
@@ -137,9 +139,13 @@ const List = ({
           <p className={cn(...textStyle, 'text-gray-900')}>{title}</p>
         </div>
         <ul className={cn('pl-2')}>
-          <li className={cn(...descriptionStyle, 'text-gray-900')}>&middot; {description}</li>
+          <div className={cn(...descriptionStyle, 'text-gray-900', 'flex', 'gap-1')}>
+            &middot; <p>{description}</p>
+          </div>
           {subDescription && (
-            <li className={cn(...descriptionStyle, 'text-gray-900')}>&middot; {subDescription}</li>
+            <div className={cn(...descriptionStyle, 'text-gray-900', 'flex', 'gap-1')}>
+              &middot; <p>{subDescription}</p>
+            </div>
           )}
         </ul>
       </div>
@@ -190,7 +196,8 @@ const GuidePage = ({ initialData }: GuideProps) => {
       </div>
       <div
         className={cn(
-          'w-[66.5rem]',
+          'w-[30rem]',
+          'sm:w-[66.5625rem]',
           'flex',
           'flex-col',
           'items-start',
@@ -199,7 +206,17 @@ const GuidePage = ({ initialData }: GuideProps) => {
           'pb-[7.5rem]',
         )}
       >
-        <div className={cn('w-full', 'flex', 'items-center', 'justify-between')}>
+        <div
+          className={cn(
+            'w-full',
+            'flex',
+            'items-center',
+            'flex-wrap',
+            'gap-4',
+            'sm:gap-5',
+            'justify-center',
+          )}
+        >
           {Elements.map((element, index) => (
             <Steps
               key={index}
@@ -240,7 +257,17 @@ const GuidePage = ({ initialData }: GuideProps) => {
       <Button
         variant={data && !data.step ? 'disabled' : 'fill'}
         disabled={data && !data.step ? true : false}
-        className={cn('sticky', 'bottom-10', 'w-[21.25rem]', 'z-10', 'mb-[10rem]')}
+        className={cn(
+          'sticky',
+          'bottom-10',
+          'w-[30rem]',
+          'h-[3.25rem]',
+          'sm:w-[31.25rem]',
+          'sm:h-[4.25rem]',
+          'z-10',
+          'mb-[10rem]',
+          'text-[1rem]/[1.5rem]',
+        )}
         onClick={() => {
           if (!authInfo?.authReferrerType) {
             setShowModal(true);
@@ -255,6 +282,7 @@ const GuidePage = ({ initialData }: GuideProps) => {
       >
         원서 작성하기
       </Button>
+      <Footer />
 
       <AlertDialog open={showModal}>
         <AlertDialogContent className="w-[400px]">

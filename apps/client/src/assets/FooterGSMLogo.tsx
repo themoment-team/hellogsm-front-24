@@ -1,10 +1,11 @@
+import { cn } from 'shared/lib/utils';
+
 const FooterGSMLogo = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="231"
-    height="141"
     viewBox="0 0 231 141"
     fill="none"
+    className={cn('w-[9rem]', 'h-[5.5625rem]', 'sm:w-[14.4375rem]', 'sm:h-[8.8125rem]')}
   >
     <g clipPath="url(#clip0_2582_13103)">
       <path
