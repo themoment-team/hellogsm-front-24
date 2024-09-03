@@ -207,7 +207,7 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
     } as PostOneseoType;
     setIsButtonClick(false);
 
-    if (watch('img') && watch('img').includes('data:image')) {
+    if (store?.profileImg && store.profileImg.includes('data:image')) {
       const formData = new FormData();
       formData.append('file', dataUrltoFile(watch('img'), 'img.png'));
 
@@ -215,6 +215,10 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
       mutatePostImage(formData);
 
       return;
+    }
+
+    if (store?.profileImg && !store.profileImg.includes('data:image')) {
+      tempOneseo.profileImg = store.profileImg;
     }
 
     postTempStorage(tempOneseo);
