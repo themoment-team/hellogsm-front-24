@@ -18,7 +18,6 @@ import {
 } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 import { useStore } from 'shared/stores';
-import { dataUrltoFile } from 'shared/utils';
 
 interface UploadPhotoProps {
   setValue: UseFormSetValue<basicRegisterType>;
@@ -48,7 +47,6 @@ const UploadPhoto = ({ setValue, watch }: UploadPhotoProps) => {
             setProfileImg(reader.result);
             setValue('img', reader.result);
             setProfileImg(reader.result);
-            dataUrltoFile(watch('img'), 'img.png');
           }
         };
       }
