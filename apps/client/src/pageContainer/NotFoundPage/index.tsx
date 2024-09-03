@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import { BackIcon, NotFoundIcon1, NotFoundIcon2 } from 'client/assets';
+import { BackIcon, NotFoundFourIcon, NotFoundZeorIcon } from 'client/assets';
 import { Footer } from 'client/components';
 
 import { cn } from 'shared/lib/utils';
@@ -30,15 +30,15 @@ const NotFoundPage = () => {
       >
         <div className={cn('flex', 'justify-center', 'items-center', 'relative')}>
           <div>
-            <NotFoundIcon1 color="#A3E635" />
+            <NotFoundFourIcon color="#A3E635" />
           </div>
 
           <div className={cn('-ml-2')}>
-            <NotFoundIcon2 />
+            <NotFoundZeorIcon />
           </div>
 
           <div className={cn('-ml-2', 'relative')}>
-            <NotFoundIcon1 color="#075985" />
+            <NotFoundFourIcon color="#075985" />
 
             <div className={cn('absolute', 'flex', 'gap-5', 'bottom-[1px]', 'left-full')}>
               {squares.map((square, index) => (

@@ -1,5 +1,5 @@
 import { NotFoundPage } from 'client/pageContainer';
 
-export default function SignUp() {
+export default function NotFound() {
   return <NotFoundPage />;
 }
