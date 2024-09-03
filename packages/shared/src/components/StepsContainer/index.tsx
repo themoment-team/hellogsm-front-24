@@ -264,7 +264,7 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
     !guardianPhoneNumber ||
     !relationship ||
     !schoolTeacherName ||
-    !!schoolTeacherPhoneNumber;
+    !schoolTeacherPhoneNumber;
 
   useEffect(() => {
     const baseRoute = memberId ? `/edit/${memberId}` : '/register';
@@ -296,6 +296,7 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
       }
       if (isGuardianInfoComplete) {
         push(`${baseRoute}?step=3`);
+        return;
       }
     }
   }, [isBasicInfoComplete, isApplyInfoComplete, isGuardianInfoComplete, param, push, memberId]);
