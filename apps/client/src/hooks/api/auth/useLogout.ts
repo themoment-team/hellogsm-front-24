@@ -13,9 +13,6 @@ export const useLogout = () => {
         {
           method: 'GET',
           credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
         },
       );
 
