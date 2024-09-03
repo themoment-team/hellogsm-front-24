@@ -430,11 +430,7 @@ const ScoreRegister = ({
     if (subjectArray.length <= defaultSubjectLength) {
       setValue('newSubjects', null);
     }
-
-    // if (liberalSystem === 'freeGrade' && freeSemester) {
-    //   setValue(freeSemester, null);
-    // }
-  }, [defaultSubjectLength, freeSemester, setValue, subjectArray]);
+  }, [defaultSubjectLength, freeSemester, liberalSystem, setValue, subjectArray]);
 
   return (
     <>
@@ -493,6 +489,10 @@ const ScoreRegister = ({
                 if (liberalSystem === 'freeGrade') {
                   setValue('achievement1_1', null);
                   setValue('achievement1_2', null);
+                }
+
+                if (liberalSystem === 'freeSemester' && freeSemester) {
+                  setValue(freeSemester, null);
                 }
 
                 handleSubmit(handleFormSubmit)();
