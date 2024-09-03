@@ -8,7 +8,7 @@ import { Footer } from 'client/components';
 import { cn } from 'shared/lib/utils';
 
 const NotFoundPage = () => {
-  const router = useRouter();
+  const { back } = useRouter();
   const squares = [
     { bgColor: 'bg-sky-300', rotate: 'rotate-[125deg]' },
     { bgColor: 'bg-sky-800', rotate: 'rotate-[-24.201deg]' },
@@ -81,7 +81,7 @@ const NotFoundPage = () => {
                 'text-[1rem]/[1.75rem]',
                 'font-normal',
               )}
-              onClick={() => router.back()}
+              onClick={() => back()}
             >
               <BackIcon />
               돌아가기
