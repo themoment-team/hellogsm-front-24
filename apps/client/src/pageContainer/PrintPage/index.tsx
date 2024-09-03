@@ -127,7 +127,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                     접수번호
                   </th>
                   <td className="w-40 border border-b-0 border-black text-center">
-                    {oneseo.oneseoId}
+                    {oneseo.submitCode}
                   </td>
                 </tr>
               </table>
