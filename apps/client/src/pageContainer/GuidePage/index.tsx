@@ -243,8 +243,8 @@ const GuidePage = ({ initialData }: GuideProps) => {
       </div>
 
       <Button
-        variant={data ? 'disabled' : 'fill'}
-        disabled={data ? true : false}
+        variant={data && !data.step ? 'disabled' : 'fill'}
+        disabled={data && !data.step ? true : false}
         className={cn('sticky', 'bottom-10', 'w-[21.25rem]', 'z-10', 'mb-[10rem]')}
         onClick={() => {
           if (!authInfo?.authReferrerType) {
