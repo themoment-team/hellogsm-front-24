@@ -3,7 +3,7 @@
 import { authUrl } from 'api';
 import { useRouter } from 'next/navigation';
 
-export const useLogout = () => {
+export const useLogout = (refetch: () => void) => {
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -17,6 +17,7 @@ export const useLogout = () => {
       );
 
       if (response.ok) {
+        refetch();
         router.push('/');
       }
     } catch (error) {

@@ -35,9 +35,9 @@ const loginLinkStyle = [
 ];
 
 const Header = () => {
-  const { data: authInfo } = useGetMyAuthInfo();
+  const { data: authInfo, refetch } = useGetMyAuthInfo();
   const { data: memberInfo } = useGetMyMemberInfo();
-  const handleLogout = useLogout();
+  const handleLogout = useLogout(refetch);
 
   const [isClicked, setIsClicked] = useState(false);
 
@@ -139,7 +139,10 @@ const Header = () => {
                   'text-[1rem]/[1.75rem]',
                   'font-normal',
                 )}
-                onClick={handleLogout}
+                onClick={() => {
+                  handleLogout();
+                  setIsClicked(!isClicked);
+                }}
               >
                 <I.LogoutIcon /> 로그아웃
               </button>

@@ -26,13 +26,13 @@ interface MyInfoProps {
 const MyPage = ({ initialData }: MyInfoProps) => {
   const { push } = useRouter();
 
-  const { data } = useGetMyOneseo({
+  const { data, refetch } = useGetMyOneseo({
     initialData: initialData,
   });
 
   const { data: memberInfo } = useGetMyMemberInfo();
 
-  const handleLogout = useLogout();
+  const handleLogout = useLogout(refetch);
 
   const submitCode = data?.submitCode;
   const wantedScreening = data?.wantedScreening;
@@ -123,7 +123,9 @@ const MyPage = ({ initialData }: MyInfoProps) => {
           </div>
           {data === undefined ? (
             <div className={cn('flex', 'items-center', 'gap-2')}>
-              <Button variant="outline" onClick={() => push('/register?step=1')}>원서 작성하기</Button>
+              <Button variant="outline" onClick={() => push('/register?step=1')}>
+                원서 작성하기
+              </Button>
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="outline" className={cn('text-red-600')}>
