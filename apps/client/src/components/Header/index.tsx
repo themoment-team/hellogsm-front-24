@@ -35,9 +35,9 @@ const loginLinkStyle = [
 ];
 
 const Header = () => {
-  const { data: authInfo, refetch } = useGetMyAuthInfo();
-  const { data: memberInfo } = useGetMyMemberInfo();
-  const handleLogout = useLogout(refetch);
+  const { data: authInfo, refetch: authInfoRefetch } = useGetMyAuthInfo();
+  const { data: memberInfo, refetch: memberInfoRefetch } = useGetMyMemberInfo();
+  const handleLogout = useLogout(authInfoRefetch, memberInfoRefetch);
 
   const [isLogoutClicked, setIsLogoutClicked] = useState(false);
   const [isBarClicked, setIsBarClicked] = useState(false);
