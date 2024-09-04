@@ -21,3 +21,7 @@ export { default as BackIcon } from './BackIcon';
 export { default as HomeIcon } from './HomeIcon';
 export { default as LogoutIcon } from './LogoutIcon';
 export { default as HelloGSMLogo } from './HelloGSMLogo';
+export { default as HamburgurIcon } from './HamburgurIcon';
+export { default as XIcon } from './XIcon';
+export { default as OneseoIcon } from './OneseoIcon';
+export { default as FaqIcon } from './FaqIcon';
