@@ -44,25 +44,36 @@ const Section2 = () => {
             'justify-between',
             'items-center',
             'w-full',
-            'px-24',
             'gap-8',
             'md:gap-0',
+            'px-[3.75rem]',
+            'xl:px-[8rem]',
+            '2xl:px-[16rem]',
           )}
         >
           <h1
             className={cn(
               'text-[#0F2E4D]',
-              'text-[2rem]/[2.5rem]',
+              'text-[1.5rem]/[2rem]',
               'font-semibold',
               'text-center',
               'md:text-left',
+              'md:text-[2rem]/[2.5rem]',
             )}
           >
             광주소프트웨어마이스터고등학교
             <br />
             2025 신입생 모집절차
           </h1>
-          <p className={cn('text-gray-600', 'font-normal', 'hidden', 'md:inline')}>
+          <p
+            className={cn(
+              'text-gray-600',
+              'font-normal',
+              'hidden',
+              'md:inline',
+              'text-[1rem]/[1.5rem]',
+            )}
+          >
             우리 학교에 입학하기 위해 필요한
             <br />
             다섯 가지 절차를 소개해드릴게요!
