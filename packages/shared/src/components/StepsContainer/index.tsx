@@ -67,16 +67,35 @@ const getScreeningTypeText = (screeningType: string) => {
     case 'GENERAL':
       return '일반전형';
     case 'SPECIAL':
-      return '특별전형';
+      return '사회통합전형';
     case 'EXTRA_VETERANS':
     case 'EXTRA_ADMISSION':
       return '정원 외 특별전형';
     case '일반전형':
       return 'GENERAL';
-    case '특별전형':
+    case '사회통합전형':
       return 'SPECIAL';
     case '정원 외 특별전형':
       return 'EXTRA_ADMISSION';
+    default:
+      return '';
+  }
+};
+
+const getApplyMajor = (applyType: string) => {
+  switch (applyType) {
+    case 'SW':
+      return '소프트웨어개발과';
+    case 'AI':
+      return '인공지능과';
+    case 'IOT':
+      return '스마트IOT과';
+    case '소프트웨어개발과':
+      return 'SW';
+    case '인공지능과':
+      return 'AI';
+    case '스마트IOT과':
+      return 'IOT';
     default:
       return '';
   }
@@ -194,9 +213,9 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
       schoolTeacherPhoneNumber: watch('schoolTeacherPhoneNumber')
         ? watch('schoolTeacherPhoneNumber')
         : null,
-      firstDesiredMajor: watch('choice')[0] ? ReverseMajorConvertor[watch('choice')[0]] : null,
-      secondDesiredMajor: watch('choice')[1] ? ReverseMajorConvertor[watch('choice')[1]] : null,
-      thirdDesiredMajor: watch('choice')[2] ? ReverseMajorConvertor[watch('choice')[2]] : null,
+      firstDesiredMajor: watch('choice')[0] ? getApplyMajor(watch('choice')[0]) : null,
+      secondDesiredMajor: watch('choice')[1] ? getApplyMajor(watch('choice')[1]) : null,
+      thirdDesiredMajor: watch('choice')[2] ? getApplyMajor(watch('choice')[2]) : null,
       middleSchoolAchievement: middleSchoolAchievement,
       schoolName: watch('schoolName') ? watch('schoolName') : null,
       schoolAddress: watch('schoolAddress') ? watch('schoolAddress') : null,
