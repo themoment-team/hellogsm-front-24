@@ -150,7 +150,6 @@ const StepBar = ({
         schoolTeacherName,
         schoolTeacherPhoneNumber,
         relationship,
-        otherRelationship,
       } = watch();
 
       const validationResult = basicRegisterSchema.safeParse({
@@ -169,7 +168,6 @@ const StepBar = ({
         schoolTeacherName,
         schoolTeacherPhoneNumber,
         relationship,
-        otherRelationship,
       });
 
       setIsClickable(validationResult.success);
