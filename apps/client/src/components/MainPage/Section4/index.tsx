@@ -29,11 +29,16 @@ interface DotProps {
   color: string;
 }
 
-const textStyle = ['text-[#0C4A6E]', 'text-[2rem]/[2.75rem]', 'font-[600]'];
+const textStyle = [
+  'text-[#0C4A6E]',
+  'text-[1.5rem]/[2rem]',
+  'font-[600]',
+  'md:text-[2rem]/[2.75rem]',
+];
 
 const Dot = ({ color }: DotProps) => (
   <div
-    className={cn('w-[0.5rem]', 'h-[0.5rem]', 'rounded-full')}
+    className={cn('w-[0.25rem]', 'h-[0.25rem]', 'rounded-full', 'md:w-[0.5rem]', 'md:h-[0.5rem]')}
     style={{ backgroundColor: color }}
   />
 );
@@ -50,7 +55,9 @@ const DotWithText = ({ color, text, textColor }: DotWithTextProps) => (
       <Dot color={color} />
       <Dot color={color} />
     </div>
-    <p className={cn(textColor, 'text-[2rem]/[2.75rem]', 'font-[600]')}>{text}</p>
+    <p className={cn(textColor, 'text-[1.5rem]/[2rem]', 'font-[600]', 'md:text-[2rem]/[2.75rem]')}>
+      {text}
+    </p>
   </div>
 );
 
