@@ -42,22 +42,30 @@ const Elements = [
 
 const Section5 = () => {
   return (
-    <div
-      className={cn(
-        'flex',
-        'justify-center',
-        'flex-col',
-        'gap-[4.25rem]',
-        'bg-white',
-        'items-center',
-        'py-[11.25rem]',
-        'w-full',
-      )}
-    >
+    <div className={cn('flex', 'flex-col', 'gap-[4.25rem]', 'bg-white', 'py-[11.25rem]', 'w-full')}>
       <div className={cn('flex', 'justify-center', 'gap-[4.25rem]', 'flex-col')}>
-        <div className={cn('flex', 'flex-col', 'items-start', 'pl-[8rem]')}>
+        <div
+          className={cn(
+            'flex',
+            'flex-col',
+            'items-center',
+            'pl-[8rem]',
+            'px-[3.75rem]',
+            'xl:px-[8rem]',
+            '2xl:px-[16rem]',
+            'xl:items-start',
+          )}
+        >
           <div className={cn('flex', 'items-end')}>
-            <span className={cn('text-gray-900', 'text-[2rem]/[2.75rem]', 'font-semibold')}>
+            <span
+              className={cn(
+                'text-gray-900',
+                'text-[2rem]/[2.75rem]',
+                'font-semibold',
+                'xl:text-left',
+                'text-center',
+              )}
+            >
               창의 융합력을 갖춘 <br />
               글로벌 소프트웨어 학과 소개
             </span>
@@ -91,7 +99,15 @@ const Section5 = () => {
               />
               <div className={cn('w-full', 'flex', 'flex-col', 'flex-start', 'gap-3')}>
                 <div className={cn('w-full', 'flex', 'flex-col', 'items-start', 'gap-4')}>
-                  <p className={cn('text-gray-900', 'text-[1.5rem]/[2rem]', 'font-semibold')}>
+                  <p
+                    className={cn(
+                      'text-gray-900',
+                      'text-[0.75rem]/[1.25rem]',
+                      'font-semibold',
+                      'sm:text-[1rem]/[1.5rem]',
+                      'md:text-[1.5rem]/[2rem]',
+                    )}
+                  >
                     {element.department}
                   </p>
                   <div className={cn('flex', 'w-full', 'items-center', 'gap-2')}>
@@ -100,19 +116,22 @@ const Section5 = () => {
                         key={idx}
                         className={cn(
                           'flex',
-                          'px-2',
+                          'px-1',
                           'py-1',
                           'justify-center',
                           'items-center',
                           'rounded-[5rem]',
+                          'sm:px-2',
                           element.tagColor,
                         )}
                       >
                         <p
                           className={cn(
                             element.textColor,
-                            'text-[0.875rem]/[1.25rem]',
+                            'text-[0.5rem]/[0.75rem]',
                             'font-normal',
+                            'sm:text-[0.75rem]/[1rem]',
+                            'md:text-[0.875rem]/[1.25rem]',
                           )}
                         >
                           #{item}
@@ -121,13 +140,16 @@ const Section5 = () => {
                     ))}
                   </div>
                 </div>
-                <span className={cn('text-gray-600', 'text-[1.125rem]/[1.75rem]', 'font-normal')}>
-                  {element.description.split('\n').map((line, idx) => (
-                    <span key={idx}>
-                      {line}
-                      <br />
-                    </span>
-                  ))}
+                <span
+                  className={cn(
+                    'text-gray-600',
+                    'text-[0.75rem]/[1.25rem]',
+                    'font-normal',
+                    'sm:text-[1rem]/[1.5rem]',
+                    'md:text-[1.125rem]/[1.75rem]',
+                  )}
+                >
+                  {element.description}
                 </span>
               </div>
             </div>

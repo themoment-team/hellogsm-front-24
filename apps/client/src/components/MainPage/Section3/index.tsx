@@ -20,19 +20,30 @@ const Section3 = () => {
     <div className={cn('w-full', 'bg-white', 'relative', 'py-[11.25rem]')}>
       <div
         className={cn(
-          'container',
-          'mx-auto',
           'flex',
           'justify-between',
-          'px-32',
+          'px-[3.75rem]',
           'flex-col',
           'gap-[6.25rem]',
           'xl:flex-row',
           'xl:gap-0',
+          'xl:px-[8rem]',
+          '2xl:px-[16rem]',
         )}
       >
-        <div className={cn('text-left', 'flex', 'justify-between', 'xl:inline')}>
-          <h1 className={cn('text-2xl', 'font-semibold', 'text-gray-900')}>
+        <div
+          className={cn('text-left', 'flex', 'justify-center', 'xl:inline', 'md:justify-between')}
+        >
+          <h1
+            className={cn(
+              'text-[1.5rem]/[2rem]',
+              'font-semibold',
+              'text-gray-900',
+              'text-center',
+              'md:text-left',
+              'md:text-[2rem]/[2.75rem]',
+            )}
+          >
             광주소프트웨어마이스터고등학교
             <br />
             2025 신입생 모집
@@ -48,9 +59,8 @@ const Section3 = () => {
             )}
           >
             접수기간: {RECRUITMENT_PERIOD.startDate}
-            <br />
-            {' ~ '}
             <br className={cn('inline', 'xl:hidden')} />
+            {' ~ '}
             {RECRUITMENT_PERIOD.endDate}
           </p>
           <Link

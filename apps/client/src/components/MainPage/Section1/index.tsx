@@ -50,11 +50,13 @@ const Section1 = () => {
           <div className={cn(...flexColStyle, 'gap-6')}>
             <h1
               className={cn(
-                'w-[49.0625rem]',
+                'w-full',
                 'text-center',
-                'text-[3.25rem]',
+                'text-[1.75rem]',
                 'font-bold',
                 'text-white',
+                'lg:text-[3.25rem]',
+                'sm:text-[2.5rem]',
               )}
             >
               꿈🌟과 끼🤘🏻를 마음껏{' '}
@@ -74,10 +76,19 @@ const Section1 = () => {
               >
                 UP
               </span>{' '}
-              시킬 수 있는 광주소프트웨어마이스터고등학교
+              시킬 수 있는
+              <br />
+              광주소프트웨어마이스터고등학교
             </h1>
 
-            <p className={cn('text-2xl', 'font-normal', 'text-white')}>
+            <p
+              className={cn(
+                'text-[0.75rem]/[1.25rem]',
+                'font-normal',
+                'text-white',
+                'sm:text-[1.25rem]/[1.75rem]',
+              )}
+            >
               접수기간 : {RECRUITMENT_PERIOD.startDate} ~ {RECRUITMENT_PERIOD.endDate}
             </p>
           </div>
