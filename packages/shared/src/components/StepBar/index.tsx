@@ -150,6 +150,7 @@ const StepBar = ({
         schoolTeacherName,
         schoolTeacherPhoneNumber,
         relationship,
+        otherRelationship,
       } = watch();
 
       const validationResult = basicRegisterSchema.safeParse({
@@ -170,7 +171,13 @@ const StepBar = ({
         relationship,
       });
 
-      setIsClickable(validationResult.success);
+      const isRelationShipEmpty = !!otherRelationship;
+
+      setIsClickable(
+        relationship === '기타 (직접입력)'
+          ? validationResult.success && isRelationShipEmpty
+          : validationResult.success,
+      );
     }
 
     if (param === '4') {
