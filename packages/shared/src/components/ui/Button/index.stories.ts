@@ -25,6 +25,13 @@ export const Fill: Story = {
   },
 };
 
+export const ReverseFill: Story = {
+  args: {
+    variant: 'reverseFill',
+    children: 'Continue',
+  },
+};
+
 export const Destructive: Story = {
   args: {
     variant: 'destructive',

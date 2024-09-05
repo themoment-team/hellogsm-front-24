@@ -255,8 +255,8 @@ const GuidePage = ({ initialData }: GuideProps) => {
       </div>
 
       <Button
-        variant={data && !data.step ? 'disabled' : 'fill'}
-        disabled={data && !data.step ? true : false}
+        variant={data && data.step ? 'fill' : 'reverseFill'}
+        disabled={data && data.step ? false : true}
         className={cn(
           'sticky',
           'bottom-10',
@@ -266,7 +266,7 @@ const GuidePage = ({ initialData }: GuideProps) => {
           'sm:h-[4.25rem]',
           'z-10',
           'mb-[10rem]',
-          'text-[1rem]/[1.5rem]',
+          'text-[1.25rem]/[1.75rem]',
         )}
         onClick={() => {
           if (!authInfo?.authReferrerType) {
@@ -280,7 +280,11 @@ const GuidePage = ({ initialData }: GuideProps) => {
           push('/register?step=1');
         }}
       >
-        원서 작성하기
+        {data
+          ? data.step
+            ? '원서 이어서 작성하기'
+            : '최종제출을 이미 완료하였습니다.'
+          : '원서 작성하기'}
       </Button>
       <Footer />
 
