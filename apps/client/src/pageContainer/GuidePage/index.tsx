@@ -166,7 +166,7 @@ const GuidePage = ({ initialData }: GuideProps) => {
     initialData: initialData,
   });
 
-  const isTempOneseo = data && data.step;
+  const isTempOneseo = data && !data.step;
 
   const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -257,8 +257,8 @@ const GuidePage = ({ initialData }: GuideProps) => {
       </div>
 
       <Button
-        variant={isTempOneseo ? 'fill' : 'reverseFill'}
-        disabled={isTempOneseo ? false : true}
+        variant={isTempOneseo ? 'reverseFill' : 'fill'}
+        disabled={isTempOneseo ? true : false}
         className={cn(
           'sticky',
           'bottom-10',
