@@ -19,8 +19,6 @@ import {
 } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
-const PERMIT_YEAR = 3;
-
 interface ApplyRegisterType {
   setValue: UseFormSetValue<basicRegisterType>;
   watch: UseFormWatch<basicRegisterType>;
@@ -51,6 +49,8 @@ const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
     },
   ];
 
+  const PERMIT_YEAR = watch('category') !== '졸업예정' ? 3 : 1;
+
   const getAvailableDepartments = (exclude: string[]) => {
     return departments.filter((dept) => !exclude.includes(dept));
   };
@@ -69,6 +69,7 @@ const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
       setValue('category', value);
     }
   };
+  console.log(watch('category'));
 
   const handleScreeningChange = (value: string) => {
     if (screeningValues.includes(value)) {
@@ -108,19 +109,23 @@ const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
             />
 
             <CustomFormItem
-              text={'출신 중학교 & 졸업일'}
+              text={watch('category') !== '검정고시' ? '출신 중학교 & 졸업일' : '검정고시 합격일'}
               className="gap-1"
               required={true}
               fullWidth={true}
             >
               <div className={cn('flex', 'gap-2')}>
-                <Input
-                  placeholder="내 중학교 찾기"
-                  width="full"
-                  disabled={true}
-                  value={watch('schoolName') ? watch('schoolName') : selectedSchool}
-                />
-                <SearchDialog setSelectedSchool={setSelectedSchool} setValue={setValue} />
+                {watch('category') !== '검정고시' && (
+                  <>
+                    <Input
+                      placeholder="내 중학교 찾기"
+                      width="full"
+                      disabled={true}
+                      value={watch('schoolName') ? watch('schoolName') : selectedSchool}
+                    />
+                    <SearchDialog setSelectedSchool={setSelectedSchool} setValue={setValue} />
+                  </>
+                )}
               </div>
               <div className={cn('flex', 'w-full', 'justify-between')}>
                 <Select onValueChange={handleYearChange} value={watch('year')}>
