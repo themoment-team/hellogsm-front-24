@@ -81,7 +81,7 @@ const MyPage = ({ initialData }: MyInfoProps) => {
             </div>
             <div className={cn('flex', 'flex-col', 'gap-3', 'items-center')}>
               <p className={cn('text-slate-800', 'text-h3', 'font-semibold')}>{name} 님</p>
-              {data === undefined ? (
+              {data === undefined || (data && data.step) ? (
                 <p className={cn('text-slate-500', 'text-[1.25rem]/[1.75rem]', 'font-normal')}>
                   원서를 아직 작성하지 않았습니다.
                 </p>
@@ -121,7 +121,7 @@ const MyPage = ({ initialData }: MyInfoProps) => {
               )}
             </div>
           </div>
-          {data === undefined ? (
+          {data === undefined || (data && data.step) ? (
             <div className={cn('flex', 'items-center', 'gap-2')}>
               <Button variant="outline" onClick={() => push('/register?step=1')}>
                 원서 작성하기

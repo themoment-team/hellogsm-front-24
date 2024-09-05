@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 
-import Image from 'next/image';
 import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { basicRegisterType } from 'types';
 
@@ -87,12 +86,18 @@ const UploadPhoto = ({ setValue, watch }: UploadPhotoProps) => {
               htmlFor="file-input"
             >
               {profileImg ? (
-                <Image
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
                   src={profileImg}
                   alt="Uploaded"
-                  className={cn('w-[8.75rem]', 'h-[10rem]', 'object-cover', 'rounded-lg')}
-                  height={160}
-                  width={140}
+                  className={cn(
+                    'w-[8.75rem]',
+                    'h-[10rem]',
+                    'object-cover',
+                    'rounded-lg',
+                    'h-[10rem]',
+                    'w-[8.75rem]',
+                  )}
                 />
               ) : (
                 <div
