@@ -145,6 +145,13 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
     defaultMajors?.thirdDesiredMajor ? ReverseMajorConvertor[defaultMajors.thirdDesiredMajor] : '',
   ];
 
+  const defaultYear = defaultDetailData?.graduationDate
+    ? defaultDetailData.graduationDate.split('-')[0]
+    : '';
+  const defaultMonth = defaultDetailData?.graduationDate
+    ? defaultDetailData.graduationDate.split('-')[1]
+    : '';
+
   const { register, handleSubmit, setValue, watch } = useForm<basicRegisterType>({
     resolver: zodResolver(basicRegisterSchema),
     defaultValues: {
@@ -156,8 +163,8 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
         GraduationTypeConvertor[defaultDetailData.graduationType],
       schoolName: defaultDetailData?.schoolName || '',
       schoolAddress: defaultDetailData?.schoolAddress || '',
-      year: '',
-      month: '',
+      year: defaultYear || '',
+      month: String(Number(defaultMonth)) || '',
       screening: getScreeningTypeText(defaultScreening || ''),
       choice: choices,
       guardianName: defaultDetailData?.guardianName || '',
@@ -219,6 +226,10 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
       middleSchoolAchievement: middleSchoolAchievement,
       schoolName: watch('schoolName') ? watch('schoolName') : null,
       schoolAddress: watch('schoolAddress') ? watch('schoolAddress') : null,
+      graduationDate:
+        watch('year') && watch('month')
+          ? `${watch('year')}-${watch('month').padStart(2, '0')}`
+          : null,
       screening: getScreeningTypeText(watch('screening'))
         ? getScreeningTypeText(watch('screening'))
         : null,
@@ -239,7 +250,6 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
     if (store?.profileImg && !store.profileImg.includes('data:image')) {
       tempOneseo.profileImg = store.profileImg;
     }
-
     postTempStorage(tempOneseo);
   };
 

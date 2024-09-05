@@ -18,6 +18,7 @@ import {
   SelectValue,
 } from 'shared/components';
 import { cn } from 'shared/lib/utils';
+import { useStore } from 'shared/stores';
 
 interface ApplyRegisterType {
   setValue: UseFormSetValue<basicRegisterType>;
@@ -27,6 +28,8 @@ interface ApplyRegisterType {
 const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
   const [choices, setChoices] = useState<string[]>(['', '', '']);
   const [selectedSchool, setSelectedSchool] = useState<string>('');
+  const store = useStore();
+  const { setYear, setMonth } = store;
 
   const targetYear = new Date().getFullYear() + 1;
 
@@ -69,7 +72,6 @@ const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
       setValue('category', value);
     }
   };
-  console.log(watch('category'));
 
   const handleScreeningChange = (value: string) => {
     if (screeningValues.includes(value)) {
@@ -77,12 +79,14 @@ const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
     }
   };
 
-  const handleYearChange = (value: string) => {
-    setValue('year', value);
+  const handleYearChange = (year: string) => {
+    setValue('year', year);
+    setYear(year);
   };
 
-  const handleMonthChange = (value: string) => {
-    setValue('month', value);
+  const handleMonthChange = (month: string) => {
+    setValue('month', month);
+    setMonth(month);
   };
 
   return (

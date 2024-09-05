@@ -24,6 +24,8 @@ interface StoreType {
   thirdDesiredMajor: MajorType | undefined;
   schoolName: string | undefined;
   schoolAddress: string | undefined;
+  year: string | undefined;
+  month: string | undefined;
   screening: ScreeningType | undefined;
   liberalSystem: GradesInputMethodType | undefined;
   freeSemester: SemesterIdType | null | undefined;
@@ -42,6 +44,8 @@ interface StoreType {
   setThirdDesiredMajor: (major: MajorType) => void;
   setSchoolName: (schoolNmae: string) => void;
   setSchoolAddress: (SchoolAddress: string) => void;
+  setYear: (year: string) => void;
+  setMonth: (month: string) => void;
   setScreening: (screening: ScreeningType) => void;
   setLiberalSystem: (system: GradesInputMethodType) => void;
   setFreeSemester: (semester: SemesterIdType | null) => void;
@@ -63,6 +67,8 @@ const useStore = create<StoreType>((set) => ({
   thirdDesiredMajor: undefined,
   schoolName: undefined,
   schoolAddress: undefined,
+  year: undefined,
+  month: undefined,
   screening: undefined,
   liberalSystem: undefined,
   freeSemester: undefined,
@@ -84,6 +90,8 @@ const useStore = create<StoreType>((set) => ({
   setThirdDesiredMajor: (major) => set(() => ({ thirdDesiredMajor: major })),
   setSchoolName: (schoolNmae) => set(() => ({ schoolName: schoolNmae })),
   setSchoolAddress: (SchoolAddress) => set(() => ({ schoolAddress: SchoolAddress })),
+  setYear: (year) => set(() => ({ year: year })),
+  setMonth: (month) => set(() => ({ month: month })),
   setScreening: (screening) => set(() => ({ screening: screening })),
   setLiberalSystem: (system) => set(() => ({ liberalSystem: system })),
   setFreeSemester: (semester) => set(() => ({ freeSemester: semester })),
