@@ -10,15 +10,23 @@ import { PinIcon } from 'shared/assets';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared/components';
 import { defaultSubjectArray, scoreArray } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
+import { useStore } from 'shared/stores';
 
 import type { ScoreFormType, SemesterIdType, SemesterType } from 'types';
 
-const freeSemesterArray: SemesterType[] = [
-  { title: '1학년 1학기', id: 'achievement1_1' },
+const freeSemesterCandidateArray: SemesterType[] = [
   { title: '1학년 2학기', id: 'achievement1_2' },
   { title: '2학년 1학기', id: 'achievement2_1' },
   { title: '2학년 2학기', id: 'achievement2_2' },
   { title: '3학년 1학기', id: 'achievement3_1' },
+] as const;
+
+const freeSemesterGraduateArray: SemesterType[] = [
+  { title: '1학년 2학기', id: 'achievement1_2' },
+  { title: '2학년 1학기', id: 'achievement2_1' },
+  { title: '2학년 2학기', id: 'achievement2_2' },
+  { title: '3학년 1학기', id: 'achievement3_1' },
+  { title: '3학년 2학기', id: 'achievement3_2' },
 ] as const;
 
 const defaultSubjectLength = defaultSubjectArray.length;
@@ -118,6 +126,10 @@ const FreeSemesterForm = ({
   freeSemester,
   setFreeSemester,
 }: FreeSemesterFormProps) => {
+  const { graduationType } = useStore();
+  const freeSemesterArray =
+    graduationType === 'CANDIDATE' ? freeSemesterCandidateArray : freeSemesterGraduateArray;
+
   return (
     <div className={cn('flex', 'flex-col')}>
       <div
@@ -127,7 +139,7 @@ const FreeSemesterForm = ({
           'rounded-t-[0.375rem]',
           'h-[3rem]',
           'border-t-[0.0625rem]',
-          'justify-start',
+          'justify-between',
         )}
       >
         <h1 className={cn(...itemStyle, 'w-[6.75rem]')}>과목명</h1>
@@ -182,9 +194,9 @@ const FreeSemesterForm = ({
             idx === subjectArray.length - 1 && 'rounded-b-[0.375rem]',
           )}
         >
-          <div className={cn('h-full', 'w-[6.25rem]', 'flex', 'items-center', 'justify-center')}>
+          <div className={cn('h-full', 'w-[6.75rem]', 'flex', 'items-center', 'justify-center')}>
             {idx < defaultSubjectLength ? (
-              <h1 className={cn(...itemStyle, 'w-full')}>{subject}</h1>
+              <h1 className={cn(...itemStyle, 'w-full', 'w-[6.75rem]')}>{subject}</h1>
             ) : (
               <input
                 type="text"
@@ -207,7 +219,7 @@ const FreeSemesterForm = ({
           </div>
           <div className={cn('flex', 'items-center')}>
             {freeSemesterArray.map(({ id }) => (
-              <div key={id} className={cn(...itemStyle, 'w-[7.47917rem]')}>
+              <div key={id} className={cn(...itemStyle, 'w-[7.3375rem]')}>
                 {freeSemester === id ? (
                   <div
                     className={cn(
@@ -224,7 +236,9 @@ const FreeSemesterForm = ({
                     자유학기제
                   </div>
                 ) : (
-                  <ScoreSelect name={`${id}.${idx}`} control={control} setValue={setValue} />
+                  <div className={cn('w-[7.3375rem]', 'flex', 'justify-center')}>
+                    <ScoreSelect name={`${id}.${idx}`} control={control} setValue={setValue} />
+                  </div>
                 )}
               </div>
             ))}

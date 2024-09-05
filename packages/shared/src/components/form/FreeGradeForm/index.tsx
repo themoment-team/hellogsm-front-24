@@ -8,13 +8,21 @@ import { ScoreFormType, SemesterIdType, SemesterType } from 'types';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared/components';
 import { defaultSubjectArray, scoreArray } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
+import { useStore } from 'shared/stores';
 
 const defaultSubjectLength = defaultSubjectArray.length;
 
-const freeGradeArray: SemesterType[] = [
+const freeGradeCandidateArray: SemesterType[] = [
   { title: '2학년 1학기', id: 'achievement2_1' },
   { title: '2학년 2학기', id: 'achievement2_2' },
   { title: '3학년 1학기', id: 'achievement3_1' },
+] as const;
+
+const freeGradeGraduateArray: SemesterType[] = [
+  { title: '2학년 1학기', id: 'achievement2_1' },
+  { title: '2학년 2학기', id: 'achievement2_2' },
+  { title: '3학년 1학기', id: 'achievement3_1' },
+  { title: '3학년 2학기', id: 'achievement3_2' },
 ] as const;
 
 interface FreeGradeFormProps {
@@ -93,6 +101,10 @@ const FreeGradeForm = ({
   register,
   handleDeleteSubjectClick,
 }: FreeGradeFormProps) => {
+  const { graduationType } = useStore();
+  const freeGradeArray =
+    graduationType === 'CANDIDATE' ? freeGradeCandidateArray : freeGradeGraduateArray;
+
   return (
     <div className={cn('flex', 'flex-col')}>
       <div

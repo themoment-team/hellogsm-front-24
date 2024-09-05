@@ -183,11 +183,11 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
     };
 
     const freeSemesterConvertor = {
-      achievement1_1: '1-1',
       achievement1_2: '1-2',
       achievement2_1: '2-1',
       achievement2_2: '2-2',
       achievement3_1: '3-1',
+      achievement3_2: '3-2',
     } as const;
 
     const middleSchoolAchievement: { [key: string]: any } = {
@@ -196,11 +196,11 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
         : null,
       freeSemester: store.freeSemester ? freeSemesterConvertor[store.freeSemester] : null,
       artsPhysicalSubjects: ['체육', '음악', '미술'],
-      achievement1_1: store.scoreForm?.achievement1_1?.map((value) => Number(value)) ?? null,
       achievement1_2: store.scoreForm?.achievement1_2?.map((value) => Number(value)) ?? null,
       achievement2_1: store.scoreForm?.achievement2_1?.map((value) => Number(value)) ?? null,
       achievement2_2: store.scoreForm?.achievement2_2?.map((value) => Number(value)) ?? null,
       achievement3_1: store.scoreForm?.achievement3_1?.map((value) => Number(value)) ?? null,
+      achievement3_2: store.scoreForm?.achievement3_2?.map((value) => Number(value)) ?? null,
       newSubjects: store.scoreForm?.newSubjects ?? null,
       artsPhysicalAchievement:
         store.scoreForm?.artsPhysicalAchievement?.map((value) => Number(value)) ?? null,
