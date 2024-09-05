@@ -26,8 +26,6 @@ const tdStyle = 'border border-black ';
 const ApplicationPage = ({ initialData }: PrintPageProps) => {
   const { data: oneseo } = useGetMyOneseo({ initialData: initialData });
 
-  console.log(oneseo);
-
   if (!oneseo) return <>원서 정보가 없습니다</>;
 
   const isGEDScore = !!oneseo.middleSchoolAchievement.gedTotalScore;
