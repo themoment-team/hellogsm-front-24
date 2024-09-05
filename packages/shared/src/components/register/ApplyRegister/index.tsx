@@ -18,8 +18,7 @@ import {
   SelectValue,
 } from 'shared/components';
 import { cn } from 'shared/lib/utils';
-
-const PERMIT_YEAR = 3;
+import { useStore } from 'shared/stores';
 
 interface ApplyRegisterType {
   setValue: UseFormSetValue<basicRegisterType>;
@@ -29,6 +28,7 @@ interface ApplyRegisterType {
 const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
   const [choices, setChoices] = useState<string[]>(['', '', '']);
   const [selectedSchool, setSelectedSchool] = useState<string>('');
+  const { setYear, setMonth } = useStore();
 
   const targetYear = new Date().getFullYear() + 1;
 
@@ -50,6 +50,8 @@ const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
       description: '빅데이터, 사물인터넷, 머신러닝, 딥러닝 등',
     },
   ];
+
+  const PERMIT_YEAR = watch('category') !== '졸업예정' ? 3 : 1;
 
   const getAvailableDepartments = (exclude: string[]) => {
     return departments.filter((dept) => !exclude.includes(dept));
@@ -76,12 +78,14 @@ const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
     }
   };
 
-  const handleYearChange = (value: string) => {
-    setValue('year', value);
+  const handleYearChange = (year: string) => {
+    setValue('year', year);
+    setYear(year);
   };
 
-  const handleMonthChange = (value: string) => {
-    setValue('month', value);
+  const handleMonthChange = (month: string) => {
+    setValue('month', month);
+    setMonth(month);
   };
 
   return (
@@ -108,19 +112,23 @@ const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
             />
 
             <CustomFormItem
-              text={'출신 중학교 & 졸업일'}
+              text={watch('category') !== '검정고시' ? '출신 중학교 & 졸업일' : '검정고시 합격일'}
               className="gap-1"
               required={true}
               fullWidth={true}
             >
               <div className={cn('flex', 'gap-2')}>
-                <Input
-                  placeholder="내 중학교 찾기"
-                  width="full"
-                  disabled={true}
-                  value={watch('schoolName') ? watch('schoolName') : selectedSchool}
-                />
-                <SearchDialog setSelectedSchool={setSelectedSchool} setValue={setValue} />
+                {watch('category') !== '검정고시' && (
+                  <>
+                    <Input
+                      placeholder="내 중학교 찾기"
+                      width="full"
+                      disabled={true}
+                      value={watch('schoolName') ? watch('schoolName') : selectedSchool}
+                    />
+                    <SearchDialog setSelectedSchool={setSelectedSchool} setValue={setValue} />
+                  </>
+                )}
               </div>
               <div className={cn('flex', 'w-full', 'justify-between')}>
                 <Select onValueChange={handleYearChange} value={watch('year')}>

@@ -26,13 +26,13 @@ interface MyInfoProps {
 const MyPage = ({ initialData }: MyInfoProps) => {
   const { push } = useRouter();
 
-  const { data, refetch } = useGetMyOneseo({
+  const { data, refetch: myOneseoRefetch } = useGetMyOneseo({
     initialData: initialData,
   });
 
-  const { data: memberInfo } = useGetMyMemberInfo();
+  const { data: memberInfo, refetch: memberInfoRefetch } = useGetMyMemberInfo();
 
-  const handleLogout = useLogout(refetch);
+  const handleLogout = useLogout(myOneseoRefetch, memberInfoRefetch);
 
   const submitCode = data?.submitCode;
   const wantedScreening = data?.wantedScreening;

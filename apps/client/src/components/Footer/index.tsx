@@ -75,7 +75,7 @@ const Footer = () => {
                 'text-slate-600',
               )}
             >
-              ©{year} Copyright 광주소프트웨어마이스터고등학교
+              ©{year} Copyright 광주소프트웨어마이스터고등학교 &nbsp;
               <br className="sm:hidden" />
               ALL RIGHTS RESERVED.
             </p>

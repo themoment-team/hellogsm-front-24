@@ -285,6 +285,8 @@ const ScoreRegister = ({
       thirdDesiredMajor,
       schoolName,
       schoolAddress,
+      year,
+      month,
       screening,
     } = store;
 
@@ -303,6 +305,8 @@ const ScoreRegister = ({
       thirdDesiredMajor &&
       schoolName &&
       schoolAddress &&
+      year &&
+      month &&
       liberalSystem &&
       screening;
 
@@ -364,6 +368,7 @@ const ScoreRegister = ({
       thirdDesiredMajor: thirdDesiredMajor!,
       schoolName: schoolName!,
       schoolAddress: schoolAddress!,
+      graduationDate: `${year}-${month!.toString().padStart(2, '0')}`,
       screening: screening!,
       middleSchoolAchievement: middleSchoolAchievement!,
       profileImg: profileImg,

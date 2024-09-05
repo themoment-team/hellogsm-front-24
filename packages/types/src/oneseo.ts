@@ -98,6 +98,9 @@ export interface PrivacyDetailType {
   relationshipWithGuardian: string;
   schoolName: string;
   schoolAddress: string;
+  graduationDate: string;
+  year: string;
+  month: string;
   schoolTeacherName: string;
   schoolTeacherPhoneNumber: string;
   profileImg: string;
@@ -119,6 +122,7 @@ export interface PostOneseoType {
   middleSchoolAchievement: MiddleSchoolAchievementType | GEDAchievementType;
   schoolName: string | null;
   schoolAddress: string | null;
+  graduationDate: string | null;
   screening: ScreeningType | null;
   step?: number;
 }
