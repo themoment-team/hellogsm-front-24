@@ -28,8 +28,7 @@ interface ApplyRegisterType {
 const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
   const [choices, setChoices] = useState<string[]>(['', '', '']);
   const [selectedSchool, setSelectedSchool] = useState<string>('');
-  const store = useStore();
-  const { setYear, setMonth } = store;
+  const { setYear, setMonth } = useStore();
 
   const targetYear = new Date().getFullYear() + 1;
 
