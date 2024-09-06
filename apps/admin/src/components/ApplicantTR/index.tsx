@@ -33,7 +33,12 @@ import { useDebounce } from 'shared/hooks';
 import { cn } from 'shared/lib/utils';
 import { formatScore } from 'shared/utils';
 
-import { usePatchArrivedStatus, usePatchAptitudeScore, usePatchInterviewScore } from 'api/hooks';
+import {
+  usePatchArrivedStatus,
+  usePatchAptitudeScore,
+  usePatchInterviewScore,
+  usePatchAgreeDocStatus,
+} from 'api/hooks';
 
 interface ApplicationTRProps extends OneseoType {
   refetch: (
@@ -56,8 +61,10 @@ const ApplicantTR = ({
   screening,
   secondTestPassYn,
   submitCode,
+  entranceIntentionYn,
 }: ApplicationTRProps) => {
-  const [dialogOpen, setDialogOpen] = useState<'' | 'submit'>('');
+  const [realOneseoDialogOpen, setRealOneseoDialogOpen] = useState(false);
+  const [agreeDocDialogOpen, setAgreeDocDialogOpen] = useState(false);
 
   const { push } = useRouter();
 
@@ -67,6 +74,7 @@ const ApplicantTR = ({
   const [isRealOneseoArrived, setIsRealOneseoArrived] = useState<boolean>(
     realOneseoArrivedYn === 'YES',
   );
+  const [entranceIntention, setEntranceIntention] = useState<'YES' | 'NO'>(entranceIntentionYn);
 
   const { mutate: patchArrivedStatus } = usePatchArrivedStatus(memberId, {
     onSuccess: () => {
@@ -74,6 +82,15 @@ const ApplicantTR = ({
     },
     onError: () => {
       setIsRealOneseoArrived((prev) => !prev);
+    },
+  });
+
+  const { mutate: patchAgreeDocStatus } = usePatchAgreeDocStatus(memberId, {
+    onSuccess: () => {
+      refetch();
+    },
+    onError: () => {
+      setEntranceIntention(entranceIntention === 'YES' ? 'NO' : 'YES');
     },
   });
 
@@ -120,8 +137,16 @@ const ApplicantTR = ({
   }, [debounced직무적성점수, debounced심층면접점수, setValue]);
 
   const handleRealOneseoArrived = () => {
+    setRealOneseoDialogOpen(false);
     patchArrivedStatus();
     setIsRealOneseoArrived((prev) => !prev);
+  };
+
+  const handleAgreeDocArrived = () => {
+    const updatedIntention = entranceIntention === 'YES' ? 'NO' : 'YES';
+    setEntranceIntention(updatedIntention);
+    setAgreeDocDialogOpen(false);
+    patchAgreeDocStatus({ entranceIntentionYn: updatedIntention });
   };
 
   const handleAptitudeScore = () => {
@@ -138,9 +163,9 @@ const ApplicantTR = ({
         <TableRow>
           <TableCell className="w-[100px] text-zinc-900">{submitCode}</TableCell>
           <TableCell className="w-[130px]">
-            <AlertDialog open={dialogOpen === 'submit'}>
+            <AlertDialog open={realOneseoDialogOpen}>
               <Toggle
-                onClick={() => setDialogOpen('submit')}
+                onClick={() => setRealOneseoDialogOpen(true)}
                 pressed={isRealOneseoArrived}
                 icon={<CheckIcon />}
               >
@@ -151,7 +176,9 @@ const ApplicantTR = ({
                   <AlertDialogTitle>서류 제출 여부를 변경하시겠습니까?</AlertDialogTitle>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel onClick={() => setDialogOpen('')}>취소</AlertDialogCancel>
+                  <AlertDialogCancel onClick={() => setRealOneseoDialogOpen(false)}>
+                    취소
+                  </AlertDialogCancel>
                   <AlertDialogAction onClick={handleRealOneseoArrived}>변경하기</AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
@@ -217,7 +244,29 @@ const ApplicantTR = ({
           <TableCell className="w-[96px]">
             <Badge variant={secondTestResult}>{secondTestResult}</Badge>
           </TableCell>
-          <TableCell className="w-[149px]">
+          <TableCell className="w-[130px]">
+            <AlertDialog open={agreeDocDialogOpen}>
+              <Toggle
+                onClick={() => setAgreeDocDialogOpen(true)}
+                pressed={entranceIntention === 'YES'}
+                icon={<CheckIcon />}
+              >
+                제출 완료
+              </Toggle>
+              <AlertDialogContent className="w-[400px]">
+                <AlertDialogHeader>
+                  <AlertDialogTitle>입학동의서 제출 여부를 변경하시겠습니까?</AlertDialogTitle>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel onClick={() => setAgreeDocDialogOpen(false)}>
+                    취소
+                  </AlertDialogCancel>
+                  <AlertDialogAction onClick={handleAgreeDocArrived}>변경하기</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </TableCell>
+          <TableCell className="w-[142px]">
             <Button
               onClick={() => push(`/edit/${memberId}?step=1`)}
               className="ml-[33.24px]"
