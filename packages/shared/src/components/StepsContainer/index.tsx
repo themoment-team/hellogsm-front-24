@@ -212,7 +212,10 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
     const tempOneseo = {
       guardianName: watch('guardianName') ? watch('guardianName') : null,
       guardianPhoneNumber: watch('guardianPhoneNumber') ? watch('guardianPhoneNumber') : null,
-      relationshipWithGuardian: watch('relationship') ? watch('relationship') : null,
+      relationshipWithGuardian:
+        watch('relationship') === '기타 (직접입력)'
+          ? watch('otherRelationship')
+          : watch('relationship'),
       address: watch('address') ? watch('address') : null,
       detailAddress: watch('detailAddress') ? watch('detailAddress') : null,
       graduationType: watch('category') ? ReverseGraduationTypeConvertor[watch('category')] : null,
