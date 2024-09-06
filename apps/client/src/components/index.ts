@@ -7,7 +7,6 @@ export { default as Section1 } from './MainPage/Section1';
 export { default as Section2 } from './MainPage/Section2';
 export { default as Section3 } from './MainPage/Section3';
 export { default as Section4 } from './MainPage/Section4';
-export { default as MockCalculatePage } from './MockCalculatePage';
 export { default as SexToggle } from './SexToggle';
 export { default as LoginDialog } from './LoginDialog';
 export { default as ChannelTalk } from './ChannelTalk';

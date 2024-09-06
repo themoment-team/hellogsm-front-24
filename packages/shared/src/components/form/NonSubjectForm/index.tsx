@@ -4,6 +4,7 @@ import { UseFormRegister } from 'react-hook-form';
 import { GradesInputMethodType, ScoreFormType } from 'types';
 
 import { cn } from 'shared/lib/utils';
+import { useStore } from 'shared/stores';
 
 interface NonSubjectFormProps {
   register: UseFormRegister<ScoreFormType>;
@@ -50,94 +51,100 @@ const rowStyle = [
   'items-center',
 ];
 
-const NonSubjectForm = ({ register, liberalSystem }: NonSubjectFormProps) => (
-  <div className={cn('flex', 'flex-col', 'w-full')}>
-    <div
-      className={cn(
-        ...rowStyle,
-        'bg-zinc-50',
-        'rounded-t-[0.375rem]',
-        'h-[3rem]',
-        'border-t-[0.0625rem]',
-      )}
-    >
-      <h1 className={cn(...itemStyle, 'w-[3.75rem]')}>학년</h1>
-      <div className={cn('flex')}>
-        {nonSubjectTitleArray.map((title, idx) => (
-          <h1
-            key={title}
-            className={cn(
-              ...itemStyle,
-              idx === volunteerTimeIndex
-                ? liberalSystem === 'freeGrade'
-                  ? 'w-[9.1875rem]'
-                  : 'w-[17.1875rem]'
-                : 'w-[5.625rem]',
-            )}
-          >
-            {title}
-          </h1>
-        ))}
-      </div>
-    </div>
-    {nonSubjectArray.map(({ grade, registerIndexList }, index) => (
+const NonSubjectForm = ({ register, liberalSystem }: NonSubjectFormProps) => {
+  const { graduationType } = useStore();
+
+  return (
+    <div className={cn('flex', 'flex-col', 'w-full')}>
       <div
-        key={grade}
         className={cn(
           ...rowStyle,
-          'bg-white',
-          'h-[3.5rem]',
-          index === nonSubjectArray.length - 1 && 'rounded-b-[0.375rem]',
+          'bg-zinc-50',
+          'rounded-t-[0.375rem]',
+          'h-[3rem]',
+          'border-t-[0.0625rem]',
         )}
       >
-        <div className={cn('h-full', 'flex', 'items-center', 'justify-center')}>
-          <h1 className={cn(...itemStyle, 'w-[3.75rem]')}>{grade}</h1>
-        </div>
+        <h1 className={cn(...itemStyle, 'min-w-[3.75rem]')}>학년</h1>
         <div className={cn('flex')}>
-          {registerIndexList.map((registerIndex, index) => (
-            <div
-              key={index}
+          {nonSubjectTitleArray.map((title, idx) => (
+            <h1
+              key={title}
               className={cn(
                 ...itemStyle,
-                'px-[0.75rem]',
-                index === volunteerTimeIndex
+                idx === volunteerTimeIndex
                   ? liberalSystem === 'freeGrade'
                     ? 'w-[9.1875rem]'
-                    : 'w-[17.1875rem]'
+                    : 'w-[10rem]'
                   : 'w-[5.625rem]',
               )}
             >
-              <input
-                {...register(
-                  index === 0
-                    ? `absentDays.${registerIndex}`
-                    : index === 1 || index === 2 || index === 3
-                      ? `attendanceDays.${registerIndex}`
-                      : `volunteerTime.${registerIndex}`,
-                )}
-                type="number"
-                className={cn(
-                  'w-full',
-                  'h-[2rem]',
-                  'text-center',
-                  'placeholder:text-slate-400',
-                  'text-slate-900',
-                  'border-[0.0625rem]',
-                  'border-slate-300',
-                  'rounded-md',
-                  'text-[0.875rem]',
-                  'font-normal',
-                  'leading-[1.25rem]',
-                  'appearance-none',
-                )}
-                placeholder={index === volunteerTimeIndex ? '시간 입력' : '입력'}
-              />
-            </div>
+              {title}
+            </h1>
           ))}
         </div>
       </div>
-    ))}
-  </div>
-);
+      {nonSubjectArray.map(({ grade, registerIndexList }, index) => (
+        <div
+          key={grade}
+          className={cn(
+            ...rowStyle,
+            'bg-white',
+            'h-[3.5rem]',
+            index === nonSubjectArray.length - 1 && 'rounded-b-[0.375rem]',
+          )}
+        >
+          <div className={cn('h-full', 'flex', 'items-center', 'justify-center')}>
+            <h1 className={cn(...itemStyle, 'w-[3.75rem]')}>{grade}</h1>
+          </div>
+          <div className={cn('flex')}>
+            {registerIndexList.map((registerIndex, index) => (
+              <div
+                key={index}
+                className={cn(
+                  ...itemStyle,
+                  'px-[0.75rem]',
+                  index === volunteerTimeIndex
+                    ? liberalSystem === 'freeGrade'
+                      ? 'w-[9.1875rem]'
+                      : graduationType === 'GRADUATE'
+                        ? 'w-[17.1875rem]'
+                        : 'w-[9.75rem]'
+                    : 'w-[5.625rem]',
+                )}
+              >
+                <input
+                  {...register(
+                    index === 0
+                      ? `absentDays.${registerIndex}`
+                      : index === 1 || index === 2 || index === 3
+                        ? `attendanceDays.${registerIndex}`
+                        : `volunteerTime.${registerIndex}`,
+                  )}
+                  type="number"
+                  className={cn(
+                    'w-full',
+                    'h-[2rem]',
+                    'text-center',
+                    'placeholder:text-slate-400',
+                    'text-slate-900',
+                    'border-[0.0625rem]',
+                    'border-slate-300',
+                    'rounded-md',
+                    'text-[0.875rem]',
+                    'font-normal',
+                    'leading-[1.25rem]',
+                    'appearance-none',
+                  )}
+                  placeholder={index === volunteerTimeIndex ? '시간 입력' : '입력'}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 export default NonSubjectForm;

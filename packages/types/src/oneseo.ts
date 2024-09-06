@@ -6,7 +6,7 @@ export type TestResultType = "ALL" | "FIRST_PASS" | "FINAL_PASS" | "FALL";
 
 export type GraduationType = "CANDIDATE" | "GRADUATE" | "GED";
 
-export type FreeSemesterType = "1-1" | "1-2" | "2-1" | "2-2" | "3-1" | null;
+export type FreeSemesterType = "1-2" | "2-1" | "2-2" | "3-1" | "3-2" | null;
 
 export type LiberalSystemType = "자유학년제" | "자유학기제";
 
@@ -39,18 +39,18 @@ export enum SexEnum {
 }
 
 export type AchievementGradeType =
-  | "achievement1_1"
   | "achievement1_2"
   | "achievement2_1"
   | "achievement2_2"
-  | "achievement3_1";
+  | "achievement3_1"
+  | "achievement3_2";
 
 export const achievementGradeValues = [
-  "achievement1_1",
   "achievement1_2",
   "achievement2_1",
   "achievement2_2",
   "achievement3_1",
+  "achievement3_2",
 ] as const;
 
 export enum MajorEnum {
@@ -60,11 +60,11 @@ export enum MajorEnum {
 }
 
 export interface MiddleSchoolAchievementType {
-  achievement1_1: number[] | null;
   achievement1_2: number[] | null;
   achievement2_1: number[] | null;
   achievement2_2: number[] | null;
   achievement3_1: number[] | null;
+  achievement3_2: number[] | null;
   newSubjects: string[] | null;
   artsPhysicalAchievement: number[];
   absentDays: number[];

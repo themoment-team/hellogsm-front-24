@@ -190,6 +190,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                     지원자와의 관계
                   </th>
                   <td className={tdStyle} colSpan={2}>
+                    지원자 {oneseo.privacyDetail.name}의{' '}
                     {oneseo.privacyDetail.relationshipWithGuardian}
                   </td>
                 </tr>
@@ -309,11 +310,11 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                         성취도/평어
                       </div>
                     </div>
-                    {!oneseo.middleSchoolAchievement.achievement1_1 ? (
+                    {!oneseo.middleSchoolAchievement.achievement3_2 ? (
                       <div className="h-full bg-slash bg-contain bg-no-repeat"></div>
                     ) : (
                       <>
-                        {oneseo.middleSchoolAchievement.achievement1_1.map((score, i) => (
+                        {oneseo.middleSchoolAchievement.achievement3_2.map((score, i) => (
                           <div
                             key={i}
                             className="flex items-center justify-center border-b border-black"
@@ -322,7 +323,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                           </div>
                         ))}
                         <div className="flex items-center justify-center border-b-0 border-black">
-                          {plusAll(oneseo.middleSchoolAchievement.achievement1_1)}
+                          {plusAll(oneseo.middleSchoolAchievement.achievement3_2)}
                         </div>
                       </>
                     )}
@@ -462,7 +463,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                         성취도/평어
                       </div>
                     </div>
-                    {getArtPhysicalElement(oneseo.middleSchoolAchievement.achievement1_1)}
+                    {getArtPhysicalElement(oneseo.middleSchoolAchievement.achievement3_2)}
                   </div>
                   <div className="flex w-full flex-col border-r border-black">
                     <div className="flex flex-col">

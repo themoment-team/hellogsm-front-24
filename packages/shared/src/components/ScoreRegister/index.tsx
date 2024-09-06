@@ -50,19 +50,19 @@ const LiberalSystemConvertor: { [key: string]: GradesInputMethodType } = {
 };
 
 const freeSemesterConvertor = {
-  achievement1_1: '1-1',
   achievement1_2: '1-2',
   achievement2_1: '2-1',
   achievement2_2: '2-2',
   achievement3_1: '3-1',
+  achievement3_2: '3-2',
 } as const;
 
 const reversedFreeSemesterConvertor: { [key: string]: SemesterIdType } = {
-  '1-1': 'achievement1_1',
   '1-2': 'achievement1_2',
   '2-1': 'achievement2_1',
   '2-2': 'achievement2_2',
   '3-1': 'achievement3_1',
+  '3-2': 'achievement3_2',
 } as const;
 
 const formWrapper = [
@@ -75,6 +75,15 @@ const formWrapper = [
   'leading-7',
   'w-full',
 ];
+
+const widthConvertor: { [key: string]: string } = {
+  freeGrade_GRADUATION: 'w-[42.9375rem]',
+  freeGrade_CANDIDATE: 'w-[35.4375rem]',
+  freeSemester_GRADUATIONN: 'w-[43.4375rem]',
+  freeSemester_CANDIDATE: 'w-[36.1em]',
+};
+
+// ${store.liberalSystem}_${store.graduationType!}
 
 interface ScoreRegisterProps {
   data: GetMyOneseoType | undefined;
@@ -112,9 +121,6 @@ const ScoreRegister = ({
   const { register, handleSubmit, setValue, unregister, watch, control } = useForm<ScoreFormType>({
     resolver: zodResolver(scoreFormSchema),
     defaultValues: {
-      achievement1_1: store.scoreForm?.achievement1_1
-        ? store.scoreForm.achievement1_1
-        : defaultData?.achievement1_1 && defaultData.achievement1_1.map((i) => String(i)),
       achievement1_2: store.scoreForm?.achievement1_2
         ? store.scoreForm.achievement1_2
         : defaultData?.achievement1_2 && defaultData.achievement1_2.map((i) => String(i)),
@@ -127,6 +133,9 @@ const ScoreRegister = ({
       achievement3_1: store.scoreForm?.achievement3_1
         ? store.scoreForm.achievement3_1
         : defaultData?.achievement3_1 && defaultData.achievement3_1.map((i) => String(i)),
+      achievement3_2: store.scoreForm?.achievement3_2
+        ? store.scoreForm.achievement3_2
+        : defaultData?.achievement3_2 && defaultData.achievement3_2.map((i) => String(i)),
       artsPhysicalAchievement: store.scoreForm?.artsPhysicalAchievement
         ? store.scoreForm.artsPhysicalAchievement
         : defaultData?.artsPhysicalAchievement &&
@@ -156,11 +165,11 @@ const ScoreRegister = ({
       const { isArray } = Array;
 
       setScoreForm({
-        achievement1_1: isArray(watch('achievement1_1')) ? watch('achievement1_1') : null,
         achievement1_2: isArray(watch('achievement1_2')) ? watch('achievement1_2') : null,
         achievement2_1: isArray(watch('achievement2_1')) ? watch('achievement2_1') : null,
         achievement2_2: isArray(watch('achievement2_2')) ? watch('achievement2_2') : null,
         achievement3_1: isArray(watch('achievement3_1')) ? watch('achievement3_1') : null,
+        achievement3_2: isArray(watch('achievement3_2')) ? watch('achievement3_2') : null,
         newSubjects: watch('newSubjects'),
         artsPhysicalAchievement: watch('artsPhysicalAchievement'),
         absentDays: watch('absentDays'),
@@ -176,28 +185,25 @@ const ScoreRegister = ({
   useEffect(() => {
     if (!setIsStep4Clickable) return;
 
-    const getAchievementValue = (key: 'achievement1_1' | 'achievement1_2') =>
-      liberalSystem === 'freeGrade' ? null : watch(key);
-
     if (
       (store.graduationType === 'CANDIDATE' || store.graduationType === 'GRADUATE') &&
       scoreFormSchema.safeParse({
         ...watch(),
         ...{
-          achievement1_1: getAchievementValue('achievement1_1'),
-          achievement1_2: getAchievementValue('achievement1_2'),
+          achievement1_2: liberalSystem === 'freeGrade' ? null : watch('achievement1_2'),
+          achievement3_2: store.graduationType === 'CANDIDATE' ? null : watch('achievement3_2'),
+          artsPhysicalAchievement:
+            store.graduationType === 'CANDIDATE'
+              ? watch('artsPhysicalAchievement')?.filter((_, idx) => idx < 9)
+              : watch('artsPhysicalAchievement'),
         },
       }).success === true
     ) {
-      if (liberalSystem === 'freeSemester' && freeSemester) return setIsStep4Clickable!(true);
+      if (liberalSystem === 'freeSemester') return setIsStep4Clickable!(true);
       else if (liberalSystem === 'freeGrade' && !freeSemester) return setIsStep4Clickable!(true);
-
-      return setIsStep4Clickable!(false);
-    } else if (store.graduationType === 'GED' && Number(watch('gedTotalScore')) > 0) {
+    } else if (store.graduationType === 'GED' && Number(watch('gedTotalScore')) > 0)
       return setIsStep4Clickable!(true);
-    } else {
-      return setIsStep4Clickable!(false);
-    }
+    else return setIsStep4Clickable!(false);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch()]);
@@ -250,26 +256,24 @@ const ScoreRegister = ({
     setSubjectArray(filteredSubjects);
 
     const newSubjects = watch('newSubjects');
-    const score1_1 = watch('achievement1_1');
     const score1_2 = watch('achievement1_2');
     const score2_1 = watch('achievement2_1');
     const score2_2 = watch('achievement2_2');
     const score3_1 = watch('achievement3_1');
+    const score3_2 = watch('achievement3_2');
 
     setValue(
       'newSubjects',
       newSubjects && newSubjects.filter((_, i) => idx - defaultSubjectLength !== i),
     ); // newSubjects 배열에서 인덱스가 N인 값 제거
-    setValue('achievement1_1', score1_1 && score1_1.filter((_, i) => i !== idx)); // score1_1 배열에서 인덱스가 기본과목.length + index인 값 제거 (삭제 버튼 클릭한 인덱스 제거)
     setValue('achievement1_2', score1_2 && score1_2.filter((_, i) => i !== idx));
     setValue('achievement2_1', score2_1 && score2_1.filter((_, i) => i !== idx));
     setValue('achievement2_2', score2_2 && score2_2.filter((_, i) => i !== idx));
     setValue('achievement3_1', score3_1 && score3_1.filter((_, i) => i !== idx));
+    setValue('achievement3_2', score3_2 && score3_2.filter((_, i) => i !== idx)); // score3_2 배열에서 인덱스가 기본과목.length + index인 값 제거 (삭제 버튼 클릭한 인덱스 제거)
   };
 
   const handleFormSubmit: SubmitHandler<ScoreFormType> = (data) => {
-    if (liberalSystem === 'freeSemester' && !freeSemester) return;
-
     const {
       guardianName,
       guardianPhoneNumber,
@@ -310,16 +314,18 @@ const ScoreRegister = ({
       liberalSystem &&
       screening;
 
+    console.log(store);
+
     if (type !== 'calculate' && !isAllWrite) return;
 
     const isFreeSemester = liberalSystem === 'freeSemester';
 
     const {
-      achievement1_1,
       achievement1_2,
       achievement2_1,
       achievement2_2,
       achievement3_1,
+      achievement3_2,
       artsPhysicalAchievement,
       absentDays,
       attendanceDays,
@@ -333,12 +339,15 @@ const ScoreRegister = ({
       store.graduationType === 'GED'
         ? { gedTotalScore: Number(gedTotalScore) }
         : {
-            achievement1_1: achievement1_1 ? achievement1_1.map((i) => Number(i)) : null,
             achievement1_2: achievement1_2 ? achievement1_2.map((i) => Number(i)) : null,
             achievement2_1: achievement2_1 ? achievement2_1.map((i) => Number(i)) : null,
             achievement2_2: achievement2_2 ? achievement2_2.map((i) => Number(i)) : null,
             achievement3_1: achievement3_1 ? achievement3_1.map((i) => Number(i)) : null,
-            artsPhysicalAchievement: artsPhysicalAchievement!.map((i) => Number(i)),
+            achievement3_2: achievement3_2 ? achievement3_2.map((i) => Number(i)) : null,
+            artsPhysicalAchievement:
+              graduationType === 'GRADUATE'
+                ? artsPhysicalAchievement!.map((i) => Number(i))
+                : artsPhysicalAchievement!.filter((_, idx) => idx < 9).map((i) => Number(i)),
             absentDays: absentDays!.map((i) => Number(i)),
             attendanceDays: attendanceDays!.map((i) => Number(i)),
             volunteerTime: volunteerTime!.map((i) => Number(i)),
@@ -421,15 +430,21 @@ const ScoreRegister = ({
     if (store.graduationType === 'GED') {
       setTimeout(() => {
         setValue('absentDays', null);
-        setValue('achievement1_1', null);
         setValue('achievement1_2', null);
         setValue('achievement2_1', null);
         setValue('achievement2_2', null);
         setValue('achievement3_1', null);
+        setValue('achievement3_2', null);
         setValue('artsPhysicalAchievement', null);
         setValue('attendanceDays', null);
         setValue('newSubjects', null);
         setValue('volunteerTime', null);
+      }, 0);
+    }
+
+    if (store.graduationType === 'CANDIDATE') {
+      setTimeout(() => {
+        setValue('achievement3_2', null);
       }, 0);
     }
 
@@ -496,11 +511,6 @@ const ScoreRegister = ({
               onSubmit={(e) => {
                 e.preventDefault();
 
-                if (liberalSystem === 'freeGrade') {
-                  setValue('achievement1_1', null);
-                  setValue('achievement1_2', null);
-                }
-
                 if (liberalSystem === 'freeSemester' && freeSemester) {
                   setValue(freeSemester, null);
                 }
@@ -520,7 +530,7 @@ const ScoreRegister = ({
                   'flex-col',
                   'gap-[2.5rem]',
                   'items-center',
-                  liberalSystem === 'freeGrade' ? 'w-[35.4375rem]' : 'w-[43.4375rem]',
+                  widthConvertor[`${store.liberalSystem!}_${store.graduationType!}`],
                 )}
               >
                 <div className={cn(...formWrapper)}>

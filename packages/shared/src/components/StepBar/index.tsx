@@ -27,11 +27,11 @@ import { basicRegisterSchema } from 'shared/schemas';
 import { useStore } from 'shared/stores';
 
 const freeSemesterConvertor = {
-  achievement1_1: '1-1',
   achievement1_2: '1-2',
   achievement2_1: '2-1',
   achievement2_2: '2-2',
   achievement3_1: '3-1',
+  achievement3_2: '3-2',
 } as const;
 
 export enum Steps {
@@ -224,6 +224,8 @@ const StepBar = ({
         setGraduationType,
         setSchoolName,
         setSchoolAddress,
+        setMonth,
+        setYear,
       } = store;
 
       const categoryConvertor: { [key: string]: GraduationType } = {
@@ -251,6 +253,8 @@ const StepBar = ({
       setGraduationType(categoryConvertor[category]);
       setSchoolName(schoolName);
       setSchoolAddress(schoolAddress);
+      setMonth(month);
+      setYear(year);
 
       updateStep(Math.min(currentStep + 1, Steps.FOUR));
     }
@@ -345,6 +349,8 @@ const StepBar = ({
         setGraduationType,
         setSchoolName,
         setSchoolAddress,
+        setMonth,
+        setYear,
       } = store;
 
       const categoryConvertor: { [key: string]: GraduationType } = {
@@ -382,6 +388,8 @@ const StepBar = ({
       );
       setSchoolTeacherName(schoolTeacherName);
       setSchoolTeacherPhoneNumber(schoolTeacherPhoneNumber);
+      setMonth(month);
+      setYear(year);
       updateStep(Math.min(currentStep + 1, Steps.FOUR));
       const nextStep = Math.min(currentStep + 1, Steps.FOUR);
       updateStep(nextStep);
@@ -426,25 +434,35 @@ const StepBar = ({
             liberalSystem: store.liberalSystem === 'freeGrade' ? '자유학년제' : '자유학기제',
             freeSemester: store.freeSemester ? freeSemesterConvertor[store.freeSemester] : null,
             artsPhysicalSubjects: ['체육', '음악', '미술'],
-            achievement1_1: store.scoreForm?.achievement1_1
-              ? store.scoreForm.achievement1_1.map((score) => Number(score))
-              : null,
-            achievement1_2: store.scoreForm?.achievement1_2
-              ? store.scoreForm.achievement1_2.map((score) => Number(score))
-              : null,
-            achievement2_1: store.scoreForm?.achievement2_1
-              ? store.scoreForm.achievement2_1.map((score) => Number(score))
-              : null,
-            achievement2_2: store.scoreForm?.achievement2_2
-              ? store.scoreForm.achievement2_2.map((score) => Number(score))
-              : null,
-            achievement3_1: store.scoreForm?.achievement3_1
-              ? store.scoreForm?.achievement3_1.map((score) => Number(score))
-              : null,
+            achievement1_2:
+              store.freeSemester !== 'achievement1_2' && store.scoreForm?.achievement1_2
+                ? store.scoreForm.achievement1_2.map((score) => Number(score))
+                : null,
+            achievement2_1:
+              store.freeSemester !== 'achievement2_1' && store.scoreForm?.achievement2_1
+                ? store.scoreForm.achievement2_1.map((score) => Number(score))
+                : null,
+            achievement2_2:
+              store.freeSemester !== 'achievement2_2' && store.scoreForm?.achievement2_2
+                ? store.scoreForm.achievement2_2.map((score) => Number(score))
+                : null,
+            achievement3_1:
+              store.freeSemester !== 'achievement3_1' && store.scoreForm?.achievement3_1
+                ? store.scoreForm?.achievement3_1.map((score) => Number(score))
+                : null,
+            achievement3_2:
+              store.graduationType === 'GRADUATE' &&
+              store.scoreForm?.achievement3_2 &&
+              store.freeSemester !== 'achievement3_1'
+                ? store.scoreForm.achievement3_2.map((score) => Number(score))
+                : null,
             newSubjects: store.scoreForm!.newSubjects,
-            artsPhysicalAchievement: store.scoreForm!.artsPhysicalAchievement!.map((score) =>
-              Number(score),
-            ),
+            artsPhysicalAchievement:
+              store.graduationType === 'GRADUATE'
+                ? store.scoreForm!.artsPhysicalAchievement!.map((score) => Number(score))
+                : store
+                    .scoreForm!.artsPhysicalAchievement!.filter((_, idx) => idx < 9)
+                    .map((score) => Number(score)),
             absentDays: store.scoreForm!.absentDays!.map((score) => Number(score)),
             attendanceDays: store.scoreForm!.attendanceDays!.map((score) => Number(score)),
             volunteerTime: store.scoreForm!.volunteerTime!.map((score) => Number(score)),

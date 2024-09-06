@@ -6,6 +6,7 @@ import { GradesInputMethodType, ScoreFormType } from 'types';
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared/components';
 import { cn } from 'shared/lib/utils';
+import { useStore } from 'shared/stores';
 
 interface ArtPhysicalFormProps {
   control: Control<ScoreFormType, any>;
@@ -20,9 +21,22 @@ interface ScoreSelectProps {
   liberalSystem: GradesInputMethodType | undefined;
 }
 
-const artPhysicalSemesterArray = ['2학년 1학기', '2학년 2학기', '3학년 1학기'] as const;
+const artPhysicalGraduationArray = [
+  '2학년 1학기',
+  '2학년 2학기',
+  '3학년 1학기',
+  '3학년 2학기',
+] as const;
+const artPhysicalCandidateArray = ['2학년 1학기', '2학년 2학기', '3학년 1학기'] as const;
 const scoreArray = ['A', 'B', 'C', '없음'] as const;
-const artPhysicalSemesterIndexArray = [
+
+const artPhysicalGraduationIndexArray = [
+  { subject: '체육', registerIndexList: [0, 3, 6, 9] },
+  { subject: '음악', registerIndexList: [1, 4, 7, 10] },
+  { subject: '미술', registerIndexList: [2, 5, 8, 11] },
+] as const;
+
+const artPhysicalCandidateIndexArray = [
   { subject: '체육', registerIndexList: [0, 3, 6] },
   { subject: '음악', registerIndexList: [1, 4, 7] },
   { subject: '미술', registerIndexList: [2, 5, 8] },
@@ -84,6 +98,14 @@ const ScoreSelect = ({ name, control, setValue, liberalSystem }: ScoreSelectProp
 );
 
 const ArtPhysicalForm = ({ control, setValue, liberalSystem }: ArtPhysicalFormProps) => {
+  const { graduationType } = useStore();
+  const artPhysicalArray =
+    graduationType === 'CANDIDATE' ? artPhysicalCandidateArray : artPhysicalGraduationArray;
+  const artPhysicalIndexArray =
+    graduationType === 'CANDIDATE'
+      ? artPhysicalCandidateIndexArray
+      : artPhysicalGraduationIndexArray;
+
   return (
     <div className={cn('flex', 'flex-col', 'w-full')}>
       <div
@@ -97,7 +119,7 @@ const ArtPhysicalForm = ({ control, setValue, liberalSystem }: ArtPhysicalFormPr
       >
         <h1 className={cn(...itemStyle, 'w-[6.25rem]')}>과목명</h1>
         <div className={cn('flex')}>
-          {artPhysicalSemesterArray.map((title) => (
+          {artPhysicalArray.map((title) => (
             <h1
               key={title}
               className={cn(
@@ -110,14 +132,14 @@ const ArtPhysicalForm = ({ control, setValue, liberalSystem }: ArtPhysicalFormPr
           ))}
         </div>
       </div>
-      {artPhysicalSemesterIndexArray.map(({ subject, registerIndexList }, index) => (
+      {artPhysicalIndexArray.map(({ subject, registerIndexList }, index) => (
         <div
           key={subject}
           className={cn(
             ...rowStyle,
             'bg-white',
             'h-[3.5rem]',
-            index === artPhysicalSemesterIndexArray.length - 1 && 'rounded-b-[0.375rem]',
+            index === artPhysicalIndexArray.length - 1 && 'rounded-b-[0.375rem]',
           )}
         >
           <div className={cn('h-full', 'w-[6.25rem]', 'flex', 'items-center', 'justify-center')}>
