@@ -145,6 +145,7 @@ export interface OneseoType {
   memberId: number;
   submitCode: string | null;
   realOneseoArrivedYn: YesNo;
+  entranceIntentionYn: YesNo;
   name: string | null;
   screening: ScreeningType;
   schoolName: string | null;

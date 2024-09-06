@@ -36,6 +36,7 @@ export const oneseoUrl = {
     `/oneseo/v3/oneseo/search?page=${page}&size=${size}&testResultTag=${testResultTag}${addParameters('screeningTag', screeningTag)}${addParameters('isSubmitted', isSubmitted)}${addParameters('keyword', keyword)}`,
   getExcel: () => '/oneseo/v3/excel',
   patchArrivedStatus: (memberId: number) => `/oneseo/v3/arrived-status/${memberId}`,
+  patchAgreeDocStatus: (memberId: number) => `/oneseo/v3/entrance-intention/${memberId}`,
   patchAptitudeScore: (memberId: number) => `/oneseo/v3/aptitude-score/${memberId}`,
   patchInterviewScore: (memberId: number) => `/oneseo/v3/interview-score/${memberId}`,
   getAdmissionTickets: () => '/oneseo/v3/admission-tickets',
