@@ -314,8 +314,6 @@ const ScoreRegister = ({
       liberalSystem &&
       screening;
 
-    console.log(store);
-
     if (type !== 'calculate' && !isAllWrite) return;
 
     const isFreeSemester = liberalSystem === 'freeSemester';
@@ -442,12 +440,6 @@ const ScoreRegister = ({
       }, 0);
     }
 
-    if (store.graduationType === 'CANDIDATE') {
-      setTimeout(() => {
-        setValue('achievement3_2', null);
-      }, 0);
-    }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -511,8 +503,15 @@ const ScoreRegister = ({
               onSubmit={(e) => {
                 e.preventDefault();
 
+                if (liberalSystem === 'freeGrade') {
+                  setValue('achievement1_2', null);
+                }
+
                 if (liberalSystem === 'freeSemester' && freeSemester) {
                   setValue(freeSemester, null);
+                }
+                if (store.graduationType === 'CANDIDATE') {
+                  setValue('achievement3_2', null);
                 }
 
                 handleSubmit(handleFormSubmit)();
