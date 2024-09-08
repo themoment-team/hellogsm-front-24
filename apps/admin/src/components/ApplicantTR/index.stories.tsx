@@ -45,6 +45,7 @@ const MockData: ApplicationTRProps = {
   interviewScore: 100,
   secondTestPassYn: 'YES',
   refetch: fakeRefetch,
+  entranceIntentionYn: 'YES',
 };
 
 export const Primary: Story = {

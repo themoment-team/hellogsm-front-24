@@ -10,7 +10,8 @@ import { cn } from 'shared/lib/utils';
 const ApplicantTH = () => {
   const defaultStyle = cn('font-semibold', 'text-zinc-500');
 
-  const [isMouseOver, setIsMouseOver] = useState<boolean>(false);
+  const [isDocOver, setIsDocOver] = useState<boolean>(false);
+  const [isAgreeOver, setisAgreeOver] = useState<boolean>(false);
 
   return (
     <>
@@ -22,12 +23,12 @@ const ApplicantTH = () => {
               <div className={cn('flex', 'gap-1', 'items-center')}>
                 서류 제출 여부
                 <div
-                  onMouseOver={() => setIsMouseOver(true)}
-                  onMouseLeave={() => setIsMouseOver(false)}
+                  onMouseOver={() => setIsDocOver(true)}
+                  onMouseLeave={() => setIsDocOver(false)}
                   className={cn('cursor-pointer', 'relative')}
                 >
                   <QuestionMark />
-                  {isMouseOver && (
+                  {isDocOver && (
                     <div
                       className={cn(
                         'px-3',
@@ -50,11 +51,40 @@ const ApplicantTH = () => {
             <TableCell className={cn(defaultStyle, 'w-[154px]')}>지원자 정보</TableCell>
             <TableCell className={cn(defaultStyle, 'w-[154px]')}>출신 중학교</TableCell>
             <TableCell className={cn(defaultStyle, 'max-w-full')}>전형</TableCell>
-            <TableCell className={cn(defaultStyle, 'w-[96px]')}>1차 결과</TableCell>
-            <TableCell className={cn(defaultStyle, 'w-[180px]')}>직무적성 점수</TableCell>
-            <TableCell className={cn(defaultStyle, 'w-[180px]')}>심층면접 점수</TableCell>
-            <TableCell className={cn(defaultStyle, 'w-[96px]')}>2차 결과</TableCell>
-            <TableCell className={'w-[149.24px]'} />
+            <TableCell className={cn(defaultStyle, 'w-[85px]')}>1차 결과</TableCell>
+            <TableCell className={cn(defaultStyle, 'w-[186px]')}>직무적성 점수</TableCell>
+            <TableCell className={cn(defaultStyle, 'w-[186px]')}>심층면접 점수</TableCell>
+            <TableCell className={cn(defaultStyle, 'w-[90px]')}>2차 결과</TableCell>
+            <TableCell className={cn(defaultStyle, 'max-w-full')}>
+              <div className={cn('flex', 'gap-1', 'items-center')}>
+                입학 동의서 제출 여부
+                <div
+                  onMouseOver={() => setisAgreeOver(true)}
+                  onMouseLeave={() => setisAgreeOver(false)}
+                  className={cn('cursor-pointer', 'relative')}
+                >
+                  <QuestionMark />
+                  {isAgreeOver && (
+                    <div
+                      className={cn(
+                        'px-3',
+                        'py-4',
+                        'rounded-lg',
+                        'bg-slate-900',
+                        'text-xs',
+                        'font-semibold',
+                        'fixed',
+                        'z-[5]',
+                        'text-white',
+                      )}
+                    >
+                      지원자가 입학 동의서 서류를 제출했다면 클릭하여 상태를 변경해주세요!
+                    </div>
+                  )}
+                </div>
+              </div>
+            </TableCell>
+            {/* <TableCell className={'w-[100px]'} /> */}
           </TableRow>
         </TableBody>
       </Table>
