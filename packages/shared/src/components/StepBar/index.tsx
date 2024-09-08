@@ -8,6 +8,7 @@ import {
   SubmitErrorHandler,
   SubmitHandler,
   UseFormHandleSubmit,
+  UseFormSetValue,
   UseFormWatch,
 } from 'react-hook-form';
 import {
@@ -78,6 +79,7 @@ interface StepBarType {
   watch: UseFormWatch<basicRegisterType>;
   isStep4Clickable: boolean;
   setIsButtonClick: Dispatch<SetStateAction<boolean>>;
+  setValue: UseFormSetValue<basicRegisterType>;
 }
 
 const StepBar = ({
@@ -86,6 +88,7 @@ const StepBar = ({
   watch,
   isStep4Clickable,
   setIsButtonClick,
+  setValue,
 }: StepBarType) => {
   const { push } = useRouter();
   const params = useSearchParams();
@@ -166,9 +169,9 @@ const StepBar = ({
         screening,
         guardianName,
         guardianPhoneNumber,
-        schoolTeacherName,
-        schoolTeacherPhoneNumber,
         relationship,
+        schoolTeacherName: category === 'CANDIDATE' ? schoolTeacherName : null,
+        schoolTeacherPhoneNumber: category === 'CANDIDATE' ? schoolTeacherPhoneNumber : null,
       });
 
       const isRelationShipEmpty = !!otherRelationship;
@@ -185,6 +188,13 @@ const StepBar = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [param, store.liberalSystem, store.freeSemester, isStep4Clickable, watch()]);
+
+  useEffect(() => {
+    if (watch('category') === '검정고시') {
+      setValue('schoolName', '검정고시');
+      setValue('schoolAddress', '검정고시');
+    }
+  }, [watch('category')]);
 
   useEffect(() => {
     const stepNumber = Number(params.get('step')) || Steps.ONE;
@@ -268,13 +278,13 @@ const StepBar = ({
       schoolTeacherName,
       schoolTeacherPhoneNumber,
       otherRelationship,
+      category,
     } = watch();
 
     if (
       guardianName &&
       guardianPhoneNumber &&
-      schoolTeacherName &&
-      schoolTeacherPhoneNumber &&
+      (category === 'CANDIDATE' ? schoolTeacherName && schoolTeacherPhoneNumber : true) &&
       (otherRelationship || relationship)
     ) {
       const {
@@ -288,8 +298,10 @@ const StepBar = ({
       setGuardianName(guardianName);
       setGuardianPhoneNumber(guardianPhoneNumber);
       setRelationshipWithGuardian(relationship ? relationship : otherRelationship!);
-      setSchoolTeacherName(schoolTeacherName);
-      setSchoolTeacherPhoneNumber(schoolTeacherPhoneNumber);
+      if (category === '졸업예정') {
+        setSchoolTeacherName(schoolTeacherName!);
+        setSchoolTeacherPhoneNumber(schoolTeacherPhoneNumber!);
+      }
 
       updateStep(Math.min(currentStep + 1, Steps.FOUR));
     }
@@ -329,8 +341,7 @@ const StepBar = ({
       choice &&
       guardianName &&
       guardianPhoneNumber &&
-      schoolTeacherName &&
-      schoolTeacherPhoneNumber &&
+      (category === '졸업예정' ? schoolTeacherName && schoolTeacherPhoneNumber : true) &&
       (otherRelationship || relationship)
     ) {
       const {
@@ -386,8 +397,12 @@ const StepBar = ({
       setRelationshipWithGuardian(
         relationship === '기타 (직접입력)' ? otherRelationship ?? '' : relationship ?? '',
       );
-      setSchoolTeacherName(schoolTeacherName);
-      setSchoolTeacherPhoneNumber(schoolTeacherPhoneNumber);
+
+      if (category === '졸업예정') {
+        setSchoolTeacherName(schoolTeacherName!);
+        setSchoolTeacherPhoneNumber(schoolTeacherPhoneNumber!);
+      }
+
       setMonth(month);
       setYear(year);
       updateStep(Math.min(currentStep + 1, Steps.FOUR));

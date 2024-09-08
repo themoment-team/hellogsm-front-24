@@ -1,3 +1,5 @@
+import { MockScoreType } from "types";
+
 export type ScreeningType = "GENERAL" | "SPECIAL" | "EXTRA_VETERANS" | "EXTRA_ADMISSION";
 
 export type MajorType = "SW" | "AI" | "IOT";
@@ -127,6 +129,18 @@ export interface PostOneseoType {
   step?: number;
 }
 
+export interface GeneralSubjectsScoreDetailType {
+  score1_2: number;
+  score2_1: number;
+  score2_2: number;
+  score3_1: number;
+  score3_2: number;
+}
+
+export interface CalculatedScoreType extends MockScoreType {
+  generalSubjectsScoreDetail: GeneralSubjectsScoreDetailType;
+}
+
 export interface GetMyOneseoType {
   oneseoId: number;
   submitCode: string;
@@ -135,9 +149,11 @@ export interface GetMyOneseoType {
   privacyDetail: PrivacyDetailType;
   middleSchoolAchievement: MiddleSchoolAchievementType &
     GEDAchievementType & {
+      absentDaysCount: number;
       artsPhysicalSubjects: string[];
       generalSubjects: string[];
     };
+  calculatedScore: CalculatedScoreType;
   step: number | null;
 }
 

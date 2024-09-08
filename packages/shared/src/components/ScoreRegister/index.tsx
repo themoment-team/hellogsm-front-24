@@ -214,7 +214,11 @@ const ScoreRegister = ({
 
     if (liberalSystem === 'freeGrade') return setFreeSemester(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultData, setFreeSemester, liberalSystem]);
+
+    if (liberalSystem === 'freeSemester' && freeSemester) {
+      setValue(freeSemester, null);
+    }
+  }, [defaultData, setFreeSemester, liberalSystem, freeSemester]);
 
   const { mutate: mutatePostMyOneseo } = usePostMyOneseo({
     onSuccess: () => {
@@ -302,8 +306,6 @@ const ScoreRegister = ({
       address &&
       detailAddress &&
       graduationType &&
-      schoolTeacherName &&
-      schoolTeacherPhoneNumber &&
       firstDesiredMajor &&
       secondDesiredMajor &&
       thirdDesiredMajor &&
@@ -312,7 +314,10 @@ const ScoreRegister = ({
       year &&
       month &&
       liberalSystem &&
-      screening;
+      screening &&
+      graduationType === 'CANDIDATE'
+        ? schoolTeacherName && schoolTeacherPhoneNumber
+        : true;
 
     if (type !== 'calculate' && !isAllWrite) return;
 

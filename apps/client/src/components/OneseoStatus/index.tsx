@@ -6,8 +6,6 @@ import {
   achievementGradeValues,
 } from 'types';
 
-import { plusAll } from 'shared/utils';
-
 interface OneseoStatusType {
   oneseo: GetMyOneseoType;
 }
@@ -17,24 +15,14 @@ const tdStyle = 'border border-black ';
 const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
   const isGEDScore = !!oneseo.middleSchoolAchievement.gedTotalScore;
 
-  const totalScore: number = isGEDScore
-    ? 0
-    : plusAll([
-        ...achievementGradeValues.map(
-          (gradeKey) => oneseo.middleSchoolAchievement[gradeKey] ?? [0],
-        ),
-        oneseo.middleSchoolAchievement.artsPhysicalAchievement,
-      ]);
-
-  const attendanceScore = plusAll(oneseo.middleSchoolAchievement.attendanceDays);
-  const volunteerScore = plusAll(oneseo.middleSchoolAchievement.volunteerTime);
+  const graduationDate = oneseo.privacyDetail.graduationDate.split('-');
 
   return (
     <table className="mx-auto w-full border-collapse text-center text-[1.2vh] leading-[2.2vh]">
       <tbody>
         <tr>
           <td
-            className="h-[26vh] w-[3%] border-t-0 border-l-0 border border-black bg-[#e9e9e9] p-[0.2vh] align-middle font-medium"
+            className="h-[26vh] w-[3%] border border-l-0 border-t-0 border-black bg-[#e9e9e9] p-[0.2vh] align-middle font-medium"
             rowSpan={9}
           >
             지원자 현황
@@ -42,20 +30,22 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
         </tr>
         <tr>
           <td
-            className="border border-black border-t-0 bg-[#e9e9e9] p-[0.2vh] align-middle font-medium"
+            className="border border-t-0 border-black bg-[#e9e9e9] p-[0.2vh] align-middle font-medium"
             colSpan={2}
             rowSpan={2}
           >
             출신중학교
           </td>
-          {oneseo.privacyDetail.schoolName ? (
+          {oneseo.privacyDetail.schoolName &&
+          oneseo.privacyDetail.graduationType === 'CANDIDATE' ? (
             <td className="border border-t-0 border-black" colSpan={2}>
               {oneseo.privacyDetail.schoolName}
             </td>
           ) : (
-            <td colSpan={2} className="bg-slash"></td>
+            <td colSpan={2} className="bg-slash bg-contain bg-no-repeat" />
           )}
           <td className="border border-black" colSpan={6}>
+            {graduationDate[0]}년 {graduationDate[1]}월{' '}
             {GraduationEnum[oneseo.privacyDetail.graduationType]}
           </td>
         </tr>
@@ -63,21 +53,21 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
           <td className="border border-black bg-[#e9e9e9] p-[0.2vh] align-middle font-medium">
             지역명
           </td>
-          {oneseo.privacyDetail.schoolAddress ? (
+          {oneseo.privacyDetail.graduationType === 'CANDIDATE' ? (
             <td className="border border-black" colSpan={7}>
               {oneseo.privacyDetail.schoolAddress}
             </td>
           ) : (
-            <td colSpan={7} className="bg-slash"></td>
+            <td colSpan={7} className="border border-black bg-slash"></td>
           )}
         </tr>
         <tr>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium" colSpan={9}>
+          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium" colSpan={10}>
             전 형 구 분
           </td>
         </tr>
         <tr>
-          <td className="border border-black" colSpan={9}>
+          <td className="border border-black" colSpan={10}>
             {ScreeningEnum[oneseo.wantedScreening]}
           </td>
         </tr>
@@ -94,6 +84,7 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
           <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium">2-1</td>
           <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium">2-2</td>
           <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium">3-1</td>
+          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium">3-2</td>
           <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium">예체능</td>
           <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium">소계</td>
           <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium" rowSpan={2}>
@@ -101,13 +92,28 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
           </td>
         </tr>
         <tr>
+          <td className={tdStyle + 'w-[2.6875rem] bg-slash'}></td>
           {achievementGradeValues.map((gradeKey) => {
+            const achievementScoreConvertor: {
+              [key: string]: 'score1_2' | 'score2_1' | 'score2_2' | 'score3_1' | 'score3_2';
+            } = {
+              achievement1_2: 'score1_2',
+              achievement2_1: 'score2_1',
+              achievement2_2: 'score2_2',
+              achievement3_1: 'score3_1',
+              achievement3_2: 'score3_2',
+            };
+
             // 검정고시나 자유학기제로 점수가 없다면 빈칸 처리
             return isGEDScore || !oneseo.middleSchoolAchievement[gradeKey]?.length ? (
               <td key={gradeKey} className={tdStyle + 'w-[2.6875rem] bg-slash'}></td>
             ) : (
               <td key={gradeKey} className="border border-black">
-                {plusAll(oneseo.middleSchoolAchievement[gradeKey] ?? [0])}
+                {
+                  oneseo.calculatedScore.generalSubjectsScoreDetail[
+                    achievementScoreConvertor[gradeKey]
+                  ]
+                }
               </td>
             );
           })}
@@ -115,11 +121,14 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
             <td className={tdStyle + 'w-[2.6875rem] bg-slash'}></td>
           ) : (
             <td className="border border-black">
-              {plusAll(oneseo.middleSchoolAchievement.artsPhysicalAchievement)}
+              {oneseo.calculatedScore.artsPhysicalSubjectsScore}
             </td>
           )}
           <td className="border border-black">
-            {isGEDScore ? oneseo.middleSchoolAchievement.gedTotalScore : totalScore}
+            {oneseo.privacyDetail.graduationType === 'GED'
+              ? oneseo.middleSchoolAchievement.gedTotalScore
+              : oneseo.calculatedScore.generalSubjectsScore! +
+                oneseo.calculatedScore.artsPhysicalSubjectsScore!}
           </td>
         </tr>
         <tr>
@@ -129,33 +138,25 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
           <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium" colSpan={3}>
             출석
           </td>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium" colSpan={3}>
+          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium" colSpan={4}>
             봉사활동
           </td>
           <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium">소계</td>
           <td className="border border-black" colSpan={2} rowSpan={2}>
-            {totalScore + volunteerScore + attendanceScore}
+            {oneseo.calculatedScore.totalScore}
           </td>
         </tr>
         <tr>
-          {isGEDScore || attendanceScore === 0 ? (
-            <td className={tdStyle + 'w-[2.6875rem]'}></td>
-          ) : (
-            <td className="border border-black" colSpan={3}>
-              {attendanceScore}
-            </td>
-          )}
-          {isGEDScore || volunteerScore === 0 ? (
-            <td className={tdStyle + 'w-[2.6875rem]'} colSpan={3}></td>
-          ) : (
-            <td className="border border-black" colSpan={3}>
-              {volunteerScore}
-            </td>
-          )}
+          <td className="border border-black" colSpan={3}>
+            {oneseo.calculatedScore.attendanceScore}
+          </td>
+          <td className="border border-black" colSpan={4}>
+            {oneseo.calculatedScore.volunteerScore}
+          </td>
           <td className="border border-black">
-            {isGEDScore
-              ? oneseo.middleSchoolAchievement.gedTotalScore
-              : volunteerScore + attendanceScore}
+            {oneseo.privacyDetail.graduationType === 'CANDIDATE'
+              ? oneseo.calculatedScore.attendanceScore + oneseo.calculatedScore.volunteerScore
+              : 600}
           </td>
         </tr>
         <tr>
@@ -169,24 +170,24 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
           </td>
         </tr>
         <tr>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium" colSpan={3}>
+          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium" colSpan={4}>
             1지망 학과
           </td>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium" colSpan={3}>
+          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium" colSpan={4}>
             2지망 학과
           </td>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium" colSpan={3}>
+          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium" colSpan={4}>
             3지망 학과
           </td>
         </tr>
         <tr>
-          <td className="border border-black" colSpan={3}>
+          <td className="border border-black" colSpan={4}>
             {MajorEnum[oneseo.desiredMajors.firstDesiredMajor]}
           </td>
-          <td className="border border-black" colSpan={3}>
+          <td className="border border-black" colSpan={4}>
             {MajorEnum[oneseo.desiredMajors.secondDesiredMajor]}
           </td>
-          <td className="border border-black" colSpan={3}>
+          <td className="border border-black" colSpan={4}>
             {MajorEnum[oneseo.desiredMajors.thirdDesiredMajor]}
           </td>
         </tr>

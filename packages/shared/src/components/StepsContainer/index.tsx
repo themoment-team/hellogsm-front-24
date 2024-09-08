@@ -292,11 +292,9 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
   const isApplyInfoComplete = !category || !schoolName || !year || !month || !screening || !choice;
 
   const isGuardianInfoComplete =
-    !guardianName ||
-    !guardianPhoneNumber ||
-    !relationship ||
-    !schoolTeacherName ||
-    !schoolTeacherPhoneNumber;
+    !guardianName || !guardianPhoneNumber || !relationship || category === 'CANDIDATE'
+      ? !schoolTeacherName || !schoolTeacherPhoneNumber
+      : false;
 
   useEffect(() => {
     const baseRoute = memberId ? `/edit/${memberId}` : '/register';
@@ -353,6 +351,7 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
             watch={watch}
             isStep4Clickable={isStep4Clickable}
             setIsButtonClick={setIsButtonClick}
+            setValue={setValue}
           />
           <div
             className={cn([
