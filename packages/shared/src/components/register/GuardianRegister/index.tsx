@@ -19,6 +19,7 @@ interface GuardianType {
 
 const GuardianRegister = ({ register, setValue, watch }: GuardianType) => {
   const [selectedRelationship, setSelectedRelationship] = useState<RelationshipType>();
+  const { category: graduationType } = watch();
 
   const handleRadioChange = (value: string) => {
     if (value === '부' || value === '모' || value === '기타 (직접입력)') {
@@ -77,25 +78,27 @@ const GuardianRegister = ({ register, setValue, watch }: GuardianType) => {
             </div>
           </div>
           <div className={cn('flex', 'w-[29.75rem]', 'flex-col', 'items-start', 'gap-8')}>
-            <CustomFormItem
-              text={'담임선생님 이름 / 연락처'}
-              className="gap-1"
-              required={true}
-              fullWidth={true}
-            >
-              <Input
-                placeholder="담임선생님 이름 입력"
-                width="full"
-                {...register('schoolTeacherName')}
-                value={watch('schoolTeacherName')}
-              />
-              <Input
-                placeholder="담임선생님 연락처 입력"
-                width="full"
-                {...register('schoolTeacherPhoneNumber')}
-                value={watch('schoolTeacherPhoneNumber')}
-              />
-            </CustomFormItem>
+            {graduationType === '졸업예정' && (
+              <CustomFormItem
+                text={'담임선생님 이름 / 연락처'}
+                className="gap-1"
+                required={true}
+                fullWidth={true}
+              >
+                <Input
+                  placeholder="담임선생님 이름 입력"
+                  width="full"
+                  {...register('schoolTeacherName')}
+                  value={watch('schoolTeacherName')!}
+                />
+                <Input
+                  placeholder="담임선생님 연락처 입력"
+                  width="full"
+                  {...register('schoolTeacherPhoneNumber')}
+                  value={watch('schoolTeacherPhoneNumber')!}
+                />
+              </CustomFormItem>
+            )}
           </div>
         </div>
       </div>

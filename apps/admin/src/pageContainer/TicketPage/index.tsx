@@ -174,7 +174,7 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
         </div>
       ))}
       <Button
-        className="fixed bottom-10 right-10 items-center gap-2 print:hidden"
+        className="fixed bottom-10 right-10 z-50 items-center gap-2 print:hidden"
         onClick={handlePrint}
       >
         <PrintIcon />

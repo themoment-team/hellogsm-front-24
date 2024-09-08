@@ -1,7 +1,5 @@
 'use client';
 
-// import { plusAll } from 'shared';
-
 import { plusAll } from 'shared';
 import { GetMyOneseoType, SexEnum } from 'types';
 
@@ -28,8 +26,6 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
 
   if (!oneseo) return <>원서 정보가 없습니다</>;
 
-  const isGEDScore = !!oneseo.middleSchoolAchievement.gedTotalScore;
-
   const date = new Date();
 
   const targetDate = date.getFullYear() + 1;
@@ -47,7 +43,10 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
 
   let currentIdx = 0;
 
-  const artPhysicalScores = [...oneseo.middleSchoolAchievement.artsPhysicalAchievement];
+  const artPhysicalScores =
+    oneseo.privacyDetail.graduationType === 'CANDIDATE'
+      ? [...oneseo.middleSchoolAchievement.artsPhysicalAchievement]
+      : [0];
 
   const getArtPhysicalElement = (achievement: number[] | null) => {
     if (!achievement) {
@@ -68,7 +67,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
           </div>
         ))}
         <div className="flex items-center justify-center border-b-0 border-black">
-          {plusAll(arr)}
+          {oneseo.privacyDetail.graduationType === 'CANDIDATE' ? plusAll(arr) : 0}
         </div>
       </>
     );
@@ -97,7 +96,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
       `}</style>
       {/* 입학원서 */}
       <Button
-        className="fixed bottom-10 right-24 items-center gap-2 print:hidden"
+        className="fixed bottom-10 right-24 z-50 items-center gap-2 print:hidden"
         onClick={handlePrint}
       >
         <PrintIcon />
@@ -204,18 +203,26 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                   <th className={thStyle} colSpan={3} rowSpan={6}>
                     원서작성자(담임) <br /> 성명
                   </th>
-                  {oneseo.privacyDetail.schoolTeacherName ? (
-                    <td colSpan={2} className={tdStyle + 'text-end'} rowSpan={3}>
-                      {oneseo.privacyDetail.schoolTeacherName}(인)
-                    </td>
-                  ) : (
-                    <td className={tdStyle + 'line-through'} colSpan={2} rowSpan={3} />
-                  )}
+                  <td
+                    colSpan={2}
+                    className={cn(
+                      tdStyle,
+                      'text-end',
+                      oneseo.privacyDetail.graduationType !== 'CANDIDATE' && [
+                        'bg-slash',
+                        'bg-contain',
+                        'bg-no-repeat',
+                      ],
+                    )}
+                    rowSpan={3}
+                  >
+                    {oneseo.privacyDetail.graduationType === 'CANDIDATE' && '(인)'}
+                  </td>
                   <th className={thStyle}>핸드폰</th>
-                  {oneseo.privacyDetail.schoolTeacherPhoneNumber ? (
+                  {oneseo.privacyDetail.graduationType === 'CANDIDATE' ? (
                     <td>{oneseo.privacyDetail.schoolTeacherPhoneNumber}</td>
                   ) : (
-                    <td className={tdStyle + 'line-through'} />
+                    <td className={cn(tdStyle, 'bg-slash', 'bg-contain', 'bg-no-repeat')} />
                   )}
                 </tr>
               </thead>
@@ -252,7 +259,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
           // 검정고시가 아닌 학생만 성적 입력 확인서 출력
         }
 
-        {!isGEDScore && (
+        {oneseo.privacyDetail.graduationType === 'CANDIDATE' && (
           <div className="relative z-[2] w-[66vh] overflow-hidden">
             <div className="relative bg-white p-4 text-black">
               <div className="relative z-[2] border border-gray-300 bg-white p-6 shadow-md">
@@ -310,23 +317,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                         성취도/평어
                       </div>
                     </div>
-                    {!oneseo.middleSchoolAchievement.achievement3_2 ? (
-                      <div className="h-full bg-slash bg-contain bg-no-repeat"></div>
-                    ) : (
-                      <>
-                        {oneseo.middleSchoolAchievement.achievement3_2.map((score, i) => (
-                          <div
-                            key={i}
-                            className="flex items-center justify-center border-b border-black"
-                          >
-                            {scoreToAlphabet[score]}
-                          </div>
-                        ))}
-                        <div className="flex items-center justify-center border-b-0 border-black">
-                          {plusAll(oneseo.middleSchoolAchievement.achievement3_2)}
-                        </div>
-                      </>
-                    )}
+                    <div className="h-full bg-slash bg-contain bg-no-repeat"></div>
                   </div>
                   <div className="flex w-full flex-col border-r border-black">
                     <div className="flex flex-col">
@@ -350,7 +341,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                           </div>
                         ))}
                         <div className="flex items-center justify-center border-b-0 border-black">
-                          {plusAll(oneseo.middleSchoolAchievement.achievement1_2)}
+                          {oneseo.calculatedScore.generalSubjectsScoreDetail.score1_2}
                         </div>
                       </>
                     )}
@@ -377,7 +368,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                           </div>
                         ))}
                         <div className="flex items-center justify-center border-b-0 border-black">
-                          {plusAll(oneseo.middleSchoolAchievement.achievement2_1)}
+                          {oneseo.calculatedScore.generalSubjectsScoreDetail.score2_1}
                         </div>
                       </>
                     )}
@@ -404,7 +395,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                           </div>
                         ))}
                         <div className="flex items-center justify-center border-b-0 border-black">
-                          {plusAll(oneseo.middleSchoolAchievement.achievement2_2)}
+                          {oneseo.calculatedScore.generalSubjectsScoreDetail.score2_2}
                         </div>
                       </>
                     )}
@@ -431,7 +422,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                           </div>
                         ))}
                         <div className="flex items-center justify-center border-b-0 border-black">
-                          {plusAll(oneseo.middleSchoolAchievement.achievement3_1)}
+                          {oneseo.calculatedScore.generalSubjectsScoreDetail.score3_1}
                         </div>
                       </>
                     )}
@@ -558,20 +549,16 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                         </td>
                       ))}
                       <td className="border border-black" rowSpan={3}>
-                        {plusAll(oneseo.middleSchoolAchievement.absentDays)}
+                        {oneseo.middleSchoolAchievement.absentDaysCount}
                       </td>
                       <td className="border border-black" rowSpan={3}>
-                        {Math.max(30 - plusAll(oneseo.middleSchoolAchievement.absentDays) * 3, 0)}
+                        {oneseo.calculatedScore.attendanceScore}
                       </td>
                       <td className="border border-black">
                         {oneseo.middleSchoolAchievement.volunteerTime[0]}
                       </td>
                       <td className="border border-black" rowSpan={3}>
-                        {plusAll([
-                          oneseo.middleSchoolAchievement.volunteerTime.map((time) =>
-                            calcVolunteerScore(time),
-                          ),
-                        ])}
+                        {oneseo.calculatedScore.volunteerScore}
                       </td>
                     </tr>
                     <tr>
