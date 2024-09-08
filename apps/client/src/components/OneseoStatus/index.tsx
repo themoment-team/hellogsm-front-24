@@ -6,8 +6,6 @@ import {
   achievementGradeValues,
 } from 'types';
 
-import { plusAll } from 'shared/utils';
-
 interface OneseoStatusType {
   oneseo: GetMyOneseoType;
 }
