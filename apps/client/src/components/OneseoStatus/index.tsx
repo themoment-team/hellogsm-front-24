@@ -17,23 +17,6 @@ const tdStyle = 'border border-black ';
 const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
   const isGEDScore = !!oneseo.middleSchoolAchievement.gedTotalScore;
 
-  const totalScore: number = isGEDScore
-    ? 0
-    : plusAll([
-        ...achievementGradeValues.map(
-          (gradeKey) => oneseo.middleSchoolAchievement[gradeKey] ?? [0],
-        ),
-        oneseo.middleSchoolAchievement.artsPhysicalAchievement,
-      ]);
-
-  const attendanceScore =
-    oneseo.privacyDetail.graduationType === 'CANDIDATE'
-      ? plusAll(oneseo.middleSchoolAchievement.attendanceDays)
-      : 0;
-  const volunteerScore =
-    oneseo.privacyDetail.graduationType === 'CANDIDATE'
-      ? plusAll(oneseo.middleSchoolAchievement.volunteerTime)
-      : 0;
   const graduationDate = oneseo.privacyDetail.graduationDate.split('-');
 
   return (

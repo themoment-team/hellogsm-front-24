@@ -73,14 +73,6 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
     );
   };
 
-  const calcVolunteerScore = (time: number) => {
-    if (time > 6) return 10;
-    if (time < 4) return 2;
-    if (time === 4) return 4;
-    if (time === 6) return 8;
-    return 6;
-  };
-
   return (
     <>
       <style jsx global>{`
