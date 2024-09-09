@@ -150,11 +150,11 @@ const ApplicantTR = ({
   };
 
   const handleAptitudeScore = () => {
-    patchAptitudeScore({ aptitudeEvaluationScore: parseInt(watch('직무적성점수')) });
+    patchAptitudeScore({ aptitudeEvaluationScore: parseFloat(watch('직무적성점수')) });
   };
 
   const handleInterviewScore = () => {
-    patchInterviewScore({ interviewScore: parseInt(watch('심층면접점수')) });
+    patchInterviewScore({ interviewScore: parseFloat(watch('심층면접점수')) });
   };
 
   return (
