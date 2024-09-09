@@ -198,7 +198,8 @@ const GuidePage = ({ initialData }: GuideProps) => {
       </div>
       <div
         className={cn(
-          'w-[30rem]',
+          'w-full',
+          'px-[4rem]',
           'sm:w-[66.5625rem]',
           'flex',
           'flex-col',
@@ -262,7 +263,7 @@ const GuidePage = ({ initialData }: GuideProps) => {
         className={cn(
           'sticky',
           'bottom-10',
-          'w-[30rem]',
+          'w-[20rem]',
           'h-[3.25rem]',
           'sm:w-[31.25rem]',
           'sm:h-[4.25rem]',
