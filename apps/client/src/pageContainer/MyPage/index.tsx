@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetMyMemberInfo, useGetMyOneseo } from 'api';
+import { useGetMyMemberInfo, useGetMyOneseo, useLogout } from 'api';
 import { useRouter } from 'next/navigation';
 import {
   Button,
@@ -15,7 +15,6 @@ import {
 import { GetMyOneseoType } from 'types';
 
 import { AlertIcon, DocumentIcon, ParticleIcon, ProfileIcon } from 'client/assets';
-import { useLogout } from 'client/hooks';
 
 import { cn } from 'shared/lib/utils';
 
@@ -32,7 +31,7 @@ const MyPage = ({ initialData }: MyInfoProps) => {
 
   const { data: memberInfo, refetch: memberInfoRefetch } = useGetMyMemberInfo();
 
-  const handleLogout = useLogout(myOneseoRefetch, memberInfoRefetch);
+  const handleLogout = useLogout(myOneseoRefetch, memberInfoRefetch, 'client');
 
   const submitCode = data?.submitCode;
   const wantedScreening = data?.wantedScreening;
