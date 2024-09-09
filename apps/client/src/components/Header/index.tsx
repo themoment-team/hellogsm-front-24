@@ -5,7 +5,10 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import * as I from 'client/assets';
-import { ActiveLink, LoginDialog } from 'client/components';
+import {
+  ActiveLink,
+  // LoginDialog
+} from 'client/components';
 import { useLogout } from 'client/hooks';
 import { cn } from 'client/lib/utils';
 
@@ -201,7 +204,9 @@ const Header = () => {
         ) : authInfo?.authReferrerType && !memberInfo?.name ? (
           '회원가입을 진행해주세요'
         ) : (
-          <LoginDialog />
+          <></>
+          // <LoginDialog />
+          // 로그인 버튼 임시 주석
         )}
       </header>
       {isBarClicked && (
