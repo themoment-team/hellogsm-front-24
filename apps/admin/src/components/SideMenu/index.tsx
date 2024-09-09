@@ -2,6 +2,8 @@
 
 import { PropsWithChildren } from 'react';
 
+import { useGetMyAuthInfo, useGetMyMemberInfo, useLogout } from 'api';
+import { Button } from 'shared';
 import { TestResultType } from 'types';
 
 import { ChevronsLeft, Puzzle, Exit } from 'admin/assets';
@@ -95,6 +97,11 @@ interface SideMenuProps {
 }
 
 const SideMenu = ({ isOpen, setIsOpen, testResultTag, setTestResultTag }: SideMenuProps) => {
+  const { refetch: authInfoRefetch } = useGetMyAuthInfo();
+  const { refetch: memberInfoRefetch } = useGetMyMemberInfo();
+
+  const handleLogoutClick = useLogout(authInfoRefetch, memberInfoRefetch, 'admin');
+
   return (
     <aside
       className={cn(
@@ -151,10 +158,12 @@ const SideMenu = ({ isOpen, setIsOpen, testResultTag, setTestResultTag }: SideMe
           </div>
         </div>
       </div>
-      <Item>
-        <Exit />
-        로그아웃
-      </Item>
+      <Button onClick={handleLogoutClick} variant="ghost" className={cn('justify-start', 'p-0')}>
+        <Item>
+          <Exit />
+          로그아웃
+        </Item>
+      </Button>
     </aside>
   );
 };
