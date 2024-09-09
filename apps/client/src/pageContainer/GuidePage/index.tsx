@@ -200,7 +200,6 @@ const GuidePage = ({ initialData }: GuideProps) => {
         className={cn(
           'w-full',
           'px-[4rem]',
-          'sm:w-[66.5625rem]',
           'flex',
           'flex-col',
           'items-start',
