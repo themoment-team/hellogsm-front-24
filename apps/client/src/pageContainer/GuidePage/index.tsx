@@ -166,7 +166,8 @@ const GuidePage = ({ initialData }: GuideProps) => {
     initialData: initialData,
   });
 
-  const isTempOneseo = data && !data.step;
+  // const isTempOneseo = data && !data.step;
+  // TODO 임시 주석 처리
 
   const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -259,8 +260,11 @@ const GuidePage = ({ initialData }: GuideProps) => {
       </div>
 
       <Button
-        variant={isTempOneseo ? 'reverseFill' : 'fill'}
-        disabled={isTempOneseo ? true : false}
+        // variant={isTempOneseo ? 'reverseFill' : 'fill'}
+        // disabled={isTempOneseo ? true : false}
+        // TODO 임시 주석 처리
+        variant="reverseFill"
+        disabled={true}
         className={cn(
           'sticky',
           'bottom-10',

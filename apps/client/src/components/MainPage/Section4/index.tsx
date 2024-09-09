@@ -80,7 +80,7 @@ const TitleCard = ({ firstText, lastText, icon }: TitleCardProps) => (
       'rounded-[1rem]',
       'shadow-lg',
       'gap-[1.8125rem]',
-      'w-[19.4375rem]',
+      'w-[20rem]',
     )}
   >
     <div className={cn('flex', 'w-[16.4375rem]', 'flex-col', 'items-start')}>
