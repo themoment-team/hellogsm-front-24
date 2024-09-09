@@ -36,7 +36,7 @@ const Footer = () => {
         'p-[3.75rem]',
         'sm:px-[6.25rem]',
         '2xl:px-[12.5rem]',
-        'w-lvw',
+        'w-full',
       )}
     >
       <div
