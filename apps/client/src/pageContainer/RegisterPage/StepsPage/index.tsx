@@ -1,10 +1,11 @@
 'use client';
 
-import { ComputerRecommendedPage } from 'client/pageContainer';
 import { useEffect } from 'react';
 
 import { StepsContainer } from 'shared';
 import { GetMyOneseoType, MyMemberInfoType } from 'types';
+
+import { ComputerRecommendedPage } from 'client/pageContainer';
 
 interface RegisterStepsPageProps {
   data: GetMyOneseoType | undefined;

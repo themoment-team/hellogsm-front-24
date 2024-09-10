@@ -6,8 +6,9 @@ import Image from 'next/image';
 import { Button, ScoreRegister, useStore } from 'shared';
 import { GraduationType } from 'types';
 
-import { cn } from 'shared/lib/utils';
 import { ComputerRecommendedPage } from 'client/pageContainer';
+
+import { cn } from 'shared/lib/utils';
 
 const graduationArray: { text: string; value: GraduationType; img: string }[] = [
   { text: '졸업 예정', value: 'CANDIDATE', img: '/images/candidate.png' },
