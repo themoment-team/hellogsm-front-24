@@ -5,6 +5,8 @@ import { useEffect } from 'react';
 import { StepsContainer } from 'shared';
 import { GetMyOneseoType, MyMemberInfoType } from 'types';
 
+import { ComputerRecommendedPage } from 'client/pageContainer';
+
 interface RegisterStepsPageProps {
   data: GetMyOneseoType | undefined;
   info: MyMemberInfoType;
@@ -26,7 +28,12 @@ const RegisterStepsPage = ({ data, param, info }: RegisterStepsPageProps) => {
     };
   }, []);
 
-  return <StepsContainer data={data} info={info} param={param} type="client" />;
+  return (
+    <>
+      <ComputerRecommendedPage />
+      <StepsContainer data={data} info={info} param={param} type="client" />;
+    </>
+  );
 };
 
 export default RegisterStepsPage;

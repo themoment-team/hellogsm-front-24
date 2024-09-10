@@ -86,43 +86,42 @@ const FinalSubmitDialog = ({ id, isStep4Clickable }: FinalSubmitDialogProps) => 
 
 const ConfirmBar = ({ id, temporarySave, isStep4Clickable, setIsButtonClick }: ConfirmBarProps) => {
   return (
-    <>
-      <div
-        className={cn(
-          'w-full',
-          'h-[5rem]',
-          'bg-white',
-          'border-t-solid',
-          'border-t-[0.0625rem]',
-          'border-gray-100',
-          'px-[20rem]',
-          'flex',
-          'justify-between',
-          'items-center',
-          'fixed',
-          'bottom-0',
-        )}
-      >
-        <div>
-          <span className={cn('text-body1', 'text-blue-600')}>
-            📎 최종 제출 후에는 정보를 수정할 수 없습니다. &nbsp;
-          </span>
-          <span className={cn('text-body1', 'text-slate-900')}>정확히 입력 후 제출해주세요!</span>
-        </div>
-        <div className={cn('flex', 'items-center', 'gap-[0.5rem]')}>
-          <Button
-            onClick={() => {
-              setIsButtonClick(true);
-              temporarySave();
-            }}
-            variant="outline"
-          >
-            임시저장
-          </Button>
-          <FinalSubmitDialog id={id} isStep4Clickable={isStep4Clickable} />
-        </div>
+    <div
+      className={cn(
+        'w-full',
+        'h-[5rem]',
+        'bg-white',
+        'border-t-solid',
+        'border-t-[0.0625rem]',
+        'border-gray-100',
+        'px-[20rem]',
+        'sm:flex',
+        'hidden',
+        'justify-between',
+        'items-center',
+        'fixed',
+        'bottom-0',
+      )}
+    >
+      <div>
+        <span className={cn('text-body1', 'text-blue-600')}>
+          📎 최종 제출 후에는 정보를 수정할 수 없습니다. &nbsp;
+        </span>
+        <span className={cn('text-body1', 'text-slate-900')}>정확히 입력 후 제출해주세요!</span>
       </div>
-    </>
+      <div className={cn('flex', 'items-center', 'gap-[0.5rem]')}>
+        <Button
+          onClick={() => {
+            setIsButtonClick(true);
+            temporarySave();
+          }}
+          variant="outline"
+        >
+          임시저장
+        </Button>
+        <FinalSubmitDialog id={id} isStep4Clickable={isStep4Clickable} />
+      </div>
+    </div>
   );
 };
 
