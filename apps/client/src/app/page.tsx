@@ -15,5 +15,5 @@ export default async function Home() {
     redirect('/signup');
   }
 
-  return <MainPage resultInfo={resultInfo} />;
+  return <MainPage resultInfo={resultInfo} memberInfo={memberInfo} />;
 }

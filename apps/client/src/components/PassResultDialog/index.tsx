@@ -1,4 +1,4 @@
-import { MyTestResultType } from 'types';
+import { MyMemberInfoType, MyTestResultType } from 'types';
 
 import { BlurIcon, HelloGSMIcon } from 'client/assets';
 
@@ -10,6 +10,7 @@ interface PassResultProps {
   setIsPassOpen: React.Dispatch<React.SetStateAction<boolean>>;
   resultInfo: MyTestResultType | undefined;
   isFinishFirstTest: boolean;
+  memberInfo: MyMemberInfoType | undefined;
 }
 
 const PassResultDialog = ({
@@ -17,16 +18,17 @@ const PassResultDialog = ({
   setIsPassOpen,
   resultInfo,
   isFinishFirstTest,
+  memberInfo,
 }: PassResultProps) => {
   const firstTestPass = isFinishFirstTest && resultInfo?.firstTestPassYn === 'YES';
   const secondTestPass = !isFinishFirstTest && resultInfo?.secondTestPassYn === 'YES';
-
+  const userName = memberInfo?.name;
   const resultMessages = {
     firstTestPassYes: {
       title: (
         <>
-          축하합니다! 김하온 님은 1차 서류 전형에 <span className={cn('text-sky-600')}>합격</span>{' '}
-          하셨습니다.
+          축하합니다! {userName} 님은 1차 서류 전형에{' '}
+          <span className={cn('text-sky-600')}>합격</span> 하셨습니다.
         </>
       ),
       message: (
@@ -40,7 +42,8 @@ const PassResultDialog = ({
     firstTestPassNo: {
       title: (
         <>
-          김하온 님은 1차 서류 전형에 <span className={cn('text-red-600')}>불합격</span> 하셨습니다.
+          {userName} 님은 1차 서류 전형에 <span className={cn('text-red-600')}>불합격</span>{' '}
+          하셨습니다.
         </>
       ),
       message: (
@@ -54,7 +57,8 @@ const PassResultDialog = ({
     secondTestPassYes: {
       title: (
         <>
-          축하합니다! 김하온 님은 <span className={cn('text-sky-600')}>최종합격</span> 하셨습니다.
+          축하합니다! {userName} 님은 <span className={cn('text-sky-600')}>최종합격</span>{' '}
+          하셨습니다.
         </>
       ),
       message: <>학과목 배정은 10월 10일 10:10에 본 사이트에서 확인하실 수 있습니다.</>,
@@ -62,7 +66,7 @@ const PassResultDialog = ({
     secondTestPassNo: {
       title: (
         <>
-          김하온 님은 최종 <span className={cn('text-red-600')}>불합격</span> 하셨습니다.
+          {userName} 님은 최종 <span className={cn('text-red-600')}>불합격</span> 하셨습니다.
         </>
       ),
       message: (

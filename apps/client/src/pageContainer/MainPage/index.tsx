@@ -2,16 +2,17 @@
 
 import { useEffect, useState } from 'react';
 
-import { MyTestResultType } from 'types';
+import { MyMemberInfoType, MyTestResultType } from 'types';
 
 import { Footer, PassResultDialog, Section5, TestResultDialog } from 'client/components';
 import { Section1, Section2, Section3, Section4 } from 'client/components';
 
 interface MainPageProps {
   resultInfo: MyTestResultType | undefined;
+  memberInfo: MyMemberInfoType | undefined;
 }
 
-const MainPage = ({ resultInfo }: MainPageProps) => {
+const MainPage = ({ resultInfo, memberInfo }: MainPageProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isPassOpen, setIsPassOpen] = useState<boolean>(false);
 
@@ -47,6 +48,7 @@ const MainPage = ({ resultInfo }: MainPageProps) => {
         setIsPassOpen={setIsPassOpen}
         resultInfo={resultInfo}
         isFinishFirstTest={isFinishFirstTest}
+        memberInfo={memberInfo}
       />
     </>
   );
