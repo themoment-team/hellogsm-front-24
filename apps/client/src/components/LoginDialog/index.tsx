@@ -1,7 +1,4 @@
-import {
-  Button,
-  //  LoginButton
-} from 'shared/components';
+import { Button, LoginButton } from 'shared/components';
 import { Dialog, DialogContent, DialogTrigger } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
@@ -24,12 +21,12 @@ const LoginDialog = () => {
             'gap-8',
           )}
         >
-          <h1>현재는 로그인을 할 수 없습니다.</h1>
-          {/* <span className={cn('text-2xl', 'font-semibold', 'text-gray-900')}>로그인</span>
+          {/* <h1>현재는 로그인을 할 수 없습니다.</h1> */}
+          <span className={cn('text-2xl', 'font-semibold', 'text-gray-900')}>로그인</span>
           <div className={cn('flex', 'flex-col', 'gap-3')}>
             <LoginButton variant="kakao">카카오로 시작하기</LoginButton>
             <LoginButton variant="google">Google 계정으로 시작하기</LoginButton>
-          </div> */}
+          </div>
         </div>
       </DialogContent>
     </Dialog>
