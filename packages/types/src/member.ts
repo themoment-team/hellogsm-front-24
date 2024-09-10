@@ -1,4 +1,4 @@
-import { SexType } from "types";
+import { SexType, YesNo } from "types";
 
 export type RoleType = "UNAUTHENTICATED" | "APPLICANT" | "ADMIN" | "ROOT";
 export type AuthReferrerType = "KAKAO" | "GOOGLE";
@@ -27,4 +27,9 @@ export interface MemberRegisterType extends MemberInfoType {
 
 export interface SendCodeType {
   phoneNumber: string;
+}
+
+export interface MyTestResultType {
+  firstTestPassYn: YesNo | null;
+  secondTestPassYn: YesNo | null;
 }

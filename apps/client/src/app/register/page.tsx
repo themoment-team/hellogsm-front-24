@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 
 import { getMyMemberInfo, getMyOneseo } from 'client/app/apis';
-// import { RegisterStepsPage } from 'client/pageContainer';
+import { RegisterStepsPage } from 'client/pageContainer';
 
 interface RegisterProps {
   searchParams?: { [key: string]: string | undefined };
@@ -16,7 +16,7 @@ export default async function Register({ searchParams }: RegisterProps) {
 
   if (!step) redirect('/register?step=1');
 
-  redirect('/');
+  // redirect('/');
   // TODO 임시 redirect
-  // return <RegisterStepsPage data={data} info={info} param={step} />;
+  return <RegisterStepsPage data={data} info={info} param={step} />;
 }

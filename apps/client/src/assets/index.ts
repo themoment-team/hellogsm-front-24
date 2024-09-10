@@ -25,4 +25,6 @@ export { default as HamburgurIcon } from './HamburgurIcon';
 export { default as XIcon } from './XIcon';
 export { default as OneseoIcon } from './OneseoIcon';
 export { default as FaqIcon } from './FaqIcon';
+export { default as BlurIcon } from './BlurIcon';
+export { default as HelloGSMIcon } from './HelloGSMIcon';
 export { default as Character } from './ComputerRecommendedPage/Character';

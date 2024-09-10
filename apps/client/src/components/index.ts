@@ -12,3 +12,5 @@ export { default as LoginDialog } from './LoginDialog';
 export { default as ChannelTalk } from './ChannelTalk';
 export { default as OneseoStatus } from './OneseoStatus';
 export { default as FaqElement } from './FaqElement';
+export { default as TestResultDialog } from './TestResultDialog';
+export { default as PassResultDialog } from './PassResultDialog';
