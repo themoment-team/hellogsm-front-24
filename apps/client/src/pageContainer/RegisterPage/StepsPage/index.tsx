@@ -1,5 +1,6 @@
 'use client';
 
+import { ComputerRecommendedPage } from 'client/pageContainer';
 import { useEffect } from 'react';
 
 import { StepsContainer } from 'shared';
@@ -26,7 +27,12 @@ const RegisterStepsPage = ({ data, param, info }: RegisterStepsPageProps) => {
     };
   }, []);
 
-  return <StepsContainer data={data} info={info} param={param} type="client" />;
+  return (
+    <>
+      <ComputerRecommendedPage />
+      <StepsContainer data={data} info={info} param={param} type="client" />;
+    </>
+  );
 };
 
 export default RegisterStepsPage;

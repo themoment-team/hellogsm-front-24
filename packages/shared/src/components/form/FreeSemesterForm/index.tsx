@@ -152,7 +152,7 @@ const FreeSemesterForm = ({
         </div>
       </div>
 
-      <div className={cn(...rowStyle, 'bg-white', 'h-[3rem]')}>
+      <div className={cn(...rowStyle, 'bg-white', 'h-[3.5rem]')}>
         <h1 className={cn(...itemStyle, 'w-[6.75rem]')}>자유학기제</h1>
         <div className={cn('flex')}>
           {freeSemesterArray.map(({ id }) => (
@@ -165,6 +165,7 @@ const FreeSemesterForm = ({
                     'text-emerald-500',
                   )}
                   type="button"
+                  onClick={() => setFreeSemester(null)}
                 >
                   <PinIcon type="ON" />
                   on
