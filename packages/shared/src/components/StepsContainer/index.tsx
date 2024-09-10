@@ -397,7 +397,7 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
       </div>
 
       {type === 'admin' ? (
-        <EditBar id="scoreForm" />
+        <EditBar id="scoreForm" step={param} />
       ) : (
         <ConfirmBar
           temporarySave={temporarySave}
