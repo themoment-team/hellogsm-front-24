@@ -76,6 +76,8 @@ const formWrapper = [
   'w-full',
 ];
 
+const strongStyle = ['text-[0.875rem]/[1.25rem]', 'text-blue-700', 'font-semibold'];
+
 const widthConvertor: { [key: string]: string } = {
   freeGrade_GRADUATION: 'w-[42.9375rem]',
   freeGrade_CANDIDATE: 'w-[35.4375rem]',
@@ -538,7 +540,18 @@ const ScoreRegister = ({
                 )}
               >
                 <div className={cn(...formWrapper)}>
-                  일반교과 성적
+                  <div className={cn('flex', 'justify-between', 'items-center')}>
+                    일반교과 성적
+                    {liberalSystem === 'freeSemester' && (
+                      <span
+                        className={cn('text-[0.875rem]/[1.25rem]', 'text-blue-700', 'font-normal')}
+                      >
+                        1학년 1학기에 <strong className={cn(strongStyle)}>자유학기제</strong>{' '}
+                        이셨다면, <strong className={cn(strongStyle)}>자유학기제</strong> 선택을 안
+                        해도 됩니다.
+                      </span>
+                    )}
+                  </div>
                   {liberalSystem === 'freeGrade' && (
                     <FreeGradeForm
                       register={register}

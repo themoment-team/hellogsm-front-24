@@ -339,7 +339,8 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
           'h-full',
           'bg-slate-50',
           'pt-[3.56rem]',
-          'flex',
+          'sm:flex',
+          'hidden',
           'justify-center',
           'pb-[5rem]',
         ])}

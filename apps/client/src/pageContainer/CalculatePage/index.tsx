@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { Button, ScoreRegister, useStore } from 'shared';
 import { GraduationType } from 'types';
 
+import { ComputerRecommendedPage } from 'client/pageContainer';
+
 import { cn } from 'shared/lib/utils';
 
 const graduationArray: { text: string; value: GraduationType; img: string }[] = [
@@ -20,8 +22,9 @@ const CalculatePage = () => {
 
   return (
     <>
+      <ComputerRecommendedPage />
       {graduationType ? (
-        <div className={cn('flex', 'justify-center', 'rounded-[1.25rem]')}>
+        <div className={cn('sm:flex', 'justify-center', 'rounded-[1.25rem]', 'hidden')}>
           <div className={cn('pb-10', 'mb-40', 'bg-white', 'mt-[3.56rem]', 'rounded-[1.25rem]')}>
             <header
               className={cn(
@@ -56,7 +59,7 @@ const CalculatePage = () => {
           </div>
         </div>
       ) : (
-        <div className={cn('flex', 'w-full', 'justify-center', 'mt-48')}>
+        <div className={cn('sm:flex', 'w-full', 'justify-center', 'mt-48', 'hidden')}>
           <div className={cn('flex', 'flex-col', 'items-center', 'gap-10')}>
             <h1 className={cn('text-[1.5rem]/[2rem]', 'text-gray-900', 'font-semibold')}>
               모의 성적 계산을 위한 지원자 유형을 선택해 주세요.
