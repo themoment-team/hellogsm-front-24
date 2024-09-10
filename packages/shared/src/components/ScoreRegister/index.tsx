@@ -18,7 +18,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   ArtPhysicalForm,
-  EditBar,
   FormController,
   FreeGradeForm,
   FreeSemesterForm,
@@ -610,7 +609,6 @@ const ScoreRegister = ({
           </div>
         )}
       </div>
-      {type === 'admin' && <EditBar id={formId} />}
       <ScoreCalculateDialog
         isDialog={isDialog}
         setIsDialog={setIsDialog}
