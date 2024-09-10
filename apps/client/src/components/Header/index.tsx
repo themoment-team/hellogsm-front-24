@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from 'react';
 
+import { useLogout } from 'api';
 import Link from 'next/link';
 
 import * as I from 'client/assets';
 import { ActiveLink, LoginDialog } from 'client/components';
-import { useLogout } from 'client/hooks';
 import { cn } from 'client/lib/utils';
 
 import { useGetMyAuthInfo, useGetMyMemberInfo } from 'api/hooks';
@@ -37,7 +37,7 @@ const loginLinkStyle = [
 const Header = () => {
   const { data: authInfo, refetch: authInfoRefetch } = useGetMyAuthInfo();
   const { data: memberInfo, refetch: memberInfoRefetch } = useGetMyMemberInfo();
-  const handleLogout = useLogout(authInfoRefetch, memberInfoRefetch);
+  const handleLogout = useLogout(authInfoRefetch, memberInfoRefetch, 'client');
 
   const [isLogoutClicked, setIsLogoutClicked] = useState(false);
   const [isBarClicked, setIsBarClicked] = useState(false);

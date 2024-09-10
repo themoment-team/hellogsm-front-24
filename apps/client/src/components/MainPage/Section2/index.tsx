@@ -95,7 +95,8 @@ const Section2 = () => {
                 key={index}
                 className={cn(
                   'flex',
-                  'px-5',
+                  'px-4',
+                  'sm:px-5',
                   'py-[0.375rem]',
                   'flex-col',
                   'items-center',
@@ -177,7 +178,8 @@ const Section2 = () => {
           className={cn(
             'flex',
             'md:hidden',
-            'px-[2.5rem]',
+            'px-[1rem]',
+            'sm:px-[2.5rem]',
             'py-[2rem]',
             'flex-col',
             'items-center',

@@ -23,10 +23,10 @@ import { YesNo, ScreeningType } from 'types/oneseo';
 interface FilterBarProps {
   keyword: string;
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
-  isSubmitted: YesNo | undefined;
-  setIsSubmitted: React.Dispatch<React.SetStateAction<YesNo | undefined>>;
-  screeningTag: ScreeningType | undefined;
-  setScreeningTag: React.Dispatch<React.SetStateAction<ScreeningType | undefined>>;
+  isSubmitted: YesNo | string;
+  setIsSubmitted: React.Dispatch<React.SetStateAction<YesNo | string>>;
+  screeningTag: ScreeningType | string;
+  setScreeningTag: React.Dispatch<React.SetStateAction<ScreeningType | string>>;
 }
 
 const FilterBar = ({
@@ -51,8 +51,8 @@ const FilterBar = ({
   };
 
   const resetFilterData = () => {
-    setIsSubmitted(undefined);
-    setScreeningTag(undefined);
+    setIsSubmitted('');
+    setScreeningTag('');
     setKeyword('');
   };
 

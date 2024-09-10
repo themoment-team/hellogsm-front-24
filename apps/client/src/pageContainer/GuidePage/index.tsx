@@ -166,7 +166,8 @@ const GuidePage = ({ initialData }: GuideProps) => {
     initialData: initialData,
   });
 
-  const isTempOneseo = data && !data.step;
+  // const isTempOneseo = data && !data.step;
+  // TODO 임시 주석 처리
 
   const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -198,8 +199,10 @@ const GuidePage = ({ initialData }: GuideProps) => {
       </div>
       <div
         className={cn(
-          'w-[30rem]',
           'sm:w-[66.5625rem]',
+          'w-full',
+          'px-[4rem]',
+          'sm:px-0',
           'flex',
           'flex-col',
           'items-start',
@@ -257,12 +260,15 @@ const GuidePage = ({ initialData }: GuideProps) => {
       </div>
 
       <Button
-        variant={isTempOneseo ? 'reverseFill' : 'fill'}
-        disabled={isTempOneseo ? true : false}
+        // variant={isTempOneseo ? 'reverseFill' : 'fill'}
+        // disabled={isTempOneseo ? true : false}
+        // TODO 임시 주석 처리
+        variant="reverseFill"
+        disabled={true}
         className={cn(
           'sticky',
           'bottom-10',
-          'w-[30rem]',
+          'w-[20rem]',
           'h-[3.25rem]',
           'sm:w-[31.25rem]',
           'sm:h-[4.25rem]',
