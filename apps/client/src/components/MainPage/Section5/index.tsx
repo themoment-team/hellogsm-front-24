@@ -50,9 +50,10 @@ const Section5 = () => {
             'flex-col',
             'items-center',
             'pl-[8rem]',
-            'px-[3.75rem]',
-            'xl:px-[8rem]',
-            '2xl:px-[16rem]',
+            'px-0',
+            'sm:px-[3.75rem]',
+            'md:px-[8rem]',
+            'xl:px-[16rem]',
             'xl:items-start',
           )}
         >
@@ -60,17 +61,19 @@ const Section5 = () => {
             <span
               className={cn(
                 'text-gray-900',
-                'text-[2rem]/[2.75rem]',
                 'font-semibold',
                 'xl:text-left',
                 'text-center',
+                'text-[1.25rem]/[1.25rem]',
+                'xs:text-[1.5rem]/[2rem]',
+                'sm:text-[2rem]/[2.5rem]',
               )}
             >
               창의 융합력을 갖춘 <br />
               글로벌 소프트웨어 학과 소개
             </span>
           </div>
-          <span className={cn('text-gray-700', 'text-[1.25rem]/[1.75rem]', 'font-normal')}>
+          <span className={cn('text-gray-700', 'sm:text-[1.25rem]/[1.75rem]', 'font-normal')}>
             체계적인 교육과정을 제공하는 소프트웨어 학과
           </span>
         </div>
@@ -83,7 +86,9 @@ const Section5 = () => {
             'justify-center',
             'items-start',
             'gap-[0.8125rem]',
-            'px-[8rem]',
+            'px-4',
+            'sm:px-[3.75rem]',
+            'md:px-[8rem]',
           )}
         >
           {Elements.map((element, index) => (
@@ -105,7 +110,7 @@ const Section5 = () => {
                       'text-[0.75rem]/[1.25rem]',
                       'font-semibold',
                       'sm:text-[1rem]/[1.5rem]',
-                      'md:text-[1.5rem]/[2rem]',
+                      'sm:text-[1.5rem]/[2rem]',
                     )}
                   >
                     {element.department}
@@ -131,7 +136,7 @@ const Section5 = () => {
                             'text-[0.5rem]/[0.75rem]',
                             'font-normal',
                             'sm:text-[0.75rem]/[1rem]',
-                            'md:text-[0.875rem]/[1.25rem]',
+                            'sm:text-[0.875rem]/[1.25rem]',
                           )}
                         >
                           #{item}
@@ -146,7 +151,7 @@ const Section5 = () => {
                     'text-[0.75rem]/[1.25rem]',
                     'font-normal',
                     'sm:text-[1rem]/[1.5rem]',
-                    'md:text-[1.125rem]/[1.75rem]',
+                    'sm:text-[1.125rem]/[1.75rem]',
                   )}
                 >
                   {element.description}

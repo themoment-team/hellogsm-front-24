@@ -33,32 +33,34 @@ const Section2 = () => {
           'justify-between',
           'items-center',
           'gap-[1.5rem]',
-          'md:gap-[7.5rem]',
+          'smx:gap-[7.5rem]',
         )}
       >
         <div
           className={cn(
             'flex',
             'flex-col',
-            'md:flex-row',
+            'smx:flex-row',
             'justify-between',
             'items-center',
             'w-full',
             'gap-8',
-            'md:gap-0',
-            'px-[3.75rem]',
-            'xl:px-[8rem]',
-            '2xl:px-[16rem]',
+            'smx:gap-0',
+            'px-0',
+            'sm:px-[3.75rem]',
+            'md:px-[8rem]',
+            'xl:px-[16rem]',
           )}
         >
           <h1
             className={cn(
               'text-[#0F2E4D]',
-              'text-[1.5rem]/[2rem]',
               'font-semibold',
               'text-center',
-              'md:text-left',
-              'md:text-[2rem]/[2.5rem]',
+              'smx:text-left',
+              'text-[1.25rem]/[1.25rem]',
+              'xs:text-[1.5rem]/[2rem]',
+              'sm:text-[2rem]/[2.5rem]',
             )}
           >
             광주소프트웨어마이스터고등학교
@@ -70,7 +72,7 @@ const Section2 = () => {
               'text-gray-600',
               'font-normal',
               'hidden',
-              'md:inline',
+              'smx:inline',
               'text-[1rem]/[1.5rem]',
             )}
           >
@@ -81,7 +83,7 @@ const Section2 = () => {
           <div
             className={cn(
               'flex',
-              'md:hidden',
+              'smx:hidden',
               'items-center',
               'px-2',
               'py-1',
@@ -115,7 +117,7 @@ const Section2 = () => {
             ))}
           </div>
         </div>
-        <div className={cn('hidden', 'md:flex', 'items-center', 'justify-center', 'flex-wrap')}>
+        <div className={cn('hidden', 'smx:flex', 'items-center', 'justify-center', 'flex-wrap')}>
           {stepsData.map((step, index) => (
             <div key={index} className={cn('flex', 'gap-5', 'items-center', 'flex-col', 'pb-10')}>
               <div className={cn('flex', 'flex-col', 'items-center', 'gap-3')}>
@@ -177,15 +179,14 @@ const Section2 = () => {
         <div
           className={cn(
             'flex',
-            'md:hidden',
-            'px-[1rem]',
-            'sm:px-[2.5rem]',
+            'smx:hidden',
             'py-[2rem]',
             'flex-col',
             'items-center',
             'gap-[1.125rem]',
             'rounded-xl',
             'bg-slate-50',
+            'mx-4',
           )}
         >
           <div className={cn('flex', 'flex-col', 'gap-1', 'items-center')}>
@@ -196,7 +197,8 @@ const Section2 = () => {
                 'items-center',
                 'gap-3',
                 'text-sky-800',
-                'text-[1.5rem]/[2rem]',
+                'text-[1.25rem]/[1.25rem]',
+                'xs:text-[1.5rem]/[2rem]',
                 'font-semibold',
               )}
             >
@@ -208,7 +210,15 @@ const Section2 = () => {
             </p>
           </div>
 
-          <p className={cn('w-[25rem]', 'text-slate-600', 'text-[1rem]/[1.5rem]', 'font-normal')}>
+          <p
+            className={cn(
+              'max-w-[30rem]',
+              'px-4',
+              'text-slate-600',
+              'text-[1rem]/[1.5rem]',
+              'font-normal',
+            )}
+          >
             직무적성소양평가는 학생들의 역량을 직무적성소양평가는 학생들의 역량을직무적성소양평가는
             학생들의 역량을직무적성소양평가는 학생들의 역량을직무적성소양평가는 학생들의
             역량을직무적성소양평가는 학생들의 역량을직무적성

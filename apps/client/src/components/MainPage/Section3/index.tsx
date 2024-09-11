@@ -22,26 +22,29 @@ const Section3 = () => {
         className={cn(
           'flex',
           'justify-between',
-          'px-[3.75rem]',
           'flex-col',
-          'gap-[6.25rem]',
-          'xl:flex-row',
-          'xl:gap-0',
-          'xl:px-[8rem]',
-          '2xl:px-[16rem]',
+          'gap-8',
+          'sm:gap-[6.25rem]',
+          'lg:flex-row',
+          'lg:gap-0',
+          'px-4',
+          'sm:px-[3.75rem]',
+          'md:px-[8rem]',
+          'xl:px-[16rem]',
         )}
       >
         <div
-          className={cn('text-left', 'flex', 'justify-center', 'xl:inline', 'md:justify-between')}
+          className={cn('text-left', 'flex', 'justify-center', 'lg:inline', 'smx:justify-between')}
         >
           <h1
             className={cn(
-              'text-[1.5rem]/[2rem]',
               'font-semibold',
               'text-gray-900',
               'text-center',
-              'md:text-left',
-              'md:text-[2rem]/[2.75rem]',
+              'smx:text-left',
+              'text-[1.25rem]/[1.25rem]',
+              'xs:text-[1.5rem]/[2rem]',
+              'sm:text-[2rem]/[2.5rem]',
             )}
           >
             광주소프트웨어마이스터고등학교
@@ -52,14 +55,14 @@ const Section3 = () => {
             className={cn(
               'mb-[2rem]',
               'mt-0',
-              'xl:mt-[1rem]',
+              'lg:mt-[1rem]',
               'hidden',
-              'md:flex',
+              'smx:flex',
               'text-gray-500',
             )}
           >
             접수기간: {RECRUITMENT_PERIOD.startDate}
-            <br className={cn('inline', 'xl:hidden')} />
+            <br className={cn('inline', 'lg:hidden')} />
             {' ~ '}
             {RECRUITMENT_PERIOD.endDate}
           </p>
@@ -72,7 +75,7 @@ const Section3 = () => {
               'px-4',
               'py-[9px]',
               'hidden',
-              'xl:inline',
+              'lg:inline',
             )}
           >
             원서접수 바로가기
@@ -82,7 +85,7 @@ const Section3 = () => {
           className={cn(
             'h-full',
             'w-full',
-            'xl:w-[43.5625rem]',
+            'lg:w-[43.5625rem]',
             'min-[600px]:w-full',
             'text-white',
           )}
@@ -92,8 +95,8 @@ const Section3 = () => {
               'grid',
               'grid-cols-1',
               'grid-rows-[repeat(3, auto)]',
-              'md:grid-cols-6',
-              'md:grid-rows-3',
+              'smx:grid-cols-6',
+              'smx:grid-rows-3',
               'gap-[0.75rem]',
               'min-h-[39rem]',
             )}
@@ -101,7 +104,7 @@ const Section3 = () => {
             <div
               className={cn(
                 'hidden',
-                'md:inline',
+                'smx:inline',
                 'col-span-2',
                 'row-span-1',
                 'rounded-3xl',
@@ -115,18 +118,26 @@ const Section3 = () => {
             <div
               className={cn(
                 'col-span-3',
-                'md:col-span-4',
+                'smx:col-span-4',
                 'row-span-1',
                 'flex',
                 'flex-col',
                 'justify-between',
                 'rounded-3xl',
                 'p-6',
-                'md:bg-sky-800',
+                'smx:bg-sky-800',
                 'bg-[#92DA1A]',
               )}
             >
-              <p className={cn('self-start', 'text-xl', 'font-medium', 'text-white')}>
+              <p
+                className={cn(
+                  'self-start',
+                  'text-[1rem][1.75rem]',
+                  'xs:text-xl',
+                  'font-medium',
+                  'text-white',
+                )}
+              >
                 최종 합격 하려면 중학교 내신 성적이
                 <br /> 최소 몇 %가 되어야 할까?&nbsp; 🤷🏻‍♀️
               </p>
@@ -148,7 +159,15 @@ const Section3 = () => {
               )}
             >
               <div>
-                <p className={cn('self-start', 'pt-[0.25rem]', 'text-xl', 'font-medium')}>
+                <p
+                  className={cn(
+                    'self-start',
+                    'pt-[0.25rem]',
+                    'text-[1rem][1.75rem]',
+                    'xs:text-xl',
+                    'font-medium',
+                  )}
+                >
                   여러 계정으로 로그인 하는 방법 🚦
                 </p>
                 <p className={cn('font-400', 'self-start', 'text-sm')}>
@@ -175,7 +194,11 @@ const Section3 = () => {
               }}
             >
               <div>
-                <p className={cn('self-start', 'text-xl', 'font-medium')}>모의 성적 계산하기</p>
+                <p
+                  className={cn('self-start', 'text-[1rem][1.75rem]', 'xs:text-xl', 'font-medium')}
+                >
+                  모의 성적 계산하기
+                </p>
                 <p className={cn('font-400', 'self-start', 'text-sm')}>
                   본격적인 원서접수 전, 모의 성적을
                   <br />
@@ -189,7 +212,7 @@ const Section3 = () => {
             <div
               className={cn(
                 'hidden',
-                'md:flex',
+                'smx:flex',
                 'col-span-4',
                 'row-span-1',
                 'flex-col',
@@ -231,7 +254,7 @@ const Section3 = () => {
               className={cn(
                 'col-span-2',
                 'hidden',
-                'md:inline',
+                'smx:inline',
                 'row-span-1',
                 'rounded-3xl',
                 'bg-lime-400',
