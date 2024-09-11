@@ -2,7 +2,7 @@ const Star3Icon = () => (
   <svg
     width="4.0625rem"
     height="2.0625rem"
-    viewBox="0 0 4.0625rem 2.0625rem"
+    viewBox="0 0 65 33"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
