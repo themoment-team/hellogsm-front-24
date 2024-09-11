@@ -62,7 +62,15 @@ const MyPage = ({ initialData }: MyInfoProps) => {
     <div className={cn('flex', 'w-full', 'h-[100vh]', 'justify-center', 'bg-white')}>
       <div className="mt-20">
         <div
-          className={cn('flex', 'flex-col', '33.5rem', 'gap-10', 'justify-center', 'items-center')}
+          className={cn(
+            'flex',
+            'flex-col',
+            '33.5rem',
+            'gap-10',
+            'justify-center',
+            'items-center',
+            'mx-4',
+          )}
         >
           <div className={cn('flex', 'w-fit', 'flex-col', 'items-center', 'gap-5')}>
             <div
@@ -160,7 +168,8 @@ const MyPage = ({ initialData }: MyInfoProps) => {
                       className={cn(
                         'flex',
                         'flex-col',
-                        'px-[1.1875rem]',
+                        'px-[0.75rem]',
+                        'xs:px-[1.1875rem]',
                         'py-4',
                         'justify-center',
                         'items-center',
@@ -168,7 +177,7 @@ const MyPage = ({ initialData }: MyInfoProps) => {
                         'border',
                         'border-solid',
                         'border-slate-300',
-                        'w-[10.75rem]',
+                        'w-full',
                       )}
                     >
                       <p className={cn('text-slate-600', 'text-[1rem]/[1.75rem]', 'font-normal')}>
