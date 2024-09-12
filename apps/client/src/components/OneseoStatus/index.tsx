@@ -36,13 +36,12 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
           >
             출신중학교
           </td>
-          {oneseo.privacyDetail.schoolName &&
-          oneseo.privacyDetail.graduationType === 'CANDIDATE' ? (
+          {oneseo.privacyDetail.graduationType === 'GED' ? (
+            <td colSpan={2} className="bg-slash bg-contain bg-no-repeat" />
+          ) : (
             <td className="border border-t-0 border-black" colSpan={2}>
               {oneseo.privacyDetail.schoolName}
             </td>
-          ) : (
-            <td colSpan={2} className="bg-slash bg-contain bg-no-repeat" />
           )}
           <td className="border border-black" colSpan={6}>
             {graduationDate[0]}년 {graduationDate[1]}월{' '}
@@ -53,12 +52,12 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
           <td className="border border-black bg-[#e9e9e9] p-[0.2vh] align-middle font-medium">
             지역명
           </td>
-          {oneseo.privacyDetail.graduationType === 'CANDIDATE' ? (
+          {oneseo.privacyDetail.graduationType === 'GED' ? (
+            <td colSpan={7} className="border border-black bg-slash" />
+          ) : (
             <td className="border border-black" colSpan={7}>
               {oneseo.privacyDetail.schoolAddress}
             </td>
-          ) : (
-            <td colSpan={7} className="border border-black bg-slash"></td>
           )}
         </tr>
         <tr>
@@ -154,9 +153,9 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
             {oneseo.calculatedScore.volunteerScore}
           </td>
           <td className="border border-black">
-            {oneseo.privacyDetail.graduationType === 'CANDIDATE'
-              ? oneseo.calculatedScore.attendanceScore + oneseo.calculatedScore.volunteerScore
-              : 600}
+            {oneseo.privacyDetail.graduationType === 'GED'
+              ? 600
+              : oneseo.calculatedScore.attendanceScore + oneseo.calculatedScore.volunteerScore}
           </td>
         </tr>
         <tr>

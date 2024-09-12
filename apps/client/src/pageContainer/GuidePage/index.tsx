@@ -32,6 +32,32 @@ interface ElementType {
   subDescription?: React.ReactNode;
 }
 
+const mustReadArticles = [
+  <>
+    본교 입학전형에 합격한 자가 본교 입학을 포기한 경우(합격 후 등록을 포기한 경우 포함) 당해 연도에
+    다른 학교에 지원할 수 없습니다.
+    <br />
+    (단, 본교에 지원하여 불합격한 자는 전기 특성화고, 후기 고등학교에 지원할 수 있습니다.)
+  </>,
+  <>
+    본교는 SW 영마이스터를 양성하기 위해 교육부와 과학기술정보통신부에서 지정•운영하는
+    산업수요맞춤형고등학교로서 취업을 목표로 교육과정을 편성, 운영합니다.
+  </>,
+  <>기숙사 생활관은 평일 교육과정을 위하여 운영하는 것을 원칙으로 합니다.</>,
+  <>
+    주말과 공휴일 등 학교 휴무일에 기숙사를 운영하지 않습니다.(예: 금요일 하교 후 퇴사, 일요일 저녁
+    입사)
+  </>,
+  <>
+    모든 학생이 기숙사에서 공동생활을 하므로 건강상의 사유로 적응이 어렵다고 판단되는 경우에는
+    충분히 고려하여 신중히 응시해야 합니다.
+  </>,
+  <>
+    적법한 절차에 의하여 정상적으로 접수가 완료된 경우, 지원자는 접수를 취소할 수 없으며 제출한
+    서류는 일체 반환하지 않습니다.
+  </>,
+] as const;
+
 const Elements: ElementType[] = [
   {
     background: 'bg-blue-200',
@@ -79,7 +105,7 @@ const Elements: ElementType[] = [
     title: '결과 발표',
     description: (
       <>
-        <strong>1차 서류심사(50%)와 2차 직무적성 소양평가, 심층면접(50%)</strong>를 통해 최종
+        <strong>1차 서류심사(50%)와 2차 직무적성 소양평가(30%), 심층면접(20%)</strong>를 통해 최종
         합격자를 선발합니다.
       </>
     ),
@@ -245,7 +271,7 @@ const GuidePage = ({ initialData }: GuideProps) => {
           <div className={cn('w-full', 'flex', 'flex-col', 'gap-5')}>
             <p className={cn(...textStyle, 'text-gray-900')}>원서 접수 전 꼭 읽어주세요!</p>
             <div className={cn(...descriptionStyle, '[&>span]:font-semibold')}>
-              <p className={cn('text-red-600')}>
+              {/* <p className={cn('text-red-600')}>
                 본교 최종 합격자는 당해 학년도에는 다른 고등학교 입학전형에 지원할 수 없습니다.
               </p>
               본교는 소프트웨어 영마이스터를 양성하기 위해 교육부와 과학기술정보통신부에서 지정,
@@ -253,7 +279,13 @@ const GuidePage = ({ initialData }: GuideProps) => {
               산업수요맞춤형고등학교로 취업을 목표로 하며 대학 진학을 희망하는 학생은 본교에 지원할
               수 없습니다. <br /> <br />
               기숙사 생활관은 평일 교육과정을 위하여 운영하는 것을 원칙으로합니다. <br />
-              주말과 공휴일 등 학교 휴무일에 기숙사를 운영하지 않습니다. <br />
+              주말과 공휴일 등 학교 휴무일에 기숙사를 운영하지 않습니다. <br /> */}
+              {mustReadArticles.map((article, idx) => (
+                <div className="flex" key={idx}>
+                  <li />
+                  <div>{article}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

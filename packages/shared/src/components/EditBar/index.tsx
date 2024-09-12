@@ -3,9 +3,10 @@ import { cn } from 'shared/lib/utils';
 
 interface EditBarProps {
   id: string;
+  step: string;
 }
 
-const EditBar = ({ id }: EditBarProps) => (
+const EditBar = ({ id, step }: EditBarProps) => (
   <div
     className={cn([
       'w-full',
@@ -21,28 +22,30 @@ const EditBar = ({ id }: EditBarProps) => (
       'border-gray-100',
     ])}
   >
-    <button
-      className={cn([
-        'px-4',
-        'py-2',
-        'flex',
-        'gap-2',
-        'text-sm',
-        'font-normal',
-        'font-semibold',
-        'leading-3',
-        'bg-blue-600',
-        'text-white',
-        'rounded-md',
-        'items-center',
-        'h-10',
-      ])}
-      type="submit"
-      form={id}
-    >
-      <EditCheckIcon />
-      원서 수정 완료
-    </button>
+    {step === '4' && (
+      <button
+        className={cn([
+          'px-4',
+          'py-2',
+          'flex',
+          'gap-2',
+          'text-sm',
+          'font-normal',
+          'font-semibold',
+          'leading-3',
+          'bg-blue-600',
+          'text-white',
+          'rounded-md',
+          'items-center',
+          'h-10',
+        ])}
+        type="submit"
+        form={id}
+      >
+        <EditCheckIcon />
+        원서 수정 완료
+      </button>
+    )}
   </div>
 );
 
