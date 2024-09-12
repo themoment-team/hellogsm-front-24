@@ -293,7 +293,6 @@ const GuidePage = ({ initialData }: GuideProps) => {
 
       <Button
         variant={isTempOneseo ? 'reverseFill' : 'fill'}
-        disabled={isTempOneseo ? true : false}
         // TODO 임시 주석 처리
         // variant="reverseFill"
         // disabled={true}
@@ -307,6 +306,7 @@ const GuidePage = ({ initialData }: GuideProps) => {
           'z-10',
           'mb-[10rem]',
           'text-[1.25rem]/[1.75rem]',
+          isTempOneseo ? 'cursor-not-allowed opacity-100' : '',
         )}
         onClick={() => {
           if (!authInfo?.authReferrerType) {
