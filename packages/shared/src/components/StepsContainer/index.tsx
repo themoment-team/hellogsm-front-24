@@ -164,7 +164,7 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
       schoolName: defaultDetailData?.schoolName || '',
       schoolAddress: defaultDetailData?.schoolAddress || '',
       year: defaultYear || '',
-      month: String(Number(defaultMonth)) || '',
+      month: defaultMonth && String(Number(defaultMonth)),
       screening: getScreeningTypeText(defaultScreening || ''),
       choice: choices,
       guardianName: defaultDetailData?.guardianName || '',
