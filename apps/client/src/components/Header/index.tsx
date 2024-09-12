@@ -105,7 +105,7 @@ const Header = () => {
         </Link>
         <nav
           className={cn(
-            'w-[18.75rem]',
+            'w-[35.5rem]',
             'hidden',
             'sm:flex',
             'justify-between',
@@ -123,6 +123,20 @@ const Header = () => {
           <ActiveLink href="/faq" className={cn('relative')} activeClassName={cn(...activeStyle)}>
             자주 묻는 질문
           </ActiveLink>
+          <ActiveLink
+            href="/oneseo/calculate"
+            className={cn('relative')}
+            activeClassName={cn(...activeStyle)}
+          >
+            모의 성적 계산
+          </ActiveLink>
+          <a
+            href="https://themoment-team.notion.site/9552cb7f5546449782e4f5ebd051386a?pvs=74"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            더모먼트팀
+          </a>
         </nav>
         {authInfo?.authReferrerType && memberInfo?.name ? (
           <>
