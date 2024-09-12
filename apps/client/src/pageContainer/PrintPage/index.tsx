@@ -84,6 +84,10 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
               display: none !important;
             }
           }
+
+          @page {
+            margin: 0;
+          }
         }
       `}</style>
       {/* 입학원서 */}
@@ -222,7 +226,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
             <OneseoStatus oneseo={oneseo} />
             <div className="border-r border-black p-2 text-sm">
               <div className="mb-4">
-                위 학생은 2024학년도 귀교 제1학년에 입학하고자 소정의 서류를 갖추어 지원하며, &nbsp;
+                위 학생은 2025학년도 귀교 제1학년에 입학하고자 소정의 서류를 갖추어 지원하며, &nbsp;
                 <strong>다른 산업수요맞춤형(마이스터)고등학교에 이중지원하지 않을 것을 서약</strong>
                 합니다.
               </div>
@@ -240,9 +244,17 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                 <p className="text-end">(인)</p>
               </div>
               <div className="text-left">광주소프트웨어마이스터고등학교장 귀하</div>
-              <div className="h-[0.5px] w-full bg-slate-400"></div>
-              <div className="text-center">위 기재 사항이 사실과 같음을 확인합니다.</div>
-              <div className="text-right text-base">중학교장[직인]</div>
+              {oneseo.privacyDetail.graduationType !== 'GED' && (
+                <>
+                  <div className="mb-3 h-[0.5px] w-full bg-slate-400" />
+                  <div className="text-center">
+                    위 기재 사항이 사실과 다름이 없음을 증명하며,
+                    <br />위 학생이 귀교 교육과정을 성실히 이수할 수 있다고 판단되어 이에
+                    추천합니다.
+                  </div>
+                  <div className="text-right text-base">중학교장[직인]</div>
+                </>
+              )}
             </div>
           </div>
           <div className="my-4 text-center">2차 전형 응시 준비물 : 신분증[학생증], 필기구 등</div>
