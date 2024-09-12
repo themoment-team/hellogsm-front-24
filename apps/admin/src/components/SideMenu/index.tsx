@@ -2,7 +2,7 @@
 
 import { PropsWithChildren } from 'react';
 
-import { useGetMyAuthInfo, useGetMyMemberInfo, useLogout } from 'api';
+import { useLogout } from 'api';
 import { Button } from 'shared';
 import { TestResultType } from 'types';
 
@@ -97,10 +97,7 @@ interface SideMenuProps {
 }
 
 const SideMenu = ({ isOpen, setIsOpen, testResultTag, setTestResultTag }: SideMenuProps) => {
-  const { refetch: authInfoRefetch } = useGetMyAuthInfo();
-  const { refetch: memberInfoRefetch } = useGetMyMemberInfo();
-
-  const handleLogoutClick = useLogout(authInfoRefetch, memberInfoRefetch, 'admin');
+  const handleLogoutClick = useLogout('admin');
 
   return (
     <aside

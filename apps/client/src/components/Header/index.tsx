@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import { useLogout } from 'api';
+import { memberQueryKeys, useLogout } from 'api';
 import Link from 'next/link';
 
 import * as I from 'client/assets';
@@ -37,17 +37,17 @@ const loginLinkStyle = [
 ];
 
 const Header = () => {
+  const { data: authInfo } = useGetMyAuthInfo();
+  const { data: memberInfo } = useGetMyMemberInfo();
+
   const queryClient = useQueryClient();
 
-  const { data: authInfo, refetch: authInfoRefetch } = useGetMyAuthInfo();
-  const { data: memberInfo, refetch: memberInfoRefetch } = useGetMyMemberInfo();
-
-  const logout = useLogout(authInfoRefetch, memberInfoRefetch, 'client');
+  const logout = useLogout('client');
 
   const handleLogout = () => {
     logout();
-    queryClient.removeQueries({ queryKey: ['member', 'my', 'auth'] });
-    queryClient.removeQueries({ queryKey: ['member', 'my'] });
+    queryClient.removeQueries({ queryKey: memberQueryKeys.getMyAuthInfo() });
+    queryClient.removeQueries({ queryKey: memberQueryKeys.getMyMemberInfo() });
   };
 
   const [isLogoutClicked, setIsLogoutClicked] = useState(false);
