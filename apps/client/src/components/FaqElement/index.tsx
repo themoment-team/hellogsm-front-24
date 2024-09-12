@@ -10,9 +10,17 @@ interface FaqProps {
   keyword: string;
   showContent: boolean;
   onToggle: () => void;
+  isPageChanging: boolean;
 }
 
-const FaqElement = ({ title, content, keyword, showContent, onToggle }: FaqProps) => {
+const FaqElement = ({
+  title,
+  content,
+  keyword,
+  showContent,
+  onToggle,
+  isPageChanging,
+}: FaqProps) => {
   const getHighlightedText = (text: string, keyword: string) => {
     if (!keyword) return text;
     const lowerCaseText = text.toLowerCase();
@@ -93,7 +101,7 @@ const FaqElement = ({ title, content, keyword, showContent, onToggle }: FaqProps
           'gap-4',
           'items-start',
           'overflow-hidden',
-          'transition-[max-height, padding] duration-500 ease-in-out',
+          `transition-[max-height, padding] duration-500 ease-in-out ${isPageChanging ? 'transition-none' : ''}`,
           showContent ? 'max-h-48 pt-4' : 'max-h-0 pt-0',
         )}
       >
