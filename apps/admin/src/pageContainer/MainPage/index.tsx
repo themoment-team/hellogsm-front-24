@@ -28,6 +28,13 @@ const flexColStyle = ['flex', 'flex-col'] as const;
 const PER_PAGE = 10;
 const DEFAULT_TEST_RESULT_TAG = 'ALL';
 
+const testResultTypeConvertor: { [key: string]: string } = {
+  ALL: '전체 지원자 관리',
+  FIRST_PASS: '1차 전형 합격자 관리',
+  FINAL_PASS: '최종 합격자 관리',
+  FALL: '불합격자 관리',
+};
+
 const MainPage = ({ initialData }: MainPageProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
@@ -91,7 +98,9 @@ const MainPage = ({ initialData }: MainPageProps) => {
         setIsOpen={setIsOpen}
       />
       <div className={cn(...flexColStyle, 'gap-8')}>
-        <h1 className={cn('text-gray-900', 'text-3xl', 'font-semibold')}>전체 지원자 관리</h1>
+        <h1 className={cn('text-gray-900', 'text-3xl', 'font-semibold')}>
+          {testResultTypeConvertor[testResultTag]}
+        </h1>
         <div className={cn(...flexColStyle, 'gap-5')}>
           <FilterBar
             screeningTag={screeningTag}
