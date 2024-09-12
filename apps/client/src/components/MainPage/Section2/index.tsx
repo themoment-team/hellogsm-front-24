@@ -5,10 +5,10 @@ import { useState, useEffect } from 'react';
 import { cn } from 'client/lib/utils';
 
 const stepsData = [
-  { icon: '📃', title: '원서 접수 및 증빙서류 제출', date: '2024.10.14. (월) ~ 17(목)' },
+  { icon: '📃', title: '원서 접수 및 증빙서류 제출', date: '2024.10.14(월) ~ 17(목) 09:00-17:00' },
   { icon: '🏆', title: '1차 결과발표', date: '2024.10.21(월) 10:00' },
   { icon: '✏️', title: '직무적성소양평가', date: '2024.10.25(금) 14:30~16:30' },
-  { icon: '💬', title: '심층면접', date: '2024.10.26(토) 14:30~16:30' },
+  { icon: '💬', title: '심층면접', date: '2024.10.26(토) 09:00~17:00' },
   { icon: '⛳', title: '최종 결과발표', date: '2024.10.30(수) 10:00' },
 ] as const;
 
@@ -50,6 +50,8 @@ const Section2 = () => {
             'sm:px-[3.75rem]',
             'md:px-[8rem]',
             'xl:px-[16rem]',
+            'fhd:px-[20rem]',
+            'uhd:px-[32.5rem]',
           )}
         >
           <h1
@@ -156,7 +158,7 @@ const Section2 = () => {
                 className={cn(
                   'flex',
                   'flex-col',
-                  'w-[15.25rem]',
+                  'w-[16rem]',
                   'pt-[1.25rem]',
                   'pb-[2.75rem]',
                   'pr-[1.25rem]',

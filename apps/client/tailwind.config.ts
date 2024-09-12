@@ -17,7 +17,9 @@ module.exports = {
 
       xl: '1728px',
 
-      '2xl': '1920px',
+      fhd: '1920px',
+
+      uhd: '2160px',
     },
   },
 };

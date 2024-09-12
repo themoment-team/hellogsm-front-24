@@ -75,8 +75,8 @@ const Elements: ElementType[] = [
     subDescription: (
       <>
         서류를 출력 후 확인 부분에 서명 후{' '}
-        <strong className={cn('text-blue-500')}>10월 14일 ~ 10월 17일까지</strong> 해당 서류를 원서
-        접수처에 제출합니다.
+        <strong className={cn('text-blue-500')}>10월 14일 ~ 10월 17일 (17:00) 까지</strong> 해당
+        서류를 원서 접수처에 제출합니다.
       </>
     ),
   },

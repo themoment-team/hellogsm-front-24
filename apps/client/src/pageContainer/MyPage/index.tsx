@@ -1,6 +1,8 @@
 'use client';
 
-import { useGetMyMemberInfo, useGetMyOneseo, useLogout } from 'api';
+import { useQueryClient } from '@tanstack/react-query';
+
+import { memberQueryKeys, useGetMyMemberInfo, useGetMyOneseo, useLogout } from 'api';
 import { useRouter } from 'next/navigation';
 import {
   Button,
@@ -25,14 +27,21 @@ interface MyInfoProps {
 const MyPage = ({ initialData }: MyInfoProps) => {
   const { push } = useRouter();
 
-  const { data, refetch: myOneseoRefetch } = useGetMyOneseo({
+  const { data } = useGetMyOneseo({
     initialData: initialData,
   });
 
-  const { data: memberInfo, refetch: memberInfoRefetch } = useGetMyMemberInfo();
+  const { data: memberInfo } = useGetMyMemberInfo();
 
-  const handleLogout = useLogout(myOneseoRefetch, memberInfoRefetch, 'client');
+  const queryClient = useQueryClient();
 
+  const logout = useLogout('client');
+
+  const handleLogout = () => {
+    logout();
+    queryClient.removeQueries({ queryKey: memberQueryKeys.getMyAuthInfo() });
+    queryClient.removeQueries({ queryKey: memberQueryKeys.getMyMemberInfo() });
+  };
   const submitCode = data?.submitCode;
   const wantedScreening = data?.wantedScreening;
   const desiredMajors = data?.desiredMajors;
