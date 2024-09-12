@@ -3,7 +3,7 @@ const StarIcon = () => (
     xmlns="http://www.w3.org/2000/svg"
     width="6.25rem"
     height="6.25rem"
-    viewBox="0 0 6.25rem 6.25rem"
+    viewBox="0 0 100 100"
     fill="none"
   >
     <path

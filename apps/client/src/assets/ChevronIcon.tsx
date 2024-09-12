@@ -2,7 +2,7 @@ const ChevronIcon = () => (
   <svg
     width="0.75rem"
     height="0.5rem"
-    viewBox="0 0 0.75rem 0.5rem"
+    viewBox="0 0 12 8"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >

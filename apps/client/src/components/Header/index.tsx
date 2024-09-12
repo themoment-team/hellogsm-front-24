@@ -100,7 +100,9 @@ const Header = () => {
           'border-gray-100',
         )}
       >
-        <I.HelloGSMLogo />
+        <Link href="/">
+          <I.HelloGSMLogo />
+        </Link>
         <nav
           className={cn(
             'w-[18.75rem]',
@@ -139,7 +141,7 @@ const Header = () => {
                   className={cn(
                     'absolute',
                     'top-full',
-                    'left-[-15%]',
+                    'left-[-17.5%]',
                     'mt-2',
                     'flex',
                     'w-[10rem]',

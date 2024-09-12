@@ -52,11 +52,12 @@ const Section1 = () => {
               className={cn(
                 'w-full',
                 'text-center',
-                'text-[1.75rem]',
                 'font-bold',
                 'text-white',
-                'lg:text-[3.25rem]',
+                'text-[1.25rem]',
+                'xs:text-[1.75rem]',
                 'sm:text-[2.5rem]',
+                'lg:text-[3.25rem]',
               )}
             >
               꿈🌟과 끼🤘🏻를 마음껏{' '}
@@ -97,10 +98,13 @@ const Section1 = () => {
             onClick={() => push('/guide')}
             className={cn(
               'text-[#F7F7F7]',
-              'text-2xl',
+              'text-[1rem]/[1.5rem]',
+              'sm:text-2xl',
               'font-bold',
-              'px-10',
-              'py-4',
+              'px-5',
+              'sm:px-10',
+              'py-2',
+              'sm:py-4',
               'rounded-full',
               'border',
               'border-white',

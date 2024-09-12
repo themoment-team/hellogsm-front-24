@@ -53,10 +53,26 @@ const FaqElement = ({ title, content, keyword, showContent, onToggle }: FaqProps
     >
       <div className={cn('flex', 'w-full', 'items-center', 'justify-between')}>
         <div className={cn('flex', 'items-center')}>
-          <p className={cn('text-sky-500', 'text-[1.25rem]/[1.8125rem]', 'font-bold', 'mr-1')}>
+          <p
+            className={cn(
+              'text-sky-500',
+              'text-[1rem]/[1.25rem]',
+              'sm:text-[1.25rem]/[1.8125rem]',
+              'font-bold',
+              'mr-1',
+            )}
+          >
             Q.
           </p>
-          <p className={cn('text-slate-700', 'text-[1.125rem]/[1.6875rem]', 'font-semibold')}>
+          <p
+            className={cn(
+              'text-slate-700',
+              'text-[0.75rem]/[1rem]',
+              'xs:text-[0.75rem]/[1.25rem]',
+              'sm:text-[1.125rem]/[1.6875rem]',
+              'font-semibold',
+            )}
+          >
             {getHighlightedText(title, keyword)}
           </p>
         </div>

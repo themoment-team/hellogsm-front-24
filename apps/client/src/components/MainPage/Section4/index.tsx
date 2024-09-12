@@ -31,14 +31,15 @@ interface DotProps {
 
 const textStyle = [
   'text-[#0C4A6E]',
-  'text-[1.5rem]/[2rem]',
   'font-[600]',
-  'md:text-[2rem]/[2.75rem]',
+  'text-[1.25rem]/[1.25rem]',
+  'xs:text-[1.5rem]/[2rem]',
+  'sm:text-[2rem]/[2.5rem]',
 ];
 
 const Dot = ({ color }: DotProps) => (
   <div
-    className={cn('w-[0.25rem]', 'h-[0.25rem]', 'rounded-full', 'md:w-[0.5rem]', 'md:h-[0.5rem]')}
+    className={cn('w-[0.25rem]', 'h-[0.25rem]', 'rounded-full', 'sm:w-[0.5rem]', 'sm:h-[0.5rem]')}
     style={{ backgroundColor: color }}
   />
 );
@@ -55,7 +56,15 @@ const DotWithText = ({ color, text, textColor }: DotWithTextProps) => (
       <Dot color={color} />
       <Dot color={color} />
     </div>
-    <p className={cn(textColor, 'text-[1.5rem]/[2rem]', 'font-[600]', 'md:text-[2rem]/[2.75rem]')}>
+    <p
+      className={cn(
+        textColor,
+        'text-[1.25rem]/[1.25rem]',
+        'xs:text-[1.5rem]/[2rem]',
+        'sm:text-[2rem]/[2.5rem]',
+        'font-[600]',
+      )}
+    >
       {text}
     </p>
   </div>
@@ -126,7 +135,7 @@ const Section4 = () => {
           'items-center',
           'gap-[0.75rem]',
           'justify-center',
-          'px-[8rem]',
+          'px-[4rem]',
         )}
       >
         {TITLES.map(({ firstText, lastText, icon }) => (

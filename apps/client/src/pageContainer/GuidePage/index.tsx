@@ -104,8 +104,8 @@ const Steps = ({
         'items-center',
         'rounded-full',
         background,
-        'sm:w-[12.3125rem]',
-        'sm:h-[12.3125rem]',
+        'md:w-[12.3125rem]',
+        'md:h-[12.3125rem]',
         'w-[9.25rem]',
         'h-[9.25rem]',
       )}
@@ -198,10 +198,11 @@ const GuidePage = ({ initialData }: GuideProps) => {
       </div>
       <div
         className={cn(
-          'sm:w-[66.5625rem]',
+          'md:w-[66.5625rem]',
           'w-full',
+          'px-[2rem]',
           'px-[4rem]',
-          'sm:px-0',
+          'md:px-0',
           'flex',
           'flex-col',
           'items-start',
@@ -217,7 +218,7 @@ const GuidePage = ({ initialData }: GuideProps) => {
             'items-center',
             'flex-wrap',
             'gap-4',
-            'sm:gap-5',
+            'md:gap-5',
             'justify-center',
           )}
         >
@@ -269,8 +270,8 @@ const GuidePage = ({ initialData }: GuideProps) => {
           'bottom-10',
           'w-[20rem]',
           'h-[3.25rem]',
-          'sm:w-[31.25rem]',
-          'sm:h-[4.25rem]',
+          'md:w-[31.25rem]',
+          'md:h-[4.25rem]',
           'z-10',
           'mb-[10rem]',
           'text-[1.25rem]/[1.75rem]',

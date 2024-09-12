@@ -73,6 +73,7 @@ const FaqPage = () => {
             'items-center',
             'gap-10',
             'pt-20',
+            'px-4',
           )}
         >
           <p
