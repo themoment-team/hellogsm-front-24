@@ -6,6 +6,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePostImage, usePostMyOneseo, usePutOneseoByMemberId, usePostMockScore } from 'api';
 // import { usePostMyOneseo, usePutOneseo } from 'api';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FreeSemesterType, GetMyOneseoType, MiddleSchoolAchievementType } from 'types';
@@ -634,13 +635,15 @@ const ScoreRegister = ({
             </AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogAction
-              onClick={() => {
-                push(type === 'client' ? '/mypage' : '/');
-                setShowModal(false);
-              }}
-            >
-              확인
+            <AlertDialogAction>
+              <Link
+                href={type === 'client' ? '/mypage' : '/'}
+                onClick={() => {
+                  setShowModal(false);
+                }}
+              >
+                확인
+              </Link>
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
