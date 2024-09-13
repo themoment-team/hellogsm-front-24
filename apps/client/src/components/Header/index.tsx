@@ -219,7 +219,7 @@ const Header = () => {
                     <I.HomeIcon size="1.5rem" color="#475569" /> 내 정보 페이지
                   </Link>
                   <button
-                    className={cn(...modalBtnStyle)}
+                    className={cn(...modalBtnStyle, 'text-red-600')}
                     onClick={() => {
                       handleLogout();
                       setIsLogoutClicked(!isLogoutClicked);
