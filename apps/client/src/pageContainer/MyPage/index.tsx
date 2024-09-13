@@ -1,8 +1,16 @@
 'use client';
 
+import { useState } from 'react';
+
 import { useQueryClient } from '@tanstack/react-query';
 
-import { memberQueryKeys, useGetMyMemberInfo, useGetMyOneseo, useLogout } from 'api';
+import {
+  memberQueryKeys,
+  useGetMyMemberInfo,
+  useGetMyOneseo,
+  useGetMyTestResultInfo,
+  useLogout,
+} from 'api';
 import { useRouter } from 'next/navigation';
 import {
   Button,
@@ -17,6 +25,7 @@ import {
 import { GetMyOneseoType } from 'types';
 
 import { AlertIcon, DocumentIcon, ParticleIcon, ProfileIcon } from 'client/assets';
+import { PassResultDialog } from 'client/components';
 
 import { cn } from 'shared/lib/utils';
 
@@ -25,27 +34,33 @@ interface MyInfoProps {
 }
 
 const MyPage = ({ initialData }: MyInfoProps) => {
+  const [isPassOpen, setIsPassOpen] = useState<boolean>(false);
+
   const { push } = useRouter();
 
-  const { data } = useGetMyOneseo({
+  const queryClient = useQueryClient();
+
+  const { data: oneseoInfo } = useGetMyOneseo({
     initialData: initialData,
   });
 
   const { data: memberInfo } = useGetMyMemberInfo();
 
-  const queryClient = useQueryClient();
+  const { data: resultInfo } = useGetMyTestResultInfo();
 
   const logout = useLogout('client');
 
   const handleLogout = () => {
-    logout();
     queryClient.removeQueries({ queryKey: memberQueryKeys.getMyAuthInfo() });
     queryClient.removeQueries({ queryKey: memberQueryKeys.getMyMemberInfo() });
+    logout();
   };
-  const submitCode = data?.submitCode;
-  const wantedScreening = data?.wantedScreening;
-  const desiredMajors = data?.desiredMajors;
+  const submitCode = oneseoInfo?.submitCode;
+  const wantedScreening = oneseoInfo?.wantedScreening;
+  const desiredMajors = oneseoInfo?.desiredMajors;
   const name = memberInfo?.name;
+
+  const isFinishFirstTest = resultInfo?.secondTestPassYn === null ? true : false;
 
   const departments = [
     desiredMajors?.firstDesiredMajor,
@@ -66,6 +81,8 @@ const MyPage = ({ initialData }: MyInfoProps) => {
   };
 
   const screeningLabel = wantedScreening ? screeningLabels[wantedScreening] : '전형 없음';
+
+  const buttonStyle = ['px-[0.75rem]', 'py-[0.375rem]', 'text-[0.75rem]/[1.25rem]', 'h-8'];
 
   return (
     <div className={cn('flex', 'w-full', 'h-[calc(100vh-4.625rem)]', 'justify-center', 'bg-white')}>
@@ -97,7 +114,7 @@ const MyPage = ({ initialData }: MyInfoProps) => {
             </div>
             <div className={cn('flex', 'flex-col', 'gap-3', 'items-center')}>
               <p className={cn('text-slate-800', 'text-h3', 'font-semibold')}>{name} 님</p>
-              {data === undefined || (data && data.step) ? (
+              {oneseoInfo === undefined || (oneseoInfo && oneseoInfo.step) ? (
                 <p className={cn('text-slate-500', 'text-[1.25rem]/[1.75rem]', 'font-normal')}>
                   원서를 아직 작성하지 않았습니다.
                 </p>
@@ -137,7 +154,7 @@ const MyPage = ({ initialData }: MyInfoProps) => {
               )}
             </div>
           </div>
-          {data === undefined || (data && data.step) ? (
+          {oneseoInfo === undefined || (oneseoInfo && oneseoInfo.step) ? (
             <div className={cn('flex', 'items-center', 'gap-2')}>
               <Button variant="outline" onClick={() => push('/register?step=1')}>
                 원서 작성하기
@@ -195,6 +212,50 @@ const MyPage = ({ initialData }: MyInfoProps) => {
                     </div>
                   ))}
                 </div>
+                {resultInfo && resultInfo.firstTestPassYn !== null && (
+                  <div className={cn('flex', 'flex-col', 'w-full')}>
+                    <div className={cn('flex', 'flex-col', 'gap-2')}>
+                      <div
+                        className={cn(
+                          'flex',
+                          'p-4',
+                          'items-center',
+                          'justify-between',
+                          'rounded-[0.375rem]',
+                          'border',
+                          'border-solid',
+                          'border-slate-300',
+                        )}
+                      >
+                        <div className={cn('flex', 'items-center', 'gap-3')}>
+                          <ParticleIcon />
+                          <p
+                            className={cn('text-slate-900', 'text-[1rem]/[1.75rem]', 'font-normal')}
+                          >
+                            {isFinishFirstTest
+                              ? '1차 서류전형 합격자 확인하기'
+                              : '최종 합격자 확인하기'}
+                          </p>
+                        </div>
+
+                        <Button
+                          onClick={() => setIsPassOpen(true)}
+                          variant="download"
+                          className={cn(...buttonStyle)}
+                        >
+                          바로가기
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                <PassResultDialog
+                  isPassOpen={isPassOpen}
+                  setIsPassOpen={setIsPassOpen}
+                  resultInfo={resultInfo}
+                  isFinishFirstTest={isFinishFirstTest}
+                  memberInfo={memberInfo}
+                />
               </div>
 
               <div className={cn('w-full', 'flex', 'flex-col', 'gap-3')}>
@@ -226,7 +287,11 @@ const MyPage = ({ initialData }: MyInfoProps) => {
                           </p>
                         </div>
 
-                        <Button onClick={() => push(doc.path)} variant="download">
+                        <Button
+                          onClick={() => push(doc.path)}
+                          variant="download"
+                          className={cn(...buttonStyle)}
+                        >
                           다운로드
                         </Button>
                       </div>
