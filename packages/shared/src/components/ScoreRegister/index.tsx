@@ -123,24 +123,34 @@ const ScoreRegister = ({
     resolver: zodResolver(scoreFormSchema),
     defaultValues: {
       achievement1_2: store.scoreForm?.achievement1_2
-        ? store.scoreForm.achievement1_2
-        : defaultData?.achievement1_2 && defaultData.achievement1_2.map((i) => String(i)),
+        ? store.scoreForm.achievement1_2.map((i) => (i === null ? '0' : i))
+        : defaultData?.achievement1_2
+          ? defaultData.achievement1_2.map((i) => (i === null ? '0' : String(i)))
+          : subjectArray.map(() => '0'),
       achievement2_1: store.scoreForm?.achievement2_1
-        ? store.scoreForm.achievement2_1
-        : defaultData?.achievement2_1 && defaultData.achievement2_1.map((i) => String(i)),
+        ? store.scoreForm.achievement2_1.map((i) => (i === null ? '0' : i))
+        : defaultData?.achievement2_1
+          ? defaultData.achievement2_1.map((i) => (i === null ? '0' : String(i)))
+          : subjectArray.map(() => '0'),
       achievement2_2: store.scoreForm?.achievement2_2
-        ? store.scoreForm.achievement2_2
-        : defaultData?.achievement2_2 && defaultData.achievement2_2.map((i) => String(i)),
+        ? store.scoreForm.achievement2_2.map((i) => (i === null ? '0' : i))
+        : defaultData?.achievement2_2
+          ? defaultData.achievement2_2.map((i) => (i === null ? '0' : String(i)))
+          : subjectArray.map(() => '0'),
       achievement3_1: store.scoreForm?.achievement3_1
-        ? store.scoreForm.achievement3_1
-        : defaultData?.achievement3_1 && defaultData.achievement3_1.map((i) => String(i)),
+        ? store.scoreForm.achievement3_1.map((i) => (i === null ? '0' : i))
+        : defaultData?.achievement3_1
+          ? defaultData.achievement3_1.map((i) => (i === null ? '0' : String(i)))
+          : subjectArray.map(() => '0'),
       achievement3_2: store.scoreForm?.achievement3_2
-        ? store.scoreForm.achievement3_2
-        : defaultData?.achievement3_2 && defaultData.achievement3_2.map((i) => String(i)),
+        ? store.scoreForm.achievement3_2.map((i) => (i === null ? '0' : i))
+        : defaultData?.achievement3_2
+          ? defaultData.achievement3_2.map((i) => (i === null ? '0' : String(i)))
+          : subjectArray.map(() => '0'),
       artsPhysicalAchievement: store.scoreForm?.artsPhysicalAchievement
-        ? store.scoreForm.artsPhysicalAchievement
+        ? store.scoreForm.artsPhysicalAchievement.map((i) => (i === null ? '0' : String(i)))
         : defaultData?.artsPhysicalAchievement &&
-          defaultData.artsPhysicalAchievement.map((i) => String(i)),
+          defaultData.artsPhysicalAchievement.map((i) => (i === null ? '0' : String(i))),
       newSubjects: store.scoreForm?.newSubjects
         ? store.scoreForm.newSubjects
         : defaultData?.newSubjects && [...defaultData.newSubjects],
