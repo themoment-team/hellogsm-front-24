@@ -101,7 +101,10 @@ const FaqElement = ({
           'gap-4',
           'items-start',
           'overflow-hidden',
-          `transition-[max-height, padding] duration-500 ease-in-out ${isPageChanging ? 'transition-none' : ''}`,
+          'transition-[max-height, padding]',
+          'duration-500',
+          'ease-in-out',
+          `${isPageChanging ? 'transition-none' : ''}`,
           showContent ? 'max-h-48 pt-4' : 'max-h-0 pt-0',
         )}
       >
