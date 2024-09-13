@@ -62,8 +62,6 @@ const MainPage = ({ initialData }: MainPageProps) => {
 
   const { data: editableData, refetch: editableRefetch } = useGetEditability();
 
-  console.log('editableData', editableData);
-
   const totalPages = data?.info.totalPages;
 
   const startPage = totalPages ? Math.max(0, Math.min(page, data.info.totalPages - 3)) : 0;
@@ -74,12 +72,6 @@ const MainPage = ({ initialData }: MainPageProps) => {
         (_, i) => startPage + i + 1,
       )
     : [];
-
-  useEffect(() => {
-    // 테스트 로그입니다.
-    // eslint-disable-next-line no-console
-    console.log(data);
-  }, [data]);
 
   useEffect(() => {
     oneseoRefetch();
