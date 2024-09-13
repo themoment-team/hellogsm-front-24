@@ -187,3 +187,7 @@ export interface TicketType {
   appliedScreening: ScreeningType;
   oneseoSubmitCode: string;
 }
+
+export interface EditabilityType {
+  oneseoEditability: boolean;
+}

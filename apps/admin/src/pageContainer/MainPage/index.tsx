@@ -17,7 +17,7 @@ import {
 import { useDebounce } from 'shared/hooks';
 import { cn } from 'shared/lib/utils';
 
-import { useGetOneseoList } from 'api/hooks';
+import { useGetEditability, useGetOneseoList } from 'api/hooks';
 
 interface MainPageProps {
   initialData: OneseoListType | undefined;
@@ -46,7 +46,7 @@ const MainPage = ({ initialData }: MainPageProps) => {
 
   const debouncedKeyword = useDebounce(keyword, 1000);
 
-  const { data, refetch } = useGetOneseoList(
+  const { data, refetch: oneseoRefetch } = useGetOneseoList(
     {
       page: page,
       size: PER_PAGE,
@@ -59,6 +59,10 @@ const MainPage = ({ initialData }: MainPageProps) => {
       initialData: initialData,
     },
   );
+
+  const { data: editableData, refetch: editableRefetch } = useGetEditability();
+
+  console.log('editableData', editableData);
 
   const totalPages = data?.info.totalPages;
 
@@ -78,7 +82,7 @@ const MainPage = ({ initialData }: MainPageProps) => {
   }, [data]);
 
   useEffect(() => {
-    refetch();
+    oneseoRefetch();
   }, [debouncedKeyword, page, testResultTag, isSubmitted, screeningTag]);
 
   return (
@@ -126,7 +130,13 @@ const MainPage = ({ initialData }: MainPageProps) => {
             <div className={cn('bg-zinc-200', 'w-full', 'h-[1px]')} />
             {data?.oneseos &&
               data.oneseos.map((oneseo) => (
-                <ApplicantTR {...oneseo} key={oneseo.memberId} refetch={refetch} />
+                <ApplicantTR
+                  {...oneseo}
+                  key={oneseo.memberId}
+                  editableData={editableData}
+                  oneseoRefetch={oneseoRefetch}
+                  editableRefetch={editableRefetch}
+                />
               ))}
           </div>
 
