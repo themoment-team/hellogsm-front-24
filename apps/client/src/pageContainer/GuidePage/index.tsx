@@ -69,14 +69,17 @@ const Elements: ElementType[] = [
     title: '입학 원서 제출',
     description: (
       <>
-        작성하신 입학 원서와 추가 서류는 <strong>마이페이지에서 출력</strong> 가능합니다.
+        작성하신 입학 원서와 추가 서류는{' '}
+        <strong className="font-semibold">마이페이지에서 출력</strong> 가능합니다.
       </>
     ),
     subDescription: (
       <>
         서류를 출력 후 확인 부분에 서명 후{' '}
-        <strong className={cn('text-blue-500')}>10월 14일 ~ 10월 17일 (17:00) 까지</strong> 해당
-        서류를 원서 접수처에 제출합니다.
+        <strong className={cn('text-blue-500', 'font-semibold')}>
+          10월 14일 ~ 10월 17일 (17:00) 까지
+        </strong>{' '}
+        해당 서류를 원서 접수처에 제출합니다.
       </>
     ),
   },
@@ -85,7 +88,8 @@ const Elements: ElementType[] = [
     title: '1차 전형',
     description: (
       <>
-        내신과 봉사시간, 출결현황을 점수로 환산하여 <strong>정원의 1.3배 인원</strong>을 발표합니다.
+        내신과 봉사시간, 출결현황을 점수로 환산하여{' '}
+        <strong className="font-semibold">정원의 1.3배 인원</strong>을 발표합니다.
       </>
     ),
   },
@@ -95,7 +99,7 @@ const Elements: ElementType[] = [
     description: (
       <>
         소프트웨어마이스터고등학교 학업수행에 필요한 기본 자질과 능력을 중심으로{' '}
-        <strong>직무적성 소양평가</strong>를 진행합니다.
+        <strong className="font-semibold">직무적성 소양평가</strong>를 진행합니다.
       </>
     ),
     subDescription: <>소양평가 이후 면접을 통해 지원자의 역량을 확인 후 2차 전형은 마무리됩니다.</>,
@@ -105,8 +109,10 @@ const Elements: ElementType[] = [
     title: '결과 발표',
     description: (
       <>
-        <strong>1차 서류심사(50%)와 2차 직무적성 소양평가(30%), 심층면접(20%)</strong>를 통해 최종
-        합격자를 선발합니다.
+        <strong className="font-semibold">
+          1차 서류심사(50%)와 2차 직무적성 소양평가(30%), 심층면접(20%)
+        </strong>
+        를 통해 최종 합격자를 선발합니다.
       </>
     ),
   },
