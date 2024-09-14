@@ -22,8 +22,10 @@ const MainPage = ({ resultInfo, memberInfo }: MainPageProps) => {
 
     if (hideDialog === today) {
       setIsOpen(false);
-    } else if (resultInfo) {
+    } else if (resultInfo && resultInfo.firstTestPassYn !== null) {
       setIsOpen(true);
+    } else {
+      setIsOpen(false);
     }
   }, [resultInfo]);
 
