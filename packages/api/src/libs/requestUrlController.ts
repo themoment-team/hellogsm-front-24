@@ -40,6 +40,7 @@ export const oneseoUrl = {
   patchAptitudeScore: (memberId: number) => `/oneseo/v3/aptitude-score/${memberId}`,
   patchInterviewScore: (memberId: number) => `/oneseo/v3/interview-score/${memberId}`,
   getAdmissionTickets: () => '/oneseo/v3/admission-tickets',
+  getEditability: () => '/oneseo/v3/editability',
 } as const;
 
 export const memberUrl = {

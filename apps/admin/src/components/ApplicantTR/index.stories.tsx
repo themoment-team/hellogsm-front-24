@@ -2,7 +2,7 @@ import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 
 import { ApplicantTR } from 'admin/components';
 
-import { OneseoListType, OneseoType } from 'types/oneseo';
+import { EditabilityType, OneseoListType, OneseoType } from 'types/oneseo';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
@@ -15,14 +15,28 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 interface ApplicationTRProps extends OneseoType {
-  refetch: (
+  editableData: EditabilityType | undefined;
+  oneseoRefetch: (
     options?: RefetchOptions | undefined,
   ) => Promise<QueryObserverResult<OneseoListType, Error>>;
+  editableRefetch: (
+    options?: RefetchOptions | undefined,
+  ) => Promise<QueryObserverResult<EditabilityType, Error>>;
 }
 
-const fakeRefetch: (options?: any) => any = async (options) => {
+const oneseoFakeRefetch: (options?: any) => any = async (options) => {
   return {
     data: undefined as unknown as OneseoListType,
+    error: undefined as unknown as Error,
+    isLoading: false,
+    isError: false,
+    status: 'idle',
+  };
+};
+
+const editableFakeRefetch: (options?: any) => any = async (options) => {
+  return {
+    data: undefined as unknown as EditabilityType,
     error: undefined as unknown as Error,
     isLoading: false,
     isError: false,
@@ -44,8 +58,10 @@ const MockData: ApplicationTRProps = {
   aptitudeEvaluationScore: 100,
   interviewScore: 100,
   secondTestPassYn: 'YES',
-  refetch: fakeRefetch,
+  oneseoRefetch: oneseoFakeRefetch,
   entranceIntentionYn: 'YES',
+  editableData: { oneseoEditability: true },
+  editableRefetch: editableFakeRefetch,
 };
 
 export const Primary: Story = {
