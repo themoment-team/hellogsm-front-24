@@ -24,7 +24,7 @@ const Section3 = () => {
           'justify-between',
           'flex-col',
           'gap-8',
-          'sm:gap-[6.25rem]',
+          'sm:gap-[3.75rem]',
           'lg:flex-row',
           'lg:gap-0',
           'px-4',

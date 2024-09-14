@@ -44,7 +44,7 @@ const Section2 = () => {
             'justify-between',
             'items-center',
             'w-full',
-            'gap-8',
+            'gap-[3.75rem]',
             'smx:gap-0',
             'px-0',
             'sm:px-[3.75rem]',

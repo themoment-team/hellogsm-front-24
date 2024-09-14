@@ -107,7 +107,7 @@ const Section4 = () => {
   return (
     <section
       className={cn(
-        'gap-[4.25rem]',
+        'gap-[3.75rem]',
         'flex',
         'items-center',
         'flex-col',
