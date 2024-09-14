@@ -75,7 +75,9 @@ const NonSubjectForm = ({ register, liberalSystem }: NonSubjectFormProps) => {
                 idx === volunteerTimeIndex
                   ? liberalSystem === 'freeGrade'
                     ? 'w-[9.1875rem]'
-                    : 'w-[10rem]'
+                    : graduationType === 'GRADUATE'
+                      ? 'w-[17.1875rem]'
+                      : 'w-[9.75rem]'
                   : 'w-[5.625rem]',
               )}
             >
