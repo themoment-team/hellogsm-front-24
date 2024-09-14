@@ -119,7 +119,12 @@ const Section1 = () => {
       <div className={cn('absolute', 'bottom-14', ...flexColStyle, 'gap-1', 'z-[3]')}>
         <p
           onClick={scrollToSection2}
-          className={cn('text-lg', 'text-2xl', 'text-white', 'cursor-pointer')}
+          className={cn(
+            'text-[1.125rem]/[1.75rem]',
+            'font-semibold',
+            'text-white',
+            'cursor-pointer',
+          )}
         >
           GSM 더 알아보기
         </p>
