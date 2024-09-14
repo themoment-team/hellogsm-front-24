@@ -279,7 +279,7 @@ const ApplicantTR = ({
           <TableCell className="w-[142px]">
             <Button
               onClick={() => push(`/edit/${memberId}?step=1`)}
-              disabled={!editableData}
+              disabled={editableData?.oneseoEditability === false}
               className="ml-[33.24px]"
               variant="outline"
             >
