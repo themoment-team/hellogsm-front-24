@@ -23,14 +23,17 @@ const FaqPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [keyword, setKeyword] = useState<string>('');
   const [faqStates, setFaqStates] = useState<{ [key: number]: boolean }>({});
+  const [isPageChanging, setIsPageChanging] = useState<boolean>(false);
 
   const totalItems = Element.filter((item) => item.title.toLowerCase().includes(keyword));
   const totalPages = Math.ceil(totalItems.length / ITEMS_PER_PAGE);
 
   const handlePageChange = (pageNumber: number) => {
     const newPageNumber = Math.max(1, Math.min(pageNumber, totalPages));
+    setIsPageChanging(true);
     setCurrentPage(newPageNumber);
     setFaqStates({});
+    setTimeout(() => setIsPageChanging(false), 0);
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,6 +114,7 @@ const FaqPage = () => {
                   keyword={keyword}
                   showContent={!!faqStates[index]}
                   onToggle={() => toggleFaqContent(index)}
+                  isPageChanging={isPageChanging}
                 />
               ))}
             </div>

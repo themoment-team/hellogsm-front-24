@@ -60,12 +60,12 @@ const mustReadArticles = [
 
 const Elements: ElementType[] = [
   {
-    background: 'bg-blue-200',
+    background: 'bg-blue-300',
     title: '원서 및 성적 입력',
     description: <>절차를 읽고 원서와 성적을 작성해 주시면 입학 신청이 완료됩니다.</>,
   },
   {
-    background: 'bg-blue-300',
+    background: 'bg-blue-400',
     title: '입학 원서 제출',
     description: (
       <>
@@ -84,7 +84,7 @@ const Elements: ElementType[] = [
     ),
   },
   {
-    background: 'bg-blue-400',
+    background: 'bg-blue-500',
     title: '1차 전형',
     description: (
       <>
@@ -94,7 +94,7 @@ const Elements: ElementType[] = [
     ),
   },
   {
-    background: 'bg-blue-500',
+    background: 'bg-blue-600',
     title: '2차 전형',
     description: (
       <>
@@ -105,7 +105,7 @@ const Elements: ElementType[] = [
     subDescription: <>소양평가 이후 면접을 통해 지원자의 역량을 확인 후 2차 전형은 마무리됩니다.</>,
   },
   {
-    background: 'bg-blue-600',
+    background: 'bg-blue-700',
     title: '결과 발표',
     description: (
       <>
@@ -301,7 +301,6 @@ const GuidePage = ({ initialData }: GuideProps) => {
 
       <Button
         variant={isTempOneseo ? 'reverseFill' : 'fill'}
-        disabled={isTempOneseo ? true : false}
         // TODO 임시 주석 처리
         // variant="reverseFill"
         // disabled={true}
@@ -316,6 +315,7 @@ const GuidePage = ({ initialData }: GuideProps) => {
           'mb-[10rem]',
           'text-[1.25rem]/[1.75rem]',
           'rounded-[0.75rem]',
+          isTempOneseo && ['cursor-not-allowed', 'opacity-100'],
         )}
         onClick={() => {
           if (!authInfo?.authReferrerType) {
