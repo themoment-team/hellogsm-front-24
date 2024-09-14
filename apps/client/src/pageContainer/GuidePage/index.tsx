@@ -307,6 +307,7 @@ const GuidePage = ({ initialData }: GuideProps) => {
           'z-10',
           'mb-[10rem]',
           'text-[1.25rem]/[1.75rem]',
+          'rounded-[0.75rem]',
         )}
         onClick={() => {
           if (!authInfo?.authReferrerType) {
