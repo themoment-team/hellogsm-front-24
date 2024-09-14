@@ -140,12 +140,14 @@ const Steps = ({
         'md:h-[12.3125rem]',
         'w-[9.25rem]',
         'h-[9.25rem]',
+        'text-[1rem]/[1.75rem]',
+        'md:text-[1.25rem]/[2rem]',
+        'text-white',
+        'font-semibold',
       )}
     >
-      <p className={cn('text-white', 'text-[1.5rem]/[2rem]', 'font-semibold')}>
-        {String(number).padStart(2, '0')}
-      </p>
-      <p className={cn(...textStyle, 'text-white')}>{text}</p>
+      <p>{String(number).padStart(2, '0')}</p>
+      <p>{text}</p>
     </div>
   );
 };
