@@ -105,7 +105,7 @@ const FaqElement = ({
           'duration-500',
           'ease-in-out',
           `${isPageChanging ? 'transition-none' : ''}`,
-          showContent ? 'max-h-48 pt-4' : 'max-h-0 pt-0',
+          showContent ? ['max-h-48', 'pt-4'] : ['max-h-0', 'pt-0'],
         )}
       >
         <div
@@ -116,7 +116,7 @@ const FaqElement = ({
             'transition-all',
             'duration-500',
             'ease-in-out',
-            showContent ? 'max-h-[0.05rem] opacity-100' : 'max-h-0 opacity-0',
+            showContent ? ['max-h-[0.05rem]', 'opacity-100'] : ['max-h-0', 'opacity-0'],
           )}
         />
         <p

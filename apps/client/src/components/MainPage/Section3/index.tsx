@@ -51,16 +51,7 @@ const Section3 = () => {
             <br />
             2025 신입생 모집
           </h1>
-          <p
-            className={cn(
-              'mb-0',
-              'lg:mb-[2rem]',
-              'mt-[1rem]',
-              'hidden',
-              'smx:flex',
-              'text-gray-500',
-            )}
-          >
+          <p className={cn('mb-0', 'lg:mb-8', 'mt-[1rem]', 'hidden', 'smx:flex', 'text-gray-500')}>
             접수기간: {RECRUITMENT_PERIOD.startDate} ~ {RECRUITMENT_PERIOD.endDate}
           </p>
           <Link
