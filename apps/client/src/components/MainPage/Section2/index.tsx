@@ -32,9 +32,12 @@ const Section2 = () => {
           'flex-col',
           'justify-between',
           'items-center',
-          'gap-[1.5rem]',
+          'gap-6',
           'smx:gap-[5.125rem]',
           'lg:gap-[7.5rem]',
+          'px-6',
+          'xs:px-[3.75rem]',
+          'md:px-0',
         )}
       >
         <div
@@ -186,7 +189,6 @@ const Section2 = () => {
             'gap-[1.125rem]',
             'rounded-xl',
             'bg-slate-50',
-            'mx-4',
           )}
         >
           <div className={cn('flex', 'flex-col', 'gap-1', 'items-center')}>
