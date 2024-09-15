@@ -4,8 +4,16 @@ import { useEffect, useState } from 'react';
 
 import { MyMemberInfoType, MyTestResultType } from 'types';
 
-import { Footer, PassResultDialog, Section5, TestResultDialog } from 'client/components';
-import { Section1, Section2, Section3, Section4 } from 'client/components';
+import {
+  Footer,
+  PassResultDialog,
+  Section1,
+  Section2,
+  Section3,
+  Section4,
+  Section5,
+  TestResultDialog,
+} from 'client/components';
 
 interface MainPageProps {
   resultInfo: MyTestResultType | undefined;
