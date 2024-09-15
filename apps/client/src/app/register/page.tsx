@@ -1,3 +1,4 @@
+import { getDate } from 'api';
 import { redirect } from 'next/navigation';
 
 import { getMyMemberInfo, getMyOneseo } from 'client/app/apis';
@@ -10,9 +11,20 @@ interface RegisterProps {
 export default async function Register({ searchParams }: RegisterProps) {
   const step = searchParams?.step;
 
-  const [data, info] = await Promise.all([getMyOneseo(), getMyMemberInfo('/')]);
+  const [data, info, dateList] = await Promise.all([
+    getMyOneseo(),
+    getMyMemberInfo('/'),
+    getDate(),
+  ]);
 
-  if (info === undefined || (data && !data.step)) redirect('/');
+  const currentTime = new Date().getTime();
+  const isOneseoWrite =
+    dateList?.oneseoSubmissionStart && dateList?.oneseoSubmissionEnd
+      ? new Date(dateList.oneseoSubmissionStart).getTime() <= currentTime &&
+        currentTime < new Date(dateList.oneseoSubmissionEnd).getTime()
+      : false;
+
+  if (info === undefined || (data && !data.step) || !isOneseoWrite) redirect('/');
 
   if (!step) redirect('/register?step=1');
 

@@ -182,15 +182,28 @@ const List = ({
 
 interface GuideProps {
   initialData: GetMyOneseoType | undefined;
+  isOneseoWrite: boolean;
 }
 
-const GuidePage = ({ initialData }: GuideProps) => {
+const GuidePage = ({ initialData, isOneseoWrite }: GuideProps) => {
   const { data: authInfo } = useGetMyAuthInfo();
   const { data: memberInfo } = useGetMyMemberInfo();
 
   const { data } = useGetMyOneseo({
     initialData: initialData,
   });
+
+  const [buttonText, buttonVariant]: [string, 'submit' | 'fill' | 'reverseFill'] = (() => {
+    if (!isOneseoWrite) return ['원서 작성을 할수 없는 기간입니다.', 'submit'];
+
+    if (!data) return ['원서 작성하기', 'fill'];
+
+    if (data && data.step) return ['원서 이어서 작성하기', 'fill'];
+
+    if (data && !data.step) return ['최종제출을 이미 완료하였습니다.', 'reverseFill'];
+
+    return ['원서 작성하기', 'fill'];
+  })();
 
   const isTempOneseo = data && !data.step;
 
@@ -292,10 +305,8 @@ const GuidePage = ({ initialData }: GuideProps) => {
       </div>
 
       <Button
-        variant={isTempOneseo ? 'reverseFill' : 'fill'}
-        // TODO 임시 주석 처리
-        // variant="reverseFill"
-        // disabled={true}
+        variant={buttonVariant}
+        disabled={buttonVariant === 'fill' ? false : true}
         className={cn(
           'sticky',
           'bottom-10',
@@ -306,7 +317,7 @@ const GuidePage = ({ initialData }: GuideProps) => {
           'z-10',
           'mb-[10rem]',
           'text-[1.25rem]/[1.75rem]',
-          isTempOneseo ? 'cursor-not-allowed opacity-100' : '',
+          isTempOneseo && ['cursor-not-allowed', 'opacity-100'],
         )}
         onClick={() => {
           if (!authInfo?.authReferrerType) {
@@ -320,11 +331,7 @@ const GuidePage = ({ initialData }: GuideProps) => {
           push('/register?step=1');
         }}
       >
-        {data
-          ? data.step
-            ? '원서 이어서 작성하기'
-            : '최종제출을 이미 완료하였습니다.'
-          : '원서 작성하기'}
+        {buttonText}
       </Button>
       <Footer />
 
