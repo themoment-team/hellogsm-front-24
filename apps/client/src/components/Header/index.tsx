@@ -141,13 +141,13 @@ const Header = () => {
           >
             모의 성적 계산
           </ActiveLink>
-          <a
-            href="https://themoment-team.notion.site/9552cb7f5546449782e4f5ebd051386a?pvs=74"
-            target="_blank"
-            rel="noopener noreferrer"
+          <ActiveLink
+            href="/introduce"
+            className={cn('relative')}
+            activeClassName={cn(...activeStyle)}
           >
             더모먼트팀
-          </a>
+          </ActiveLink>
         </nav>
         {authInfo?.authReferrerType && memberInfo?.name ? (
           <>
