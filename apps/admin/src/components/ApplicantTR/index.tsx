@@ -260,6 +260,7 @@ const ApplicantTR = ({
                 onClick={() => setAgreeDocDialogOpen(true)}
                 pressed={entranceIntention === 'YES'}
                 icon={<CheckIcon />}
+                disabled={secondTestPassYn !== 'YES'}
               >
                 제출 완료
               </Toggle>
