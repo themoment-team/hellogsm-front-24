@@ -76,7 +76,7 @@ const Section1 = () => {
                   'sm:before:tracking-[0.75rem]',
                   'sm:before:-top-[2.15rem]',
                   'sm:before:text-[2rem]',
-                  'sm:before:left-[0.5rem]',
+                  'sm:before:left-2',
                   'lg:before:left-[0.675rem]',
                   'lg:before:tracking-[1.15rem]',
                 )}
