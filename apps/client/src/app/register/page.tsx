@@ -28,7 +28,5 @@ export default async function Register({ searchParams }: RegisterProps) {
 
   if (!step) redirect('/register?step=1');
 
-  // redirect('/');
-  // TODO 임시 redirect
   return <RegisterStepsPage data={data} info={info} param={step} />;
 }
