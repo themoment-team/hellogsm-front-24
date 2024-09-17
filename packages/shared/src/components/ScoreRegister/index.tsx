@@ -123,31 +123,45 @@ const ScoreRegister = ({
   const { register, handleSubmit, setValue, unregister, watch, control } = useForm<ScoreFormType>({
     resolver: zodResolver(scoreFormSchema),
     defaultValues: {
-      achievement1_2: store.scoreForm?.achievement1_2
-        ? store.scoreForm.achievement1_2.map((i) => (i === null ? '0' : i))
-        : defaultData?.achievement1_2
-          ? defaultData.achievement1_2.map((i) => (i === null ? '0' : String(i)))
-          : subjectArray.map(() => '0'),
-      achievement2_1: store.scoreForm?.achievement2_1
-        ? store.scoreForm.achievement2_1.map((i) => (i === null ? '0' : i))
-        : defaultData?.achievement2_1
-          ? defaultData.achievement2_1.map((i) => (i === null ? '0' : String(i)))
-          : subjectArray.map(() => '0'),
-      achievement2_2: store.scoreForm?.achievement2_2
-        ? store.scoreForm.achievement2_2.map((i) => (i === null ? '0' : i))
-        : defaultData?.achievement2_2
-          ? defaultData.achievement2_2.map((i) => (i === null ? '0' : String(i)))
-          : subjectArray.map(() => '0'),
-      achievement3_1: store.scoreForm?.achievement3_1
-        ? store.scoreForm.achievement3_1.map((i) => (i === null ? '0' : i))
-        : defaultData?.achievement3_1
-          ? defaultData.achievement3_1.map((i) => (i === null ? '0' : String(i)))
-          : subjectArray.map(() => '0'),
-      achievement3_2: store.scoreForm?.achievement3_2
-        ? store.scoreForm.achievement3_2.map((i) => (i === null ? '0' : i))
-        : defaultData?.achievement3_2
-          ? defaultData.achievement3_2.map((i) => (i === null ? '0' : String(i)))
-          : subjectArray.map(() => '0'),
+      achievement1_2:
+        type !== 'calculate'
+          ? store.scoreForm?.achievement1_2
+            ? store.scoreForm.achievement1_2.map((i) => (i === null ? '0' : i))
+            : defaultData?.achievement1_2
+              ? defaultData.achievement1_2.map((i) => (i === null ? '0' : String(i)))
+              : subjectArray.map(() => '0')
+          : undefined,
+      achievement2_1:
+        type !== 'calculate'
+          ? store.scoreForm?.achievement2_1
+            ? store.scoreForm.achievement2_1.map((i) => (i === null ? '0' : i))
+            : defaultData?.achievement2_1
+              ? defaultData.achievement2_1.map((i) => (i === null ? '0' : String(i)))
+              : subjectArray.map(() => '0')
+          : undefined,
+      achievement2_2:
+        type !== 'calculate'
+          ? store.scoreForm?.achievement2_2
+            ? store.scoreForm.achievement2_2.map((i) => (i === null ? '0' : i))
+            : defaultData?.achievement2_2 &&
+              defaultData.achievement2_2.map((i) => (i === null ? '0' : String(i)))
+          : undefined,
+      achievement3_1:
+        type !== 'calculate'
+          ? store.scoreForm?.achievement3_1
+            ? store.scoreForm.achievement3_1.map((i) => (i === null ? '0' : i))
+            : defaultData?.achievement3_1
+              ? defaultData.achievement3_1.map((i) => (i === null ? '0' : String(i)))
+              : subjectArray.map(() => '0')
+          : undefined,
+      achievement3_2:
+        type !== 'calculate'
+          ? store.scoreForm?.achievement3_2
+            ? store.scoreForm.achievement3_2.map((i) => (i === null ? '0' : i))
+            : defaultData?.achievement3_2
+              ? defaultData.achievement3_2.map((i) => (i === null ? '0' : String(i)))
+              : subjectArray.map(() => '0')
+          : undefined,
       artsPhysicalAchievement: store.scoreForm?.artsPhysicalAchievement
         ? store.scoreForm.artsPhysicalAchievement.map((i) => (i === null ? '0' : String(i)))
         : defaultData?.artsPhysicalAchievement &&
@@ -201,14 +215,26 @@ const ScoreRegister = ({
       (store.graduationType === 'CANDIDATE' || store.graduationType === 'GRADUATE') &&
       scoreFormSchema.safeParse({
         ...watch(),
-        ...{
-          achievement1_2: liberalSystem === 'freeGrade' ? null : watch('achievement1_2'),
-          achievement3_2: store.graduationType === 'CANDIDATE' ? null : watch('achievement3_2'),
-          artsPhysicalAchievement:
-            store.graduationType === 'CANDIDATE'
-              ? watch('artsPhysicalAchievement')?.filter((_, idx) => idx < 9)
-              : watch('artsPhysicalAchievement'),
-        },
+
+        achievement1_2:
+          liberalSystem === 'freeGrade'
+            ? null
+            : freeSemester === 'achievement1_2'
+              ? null
+              : watch('achievement1_2'),
+        achievement2_1: freeSemester === 'achievement2_1' ? null : watch('achievement2_1'),
+        achievement2_2: freeSemester === 'achievement2_2' ? null : watch('achievement2_2'),
+        achievement3_1: freeSemester === 'achievement3_1' ? null : watch('achievement3_1'),
+        achievement3_2:
+          store.graduationType === 'CANDIDATE'
+            ? null
+            : freeSemester === 'achievement3_2'
+              ? null
+              : watch('achievement3_2'),
+        artsPhysicalAchievement:
+          store.graduationType === 'CANDIDATE'
+            ? watch('artsPhysicalAchievement')?.filter((_, idx) => idx < 9)
+            : watch('artsPhysicalAchievement'),
       }).success === true
     ) {
       if (liberalSystem === 'freeSemester') return setIsStep4Clickable!(true);
@@ -226,10 +252,6 @@ const ScoreRegister = ({
 
     if (liberalSystem === 'freeGrade') return setFreeSemester(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-
-    if (liberalSystem === 'freeSemester' && freeSemester) {
-      setValue(freeSemester, null);
-    }
   }, [defaultData, setFreeSemester, liberalSystem, freeSemester]);
 
   const { mutate: mutatePostMyOneseo } = usePostMyOneseo({
@@ -479,7 +501,7 @@ const ScoreRegister = ({
             'text-gray-900',
           ])}
         >
-          성적을 입력해 주세요.
+          {type === 'calculate' ? '모의 성적 계산하기' : '성적을 입력해 주세요.'}
         </h1>
         <p
           className={cn(
@@ -491,7 +513,9 @@ const ScoreRegister = ({
             'mb-[2rem]',
           )}
         >
-          회원가입 시 입력한 기본 정보가 노출됩니다.
+          {type === 'calculate'
+            ? '성적을 정확히 입력해 주세요.'
+            : '회원가입 시 입력한 기본 정보가 노출됩니다.'}
         </p>
         {store.graduationType === 'GED' ? (
           <form id={formId} onSubmit={handleSubmit(handleFormSubmit)}>
