@@ -31,9 +31,10 @@ import { cn } from 'shared/lib/utils';
 
 interface MyInfoProps {
   initialData: GetMyOneseoType | undefined;
+  isOneseoWrite: boolean;
 }
 
-const MyPage = ({ initialData }: MyInfoProps) => {
+const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
   const [isPassOpen, setIsPassOpen] = useState<boolean>(false);
 
   const { push } = useRouter();
@@ -115,9 +116,11 @@ const MyPage = ({ initialData }: MyInfoProps) => {
             <div className={cn('flex', 'flex-col', 'gap-3', 'items-center')}>
               <p className={cn('text-slate-800', 'text-h3', 'font-semibold')}>{name} 님</p>
               {oneseoInfo === undefined || (oneseoInfo && oneseoInfo.step) ? (
-                <p className={cn('text-slate-500', 'text-[1.25rem]/[1.75rem]', 'font-normal')}>
-                  원서를 아직 작성하지 않았습니다.
-                </p>
+                isOneseoWrite && (
+                  <p className={cn('text-slate-500', 'text-[1.25rem]/[1.75rem]', 'font-normal')}>
+                    원서를 아직 작성하지 않았습니다.
+                  </p>
+                )
               ) : (
                 <div className={cn('flex', 'items-center', 'gap-2')}>
                   <div
@@ -156,9 +159,11 @@ const MyPage = ({ initialData }: MyInfoProps) => {
           </div>
           {oneseoInfo === undefined || (oneseoInfo && oneseoInfo.step) ? (
             <div className={cn('flex', 'items-center', 'gap-2')}>
-              <Button variant="outline" onClick={() => push('/register?step=1')}>
-                원서 작성하기
-              </Button>
+              {isOneseoWrite && (
+                <Button variant="outline" onClick={() => push('/register?step=1')}>
+                  원서 작성하기
+                </Button>
+              )}
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="outline" className={cn('text-red-600')}>
