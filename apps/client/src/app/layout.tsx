@@ -14,6 +14,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // TODO 로컬 font 적용시키기
   return (
     <html lang="ko">
       <head>
