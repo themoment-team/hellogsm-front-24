@@ -24,20 +24,18 @@ const Section3 = () => {
           'justify-between',
           'flex-col',
           'gap-8',
-          'sm:gap-[6.25rem]',
+          'sm:gap-[3.75rem]',
           'lg:flex-row',
           'lg:gap-0',
-          'px-4',
-          'sm:px-[3.75rem]',
+          'px-6',
+          'xs:px-[3.75rem]',
           'md:px-[8rem]',
           'xl:px-[16rem]',
           'fhd:px-[20rem]',
           'uhd:px-[32.5rem]',
         )}
       >
-        <div
-          className={cn('text-left', 'flex', 'justify-center', 'lg:inline', 'smx:justify-between')}
-        >
+        <div className={cn('text-left', 'flex', 'lg:inline', 'flex-col')}>
           <h1
             className={cn(
               'font-semibold',
@@ -53,20 +51,8 @@ const Section3 = () => {
             <br />
             2025 신입생 모집
           </h1>
-          <p
-            className={cn(
-              'mb-[2rem]',
-              'mt-0',
-              'lg:mt-[1rem]',
-              'hidden',
-              'smx:flex',
-              'text-gray-500',
-            )}
-          >
-            접수기간: {RECRUITMENT_PERIOD.startDate}
-            <br className={cn('inline', 'lg:hidden')} />
-            {' ~ '}
-            {RECRUITMENT_PERIOD.endDate}
+          <p className={cn('mb-0', 'lg:mb-8', 'mt-[1rem]', 'hidden', 'smx:flex', 'text-gray-500')}>
+            접수기간: {RECRUITMENT_PERIOD.startDate} ~ {RECRUITMENT_PERIOD.endDate}
           </p>
           <Link
             href="/"

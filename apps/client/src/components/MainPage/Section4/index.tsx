@@ -85,11 +85,12 @@ const TitleCard = ({ firstText, lastText, icon }: TitleCardProps) => (
       'px-[1.5rem]',
       'flex-col',
       'justify-end',
-      'items-end',
       'rounded-[1rem]',
       'shadow-lg',
       'gap-[1.8125rem]',
-      'w-[20rem]',
+      'w-[30rem]',
+      'sm:w-[25.1875rem]',
+      'md:w-[20rem]',
     )}
   >
     <div className={cn('flex', 'w-[16.4375rem]', 'flex-col', 'items-start')}>
@@ -107,7 +108,7 @@ const Section4 = () => {
   return (
     <section
       className={cn(
-        'gap-[4.25rem]',
+        'gap-[3.75rem]',
         'flex',
         'items-center',
         'flex-col',
@@ -135,7 +136,8 @@ const Section4 = () => {
           'items-center',
           'gap-[0.75rem]',
           'justify-center',
-          'px-[4rem]',
+          'px-4',
+          'xs:px-[3.75rem]',
         )}
       >
         {TITLES.map(({ firstText, lastText, icon }) => (

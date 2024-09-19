@@ -32,20 +32,22 @@ const Section2 = () => {
           'flex-col',
           'justify-between',
           'items-center',
-          'gap-[1.5rem]',
-          'smx:gap-[7.5rem]',
+          'gap-6',
+          'smx:gap-[5.125rem]',
+          'lg:gap-[7.5rem]',
+          'px-6',
+          'xs:px-[3.75rem]',
+          'md:px-0',
         )}
       >
         <div
           className={cn(
             'flex',
             'flex-col',
-            'smx:flex-row',
-            'justify-between',
-            'items-center',
+            'items-left',
             'w-full',
-            'gap-8',
-            'smx:gap-0',
+            'gap-[3.75rem]',
+            'smx:gap-4',
             'px-0',
             'sm:px-[3.75rem]',
             'md:px-[8rem]',
@@ -78,45 +80,44 @@ const Section2 = () => {
               'text-[1rem]/[1.5rem]',
             )}
           >
-            우리 학교에 입학하기 위해 필요한
-            <br />
-            다섯 가지 절차를 소개해드릴게요!
+            우리 학교에 입학하기 위해 필요한 다섯 가지 절차를 소개해드릴게요!
           </p>
-          <div
-            className={cn(
-              'flex',
-              'smx:hidden',
-              'items-center',
-              'px-2',
-              'py-1',
-              'gap-1',
-              'rounded-md',
-              'bg-slate-100',
-            )}
-          >
-            {stepsData.map((_, index) => (
-              <button
-                key={index}
-                className={cn(
-                  'flex',
-                  'px-4',
-                  'sm:px-5',
-                  'py-[0.375rem]',
-                  'flex-col',
-                  'items-center',
-                  'justify-center',
-                  'gap-2',
-                  'rounded-md',
-                  index === clickedIndex ? 'bold text-slate-600' : 'text-slate-400',
-                  index === clickedIndex ? 'bg-white' : '',
-                  'text-[1rem]/[1.5rem]',
-                  'font-normal',
-                )}
-                onClick={() => setClickedIndex(index)}
-              >
-                {`${index + 1}차`}
-              </button>
-            ))}
+          <div className={cn('flex', 'smx:hidden', 'items-center', 'justify-center')}>
+            <div
+              className={cn(
+                'flex',
+                'items-center',
+                'px-2',
+                'py-1',
+                'gap-1',
+                'rounded-md',
+                'bg-slate-100',
+              )}
+            >
+              {stepsData.map((_, index) => (
+                <button
+                  key={index}
+                  className={cn(
+                    'flex',
+                    'px-4',
+                    'sm:px-5',
+                    'py-[0.375rem]',
+                    'flex-col',
+                    'items-center',
+                    'justify-center',
+                    'gap-2',
+                    'rounded-md',
+                    index === clickedIndex ? 'bold text-slate-600' : 'text-slate-400',
+                    index === clickedIndex ? 'bg-white' : '',
+                    'text-[1rem]/[1.5rem]',
+                    'font-normal',
+                  )}
+                  onClick={() => setClickedIndex(index)}
+                >
+                  {`${index + 1}차`}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
         <div className={cn('hidden', 'smx:flex', 'items-center', 'justify-center', 'flex-wrap')}>
@@ -188,7 +189,6 @@ const Section2 = () => {
             'gap-[1.125rem]',
             'rounded-xl',
             'bg-slate-50',
-            'mx-4',
           )}
         >
           <div className={cn('flex', 'flex-col', 'gap-1', 'items-center')}>
