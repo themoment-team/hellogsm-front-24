@@ -1,12 +1,9 @@
 export * from './ui';
 export * from './MainPage';
+export * from './TeamPage';
 export { default as ActiveLink } from './ActiveLink';
 export { default as Footer } from './Footer';
 export { default as Header } from './Header';
-export { default as Section1 } from './MainPage/Section1';
-export { default as Section2 } from './MainPage/Section2';
-export { default as Section3 } from './MainPage/Section3';
-export { default as Section4 } from './MainPage/Section4';
 export { default as SexToggle } from './SexToggle';
 export { default as LoginDialog } from './LoginDialog';
 export { default as ChannelTalk } from './ChannelTalk';

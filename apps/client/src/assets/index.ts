@@ -28,5 +28,7 @@ export { default as FaqIcon } from './FaqIcon';
 export { default as BlurIcon } from './BlurIcon';
 export { default as HelloGSMIcon } from './HelloGSMIcon';
 export { default as Character } from './ComputerRecommendedPage/Character';
+export { default as TheMomentIcon } from './TheMomentIcon';
+export { default as SmallTheMomentIcon } from './SmallTheMomentIcon';
 export { default as CalculateIcon } from './CalculateIcon';
 export { default as SparcleIcon } from './SparcleIcon';
