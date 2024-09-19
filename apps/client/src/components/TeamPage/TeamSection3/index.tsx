@@ -38,21 +38,27 @@ const TeamSection3 = () => {
         'bg-[#F3F6FF]',
         'py-[15rem]',
         'gap-[9.5rem]',
-        'px-0',
-        'sm:px-[3.75rem]',
-        'md:px-[8rem]',
-        'xl:px-[12.5rem]',
-        'fhd:px-[20rem]',
-        'uhd:px-[22.5rem]',
       )}
     >
-      <h1 className={cn('text-[#473B6B]', 'text-[2.75rem]/[3.85rem]', 'font-bold')}>
+      <h1
+        className={cn(
+          'text-[#473B6B]',
+          'text-[2.75rem]/[3.85rem]',
+          'font-bold',
+          'px-0',
+          'sm:px-[3.75rem]',
+          'md:px-[8rem]',
+          'xl:px-[12.5rem]',
+          'fhd:px-[20rem]',
+          'uhd:px-[22.5rem]',
+        )}
+      >
         <span className={cn('text-[#7C58E9]')}>더모먼트</span>는
         <br />
         어떤 팀 인가요?
       </h1>
       <div className={cn('flex', 'w-full', 'justify-center')}>
-        <div className={cn('flex', 'justify-center', 'gap-4')}>
+        <div className={cn('flex', 'w-full', 'justify-center', 'flex-wrap', 'gap-4')}>
           {Elements.map((element, index) => (
             <div
               key={index}

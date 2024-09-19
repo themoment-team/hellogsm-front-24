@@ -5,6 +5,7 @@ import { cn } from 'shared/lib/utils';
 const TeamSection2 = () => {
   return (
     <div
+      id="section2"
       className={cn(
         'flex',
         'justify-between',
@@ -31,7 +32,7 @@ const TeamSection2 = () => {
           약 30명의 재학생, 졸업생들이 모여서 활동하고, 주로 학교에 필요한 서비스를 개발합니다.
           <br />
           학교에 필요한 서비스를 함께 개발하고 싶나요? <br />
-          지금 바로 SW 마이스터고에 지원하세요 !
+          지금 바로 SW 마이스터고에 지원하세요!
         </span>
       </div>
       <div

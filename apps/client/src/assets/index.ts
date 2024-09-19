@@ -29,3 +29,4 @@ export { default as BlurIcon } from './BlurIcon';
 export { default as HelloGSMIcon } from './HelloGSMIcon';
 export { default as Character } from './ComputerRecommendedPage/Character';
 export { default as TheMomentIcon } from './TheMomentIcon';
+export { default as SmallTheMomentIcon } from './SmallTheMomentIcon';
