@@ -19,6 +19,8 @@ export const metadata: Metadata = {
     'GSM',
     'GwangjuSoftwareMeisterHighSchool',
     'SoftWare',
+    'Gwangju',
+    'MeisterHighSchool',
   ],
   creator: 'the-moment',
   publisher: 'the-moment',
