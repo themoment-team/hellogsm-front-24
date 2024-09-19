@@ -71,4 +71,4 @@ export const Members = [
     imageURL: 'https://github.com/codnstj.png',
     githubURL: 'https://github.com/codnstj',
   },
-];
+] as const;
