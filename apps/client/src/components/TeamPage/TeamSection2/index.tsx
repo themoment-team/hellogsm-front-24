@@ -15,7 +15,7 @@ const TeamSection2 = () => {
         'px-0',
         'sm:px-[3.75rem]',
         'md:px-[8rem]',
-        'xl:px-[1rem]',
+        'xl:px-[12.5rem]',
         'fhd:px-[20rem]',
         'uhd:px-[32.5rem]',
       )}

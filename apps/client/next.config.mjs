@@ -3,6 +3,7 @@ const nextConfig = {
   transpilePackages: ['shared', 'types', 'api', 'tailwind-config', 'code-style-config'],
   reactStrictMode: false,
   images: {
+    domains: ['github.com'],
     remotePatterns: [
       {
         protocol: 'https',
