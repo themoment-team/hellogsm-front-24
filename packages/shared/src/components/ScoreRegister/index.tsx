@@ -7,9 +7,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { usePostImage, usePostMyOneseo, usePutOneseoByMemberId, usePostMockScore } from 'api';
 // import { usePostMyOneseo, usePutOneseo } from 'api';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { FreeSemesterType, GetMyOneseoType, MiddleSchoolAchievementType } from 'types';
+import { GetMyOneseoType, MiddleSchoolAchievementType } from 'types';
 
 import {
   AlertDialog,
@@ -34,6 +33,7 @@ import { useStore } from 'shared/stores';
 import { dataUrltoFile } from 'shared/utils';
 
 import type {
+  FreeSemesterType,
   GEDAchievementType,
   GradesInputMethodType,
   MockScoreType,
@@ -107,7 +107,6 @@ const ScoreRegister = ({
   isButtonClick,
 }: ScoreRegisterProps) => {
   const store = useStore();
-  const { push } = useRouter();
   const [showModal, setShowModal] = useState<boolean>(false);
   const { setLiberalSystem, setFreeSemester, freeSemester, liberalSystem, setScoreForm } = store;
   const [oneseoBody, setOneseoBody] = useState<Omit<PostOneseoType, 'profileImg'> | null>(null);
@@ -390,9 +389,11 @@ const ScoreRegister = ({
             volunteerTime: volunteerTime!.map((i) => Number(i)),
             newSubjects: newSubjects,
             liberalSystem: liberalSystem === 'freeGrade' ? '자유학년제' : '자유학기제',
-            freeSemester: (isFreeSemester
+            freeSemester: (isFreeSemester && freeSemester
               ? freeSemesterConvertor[freeSemester!]
-              : null) as FreeSemesterType,
+              : isFreeSemester && !freeSemester
+                ? '' // 자유학기제가 1-1일때
+                : null) as FreeSemesterType,
             artsPhysicalSubjects: ['체육', '음악', '미술'],
           };
 

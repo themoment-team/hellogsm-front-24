@@ -51,3 +51,7 @@ export const memberUrl = {
   postSendCode: () => '/member/v3/member/me/send-code',
   postVerifyCode: () => '/member/v3/member/me/auth-code',
 } as const;
+
+export const dateUrl = {
+  getDate: () => '/date',
+} as const;
