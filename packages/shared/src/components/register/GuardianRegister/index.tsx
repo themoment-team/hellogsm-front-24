@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect } from 'react';
 
 import { UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { basicRegisterType } from 'types';
@@ -9,8 +9,6 @@ import { CustomFormItem, RadioButton } from 'shared/components';
 import { Input } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
-type RelationshipType = '부' | '모' | '기타 (직접입력)';
-
 interface GuardianType {
   register: UseFormRegister<basicRegisterType>;
   setValue: UseFormSetValue<basicRegisterType>;
@@ -18,16 +16,20 @@ interface GuardianType {
 }
 
 const GuardianRegister = ({ register, setValue, watch }: GuardianType) => {
-  const [selectedRelationship, setSelectedRelationship] = useState<RelationshipType>();
   const { category: graduationType } = watch();
+
+  useEffect(() => {
+    if (watch('relationship') === '' && watch('otherRelationship') !== '') {
+      setValue('relationship', '기타 (직접입력)');
+    }
+  }, []);
 
   const handleRadioChange = (value: string) => {
     if (value === '부' || value === '모' || value === '기타 (직접입력)') {
-      setSelectedRelationship(value);
       setValue('relationship', value);
-      if (value !== '기타 (직접입력)') {
-        setValue('otherRelationship', '');
-      }
+    } else {
+      setValue('relationship', '기타 (직접입력)');
+      setValue('otherRelationship', value);
     }
   };
 
@@ -68,7 +70,7 @@ const GuardianRegister = ({ register, setValue, watch }: GuardianType) => {
                 watch={watch}
                 watchContent="relationship"
               />
-              {selectedRelationship === '기타 (직접입력)' && (
+              {watch('relationship') === '기타 (직접입력)' && (
                 <Input
                   placeholder="직접 입력"
                   {...register('otherRelationship')}

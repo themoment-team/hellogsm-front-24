@@ -56,7 +56,7 @@ const Section1 = () => {
                 'text-white',
                 'text-[1.25rem]',
                 'xs:text-[1.75rem]',
-                'sm:text-[2.5rem]',
+                'sm:text-[2.75rem]',
                 'lg:text-[3.25rem]',
               )}
             >
@@ -65,14 +65,20 @@ const Section1 = () => {
                 className={cn(
                   'relative',
                   'before:absolute',
-                  'before:-top-[2.625rem]',
-                  'before:left-2',
                   'before:text-lime-400',
-                  'before:tracking-[0.8125rem]',
                   'text-sky-300',
-                  'before:text-[2.5rem]',
                   // eslint-disable-next-line quotes
                   "before:content-['••']",
+                  'before:tracking-[0.5rem]',
+                  'before:-top-[1.275rem]',
+                  'before:left-[0.35rem]',
+                  'before:text-[1.25rem]',
+                  'sm:before:tracking-[0.75rem]',
+                  'sm:before:-top-[2.15rem]',
+                  'sm:before:text-[2rem]',
+                  'sm:before:left-2',
+                  'lg:before:left-[0.675rem]',
+                  'lg:before:tracking-[1.15rem]',
                 )}
               >
                 UP

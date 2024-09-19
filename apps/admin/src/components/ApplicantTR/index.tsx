@@ -7,7 +7,7 @@ import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useForm, Controller } from 'react-hook-form';
 import { checkIsPassedDate } from 'shared';
-import { OneseoListType, OneseoType, ScreeningEnum } from 'types';
+import { EditabilityType, OneseoListType, OneseoType, ScreeningEnum } from 'types';
 
 import { TextField } from 'admin/components';
 
@@ -41,13 +41,17 @@ import {
 } from 'api/hooks';
 
 interface ApplicationTRProps extends OneseoType {
-  refetch: (
+  editableData: EditabilityType | undefined;
+  oneseoRefetch: (
     options?: RefetchOptions | undefined,
   ) => Promise<QueryObserverResult<OneseoListType, Error>>;
+  editableRefetch: (
+    options?: RefetchOptions | undefined,
+  ) => Promise<QueryObserverResult<EditabilityType, Error>>;
 }
 
 const ApplicantTR = ({
-  refetch,
+  oneseoRefetch,
   aptitudeEvaluationScore,
   firstTestPassYn,
   guardianPhoneNumber,
@@ -62,6 +66,8 @@ const ApplicantTR = ({
   secondTestPassYn,
   submitCode,
   entranceIntentionYn,
+  editableData,
+  editableRefetch,
 }: ApplicationTRProps) => {
   const [realOneseoDialogOpen, setRealOneseoDialogOpen] = useState(false);
   const [agreeDocDialogOpen, setAgreeDocDialogOpen] = useState(false);
@@ -78,7 +84,8 @@ const ApplicantTR = ({
 
   const { mutate: patchArrivedStatus } = usePatchArrivedStatus(memberId, {
     onSuccess: () => {
-      refetch();
+      oneseoRefetch();
+      editableRefetch();
     },
     onError: () => {
       setIsRealOneseoArrived((prev) => !prev);
@@ -87,7 +94,8 @@ const ApplicantTR = ({
 
   const { mutate: patchAgreeDocStatus } = usePatchAgreeDocStatus(memberId, {
     onSuccess: () => {
-      refetch();
+      oneseoRefetch();
+      editableRefetch();
     },
     onError: () => {
       setEntranceIntention(entranceIntention === 'YES' ? 'NO' : 'YES');
@@ -96,12 +104,14 @@ const ApplicantTR = ({
 
   const { mutate: patchAptitudeScore } = usePatchAptitudeScore(memberId, {
     onSuccess: () => {
-      refetch();
+      oneseoRefetch();
+      editableRefetch();
     },
   });
   const { mutate: patchInterviewScore } = usePatchInterviewScore(memberId, {
     onSuccess: () => {
-      refetch();
+      oneseoRefetch();
+      editableRefetch();
     },
   });
 
@@ -250,6 +260,7 @@ const ApplicantTR = ({
                 onClick={() => setAgreeDocDialogOpen(true)}
                 pressed={entranceIntention === 'YES'}
                 icon={<CheckIcon />}
+                disabled={secondTestPassYn !== 'YES'}
               >
                 제출 완료
               </Toggle>
@@ -269,6 +280,7 @@ const ApplicantTR = ({
           <TableCell className="w-[142px]">
             <Button
               onClick={() => push(`/edit/${memberId}?step=1`)}
+              disabled={editableData?.oneseoEditability === false}
               className="ml-[33.24px]"
               variant="outline"
             >

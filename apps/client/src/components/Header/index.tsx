@@ -27,6 +27,8 @@ const activeStyle = [
   'after:rounded-lg',
 ];
 
+const activeTextStyle = ['relative', 'text-[0.875rem]/[1.5rem]', 'md:text-[1.125rem]/[1.75rem]'];
+
 const loginLinkStyle = [
   'flex',
   'gap-x-1',
@@ -34,6 +36,17 @@ const loginLinkStyle = [
   'font-[600]',
   'text-lg',
   'items-center',
+];
+
+const modalBtnStyle = [
+  'flex',
+  'py-2',
+  'pl-[0.75rem]',
+  'justify-center',
+  'items-center',
+  'gap-2',
+  'text-slate-700',
+  ...activeTextStyle,
 ];
 
 const Header = () => {
@@ -59,11 +72,17 @@ const Header = () => {
     { href: '/guide', label: '원서접수', icon: I.OneseoIcon },
     { href: '/faq', label: '자주 묻는 질문', icon: I.FaqIcon },
     { href: '/mypage', label: '내 정보 페이지', icon: I.HeaderProfileIcon },
+    { href: '/oneseo/calculate', label: '모의 성적 계산', icon: I.CalculateIcon },
+    {
+      href: 'https://themoment-team.notion.site/9552cb7f5546449782e4f5ebd051386a?pvs=74',
+      label: '더모먼트팀',
+      icon: I.SparcleIcon,
+    },
   ];
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 640) {
+      if (window.innerWidth >= 750) {
         setIsBarClicked(false);
       }
     };
@@ -96,7 +115,7 @@ const Header = () => {
           'md:px-[3.75rem]',
           'lg:px-[6.25rem]',
           'xl:px-[15.25rem]',
-          '2xl:px-[20rem]',
+          'fhd:px-[20rem]',
           'flex',
           'justify-between',
           'items-center',
@@ -109,6 +128,7 @@ const Header = () => {
           'border-t-solid',
           'border-b-[0.0625rem]',
           'border-gray-100',
+          'gap-8',
         )}
       >
         <Link href="/">
@@ -118,25 +138,37 @@ const Header = () => {
           className={cn(
             'w-[35.5rem]',
             'hidden',
-            'sm:flex',
+            'smxm:flex',
             'justify-between',
             'text-lg',
             'font-[600]',
             'text-gray-500',
           )}
         >
-          <ActiveLink href="/" className={cn('relative')} activeClassName={cn(...activeStyle)}>
+          <ActiveLink
+            href="/"
+            className={cn(...activeTextStyle)}
+            activeClassName={cn(...activeStyle)}
+          >
             홈
           </ActiveLink>
-          <ActiveLink href="/guide" className={cn('relative')} activeClassName={cn(...activeStyle)}>
+          <ActiveLink
+            href="/guide"
+            className={cn(...activeTextStyle)}
+            activeClassName={cn(...activeStyle)}
+          >
             원서접수
           </ActiveLink>
-          <ActiveLink href="/faq" className={cn('relative')} activeClassName={cn(...activeStyle)}>
+          <ActiveLink
+            href="/faq"
+            className={cn(...activeTextStyle)}
+            activeClassName={cn(...activeStyle)}
+          >
             자주 묻는 질문
           </ActiveLink>
           <ActiveLink
             href="/oneseo/calculate"
-            className={cn('relative')}
+            className={cn(...activeTextStyle)}
             activeClassName={cn(...activeStyle)}
           >
             모의 성적 계산
@@ -151,13 +183,14 @@ const Header = () => {
         </nav>
         {authInfo?.authReferrerType && memberInfo?.name ? (
           <>
-            <div className={cn('relative', 'hidden', 'sm:flex')}>
+            <div className={cn('relative', 'hidden', 'smxm:flex', 'w-[10rem]')}>
               <button
                 className={cn(...loginLinkStyle, 'gap-2', 'relative')}
                 onClick={() => setIsLogoutClicked(!isLogoutClicked)}
               >
-                <div className={cn('flex', 'items-center', 'gap-[0.125rem]')}>
-                  <I.HeaderProfileIcon size="1.5rem" color="#868686" /> {memberInfo.name} 님
+                <div className={cn('flex', 'items-center', 'gap-[0.125rem]', ...activeTextStyle)}>
+                  <I.HeaderProfileIcon size="1.5rem" color="#2563EB" />
+                  <span className={cn('text-blue-600')}>{memberInfo.name}</span> 님
                 </div>
                 <I.ChevronIcon />
               </button>
@@ -179,34 +212,13 @@ const Header = () => {
                 >
                   <Link
                     href="/mypage"
-                    className={cn(
-                      'flex',
-                      'py-2',
-                      'pl-[0.75rem]',
-                      'justify-center',
-                      'items-center',
-                      'gap-2',
-                      'text-slate-700',
-                      'text-[1rem]/[1.75rem]',
-                      'font-normal',
-                    )}
+                    className={cn(...modalBtnStyle)}
                     onClick={() => setIsLogoutClicked(!isLogoutClicked)}
                   >
                     <I.HomeIcon size="1.5rem" color="#475569" /> 내 정보 페이지
                   </Link>
                   <button
-                    className={cn(
-                      'flex',
-                      'py-2',
-                      'pl-[0.75rem]',
-                      'pr-[1.8125rem]',
-                      'justify-center',
-                      'items-center',
-                      'gap-2',
-                      'text-red-600',
-                      'text-[1rem]/[1.75rem]',
-                      'font-normal',
-                    )}
+                    className={cn(...modalBtnStyle, 'text-red-600')}
                     onClick={() => {
                       handleLogout();
                       setIsLogoutClicked(!isLogoutClicked);
@@ -220,7 +232,7 @@ const Header = () => {
 
             <button
               onClick={() => setIsBarClicked(!isBarClicked)}
-              className={cn('flex', 'sm:hidden')}
+              className={cn('flex', 'smxm:hidden')}
             >
               {isBarClicked ? <I.XIcon /> : <I.HamburgurIcon />}
             </button>

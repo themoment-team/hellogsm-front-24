@@ -36,6 +36,8 @@ const CalculatePage = () => {
                 'items-center',
                 'rounded-t-[1.25rem]',
                 'gap-2',
+                'border-b-[0.0625rem]',
+                'border-gray-100',
               )}
             >
               <Button onClick={() => setGraduationType(undefined)} variant="ghost">
@@ -50,6 +52,7 @@ const CalculatePage = () => {
                 내 성적 계산하기
               </Button>
             </header>
+            <div className={cn('w-full', 'h-6')} />
             <ScoreRegister
               type="calculate"
               data={undefined}
