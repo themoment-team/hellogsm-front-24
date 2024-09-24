@@ -171,8 +171,8 @@ const ApplicantTR = ({
     <Table>
       <TableBody>
         <TableRow>
-          <TableCell className="w-[100px] text-zinc-900">{submitCode}</TableCell>
-          <TableCell className="w-[130px]">
+          <TableCell className="w-[6.25rem] text-zinc-900">{submitCode}</TableCell>
+          <TableCell className="w-[7.25rem] p-0">
             <AlertDialog open={realOneseoDialogOpen}>
               <Toggle
                 onClick={() => setRealOneseoDialogOpen(true)}
@@ -181,7 +181,7 @@ const ApplicantTR = ({
               >
                 제출 완료
               </Toggle>
-              <AlertDialogContent className="w-[400px]">
+              <AlertDialogContent className="w-[25rem]">
                 <AlertDialogHeader>
                   <AlertDialogTitle>서류 제출 여부를 변경하시겠습니까?</AlertDialogTitle>
                 </AlertDialogHeader>
@@ -194,16 +194,16 @@ const ApplicantTR = ({
               </AlertDialogContent>
             </AlertDialog>
           </TableCell>
-          <TableCell className="w-[154px] font-semibold text-zinc-900">
+          <TableCell className="w-[8.625rem] font-semibold text-zinc-900">
             {name} <br />
             <span className="font-normal text-zinc-600">{phoneNumber}</span>
           </TableCell>
-          <TableCell className="w-[154px] text-zinc-600">{schoolName}</TableCell>
-          <TableCell className="max-w-full text-zinc-900">{ScreeningEnum[screening]}</TableCell>
-          <TableCell className="w-[96px]">
+          <TableCell className="w-[9.625rem] text-zinc-600">{schoolName}</TableCell>
+          <TableCell className="w-[7.625rem] text-zinc-900">{ScreeningEnum[screening]}</TableCell>
+          <TableCell className="w-[6rem]">
             <Badge variant={firstTestResult}>{firstTestResult}</Badge>
           </TableCell>
-          <TableCell className="w-[180px] text-zinc-400">
+          <TableCell className="w-[11.25rem] text-zinc-400">
             {firstTestPassYn === 'YES' && is직무적성처리기간 ? (
               <div className={cn('flex', 'gap-1.5')}>
                 <Controller
@@ -227,7 +227,7 @@ const ApplicantTR = ({
               '진행 전'
             )}
           </TableCell>
-          <TableCell className="w-[180px] text-zinc-400">
+          <TableCell className="w-[11.25rem] text-zinc-400">
             {firstTestPassYn === 'YES' && is심층면접처리기간 ? (
               <div className={cn('flex', 'gap-1.5')}>
                 <Controller
@@ -251,10 +251,10 @@ const ApplicantTR = ({
               '진행 전'
             )}
           </TableCell>
-          <TableCell className="w-[96px]">
+          <TableCell className="w-[6rem]">
             <Badge variant={secondTestResult}>{secondTestResult}</Badge>
           </TableCell>
-          <TableCell className="w-[130px]">
+          <TableCell className="w-[8.125rem]">
             <AlertDialog open={agreeDocDialogOpen}>
               <Toggle
                 onClick={() => setAgreeDocDialogOpen(true)}
@@ -264,7 +264,7 @@ const ApplicantTR = ({
               >
                 제출 완료
               </Toggle>
-              <AlertDialogContent className="w-[400px]">
+              <AlertDialogContent className="w-[25rem]">
                 <AlertDialogHeader>
                   <AlertDialogTitle>입학동의서 제출 여부를 변경하시겠습니까?</AlertDialogTitle>
                 </AlertDialogHeader>
@@ -277,7 +277,7 @@ const ApplicantTR = ({
               </AlertDialogContent>
             </AlertDialog>
           </TableCell>
-          <TableCell className="w-[142px]">
+          <TableCell className="w-[8.875rem]">
             <Button
               onClick={() => push(`/edit/${memberId}?step=1`)}
               disabled={editableData?.oneseoEditability === false}

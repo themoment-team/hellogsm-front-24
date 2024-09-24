@@ -18,8 +18,8 @@ const ApplicantTH = () => {
       <Table>
         <TableBody>
           <TableRow>
-            <TableCell className={cn(defaultStyle, 'w-[100px]')}>접수 번호</TableCell>
-            <TableCell className={cn(defaultStyle, 'w-[130px]')}>
+            <TableCell className={cn(defaultStyle, 'w-[5.25rem]')}>접수 번호</TableCell>
+            <TableCell className={cn(defaultStyle, 'w-[7.5rem]')}>
               <div className={cn('flex', 'gap-1', 'items-center')}>
                 서류 제출 여부
                 <div
@@ -48,14 +48,14 @@ const ApplicantTH = () => {
                 </div>
               </div>
             </TableCell>
-            <TableCell className={cn(defaultStyle, 'w-[154px]')}>지원자 정보</TableCell>
-            <TableCell className={cn(defaultStyle, 'w-[154px]')}>출신 중학교</TableCell>
-            <TableCell className={cn(defaultStyle, 'max-w-full')}>전형</TableCell>
-            <TableCell className={cn(defaultStyle, 'w-[85px]')}>1차 결과</TableCell>
-            <TableCell className={cn(defaultStyle, 'w-[186px]')}>직무적성 점수</TableCell>
-            <TableCell className={cn(defaultStyle, 'w-[186px]')}>심층면접 점수</TableCell>
-            <TableCell className={cn(defaultStyle, 'w-[90px]')}>2차 결과</TableCell>
-            <TableCell className={cn(defaultStyle, 'max-w-full')}>
+            <TableCell className={cn(defaultStyle, 'w-[7rem]')}>지원자 정보</TableCell>
+            <TableCell className={cn(defaultStyle, 'w-[8.75rem]')}>출신 중학교</TableCell>
+            <TableCell className={cn(defaultStyle, 'w-[6.75rem]')}>전형</TableCell>
+            <TableCell className={cn(defaultStyle, 'w-[5.3125rem]')}>1차 결과</TableCell>
+            <TableCell className={cn(defaultStyle, 'w-[10rem]')}>직무적성 점수</TableCell>
+            <TableCell className={cn(defaultStyle, 'w-[10rem]')}>심층면접 점수</TableCell>
+            <TableCell className={cn(defaultStyle, 'w-[5.625rem]')}>2차 결과</TableCell>
+            <TableCell className={cn(defaultStyle, 'w-[15rem]')}>
               <div className={cn('flex', 'gap-1', 'items-center')}>
                 입학 동의서 제출 여부
                 <div
