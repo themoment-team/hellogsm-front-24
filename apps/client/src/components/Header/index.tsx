@@ -217,7 +217,8 @@ const Header = () => {
                   >
                     <I.HomeIcon size="1.5rem" color="#475569" /> 내 정보 페이지
                   </Link>
-                  <button
+                  <Link
+                    href="/"
                     className={cn(...modalBtnStyle, 'text-red-600')}
                     onClick={() => {
                       handleLogout();
@@ -225,7 +226,7 @@ const Header = () => {
                     }}
                   >
                     <I.LogoutIcon /> 로그아웃
-                  </button>
+                  </Link>
                 </div>
               )}
             </div>
