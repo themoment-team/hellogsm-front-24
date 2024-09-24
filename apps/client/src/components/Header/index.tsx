@@ -175,7 +175,7 @@ const Header = () => {
           </ActiveLink>
           <ActiveLink
             href="/introduce"
-            className={cn('relative')}
+            className={cn(...activeTextStyle)}
             activeClassName={cn(...activeStyle)}
           >
             더모먼트팀
