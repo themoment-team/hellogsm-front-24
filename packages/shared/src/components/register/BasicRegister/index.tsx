@@ -45,8 +45,8 @@ const BasicRegister = ({
   const birthMonth = birthDate ? String(birthDate.getMonth() + 1).padStart(2, '0') : '';
   const birthDay = birthDate ? String(birthDate.getDate()).padStart(2, '0') : '';
 
-  const handleDaumPostCodePopupComplete = ({ address, zonecode }: Address) => {
-    setValue('address', `${address} ${zonecode}`);
+  const handleDaumPostCodePopupComplete = ({ address }: Address) => {
+    setValue('address', address);
   };
 
   const handleZipCodeButtonClick = () =>

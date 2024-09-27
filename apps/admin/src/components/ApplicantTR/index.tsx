@@ -71,6 +71,7 @@ const ApplicantTR = ({
 }: ApplicationTRProps) => {
   const [realOneseoDialogOpen, setRealOneseoDialogOpen] = useState(false);
   const [agreeDocDialogOpen, setAgreeDocDialogOpen] = useState(false);
+  const [editOneseoDialogOpen, setEditOneseoDialogOpen] = useState(false);
 
   const { push } = useRouter();
 
@@ -165,6 +166,14 @@ const ApplicantTR = ({
 
   const handleInterviewScore = () => {
     patchInterviewScore({ interviewScore: parseInt(watch('심층면접점수')) });
+  };
+
+  const handleOneseoEdit = () => {
+    if (editableData?.oneseoEditability === true) {
+      push(`/edit/${memberId}?step=1`);
+    } else {
+      setEditOneseoDialogOpen(true);
+    }
   };
 
   return (
@@ -278,14 +287,21 @@ const ApplicantTR = ({
             </AlertDialog>
           </TableCell>
           <TableCell className="w-[8.875rem]">
-            <Button
-              onClick={() => push(`/edit/${memberId}?step=1`)}
-              disabled={editableData?.oneseoEditability === false}
-              className="ml-[33.24px]"
-              variant="outline"
-            >
+            <Button onClick={handleOneseoEdit} className="ml-[33.24px]" variant="outline">
               원서수정
             </Button>
+            <AlertDialog open={editOneseoDialogOpen}>
+              <AlertDialogContent className="w-[25rem]">
+                <AlertDialogHeader>
+                  <AlertDialogTitle>원서 수정을 할 수 없는 기간입니다.</AlertDialogTitle>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel onClick={() => setEditOneseoDialogOpen(false)}>
+                    닫기
+                  </AlertDialogCancel>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </TableCell>
         </TableRow>
       </TableBody>

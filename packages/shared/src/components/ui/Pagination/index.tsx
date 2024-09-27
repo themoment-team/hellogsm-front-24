@@ -70,9 +70,9 @@ const PaginationPrevious = ({
       )}
       {...props}
     >
-      <ChevronLeft className="w-4 h-4" />
+      <ChevronLeft className="h-4 w-4" />
     </PaginationLink>
-    <div className="w-[84px]" />
+    <div className="w-[48px]" />
   </div>
 );
 PaginationPrevious.displayName = 'PaginationPrevious';
@@ -86,7 +86,7 @@ const PaginationNext = ({ className, ...props }: React.ComponentProps<typeof Pag
       className={cn(buttonVariants({ variant: 'ghost' }), 'gap-1 pr-2.5', className)}
       {...props}
     >
-      <ChevronRight className="w-4 h-4" />
+      <ChevronRight className="h-4 w-4" />
     </PaginationLink>
   </div>
 );
