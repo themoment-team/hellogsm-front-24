@@ -2,6 +2,7 @@ import { SexType, YesNo } from "types";
 
 export type RoleType = "UNAUTHENTICATED" | "APPLICANT" | "ADMIN" | "ROOT";
 export type AuthReferrerType = "KAKAO" | "GOOGLE";
+export type Majors = "AI" | "SW" | "IOT";
 
 interface MemberInfoType {
   name: string;
@@ -32,4 +33,5 @@ export interface SendCodeType {
 export interface MyTestResultType {
   firstTestPassYn: YesNo | null;
   secondTestPassYn: YesNo | null;
+  decideMajor: Majors | null;
 }

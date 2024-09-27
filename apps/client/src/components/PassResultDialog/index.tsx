@@ -22,6 +22,7 @@ const PassResultDialog = ({
 }: PassResultProps) => {
   const firstTestPass = isFinishFirstTest && resultInfo?.firstTestPassYn === 'YES';
   const secondTestPass = !isFinishFirstTest && resultInfo?.secondTestPassYn === 'YES';
+  const major = resultInfo?.decideMajor;
   const userName = memberInfo?.name;
   const resultMessages = {
     firstTestPassYes: {
@@ -61,7 +62,12 @@ const PassResultDialog = ({
           하셨습니다.
         </>
       ),
-      message: <>학과목 배정은 10월 10일 10:10에 본 사이트에서 확인하실 수 있습니다.</>,
+      message: (
+        <>
+          {userName} 님은 {major} 학과에 배정되셨습니다. 더 자세한 정보는
+          <br /> 본 사이트에서 확인해 주시기 바랍니다.
+        </>
+      ),
     },
     secondTestPassNo: {
       title: (
