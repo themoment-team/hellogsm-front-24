@@ -74,7 +74,7 @@ const Header = () => {
     { href: '/mypage', label: '내 정보 페이지', icon: I.HeaderProfileIcon },
     { href: '/oneseo/calculate', label: '모의 성적 계산', icon: I.CalculateIcon },
     {
-      href: 'https://themoment-team.notion.site/9552cb7f5546449782e4f5ebd051386a?pvs=74',
+      href: '/introduce',
       label: '더모먼트팀',
       icon: I.SparcleIcon,
     },

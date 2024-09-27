@@ -53,9 +53,9 @@ const TeamSection3 = () => {
           'uhd:px-[22.5rem]',
         )}
       >
-        <span className={cn('text-[#7C58E9]')}>더모먼트</span>는
+        <span className={cn('text-[#7C58E9]')}>더모먼트팀</span>은
         <br />
-        어떤 팀 인가요?
+        아래의 비전을 가지고 활동해요.
       </h1>
       <div className={cn('flex', 'w-full', 'justify-center')}>
         <div className={cn('flex', 'w-full', 'justify-center', 'flex-wrap', 'gap-4')}>

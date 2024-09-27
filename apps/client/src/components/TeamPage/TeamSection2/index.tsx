@@ -8,30 +8,52 @@ const TeamSection2 = () => {
       id="section2"
       className={cn(
         'flex',
+        'flex-col-reverse',
+        'md:flex-row',
         'justify-between',
         'items-center',
         'w-full',
         'bg-white',
         'py-[15rem]',
-        'px-0',
-        'sm:px-[3.75rem]',
-        'md:px-[8rem]',
+        'px-[6.25rem]',
         'xl:px-[12.5rem]',
         'fhd:px-[20rem]',
         'uhd:px-[22.5rem]',
+        'gap-[5rem]',
+        'md:gap-0',
       )}
     >
       <div className={cn('flex', 'w-[43.75rem]', 'flex-col', 'gap-6')}>
-        <h1 className={cn('text-[#473B6B]', 'text-[4.25rem]/[5.525rem]', 'font-bold')}>
+        <h1
+          className={cn(
+            'text-[#473B6B]',
+            'text-[4.25rem]/[5.525rem]',
+            'font-bold',
+            'text-center',
+            'md:text-left',
+          )}
+        >
           <span className={cn('text-[#7C58E9]')}>더모먼트</span>는
           <br />
           어떤 팀 인가요?
         </h1>
-        <span className={cn('text-[#5D5B64]', 'text-[1.25rem]/[2rem]', 'font-normal')}>
+        <span
+          className={cn(
+            'text-[#5D5B64]',
+            'text-[1.25rem]/[2rem]',
+            'font-normal',
+            'text-center',
+            'md:text-left',
+          )}
+        >
           더모먼트팀은 광주소프트웨어마이스터고등학교의 전공 동아리입니다. <br />
-          약 30명의 재학생, 졸업생들이 모여서 활동하고, 주로 학교에 필요한 서비스를 개발합니다.
+          약 30명의 재학생, 졸업생들이 모여서 활동하고, <br
+            className={cn('sm:hidden', 'block')}
+          />{' '}
+          주로 학교에 필요한 서비스를 개발합니다.
           <br />
-          학교에 필요한 서비스를 함께 개발하고 싶나요? <br />
+          학교에 필요한 서비스를 함께 개발하고 싶나요?{' '}
+          <br className={cn('md:block', 'sm:hidden', 'block')} />
           지금 바로 SW 마이스터고에 지원하세요!
         </span>
       </div>
