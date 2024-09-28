@@ -33,11 +33,12 @@ const TeamSection3 = () => {
       className={cn(
         'flex',
         'flex-col',
-        'items-left',
+        'items-center',
+        'md:items-start',
         'w-full',
         'bg-[#F3F6FF]',
         'py-[15rem]',
-        'gap-[9.5rem]',
+        'gap-[7.5rem]',
       )}
     >
       <h1
@@ -51,6 +52,8 @@ const TeamSection3 = () => {
           'xl:px-[12.5rem]',
           'fhd:px-[20rem]',
           'uhd:px-[22.5rem]',
+          'text-center',
+          'md:text-left',
         )}
       >
         <span className={cn('text-[#7C58E9]')}>더모먼트팀</span>은
