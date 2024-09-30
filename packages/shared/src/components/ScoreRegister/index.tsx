@@ -272,6 +272,11 @@ const ScoreRegister = ({
   const handleDeleteSubjectClick = (idx: number) => {
     const filteredSubjects = subjectArray.filter((_, i) => i !== idx);
     unregister(`newSubjects.${idx - defaultSubjectLength}`);
+    unregister(`achievement1_2.${idx}`, undefined);
+    unregister(`achievement2_1.${idx}`, undefined);
+    unregister(`achievement2_2.${idx}`, undefined);
+    unregister(`achievement3_1.${idx}`, undefined);
+    unregister(`achievement3_2.${idx}`, undefined);
     setSubjectArray(filteredSubjects);
 
     const newSubjects = watch('newSubjects');
@@ -290,6 +295,7 @@ const ScoreRegister = ({
     setValue('achievement2_2', score2_2 && score2_2.filter((_, i) => i !== idx));
     setValue('achievement3_1', score3_1 && score3_1.filter((_, i) => i !== idx));
     setValue('achievement3_2', score3_2 && score3_2.filter((_, i) => i !== idx)); // score3_2 배열에서 인덱스가 기본과목.length + index인 값 제거 (삭제 버튼 클릭한 인덱스 제거)
+    saveStorage();
   };
 
   const handleFormSubmit: SubmitHandler<ScoreFormType> = (data) => {
@@ -461,13 +467,9 @@ const ScoreRegister = ({
         (subject) => handleAddSubjectClick(subject),
       );
       setTimeout(() => setValue('newSubjects', store.scoreForm!.newSubjects), 0);
-
-      return;
     } else if (defaultData?.newSubjects) {
       [...defaultData.newSubjects].forEach((subject) => handleAddSubjectClick(subject));
       setTimeout(() => setValue('newSubjects', defaultData.newSubjects), 0);
-
-      return;
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
