@@ -45,7 +45,7 @@ const FinalSubmitDialog = ({ id, isStep4Clickable }: FinalSubmitDialogProps) => 
           <p>원서 최종 제출</p>
         </Button>
       </DialogTrigger>
-      <DialogContent showCloseIcon={false}>
+      <DialogContent className="bg-white" showCloseIcon={false}>
         <DialogHeader>
           <DialogTitle>원서를 최종 제출 하시겠습니까?</DialogTitle>
           <DialogDescription>
