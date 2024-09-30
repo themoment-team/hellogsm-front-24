@@ -19,6 +19,7 @@ import {
   MockScoreType,
   ScreeningType,
   GEDAchievementType,
+  FreeSemesterType,
 } from 'types';
 
 import { StepCheckIcon, ProgressBarIcon } from 'shared/assets';
@@ -447,7 +448,11 @@ const StepBar = ({
           }
         : {
             liberalSystem: store.liberalSystem === 'freeGrade' ? '자유학년제' : '자유학기제',
-            freeSemester: store.freeSemester ? freeSemesterConvertor[store.freeSemester] : null,
+            freeSemester: (store.liberalSystem === 'freeSemester'
+              ? store.freeSemester
+                ? freeSemesterConvertor[store.freeSemester]
+                : ''
+              : null) as FreeSemesterType,
             artsPhysicalSubjects: ['체육', '음악', '미술'],
             achievement1_2:
               store.freeSemester !== 'achievement1_2' && store.scoreForm?.achievement1_2
