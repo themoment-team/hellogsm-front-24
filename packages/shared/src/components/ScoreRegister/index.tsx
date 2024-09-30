@@ -125,10 +125,10 @@ const ScoreRegister = ({
     const { scoreForm } = store;
 
     if (scoreForm && Array.isArray(scoreForm[semester]))
-      return scoreForm[semester].map((i) => (i ? String(i) : undefined));
+      return scoreForm[semester]!.map((i) => (i ? String(i) : undefined));
 
     if (defaultData && defaultData[semester])
-      return defaultData[semester].map((i) => (i ? String(i) : '0'));
+      return defaultData[semester]!.map((i) => (i ? String(i) : '0'));
 
     return undefined;
   };
