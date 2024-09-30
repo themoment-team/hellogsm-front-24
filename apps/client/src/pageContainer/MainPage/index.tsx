@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
+import { useStore } from 'shared';
 import { MyMemberInfoType, MyTestResultType } from 'types';
 
 import {
@@ -23,6 +24,7 @@ interface MainPageProps {
 const MainPage = ({ resultInfo, memberInfo }: MainPageProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isPassOpen, setIsPassOpen] = useState<boolean>(false);
+  const { setAll } = useStore();
 
   useEffect(() => {
     const today = new Date().toDateString();
@@ -36,6 +38,10 @@ const MainPage = ({ resultInfo, memberInfo }: MainPageProps) => {
       setIsOpen(false);
     }
   }, [resultInfo]);
+
+  useEffect(() => {
+    setAll();
+  }, []);
 
   const isFinishFirstTest = resultInfo?.secondTestPassYn === null ? true : false;
 

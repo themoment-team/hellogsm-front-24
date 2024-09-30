@@ -50,6 +50,7 @@ interface StoreType {
   setLiberalSystem: (system: GradesInputMethodType) => void;
   setFreeSemester: (semester: SemesterIdType | null) => void;
   setScoreForm: (scoreForm: ScoreFormType) => void;
+  setAll: () => void;
 }
 
 const useStore = create<StoreType>((set) => ({
@@ -96,6 +97,29 @@ const useStore = create<StoreType>((set) => ({
   setLiberalSystem: (system) => set(() => ({ liberalSystem: system })),
   setFreeSemester: (semester) => set(() => ({ freeSemester: semester })),
   setScoreForm: (scoreForm) => set(() => ({ scoreForm: scoreForm })),
+  setAll: () =>
+    set(() => ({
+      guardianName: undefined,
+      guardianPhoneNumber: undefined,
+      relationshipWithGuardian: undefined,
+      profileImg: undefined,
+      address: undefined,
+      detailAddress: undefined,
+      graduationType: undefined,
+      schoolTeacherName: undefined,
+      schoolTeacherPhoneNumber: undefined,
+      firstDesiredMajor: undefined,
+      secondDesiredMajor: undefined,
+      thirdDesiredMajor: undefined,
+      schoolName: undefined,
+      schoolAddress: undefined,
+      year: undefined,
+      month: undefined,
+      screening: undefined,
+      liberalSystem: undefined,
+      freeSemester: undefined,
+      scoreForm: undefined,
+    })),
 }));
 
 export default useStore;
