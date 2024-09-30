@@ -321,7 +321,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                         성취도/평어
                       </div>
                     </div>
-                    <div className="h-full bg-slash bg-contain bg-no-repeat"></div>
+                    <div className="h-full bg-slash bg-contain bg-no-repeat" />
                   </div>
                   <div className="flex w-full flex-col border-r border-black">
                     <div className="flex flex-col">
@@ -332,11 +332,11 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                         성취도/평어
                       </div>
                     </div>
-                    {!oneseo.middleSchoolAchievement.achievement1_2 ? (
-                      <div className="h-full bg-slash bg-contain bg-no-repeat"></div>
+                    {!oneseo.calculatedScore.generalSubjectsScoreDetail.score1_2 ? (
+                      <div className="h-full bg-slash bg-contain bg-no-repeat" />
                     ) : (
                       <>
-                        {oneseo.middleSchoolAchievement.achievement1_2.map((score, i) => (
+                        {oneseo.middleSchoolAchievement.achievement1_2!.map((score, i) => (
                           <div
                             key={i}
                             className="flex items-center justify-center border-b border-black"
@@ -359,11 +359,11 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                         성취도/평어
                       </div>
                     </div>
-                    {!oneseo.middleSchoolAchievement.achievement2_1 ? (
-                      <div className="h-full bg-slash bg-contain bg-no-repeat"></div>
+                    {!oneseo.calculatedScore.generalSubjectsScoreDetail.score2_1 ? (
+                      <div className="h-full bg-slash bg-contain bg-no-repeat" />
                     ) : (
                       <>
-                        {oneseo.middleSchoolAchievement.achievement2_1.map((score, i) => (
+                        {oneseo.middleSchoolAchievement.achievement2_1!.map((score, i) => (
                           <div
                             key={i}
                             className="flex items-center justify-center border-b border-black"
@@ -386,11 +386,11 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                         성취도/평어
                       </div>
                     </div>
-                    {!oneseo.middleSchoolAchievement.achievement2_2 ? (
-                      <div className="h-full bg-slash bg-contain bg-no-repeat"></div>
+                    {!oneseo.calculatedScore.generalSubjectsScoreDetail.score2_2 ? (
+                      <div className="h-full bg-slash bg-contain bg-no-repeat" />
                     ) : (
                       <>
-                        {oneseo.middleSchoolAchievement.achievement2_2.map((score, i) => (
+                        {oneseo.middleSchoolAchievement.achievement2_2!.map((score, i) => (
                           <div
                             key={i}
                             className="flex items-center justify-center border-b border-black"
@@ -413,11 +413,11 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                         성취도/평어
                       </div>
                     </div>
-                    {!oneseo.middleSchoolAchievement.achievement3_1 ? (
-                      <div className="h-full bg-slash bg-contain bg-no-repeat"></div>
+                    {!oneseo.calculatedScore.generalSubjectsScoreDetail.score3_1 ? (
+                      <div className="h-full bg-slash bg-contain bg-no-repeat" />
                     ) : (
                       <>
-                        {oneseo.middleSchoolAchievement.achievement3_1.map((score, i) => (
+                        {oneseo.middleSchoolAchievement.achievement3_1!.map((score, i) => (
                           <div
                             key={i}
                             className="flex items-center justify-center border-b border-black"
@@ -482,9 +482,9 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                     </div>
                     {getArtPhysicalElement(oneseo.middleSchoolAchievement.achievement2_1)}
                   </div>
-                  <div className="flex w-full flex-col border-r border-black">
+                  <div className="flex w-full flex-col">
                     <div className="flex flex-col">
-                      <div className="h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold">
+                      <div className="border-bla ck h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold">
                         2학년 2학기
                       </div>
                       <div className="h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold">
@@ -492,17 +492,6 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                       </div>
                     </div>
                     {getArtPhysicalElement(oneseo.middleSchoolAchievement.achievement2_2)}
-                  </div>
-                  <div className="flex w-full flex-col border-black">
-                    <div className="flex flex-col">
-                      <div className="h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold">
-                        3학년 1학기
-                      </div>
-                      <div className="h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold">
-                        성취도/평어
-                      </div>
-                    </div>
-                    {getArtPhysicalElement(oneseo.middleSchoolAchievement.achievement3_1)}
                   </div>
                 </div>
                 <h2 className="mt-[1.5vh] text-[1.2vh] leading-[2vh]">비교과</h2>
