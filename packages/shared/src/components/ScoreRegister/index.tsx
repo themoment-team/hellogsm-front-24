@@ -119,51 +119,34 @@ const ScoreRegister = ({
   const defaultData = data?.middleSchoolAchievement;
   const defaultSubjectLength = defaultSubjectArray.length;
 
+  const getDefaultValue = (semester: SemesterIdType | 'artsPhysicalAchievement') => {
+    if (type === 'calculate') return undefined;
+
+    const { scoreForm } = store;
+
+    if (scoreForm && Array.isArray(scoreForm[semester]))
+      return scoreForm[semester].map((i) => (i ? String(i) : undefined));
+
+    if (defaultData && defaultData[semester])
+      return defaultData[semester].map((i) => (i ? String(i) : '0'));
+
+    return undefined;
+  };
+
   const { register, handleSubmit, setValue, unregister, watch, control } = useForm<ScoreFormType>({
     resolver: zodResolver(scoreFormSchema),
     defaultValues: {
-      achievement1_2:
-        type !== 'calculate'
-          ? store.scoreForm?.achievement1_2
-            ? store.scoreForm.achievement1_2.map((i) => (i === null ? '0' : i))
-            : defaultData?.achievement1_2 &&
-              defaultData.achievement1_2.map((i) => (i === null ? '0' : String(i)))
-          : undefined,
-      achievement2_1:
-        type !== 'calculate'
-          ? store.scoreForm?.achievement2_1
-            ? store.scoreForm.achievement2_1.map((i) => (i === null ? '0' : i))
-            : defaultData?.achievement2_1 &&
-              defaultData.achievement2_1.map((i) => (i === null ? '0' : String(i)))
-          : undefined,
-      achievement2_2:
-        type !== 'calculate'
-          ? store.scoreForm?.achievement2_2
-            ? store.scoreForm.achievement2_2.map((i) => (i === null ? '0' : i))
-            : defaultData?.achievement2_2 &&
-              defaultData.achievement2_2.map((i) => (i === null ? '0' : String(i)))
-          : undefined,
-      achievement3_1:
-        type !== 'calculate'
-          ? store.scoreForm?.achievement3_1
-            ? store.scoreForm.achievement3_1.map((i) => (i === null ? '0' : i))
-            : defaultData?.achievement3_1 &&
-              defaultData.achievement3_1.map((i) => (i === null ? '0' : String(i)))
-          : undefined,
-      achievement3_2:
-        type !== 'calculate'
-          ? store.scoreForm?.achievement3_2
-            ? store.scoreForm.achievement3_2.map((i) => (i === null ? '0' : i))
-            : defaultData?.achievement3_2 &&
-              defaultData.achievement3_2.map((i) => (i === null ? '0' : String(i)))
-          : undefined,
-      artsPhysicalAchievement: store.scoreForm?.artsPhysicalAchievement
-        ? store.scoreForm.artsPhysicalAchievement.map((i) => (i === null ? '0' : String(i)))
-        : defaultData?.artsPhysicalAchievement &&
-          defaultData.artsPhysicalAchievement.map((i) => (i === null ? '0' : String(i))),
+      achievement1_2: getDefaultValue('achievement1_2'),
+      achievement2_1: getDefaultValue('achievement2_1'),
+      achievement2_2: getDefaultValue('achievement2_2'),
+      achievement3_1: getDefaultValue('achievement3_1'),
+      achievement3_2: getDefaultValue('achievement3_2'),
+      artsPhysicalAchievement: getDefaultValue('artsPhysicalAchievement'),
       newSubjects: store.scoreForm?.newSubjects
         ? store.scoreForm.newSubjects
-        : defaultData?.newSubjects && [...defaultData.newSubjects],
+        : defaultData?.newSubjects
+          ? defaultData.newSubjects
+          : undefined,
       absentDays: store.scoreForm?.absentDays
         ? store.scoreForm.absentDays
         : defaultData?.absentDays && defaultData.absentDays.map((i) => String(i)),
@@ -181,7 +164,7 @@ const ScoreRegister = ({
     },
   });
 
-  useEffect(() => {
+  const saveStorage = () => {
     if (watch) {
       const { isArray } = Array;
 
@@ -199,7 +182,10 @@ const ScoreRegister = ({
         gedTotalScore: watch('gedTotalScore'),
       });
     }
+  };
 
+  useEffect(() => {
+    saveStorage();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isStep4Clickable, isButtonClick]);
 
@@ -385,11 +371,12 @@ const ScoreRegister = ({
             volunteerTime: volunteerTime!.map((i) => Number(i)),
             newSubjects: newSubjects,
             liberalSystem: liberalSystem === 'freeGrade' ? '자유학년제' : '자유학기제',
-            freeSemester: (isFreeSemester && freeSemester
-              ? freeSemesterConvertor[freeSemester!]
-              : isFreeSemester && !freeSemester
-                ? '' // 자유학기제가 1-1일때
-                : null) as FreeSemesterType,
+            freeSemester: (isFreeSemester
+              ? freeSemester
+                ? freeSemesterConvertor[freeSemester]
+                : ''
+              : null) as FreeSemesterType,
+
             artsPhysicalSubjects: ['체육', '음악', '미술'],
           };
 
@@ -446,13 +433,6 @@ const ScoreRegister = ({
   };
 
   useEffect(() => {
-    if (defaultData?.newSubjects?.length) {
-      [...defaultData.newSubjects].forEach((subject) => handleAddSubjectClick(subject));
-      // handleAddSubjectClick(defaultData.newSubjects.length);
-
-      setTimeout(() => setValue('newSubjects', defaultData.newSubjects), 0);
-    }
-
     setLiberalSystem(
       store.liberalSystem
         ? store.liberalSystem
@@ -476,12 +456,26 @@ const ScoreRegister = ({
       }, 0);
     }
 
+    if (store.scoreForm?.newSubjects) {
+      [...store.scoreForm.newSubjects.filter((subject) => typeof subject === 'string')].forEach(
+        (subject) => handleAddSubjectClick(subject),
+      );
+      setTimeout(() => setValue('newSubjects', store.scoreForm!.newSubjects), 0);
+
+      return;
+    } else if (defaultData?.newSubjects) {
+      [...defaultData.newSubjects].forEach((subject) => handleAddSubjectClick(subject));
+      setTimeout(() => setValue('newSubjects', defaultData.newSubjects), 0);
+
+      return;
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (subjectArray.length <= defaultSubjectLength) {
-      setValue('newSubjects', null);
+      setValue('newSubjects', []);
     }
   }, [defaultSubjectLength, freeSemester, liberalSystem, setValue, subjectArray]);
 
@@ -655,10 +649,9 @@ const ScoreRegister = ({
                 <>
                   원서가 제출되었습니다!
                   <br />
-                  {
-                    // TODO 연락처 수정 필요
-                  }
-                  문제가 있다면 blabla로 연락주세요.
+                  문제가 있다면
+                  <br />
+                  062-949-6800(교무실)로 연락주세요.
                 </>
               ) : (
                 <>원서가 수정되었습니다!</>
