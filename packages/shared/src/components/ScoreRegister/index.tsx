@@ -666,6 +666,7 @@ const ScoreRegister = ({
                 href={type === 'client' ? '/mypage' : '/'}
                 onClick={() => {
                   setShowModal(false);
+                  store.setAll();
                 }}
               >
                 확인
