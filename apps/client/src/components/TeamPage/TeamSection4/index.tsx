@@ -41,7 +41,8 @@ const TeamSection4 = () => {
       )}
     >
       <h3 className={cn('text-[#0F0921]', 'text-[2.75rem]/[3.85rem]', 'font-bold')}>
-        &quot;입학지원시스템, 누가 만들었을까요?&quot;
+        &quot;입학지원시스템, <br className={cn('block', 'sm:hidden')} />
+        누가 만들었을까요?&quot;
       </h3>
       <div className={cn('flex', 'flex-col', 'relative', 'w-full', 'overflow-hidden', 'gap-6')}>
         <div
