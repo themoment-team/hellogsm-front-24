@@ -77,8 +77,8 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
   const screeningLabels: Record<string, string> = {
     GENERAL: '일반전형',
     SPECIAL: '특별전형',
-    EXTRA_VETERANS: '정원 외 특별전형',
-    EXTRA_ADMISSION: '정원 외 특별전형',
+    EXTRA_VETERANS: '국가보훈대상자',
+    EXTRA_ADMISSION: '특례입학대상자',
   };
 
   const screeningLabel = wantedScreening ? screeningLabels[wantedScreening] : '전형 없음';

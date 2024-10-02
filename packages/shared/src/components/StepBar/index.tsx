@@ -248,7 +248,8 @@ const StepBar = ({
       const screeningConvertor: { [key: string]: ScreeningType } = {
         일반전형: 'GENERAL',
         사회통합전형: 'SPECIAL',
-        '정원 외 특별전형': 'EXTRA_ADMISSION',
+        국가보훈대상자: 'EXTRA_VETERANS',
+        특례입학대상자: 'EXTRA_ADMISSION',
       };
 
       const majorConvertor: { [key: string]: MajorType } = {
@@ -374,7 +375,8 @@ const StepBar = ({
       const screeningConvertor: { [key: string]: ScreeningType } = {
         일반전형: 'GENERAL',
         사회통합전형: 'SPECIAL',
-        '정원 외 특별전형': 'EXTRA_ADMISSION',
+        국가보훈대상자: 'EXTRA_VETERANS',
+        특례입학대상자: 'EXTRA_ADMISSION',
       };
 
       const majorConvertor: { [key: string]: MajorType } = {
