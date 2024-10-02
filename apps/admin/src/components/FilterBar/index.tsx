@@ -45,7 +45,7 @@ const FilterBar = ({
   };
 
   const handleScreeningTagChange = (value: string) => {
-    if (value === 'GENERAL' || value === 'SPECIAL') {
+    if (value === 'GENERAL' || value === 'SPECIAL' || value === 'EXTRA') {
       setScreeningTag(value);
     }
   };
@@ -87,6 +87,7 @@ const FilterBar = ({
                 <SelectLabel>전형선택</SelectLabel>
                 <SelectItem value="GENERAL">일반전형</SelectItem>
                 <SelectItem value="SPECIAL">특별전형</SelectItem>
+                <SelectItem value="EXTRA">정원 외 특별전형</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
