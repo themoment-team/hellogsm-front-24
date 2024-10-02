@@ -34,7 +34,7 @@ const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
 
   const departments = ['소프트웨어개발과', '스마트IOT과', '인공지능과'];
   const categoryValues = ['졸업자', '졸업예정', '검정고시'];
-  const screeningValues = ['일반전형', '사회통합전형', '정원 외 특별전형'];
+  const screeningValues = ['일반전형', '사회통합전형', '국가보훈대상자', '특례입학대상자'];
 
   const departmentDetails = [
     {
@@ -170,7 +170,7 @@ const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
           <div className={cn('flex', 'w-[29.75rem]', 'flex-col', 'items-start', 'gap-10')}>
             <RadioButton
               title={'전형'}
-              options={['일반전형', '사회통합전형', '정원 외 특별전형']}
+              options={['일반전형', '사회통합전형', '국가보훈대상자', '특례입학대상자']}
               required={true}
               onChange={handleScreeningChange}
               watch={watch}

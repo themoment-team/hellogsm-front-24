@@ -69,13 +69,16 @@ const getScreeningTypeText = (screeningType: string) => {
     case 'SPECIAL':
       return '사회통합전형';
     case 'EXTRA_VETERANS':
+      return '국가보훈대상자';
     case 'EXTRA_ADMISSION':
-      return '정원 외 특별전형';
+      return '특례입학대상자';
     case '일반전형':
       return 'GENERAL';
     case '사회통합전형':
       return 'SPECIAL';
-    case '정원 외 특별전형':
+    case '국가보훈대상자':
+      return 'EXTRA_VETERANS';
+    case '특례입학대상자':
       return 'EXTRA_ADMISSION';
     default:
       return '';
