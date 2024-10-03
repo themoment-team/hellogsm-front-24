@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useGetMyAuthInfo, useGetMyMemberInfo } from 'api';
+import { useGetDuplicateMember, useGetMyAuthInfo, useGetMyMemberInfo } from 'api';
 import { useRouter } from 'next/navigation';
 import { useForm, FormProvider } from 'react-hook-form';
-import { MemberRegisterType, SexType, SendCodeType } from 'types';
+import { MemberRegisterType, SendCodeType, SexType } from 'types';
 import { z } from 'zod';
 
 import { ChevronIcon } from 'client/assets';
@@ -39,7 +39,11 @@ import { cn } from 'shared/lib/utils';
 
 const PERMIT_YEAR = 50;
 
-const SignUpPage = () => {
+interface SignUpProps {
+  isPastAnnouncement: boolean;
+}
+
+const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
   const { push } = useRouter();
 
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
@@ -48,7 +52,10 @@ const SignUpPage = () => {
   const [lastSubmittedCode, setLastSubmittedCode] = useState<string>('');
   const [isSuccess, setIsSuccess] = useState<boolean | undefined>(undefined);
 
-  const [showModal, setShowModal] = useState<'code' | 'success' | 'error' | ''>('');
+  const [showModal, setShowModal] = useState<
+    'duplicate' | 'date' | 'code' | 'success' | 'error' | ''
+  >('');
+  const [isContinue, setIsContinue] = useState<boolean>(false);
 
   const formMethods = useForm({
     resolver: zodResolver(signupFormSchema),
@@ -101,6 +108,13 @@ const SignUpPage = () => {
   const { refetch: refetchGetMyAuthInfo } = useGetMyAuthInfo();
   const { refetch: refetchGetMyMemberInfo } = useGetMyMemberInfo();
 
+  const { data: duplicateMemberData, refetch: checkDuplicateMember } = useGetDuplicateMember(
+    phoneNumber,
+    {
+      enabled: false,
+    },
+  );
+
   const { mutate: mutateMemberRegister } = usePostMemberRegister({
     onError: () => setShowModal('error'),
     onSuccess: () => {
@@ -152,10 +166,17 @@ const SignUpPage = () => {
   };
 
   const sendCodeNumber = (number: string) => {
-    const body: SendCodeType = {
-      phoneNumber: number,
-    };
-    mutateSendCode(body);
+    checkDuplicateMember();
+    if (duplicateMemberData?.DuplicateMemberYn === 'YES' && isContinue === true) {
+      const body: SendCodeType = {
+        phoneNumber: number,
+      };
+      mutateSendCode(body);
+      return;
+    } else {
+      setShowModal('duplicate');
+      return;
+    }
   };
 
   return (
@@ -410,6 +431,60 @@ const SignUpPage = () => {
               onClick={() => {
                 setShowModal('');
                 if (showModal === 'success') push('/');
+              }}
+            >
+              확인
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={showModal === 'duplicate'}>
+        <AlertDialogContent className="w-[520px]">
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              같은 전화번호로 생성된 계정이 이미 존재합니다.
+              <br />
+              회원가입시, 기존의 정보는 사라집니다. 진행하시겠습니까?
+            </AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setIsContinue(false);
+                setShowModal('');
+              }}
+            >
+              취소
+            </Button>
+            <AlertDialogAction
+              onClick={() => {
+                if (isPastAnnouncement) {
+                  setShowModal('date');
+                } else {
+                  setIsContinue(true);
+                  setShowModal('');
+                }
+              }}
+            >
+              확인
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={showModal === 'date'}>
+        <AlertDialogContent className="w-[400px]">
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              1차 합격 결과 발표 이후에는 기존 회원 정보를 <br /> 삭제할 수 없습니다.
+            </AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction
+              onClick={() => {
+                setShowModal('');
               }}
             >
               확인
