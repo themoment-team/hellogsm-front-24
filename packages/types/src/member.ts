@@ -33,5 +33,5 @@ export interface SendCodeType {
 export interface MyTestResultType {
   firstTestPassYn: YesNo | null;
   secondTestPassYn: YesNo | null;
-  decideMajor: Majors | null;
+  decidedMajor: Majors | null;
 }

@@ -22,7 +22,7 @@ const PassResultDialog = ({
 }: PassResultProps) => {
   const firstTestPass = isFinishFirstTest && resultInfo?.firstTestPassYn === 'YES';
   const secondTestPass = !isFinishFirstTest && resultInfo?.secondTestPassYn === 'YES';
-  const major = resultInfo?.decideMajor;
+  const major = resultInfo?.decidedMajor;
   const userName = memberInfo?.name;
   const resultMessages = {
     firstTestPassYes: {
