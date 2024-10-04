@@ -171,8 +171,9 @@ const StepBar = ({
         guardianName,
         guardianPhoneNumber,
         relationship,
-        schoolTeacherName: category === 'CANDIDATE' ? schoolTeacherName : null,
-        schoolTeacherPhoneNumber: category === 'CANDIDATE' ? schoolTeacherPhoneNumber : null,
+        schoolTeacherName: store.graduationType === 'CANDIDATE' ? schoolTeacherName : null,
+        schoolTeacherPhoneNumber:
+          store.graduationType === 'CANDIDATE' ? schoolTeacherPhoneNumber : null,
       });
 
       const isRelationShipEmpty = !!otherRelationship;
@@ -441,6 +442,8 @@ const StepBar = ({
   };
 
   const handleCheckScoreButtonClick = () => {
+    // console.log(store.scoreForm?.gedTotalScore);
+
     const middleSchoolAchievement: MiddleSchoolAchievementType | GEDAchievementType =
       store.graduationType === 'GED'
         ? {

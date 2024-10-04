@@ -516,7 +516,14 @@ const ScoreRegister = ({
               <p className={cn('text-slate-900', 'text-[0.875rem]/[1.25rem]')}>
                 검정고시 전과목 득점 합계 <span className={cn('text-red-600')}>*</span>
               </p>
-              <Input {...register('gedTotalScore')} placeholder="점수 입력" />
+              <Input
+                {...register('gedTotalScore', {
+                  onChange: () => {
+                    saveStorage();
+                  },
+                })}
+                placeholder="점수 입력"
+              />
             </div>
           </form>
         ) : (

@@ -43,7 +43,7 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
               {oneseo.privacyDetail.schoolName}
             </td>
           )}
-          <td className="border border-black" colSpan={6}>
+          <td className="border-r border-black" colSpan={6}>
             {graduationDate[0]}년 {graduationDate[1]}월{' '}
             {GraduationEnum[oneseo.privacyDetail.graduationType]}
           </td>

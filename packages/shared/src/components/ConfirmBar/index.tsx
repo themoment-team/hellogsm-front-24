@@ -16,6 +16,7 @@ import {
   DialogHeader,
 } from 'shared/components';
 import { cn } from 'shared/lib/utils';
+import { useStore } from 'shared/stores';
 
 interface ConfirmBarProps {
   id: string;
@@ -85,6 +86,8 @@ const FinalSubmitDialog = ({ id, isStep4Clickable }: FinalSubmitDialogProps) => 
 };
 
 const ConfirmBar = ({ id, temporarySave, isStep4Clickable, setIsButtonClick }: ConfirmBarProps) => {
+  const { setAll } = useStore();
+
   return (
     <div
       className={cn(
@@ -114,6 +117,7 @@ const ConfirmBar = ({ id, temporarySave, isStep4Clickable, setIsButtonClick }: C
           onClick={() => {
             setIsButtonClick(true);
             temporarySave();
+            setAll();
           }}
           variant="outline"
         >
