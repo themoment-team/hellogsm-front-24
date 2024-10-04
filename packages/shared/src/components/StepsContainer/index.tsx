@@ -210,6 +210,7 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
       absentDays: store.scoreForm?.absentDays?.map((value) => Number(value)) ?? null,
       attendanceDays: store.scoreForm?.attendanceDays?.map((value) => Number(value)) ?? null,
       volunteerTime: store.scoreForm?.volunteerTime?.map((value) => Number(value)) ?? null,
+      gedTotalScore: store.scoreForm?.gedTotalScore ? Number(store.scoreForm?.gedTotalScore) : null,
     };
 
     const tempOneseo = {
@@ -259,22 +260,22 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
     postTempStorage(tempOneseo);
   };
 
-  const {
-    img,
-    address,
-    detailAddress,
-    category,
-    schoolName,
-    year,
-    month,
-    screening,
-    choice,
-    guardianName,
-    guardianPhoneNumber,
-    relationship,
-    schoolTeacherName,
-    schoolTeacherPhoneNumber,
-  } = watch();
+  // const {
+  //   img,
+  //   address,
+  //   detailAddress,
+  //   category,
+  //   schoolName,
+  //   year,
+  //   month,
+  //   screening,
+  //   choice,
+  //   guardianName,
+  //   guardianPhoneNumber,
+  //   relationship,
+  //   schoolTeacherName,
+  //   schoolTeacherPhoneNumber,
+  // } = watch();
 
   const userBasicInfo = {
     name: info?.name || '',
@@ -290,14 +291,35 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
     phoneNumber: data?.privacyDetail.phoneNumber,
   };
 
-  const isBasicInfoComplete = !img || !address || !detailAddress;
+  // const isBasicInfoComplete = !img || !address || !detailAddress;
 
-  const isApplyInfoComplete = !category || !schoolName || !year || !month || !screening || !choice;
+  // const isApplyInfoComplete = !category || !schoolName || !year || !month || !screening || !choice;
+
+  // const isGuardianInfoComplete =
+  //   !guardianName || !guardianPhoneNumber || !relationship || category === 'CANDIDATE'
+  //     ? !schoolTeacherName || !schoolTeacherPhoneNumber
+  //     : false;
+
+  const isBasicInfoComplete = !store.profileImg || !store.address || !store.detailAddress;
+
+  const isApplyInfoComplete =
+    !store.schoolName ||
+    !store.schoolAddress ||
+    !store.year ||
+    !store.month ||
+    !store.screening ||
+    !store.graduationType ||
+    !store.firstDesiredMajor ||
+    !store.secondDesiredMajor ||
+    !store.thirdDesiredMajor;
 
   const isGuardianInfoComplete =
-    !guardianName || !guardianPhoneNumber || !relationship || category === 'CANDIDATE'
-      ? !schoolTeacherName || !schoolTeacherPhoneNumber
-      : false;
+    !store.guardianName ||
+    !store.guardianPhoneNumber ||
+    !store.relationshipWithGuardian ||
+    (store.graduationType === 'CANDIDATE'
+      ? !store.schoolTeacherName || !store.schoolTeacherPhoneNumber
+      : false);
 
   useEffect(() => {
     const baseRoute = memberId ? `/edit/${memberId}` : '/register';
