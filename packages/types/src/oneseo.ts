@@ -137,8 +137,15 @@ export interface GeneralSubjectsScoreDetailType {
   score3_2: number;
 }
 
+export interface artsPhysicalSubjectsScoreDetailType {
+  score2_1: number;
+  score2_2: number;
+  score3_1: number;
+}
+
 export interface CalculatedScoreType extends MockScoreType {
   generalSubjectsScoreDetail: GeneralSubjectsScoreDetailType;
+  artsPhysicalSubjectsScoreDetail: artsPhysicalSubjectsScoreDetailType;
 }
 
 export interface GetMyOneseoType {
