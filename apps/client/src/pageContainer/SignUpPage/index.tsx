@@ -51,11 +51,11 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
   const [timeLeft, setTimeLeft] = useState<number>(180);
   const [lastSubmittedCode, setLastSubmittedCode] = useState<string>('');
   const [isSuccess, setIsSuccess] = useState<boolean | undefined>(undefined);
+  const [isContinue, setIsContinue] = useState<boolean>(false);
 
   const [showModal, setShowModal] = useState<
     'duplicate' | 'date' | 'code' | 'success' | 'error' | ''
   >('');
-  const [isContinue, setIsContinue] = useState<boolean>(false);
 
   const formMethods = useForm({
     resolver: zodResolver(signupFormSchema),
@@ -167,7 +167,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
 
   const sendCodeNumber = (number: string) => {
     checkDuplicateMember();
-    if (duplicateMemberData?.DuplicateMemberYn === 'YES' && isContinue === true) {
+    if (duplicateMemberData?.duplicateMemberYn === 'NO' || isContinue === true) {
       const body: SendCodeType = {
         phoneNumber: number,
       };
@@ -178,6 +178,12 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
       return;
     }
   };
+
+  useEffect(() => {
+    if (isContinue === true) {
+      sendCodeNumber(phoneNumber);
+    }
+  }, [isContinue]);
 
   return (
     <>
@@ -452,7 +458,6 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
             <Button
               variant="outline"
               onClick={() => {
-                setIsContinue(false);
                 setShowModal('');
               }}
             >

@@ -37,5 +37,5 @@ export interface MyTestResultType {
 }
 
 export interface DuplicateType {
-  DuplicateMemberYn: YesNo | null;
+  duplicateMemberYn: YesNo | null;
 }
