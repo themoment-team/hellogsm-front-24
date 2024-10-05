@@ -220,7 +220,11 @@ const ScoreRegister = ({
     ) {
       if (liberalSystem === 'freeSemester') return setIsStep4Clickable!(true);
       else if (liberalSystem === 'freeGrade' && !freeSemester) return setIsStep4Clickable!(true);
-    } else if (store.graduationType === 'GED' && Number(watch('gedTotalScore')) > 0)
+    } else if (
+      store.graduationType === 'GED' &&
+      Number(watch('gedTotalScore')) > 0 &&
+      600 >= Number(watch('gedTotalScore'))
+    )
       return setIsStep4Clickable!(true);
     else return setIsStep4Clickable!(false);
 
