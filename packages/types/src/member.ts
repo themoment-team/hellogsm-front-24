@@ -35,3 +35,7 @@ export interface MyTestResultType {
   secondTestPassYn: YesNo | null;
   decidedMajor: Majors | null;
 }
+
+export interface DuplicateType {
+  duplicateMemberYn: YesNo | null;
+}
