@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "api/*": ["./src/*"],
+      "types": ["../types/src"],
+      "shared/*": ["../shared/src/*"]
+    }
+  }
+}

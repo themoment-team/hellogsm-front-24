@@ -1,0 +1,18 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "shared": "workspace:^",
+    "eslint-config-custom": "workspace:^",
+    "types": "workspace:^"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "prettier": "eslint-config-custom/prettier"
+}
