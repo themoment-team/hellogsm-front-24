@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import { StepsContainer } from 'shared';
+import { StepsContainer, useStore } from 'shared';
 import { GetMyOneseoType, MyMemberInfoType } from 'types';
 
 import { ComputerRecommendedPage } from 'client/pageContainer';
@@ -14,6 +14,8 @@ interface RegisterStepsPageProps {
 }
 
 const RegisterStepsPage = ({ data, param, info }: RegisterStepsPageProps) => {
+  const { setAll } = useStore();
+
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
       event.preventDefault();
@@ -25,6 +27,12 @@ const RegisterStepsPage = ({ data, param, info }: RegisterStepsPageProps) => {
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      setAll();
     };
   }, []);
 
