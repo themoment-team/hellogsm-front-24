@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePostImage, usePostTempStorage } from 'api';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import {
@@ -437,13 +436,17 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
             <AlertDialogTitle>
               {isTempModal[1] === 'success'
                 ? '원서가 임시저장 되었습니다!'
-                : '임시저장에 실패하였습니다.'}
+                : isTempModal[1] === 'error' && '임시저장에 실패하였습니다.'}
             </AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <Link href="/">
-              <AlertDialogAction>확인</AlertDialogAction>
-            </Link>
+            <AlertDialogAction
+              onClick={() => {
+                setIsTempModal([false, null]);
+              }}
+            >
+              확인
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
