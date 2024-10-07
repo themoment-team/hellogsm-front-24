@@ -32,3 +32,5 @@ export { default as TheMomentIcon } from './TheMomentIcon';
 export { default as SmallTheMomentIcon } from './SmallTheMomentIcon';
 export { default as CalculateIcon } from './CalculateIcon';
 export { default as SparcleIcon } from './SparcleIcon';
+export { default as PrintIcon } from './PrintIcon';
+export { default as CopyIcon } from './CopyIcon';
