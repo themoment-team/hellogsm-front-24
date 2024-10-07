@@ -73,7 +73,7 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
     {
       icon: <PrintIcon />,
       text: '유형별 제출서류 확인하기',
-      path: '/전형유형별 제출 서류 안내.hwpx',
+      path: '/지원자 제출서류 목록 안내.hwpx',
     },
     { icon: <ParticleIcon />, text: '입학원서 다운로드', path: '/print' },
     { icon: <DocumentIcon />, text: '제출서류 다운로드', path: '/입학제출서류.hwp' },
