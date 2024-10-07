@@ -58,10 +58,6 @@ const mustReadArticles = [
   </>,
 ] as const;
 
-const writingTipsDownload = () => {
-  window.location.href = '/입학원서 작성 요령.hwp';
-};
-
 const Elements: ElementType[] = [
   {
     background: 'bg-blue-300',
@@ -69,9 +65,9 @@ const Elements: ElementType[] = [
     description: (
       <>
         절차를 읽고 원서와 성적을 작성해 주시면 입학 신청이 완료됩니다.
-        <div
+        <a
           className={cn('flex', 'items-center', 'gap-3', 'mt-5', 'cursor-pointer', 'w-fit')}
-          onClick={() => writingTipsDownload()}
+          href="/입학원서 작성 요령.hwp"
         >
           <CopyIcon />
           <span
@@ -79,7 +75,7 @@ const Elements: ElementType[] = [
           >
             입학 원서 작성 요령 다운로드
           </span>
-        </div>
+        </a>
       </>
     ),
   },
