@@ -74,11 +74,11 @@ const Elements: ElementType[] = [
           onClick={() => writingTipsDownload()}
         >
           <CopyIcon />
-          <div
+          <span
             className={cn('text-slate-400', 'font-semibold', 'text-[1rem]/[1.5rem]', 'underline')}
           >
             입학 원서 작성 요령 다운로드
-          </div>
+          </span>
         </div>
       </>
     ),
