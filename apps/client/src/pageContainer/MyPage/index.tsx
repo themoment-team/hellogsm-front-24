@@ -24,7 +24,7 @@ import {
 } from 'shared';
 import { GetMyOneseoType } from 'types';
 
-import { AlertIcon, DocumentIcon, ParticleIcon, ProfileIcon } from 'client/assets';
+import { AlertIcon, DocumentIcon, ParticleIcon, PrintIcon, ProfileIcon } from 'client/assets';
 import { PassResultDialog } from 'client/components';
 
 import { cn } from 'shared/lib/utils';
@@ -70,6 +70,11 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
   ];
 
   const relatedDocuments = [
+    {
+      icon: <PrintIcon />,
+      text: '유형별 제출서류 확인하기',
+      path: '/전형유형별 제출 서류 안내.hwpx',
+    },
     { icon: <ParticleIcon />, text: '입학원서 다운로드', path: '/print' },
     { icon: <DocumentIcon />, text: '제출서류 다운로드', path: '/입학제출서류.hwp' },
   ];
