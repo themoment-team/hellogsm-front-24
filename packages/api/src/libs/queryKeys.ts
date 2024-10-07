@@ -31,4 +31,5 @@ export const memberQueryKeys = {
   getMyMemberInfo: () => ['member', 'my'],
   getMyAuthInfo: () => ['member', 'my', 'auth'],
   getMyTestResultInfo: () => ['member', 'my', 'result'],
+  getCheckDuplicate: (phoneNumber: string) => ['member', 'duplicate', 'check', phoneNumber],
 };
