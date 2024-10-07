@@ -181,8 +181,6 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
     } else {
       setShowModal('duplicate');
     }
-
-    return;
   };
 
   useEffect(() => {
