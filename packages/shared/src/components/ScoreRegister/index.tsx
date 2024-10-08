@@ -290,20 +290,22 @@ const ScoreRegister = ({
     onError: () => {},
   });
 
+  const { mutate: mutatePutOneseo } = usePutOneseoByMemberId(memberId!, {
+    onSuccess: () => {
+      setShowModal(true);
+    },
+    onError: () => {},
+  });
+
   const { mutate: mutatePostImage } = usePostImage({
     onSuccess: (data) => {
       if (oneseoBody) {
         const body: PostOneseoType = { ...oneseoBody, profileImg: data.url };
 
-        mutatePostMyOneseo(body);
+        return type === 'client'
+          ? mutatePostMyOneseo(body)
+          : type === 'admin' && mutatePutOneseo(body);
       }
-    },
-    onError: () => {},
-  });
-
-  const { mutate: mutatePutOneseo } = usePutOneseoByMemberId(memberId!, {
-    onSuccess: () => {
-      setShowModal(true);
     },
     onError: () => {},
   });
@@ -449,15 +451,6 @@ const ScoreRegister = ({
       profileImg: profileImg,
     };
 
-    if (type === 'admin') {
-      const putBody: PostOneseoType = {
-        ...body,
-        profileImg: profileImg!,
-      };
-
-      return mutatePutOneseo(putBody);
-    }
-
     setOneseoBody(body);
 
     if (profileImg && profileImg.includes('data:image')) {
@@ -467,7 +460,7 @@ const ScoreRegister = ({
       return mutatePostImage(formData);
     }
 
-    mutatePostMyOneseo(body);
+    return type === 'client' ? mutatePostMyOneseo(body) : type === 'admin' && mutatePutOneseo(body);
   };
 
   const handleAddSubjectClick = (defaultSubject?: string) => {
@@ -712,7 +705,6 @@ const ScoreRegister = ({
                 href={type === 'client' ? '/mypage' : '/'}
                 onClick={() => {
                   setShowModal(false);
-                  store.setAll();
                 }}
               >
                 확인
