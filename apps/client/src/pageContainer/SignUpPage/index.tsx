@@ -108,12 +108,9 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
   const { refetch: refetchGetMyAuthInfo } = useGetMyAuthInfo();
   const { refetch: refetchGetMyMemberInfo } = useGetMyMemberInfo();
 
-  const { data: duplicateMemberData, refetch: checkDuplicateMember } = useGetDuplicateMember(
-    phoneNumber,
-    {
-      enabled: false,
-    },
-  );
+  const { refetch: checkDuplicateMember } = useGetDuplicateMember(phoneNumber, {
+    enabled: false,
+  });
 
   const { mutate: mutateMemberRegister } = usePostMemberRegister({
     onError: () => setShowModal('error'),
@@ -165,9 +162,17 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
     mutateMemberRegister(body);
   };
 
-  const sendCodeNumber = (number: string) => {
-    checkDuplicateMember();
-    if (duplicateMemberData?.duplicateMemberYn === 'NO' || isContinue === true) {
+  const sendCodeNumber = async (number: string) => {
+    const duplicateResponse = await checkDuplicateMember();
+    const isDuplicate = duplicateResponse?.data?.duplicateMemberYn === 'NO';
+
+    if (isDuplicate) {
+      const body: SendCodeType = {
+        phoneNumber: number,
+      };
+      mutateSendCode(body);
+      return;
+    } else if (isContinue === true) {
       const body: SendCodeType = {
         phoneNumber: number,
       };
@@ -175,7 +180,6 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
       return;
     } else {
       setShowModal('duplicate');
-      return;
     }
   };
 

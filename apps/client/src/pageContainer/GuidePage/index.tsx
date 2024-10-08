@@ -14,7 +14,7 @@ import {
 } from 'shared';
 import { GetMyOneseoType } from 'types';
 
-import { BlueStarIcon, CloverIcon } from 'client/assets';
+import { BlueStarIcon, CloverIcon, CopyIcon } from 'client/assets';
 import { Footer, LoginDialog } from 'client/components';
 
 import { cn } from 'shared/lib/utils';
@@ -62,7 +62,22 @@ const Elements: ElementType[] = [
   {
     background: 'bg-blue-300',
     title: '원서 및 성적 입력',
-    description: <>절차를 읽고 원서와 성적을 작성해 주시면 입학 신청이 완료됩니다.</>,
+    description: (
+      <>
+        절차를 읽고 원서와 성적을 작성해 주시면 입학 신청이 완료됩니다.
+        <a
+          className={cn('flex', 'items-center', 'gap-3', 'mt-5', 'cursor-pointer', 'w-fit')}
+          href="/입학원서 작성 요령.hwp"
+        >
+          <CopyIcon />
+          <span
+            className={cn('text-slate-400', 'font-semibold', 'text-[1rem]/[1.5rem]', 'underline')}
+          >
+            입학 원서 작성 요령 다운로드
+          </span>
+        </a>
+      </>
+    ),
   },
   {
     background: 'bg-blue-400',
@@ -174,11 +189,11 @@ const List = ({
         </div>
         <ul className={cn('pl-2')}>
           <div className={cn(...descriptionStyle, 'text-gray-900', 'flex', 'gap-1')}>
-            &middot; <p>{description}</p>
+            &middot; <span>{description}</span>
           </div>
           {subDescription && (
             <div className={cn(...descriptionStyle, 'text-gray-900', 'flex', 'gap-1')}>
-              &middot; <p>{subDescription}</p>
+              &middot; <span>{subDescription}</span>
             </div>
           )}
         </ul>
