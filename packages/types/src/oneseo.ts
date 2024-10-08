@@ -130,17 +130,19 @@ export interface PostOneseoType {
 }
 
 export interface GeneralSubjectsScoreDetailType {
+  score1_2: number | null;
+  score2_1: number | null;
+  score2_2: number | null;
+  score3_1: number | null;
+  score3_2: number | null;
+}
+
+export interface artsPhysicalSubjectsScoreDetailType {
   score1_2: number;
   score2_1: number;
   score2_2: number;
   score3_1: number;
   score3_2: number;
-}
-
-export interface artsPhysicalSubjectsScoreDetailType {
-  score2_1: number;
-  score2_2: number;
-  score3_1: number;
 }
 
 export interface CalculatedScoreType extends MockScoreType {

@@ -52,6 +52,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
   const [lastSubmittedCode, setLastSubmittedCode] = useState<string>('');
   const [isSuccess, setIsSuccess] = useState<boolean | undefined>(undefined);
   const [isContinue, setIsContinue] = useState<boolean>(false);
+  const [isVerifyClicked, setIsVerifyClicked] = useState(false);
 
   const [showModal, setShowModal] = useState<
     'duplicate' | 'date' | 'code' | 'success' | 'error' | ''
@@ -82,6 +83,9 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
       }, 1000);
       return () => clearInterval(timer);
     }
+    if (timeLeft === 0) {
+      setIsSuccess(false);
+    }
   }, [btnClick, timeLeft]);
 
   const formatTime = (seconds: number) => {
@@ -108,12 +112,9 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
   const { refetch: refetchGetMyAuthInfo } = useGetMyAuthInfo();
   const { refetch: refetchGetMyMemberInfo } = useGetMyMemberInfo();
 
-  const { data: duplicateMemberData, refetch: checkDuplicateMember } = useGetDuplicateMember(
-    phoneNumber,
-    {
-      enabled: false,
-    },
-  );
+  const { refetch: checkDuplicateMember } = useGetDuplicateMember(phoneNumber, {
+    enabled: false,
+  });
 
   const { mutate: mutateMemberRegister } = usePostMemberRegister({
     onError: () => setShowModal('error'),
@@ -127,6 +128,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
   const { mutate: mutateSendCode } = useSendCode({
     onSuccess: () => {
       setBtnClick(true);
+      setIsVerifyClicked(true);
       formMethods.setValue('isSentCertificationNumber', true);
     },
     onError: () => setShowModal('code'),
@@ -165,9 +167,17 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
     mutateMemberRegister(body);
   };
 
-  const sendCodeNumber = (number: string) => {
-    checkDuplicateMember();
-    if (duplicateMemberData?.duplicateMemberYn === 'NO' || isContinue === true) {
+  const sendCodeNumber = async (number: string) => {
+    const duplicateResponse = await checkDuplicateMember();
+    const isDuplicate = duplicateResponse?.data?.duplicateMemberYn === 'NO';
+
+    if (isDuplicate) {
+      const body: SendCodeType = {
+        phoneNumber: number,
+      };
+      mutateSendCode(body);
+      return;
+    } else if (isContinue === true) {
       const body: SendCodeType = {
         phoneNumber: number,
       };
@@ -175,7 +185,6 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
       return;
     } else {
       setShowModal('duplicate');
-      return;
     }
   };
 
@@ -336,20 +345,30 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
                   <Button
                     type="button"
                     variant="disabled"
-                    disabled={isCertificationButtonDisabled || btnClick === true}
+                    className={cn('w-[5.25rem]')}
+                    disabled={
+                      (isCertificationButtonDisabled || btnClick === true) && timeLeft !== 0
+                    }
                     onClick={() => {
                       sendCodeNumber(phoneNumber);
+                      setTimeLeft(180);
                     }}
                   >
-                    번호 인증
+                    {isVerifyClicked ? '재전송' : '번호 인증'}
                   </Button>
                 </div>
                 <Input
                   {...formMethods.register('certificationNumber')}
-                  // disabled={!isSentCertificationNumber || timeLeft === 0}
+                  disabled={!isSentCertificationNumber || timeLeft === 0}
                   placeholder="인증번호 6자리 입력"
                   successMessage={isSuccess === true ? '번호 인증이 완료되었습니다' : undefined}
-                  errorMessage={isSuccess === false ? '인증번호를 확인해 주세요.' : undefined}
+                  errorMessage={
+                    isSuccess === false
+                      ? timeLeft === 0
+                        ? '인증번호가 만료되었습니다.'
+                        : '인증번호를 확인해 주세요.'
+                      : undefined
+                  }
                 />
               </div>
             </CustomFormItem>

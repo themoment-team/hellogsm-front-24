@@ -1,7 +1,5 @@
 'use client';
 
-import { Dispatch, SetStateAction } from 'react';
-
 import { useSearchParams } from 'next/navigation';
 
 import { MouseIcon } from 'shared/assets';
@@ -21,7 +19,6 @@ interface ConfirmBarProps {
   id: string;
   temporarySave: () => void;
   isStep4Clickable: boolean;
-  setIsButtonClick: Dispatch<SetStateAction<boolean>>;
 }
 
 interface FinalSubmitDialogProps {
@@ -84,7 +81,7 @@ const FinalSubmitDialog = ({ id, isStep4Clickable }: FinalSubmitDialogProps) => 
   );
 };
 
-const ConfirmBar = ({ id, temporarySave, isStep4Clickable, setIsButtonClick }: ConfirmBarProps) => (
+const ConfirmBar = ({ id, temporarySave, isStep4Clickable }: ConfirmBarProps) => (
   <div
     className={cn(
       'w-full',
@@ -111,7 +108,6 @@ const ConfirmBar = ({ id, temporarySave, isStep4Clickable, setIsButtonClick }: C
     <div className={cn('flex', 'items-center', 'gap-[0.5rem]')}>
       <Button
         onClick={() => {
-          setIsButtonClick(true);
           temporarySave();
         }}
         variant="outline"

@@ -1,6 +1,6 @@
 'use client';
 
-import { GetMyOneseoType, SexEnum } from 'types';
+import { artsPhysicalSubjectsScoreDetailType, GetMyOneseoType, SexEnum } from 'types';
 
 import { OneseoStatus } from 'client/components';
 import { cn } from 'client/lib/utils';
@@ -15,6 +15,22 @@ interface PrintPageProps {
   initialData: GetMyOneseoType | undefined;
 }
 
+const semesterArray: string[] = [
+  '1학년 2학기',
+  '2학년 1학기',
+  '2학년 2학기',
+  '3학년 1학기',
+  '3학년 2학기',
+] as const;
+
+const semesterToScore: { [key: string]: keyof artsPhysicalSubjectsScoreDetailType } = {
+  '1학년 2학기': 'score1_2',
+  '2학년 1학기': 'score2_1',
+  '2학년 2학기': 'score2_2',
+  '3학년 1학기': 'score3_1',
+  '3학년 2학기': 'score3_2',
+};
+
 const scoreToAlphabet = ['없음', 'E', 'D', 'C', 'B', 'A'] as const;
 
 const thStyle = 'border border-black bg-[#e9e9e9] ';
@@ -22,6 +38,23 @@ const tdStyle = 'border border-black ';
 
 const ApplicationPage = ({ initialData }: PrintPageProps) => {
   const { data: oneseo } = useGetMyOneseo({ initialData: initialData });
+
+  const artPhysicalScores = (() => {
+    if (!oneseo) return [null, null, null, null, null];
+
+    let index = 0;
+    return semesterArray.map((semester) => {
+      if (oneseo.calculatedScore.artsPhysicalSubjectsScoreDetail[semesterToScore[semester]] >= 0) {
+        const scoreArray = [
+          ...oneseo.middleSchoolAchievement.artsPhysicalAchievement.slice(index, index + 3),
+          oneseo.calculatedScore.artsPhysicalSubjectsScoreDetail[semesterToScore[semester]],
+        ];
+        index += 3;
+
+        return scoreArray;
+      } else return null;
+    });
+  })();
 
   if (!oneseo) return <>원서 정보가 없습니다</>;
 
@@ -225,7 +258,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
           // 검정고시가 아닌 학생만 성적 입력 확인서 출력
         }
 
-        {oneseo.privacyDetail.graduationType === 'CANDIDATE' && (
+        {oneseo.privacyDetail.graduationType !== 'GED' && (
           <div className="relative z-[2] w-[66vh] overflow-hidden">
             <div className="relative bg-white p-4 text-black">
               <div className="relative z-[2] border border-gray-300 bg-white p-6 shadow-md">
@@ -366,7 +399,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                       </>
                     )}
                   </div>
-                  <div className="flex w-full flex-col border-black">
+                  <div className="flex w-full flex-col border-r border-black">
                     <div className="flex flex-col">
                       <div className="h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold">
                         3학년 1학기
@@ -376,6 +409,34 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                       </div>
                     </div>
                     {!oneseo.calculatedScore.generalSubjectsScoreDetail.score3_1 ? (
+                      <div className="h-full bg-slash bg-contain bg-no-repeat" />
+                    ) : (
+                      <>
+                        {oneseo.middleSchoolAchievement.achievement3_1!.map((score, i) => (
+                          <div
+                            key={i}
+                            className="flex items-center justify-center border-b border-black"
+                          >
+                            {scoreToAlphabet[score]}
+                          </div>
+                        ))}
+                        <div className="flex items-center justify-center border-b-0 border-black">
+                          {oneseo.calculatedScore.generalSubjectsScoreDetail.score3_1}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  <div className="flex w-full flex-col border-black">
+                    <div className="flex flex-col">
+                      <div className="h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold">
+                        3학년 2학기
+                      </div>
+                      <div className="h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold">
+                        성취도/평어
+                      </div>
+                    </div>
+                    {oneseo.privacyDetail.graduationType === 'CANDIDATE' ||
+                    !oneseo.calculatedScore.generalSubjectsScoreDetail.score3_2 ? (
                       <div className="h-full bg-slash bg-contain bg-no-repeat" />
                     ) : (
                       <>
@@ -411,7 +472,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                     ))}
                     <div className="flex items-center justify-center">환산점</div>
                   </div>
-                  <div className="flex w-full flex-col border-b-0 border-r border-black">
+                  <div className="flex w-full flex-col border-b-0 border-black">
                     <div className="flex flex-col">
                       <div className="h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold">
                         1학년 1학기
@@ -422,83 +483,39 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                     </div>
                     <div className="h-full bg-slash bg-contain bg-no-repeat" />
                   </div>
-                  <div className="flex w-full flex-col border-b-0 border-r border-black">
-                    <div className="flex flex-col">
-                      <div className="h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold">
-                        1학년 2학기
+                  {semesterArray.map((semester, idx) => (
+                    <div
+                      className="flex w-full flex-col border-b-0 border-l border-black"
+                      key={semester}
+                    >
+                      <div className="flex flex-col">
+                        <div className="h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold">
+                          {semester}
+                        </div>
+                        <div className="h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold">
+                          성취도/평어
+                        </div>
                       </div>
-                      <div className="h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold">
-                        성취도/평어
-                      </div>
+                      {artPhysicalScores[idx] ? (
+                        <>
+                          <div className="flex items-center justify-center border-b border-black">
+                            {artPhysicalScores[idx]![0]}
+                          </div>
+                          <div className="flex items-center justify-center border-b border-black">
+                            {artPhysicalScores[idx]![1]}
+                          </div>
+                          <div className="flex items-center justify-center border-b border-black">
+                            {artPhysicalScores[idx]![2]}
+                          </div>
+                          <div className="flex items-center justify-center">
+                            {artPhysicalScores[idx]![3]}
+                          </div>
+                        </>
+                      ) : (
+                        <div className="h-full bg-slash bg-contain bg-no-repeat" />
+                      )}
                     </div>
-                    <div className="h-full bg-slash bg-contain bg-no-repeat" />
-                  </div>
-                  <div className="flex w-full flex-col border-r border-black">
-                    <div className="flex flex-col">
-                      <div className="h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold">
-                        2학년 1학기
-                      </div>
-                      <div className="h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold">
-                        성취도/평어
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-center border-b border-black">
-                      {oneseo.middleSchoolAchievement.artsPhysicalAchievement[0]}
-                    </div>
-                    <div className="flex items-center justify-center border-b border-black">
-                      {oneseo.middleSchoolAchievement.artsPhysicalAchievement[1]}
-                    </div>
-                    <div className="flex items-center justify-center border-b border-black">
-                      {oneseo.middleSchoolAchievement.artsPhysicalAchievement[2]}
-                    </div>
-                    <div className="flex items-center justify-center">
-                      {/* {oneseo.calculatedScore.artsPhysicalSubjectsScoreDetail.score2_1} */}
-                    </div>
-                  </div>
-                  <div className="flex w-full flex-col border-r border-black">
-                    <div className="flex flex-col">
-                      <div className="h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold">
-                        2학년 2학기
-                      </div>
-                      <div className="h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold">
-                        성취도/평어
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-center border-b border-black">
-                      {oneseo.middleSchoolAchievement.artsPhysicalAchievement[3]}
-                    </div>
-                    <div className="flex items-center justify-center border-b border-black">
-                      {oneseo.middleSchoolAchievement.artsPhysicalAchievement[4]}
-                    </div>
-                    <div className="flex items-center justify-center border-b border-black">
-                      {oneseo.middleSchoolAchievement.artsPhysicalAchievement[5]}
-                    </div>
-                    <div className="flex items-center justify-center">
-                      {/* {oneseo.calculatedScore.artsPhysicalSubjectsScoreDetail.score2_1} */}
-                    </div>
-                  </div>
-                  <div className="flex w-full flex-col">
-                    <div className="flex flex-col">
-                      <div className="border-bla ck h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold">
-                        3학년 1학기
-                      </div>
-                      <div className="h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold">
-                        성취도/평어
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-center border-b border-black">
-                      {oneseo.middleSchoolAchievement.artsPhysicalAchievement[6]}
-                    </div>
-                    <div className="flex items-center justify-center border-b border-black">
-                      {oneseo.middleSchoolAchievement.artsPhysicalAchievement[7]}
-                    </div>
-                    <div className="flex items-center justify-center border-b border-black">
-                      {oneseo.middleSchoolAchievement.artsPhysicalAchievement[8]}
-                    </div>
-                    <div className="flex items-center justify-center">
-                      {/* {oneseo.calculatedScore.artsPhysicalSubjectsScoreDetail.score3_1} */}
-                    </div>
-                  </div>
+                  ))}
                 </div>
                 <h2 className="mt-[1.5vh] text-[1.2vh] leading-[2vh]">비교과</h2>
                 <table className="w-full border-collapse border text-[1vh]">

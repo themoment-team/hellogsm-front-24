@@ -15,7 +15,8 @@ const TeamSection2 = () => {
         'w-full',
         'bg-white',
         'py-[15rem]',
-        'px-[6.25rem]',
+        'px-[1.5rem]',
+        'md:px-[6.25rem]',
         'xl:px-[12.5rem]',
         'fhd:px-[20rem]',
         'uhd:px-[22.5rem]',
@@ -23,7 +24,7 @@ const TeamSection2 = () => {
         'md:gap-0',
       )}
     >
-      <div className={cn('flex', 'w-[43.75rem]', 'flex-col', 'gap-6')}>
+      <div className={cn('flex', 'w-fit', 'flex-col', 'gap-6')}>
         <h1
           className={cn(
             'text-[#473B6B]',

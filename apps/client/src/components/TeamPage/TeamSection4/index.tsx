@@ -40,7 +40,7 @@ const TeamSection4 = () => {
         'gap-[6.25rem]',
       )}
     >
-      <h3 className={cn('text-[#0F0921]', 'text-[2.75rem]/[3.85rem]', 'font-bold')}>
+      <h3 className={cn('text-[#0F0921]', 'text-[2.75rem]/[3.85rem]', 'font-bold', 'text-center')}>
         &quot;입학지원시스템, <br className={cn('block', 'sm:hidden')} />
         누가 만들었을까요?&quot;
       </h3>

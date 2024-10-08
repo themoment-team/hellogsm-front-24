@@ -115,3 +115,33 @@ body,
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
+
+.Toastify__progress-bar--success {
+  background-color: #16a34a;
+}
+
+.Toastify__toast {
+  height: 5rem;
+  width: 21.6875rem;
+  right: 1.75rem;
+  top: 4rem;
+}
+
+.Toastify__toast-body {
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.5rem;
+  color: #292e3d;
+}
+
+.Toastify__toast-icon {
+  margin-right: 1rem;
+  margin-left: 0.125rem;
+}
+
+.Toastify__Close-Button {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+}
