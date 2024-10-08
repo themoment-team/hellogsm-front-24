@@ -133,6 +133,38 @@ const ScoreRegister = ({
     return undefined;
   };
 
+  const [scoreWatch, setScoreWatch] = useState<ScoreFormType>(
+    JSON.parse(
+      JSON.stringify({
+        achievement1_2: getDefaultValue('achievement1_2'),
+        achievement2_1: getDefaultValue('achievement2_1'),
+        achievement2_2: getDefaultValue('achievement2_2'),
+        achievement3_1: getDefaultValue('achievement3_1'),
+        achievement3_2: getDefaultValue('achievement3_2'),
+        artsPhysicalAchievement: getDefaultValue('artsPhysicalAchievement'),
+        newSubjects: store.scoreForm?.newSubjects
+          ? store.scoreForm.newSubjects
+          : defaultData?.newSubjects
+            ? defaultData.newSubjects
+            : undefined,
+        absentDays: store.scoreForm?.absentDays
+          ? store.scoreForm.absentDays
+          : defaultData?.absentDays && defaultData.absentDays.map((i) => String(i)),
+        attendanceDays: store.scoreForm?.attendanceDays
+          ? store.scoreForm.attendanceDays
+          : defaultData?.attendanceDays && defaultData.attendanceDays.map((i) => String(i)),
+        volunteerTime: store.scoreForm?.volunteerTime
+          ? store.scoreForm.volunteerTime
+          : defaultData?.volunteerTime && defaultData.volunteerTime.map((i) => String(i)),
+        gedTotalScore: store.scoreForm?.gedTotalScore
+          ? store.scoreForm.gedTotalScore
+          : defaultData?.gedTotalScore
+            ? String(defaultData.gedTotalScore)
+            : '',
+      }),
+    ) as ScoreFormType,
+  );
+
   const { register, handleSubmit, setValue, unregister, watch, control } = useForm<ScoreFormType>({
     resolver: zodResolver(scoreFormSchema),
     defaultValues: {
@@ -187,10 +219,13 @@ const ScoreRegister = ({
   useEffect(() => {
     saveStorage();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isStep4Clickable, isButtonClick]);
+  }, [isButtonClick, isStep4Clickable, scoreWatch]);
 
   useEffect(() => {
     if (!setIsStep4Clickable) return;
+
+    if (JSON.stringify(scoreWatch) !== JSON.stringify(watch()))
+      setScoreWatch(JSON.parse(JSON.stringify(watch())));
 
     if (
       (store.graduationType === 'CANDIDATE' || store.graduationType === 'GRADUATE') &&
@@ -232,7 +267,7 @@ const ScoreRegister = ({
   }, [watch()]);
 
   useEffect(() => {
-    if (!freeSemester && defaultData?.freeSemester)
+    if (freeSemester === undefined && defaultData?.freeSemester)
       return setFreeSemester(reversedFreeSemesterConvertor[defaultData.freeSemester]);
 
     if (liberalSystem === 'freeGrade') return setFreeSemester(null);

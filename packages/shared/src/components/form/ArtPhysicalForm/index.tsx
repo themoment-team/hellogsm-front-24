@@ -22,12 +22,20 @@ interface ScoreSelectProps {
 }
 
 const artPhysicalGraduationArray = [
+  '1학년 2학기',
   '2학년 1학기',
   '2학년 2학기',
   '3학년 1학기',
   '3학년 2학기',
 ] as const;
-const artPhysicalCandidateArray = ['2학년 1학기', '2학년 2학기', '3학년 1학기'] as const;
+
+const artPhysicalCandidateArray = [
+  '1학년 2학기',
+  '2학년 1학기',
+  '2학년 2학기',
+  '3학년 1학기',
+] as const;
+
 const scoreArray = ['A', 'B', 'C', '없음'] as const;
 
 const artPhysicalGraduationIndexArray = [
@@ -41,6 +49,14 @@ const artPhysicalCandidateIndexArray = [
   { subject: '음악', registerIndexList: [1, 4, 7] },
   { subject: '미술', registerIndexList: [2, 5, 8] },
 ] as const;
+
+const SemesterIdToTitle = {
+  achievement1_2: '1학년 2학기',
+  achievement2_1: '2학년 1학기',
+  achievement2_2: '2학년 2학기',
+  achievement3_1: '3학년 1학기',
+  achievement3_2: '3학년 2학기',
+};
 
 const itemStyle = [
   'h-full',
@@ -98,9 +114,24 @@ const ScoreSelect = ({ name, control, setValue, liberalSystem }: ScoreSelectProp
 );
 
 const ArtPhysicalForm = ({ control, setValue, liberalSystem }: ArtPhysicalFormProps) => {
-  const { graduationType } = useStore();
-  const artPhysicalArray =
-    graduationType === 'CANDIDATE' ? artPhysicalCandidateArray : artPhysicalGraduationArray;
+  const { graduationType, freeSemester } = useStore();
+
+  const artPhysicalArray = (() => {
+    if (graduationType === 'CANDIDATE') {
+      if (freeSemester)
+        return artPhysicalCandidateArray.filter(
+          (semester) => semester !== SemesterIdToTitle[freeSemester],
+        );
+      return artPhysicalCandidateArray.slice(1);
+    } else {
+      if (freeSemester)
+        return artPhysicalGraduationArray.filter(
+          (semester) => semester !== SemesterIdToTitle[freeSemester],
+        );
+      return artPhysicalGraduationArray.slice(1);
+    }
+  })();
+
   const artPhysicalIndexArray =
     graduationType === 'CANDIDATE'
       ? artPhysicalCandidateIndexArray
