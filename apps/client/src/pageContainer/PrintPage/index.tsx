@@ -258,7 +258,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
           // 검정고시가 아닌 학생만 성적 입력 확인서 출력
         }
 
-        {oneseo.privacyDetail.graduationType === 'CANDIDATE' && (
+        {oneseo.privacyDetail.graduationType !== 'GED' && (
           <div className="relative z-[2] w-[66vh] overflow-hidden">
             <div className="relative bg-white p-4 text-black">
               <div className="relative z-[2] border border-gray-300 bg-white p-6 shadow-md">
