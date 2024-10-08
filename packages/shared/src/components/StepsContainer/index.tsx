@@ -119,7 +119,11 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
     onSuccess: () =>
       toast.success('임시 저장 되었습니다.', {
         icon: InfoIcon,
-        closeButton: CloseIcon,
+        closeButton: (
+          <button className="cursor" onClick={() => toast.dismiss()}>
+            <CloseIcon />
+          </button>
+        ),
       }),
     onError: () => toast.error('임시 저장을 실패하였습니다.'),
   });
@@ -423,7 +427,6 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
           temporarySave={temporarySave}
           id="scoreForm"
           isStep4Clickable={isStep4Clickable}
-          setIsButtonClick={setIsButtonClick}
         />
       )}
     </>
