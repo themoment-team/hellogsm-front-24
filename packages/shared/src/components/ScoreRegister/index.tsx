@@ -720,8 +720,7 @@ const ScoreRegister = ({
                 href={type === 'client' ? '/mypage' : '/'}
                 onClick={() => {
                   setShowModal(false);
-                  store.setAll();
-                  refetch();
+                  if (type === 'client') refetch();
                 }}
               >
                 확인
