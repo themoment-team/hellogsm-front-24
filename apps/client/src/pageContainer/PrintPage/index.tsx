@@ -44,7 +44,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
 
     let index = 0;
     return semesterArray.map((semester) => {
-      if (oneseo.calculatedScore.artsPhysicalSubjectsScoreDetail[semesterToScore[semester]]) {
+      if (oneseo.calculatedScore.artsPhysicalSubjectsScoreDetail[semesterToScore[semester]] >= 0) {
         const scoreArray = [
           ...oneseo.middleSchoolAchievement.artsPhysicalAchievement.slice(index, index + 3),
           oneseo.calculatedScore.artsPhysicalSubjectsScoreDetail[semesterToScore[semester]],
