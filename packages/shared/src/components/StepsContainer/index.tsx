@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { usePostImage, usePostTempStorage } from 'api';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import {
   basicRegisterType,
   GetMyOneseoType,
@@ -15,13 +16,8 @@ import {
   PostOneseoType,
 } from 'types';
 
+import { CloseIcon, InfoIcon } from 'shared/assets';
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
   ApplyRegister,
   BasicRegister,
   ConfirmBar,
@@ -108,10 +104,6 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
   const [tempBody, setTempBody] = useState<PostOneseoType | null>(null);
   const [isStep4Clickable, setIsStep4Clickable] = useState<boolean>(false);
   const [isButtonClick, setIsButtonClick] = useState<boolean>(false);
-  const [isTempModal, setIsTempModal] = useState<[boolean, 'success' | 'error' | null]>([
-    false,
-    null,
-  ]);
 
   const defaultDetailData = data?.privacyDetail;
   const defaultMajors = data?.desiredMajors;
@@ -124,8 +116,12 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
   const sex = info ? SexEnum[info.sex] : '';
 
   const { mutate: postTempStorage } = usePostTempStorage(Number(param), {
-    onSuccess: () => setIsTempModal([true, 'success']),
-    onError: () => setIsTempModal([true, 'error']),
+    onSuccess: () =>
+      toast.success('임시 저장 되었습니다.', {
+        icon: InfoIcon,
+        closeButton: CloseIcon,
+      }),
+    onError: () => toast.error('임시 저장을 실패하였습니다.'),
   });
 
   const { mutate: mutatePostImage } = usePostImage({
@@ -430,26 +426,6 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
           setIsButtonClick={setIsButtonClick}
         />
       )}
-      <AlertDialog open={isTempModal[0]}>
-        <AlertDialogContent className="w-[400px]">
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              {isTempModal[1] === 'success'
-                ? '원서가 임시저장 되었습니다!'
-                : isTempModal[1] === 'error' && '임시저장에 실패하였습니다.'}
-            </AlertDialogTitle>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogAction
-              onClick={() => {
-                setIsTempModal([false, null]);
-              }}
-            >
-              확인
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </>
   );
 };
