@@ -499,19 +499,16 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                       {artPhysicalScores[idx] ? (
                         <>
                           <div className="flex items-center justify-center border-b border-black">
-                            {/* {oneseo.middleSchoolAchievement.artsPhysicalAchievement[index]} */}
-                            {artPhysicalScores[idx][0]}
+                            {artPhysicalScores[idx]![0]}
                           </div>
                           <div className="flex items-center justify-center border-b border-black">
-                            {/* {oneseo.middleSchoolAchievement.artsPhysicalAchievement[index + 1]} */}
-                            {artPhysicalScores[idx][1]}
+                            {artPhysicalScores[idx]![1]}
                           </div>
                           <div className="flex items-center justify-center border-b border-black">
-                            {/* {oneseo.middleSchoolAchievement.artsPhysicalAchievement[index + 2]} */}
-                            {artPhysicalScores[idx][2]}
+                            {artPhysicalScores[idx]![2]}
                           </div>
                           <div className="flex items-center justify-center">
-                            {artPhysicalScores[idx][3]}
+                            {artPhysicalScores[idx]![3]}
                           </div>
                         </>
                       ) : (
