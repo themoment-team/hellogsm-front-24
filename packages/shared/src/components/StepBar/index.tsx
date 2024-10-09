@@ -300,7 +300,9 @@ const StepBar = ({
 
       setGuardianName(guardianName);
       setGuardianPhoneNumber(guardianPhoneNumber);
-      setRelationshipWithGuardian(relationship ? relationship : otherRelationship!);
+      setRelationshipWithGuardian(
+        relationship === '기타 (직접입력)' ? otherRelationship! : relationship!,
+      );
       if (category === '졸업예정') {
         setSchoolTeacherName(schoolTeacherName!);
         setSchoolTeacherPhoneNumber(schoolTeacherPhoneNumber!);

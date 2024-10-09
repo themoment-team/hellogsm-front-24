@@ -124,7 +124,7 @@ const Header = () => {
           'top-0',
           'w-full',
           'bg-white',
-          'z-10',
+          'z-20',
           'border-t-solid',
           'border-b-[0.0625rem]',
           'border-gray-100',
