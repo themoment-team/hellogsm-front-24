@@ -1,31 +1,66 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-
+import {
+  Section2Icon1,
+  Section2Icon2,
+  Section2Icon3,
+  Section2Icon4,
+  Section2Icon5,
+  Section2Icon6,
+} from 'client/assets';
 import { cn } from 'client/lib/utils';
 
 const stepsData = [
-  { icon: '📃', title: '원서 접수 및 증빙서류 제출', date: '2024.10.14(월) ~ 17(목) 09:00-17:00' },
-  { icon: '🏆', title: '1차 결과발표', date: '2024.10.21(월) 10:00' },
-  { icon: '✏️', title: '직무적성소양평가', date: '2024.10.25(금) 14:30~16:30' },
-  { icon: '💬', title: '심층면접', date: '2024.10.26(토) 09:00~17:00' },
-  { icon: '⛳', title: '최종 결과발표', date: '2024.10.30(수) 10:00' },
-] as const;
+  {
+    icon: <Section2Icon1 />,
+    title: '원서 및 성적 입력',
+    date: '2024. 10.14.(월)~17.(목) 17:00',
+    color: 'border-lime-500',
+  },
+  {
+    icon: <Section2Icon2 />,
+    title: '입학원서 및 증빙서류 제출',
+    date: '2024. 10.14.(월)~17.(목) 17:00',
+    color: 'border-sky-400',
+  },
+  {
+    icon: <Section2Icon3 />,
+    title: '1차 전형 합격자 발표',
+    date: '2024.10.21(월) 10:00',
+    color: 'border-sky-600',
+  },
+  {
+    icon: <Section2Icon4 />,
+    title: '2차전형(직무적성 소양평가)',
+    date: '2024. 10. 24.(금) 13:00-16:30',
+    color: 'border-lime-500',
+  },
+  {
+    icon: <Section2Icon5 />,
+    title: '2차 전형(심층 면접)',
+    date: '2024. 10. 25.(토) 09:00-12:00',
+    color: 'border-sky-600',
+  },
+  {
+    icon: <Section2Icon6 />,
+    title: '최종합격자 발표',
+    date: '2024. 10. 30.(월) 10:00',
+    color: 'border-lime-500',
+  },
+  {
+    icon: <Section2Icon2 />,
+    title: '합격자 등록(서류 제출)',
+    date: '2024.10.30.(수) 09:00부터 제출 가능',
+    color: 'border-sky-400',
+  },
+];
 
 const Section2 = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [clickedIndex, setClickedIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prevIndex) => (prevIndex + 1) % stepsData.length);
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <div id="section2" className={cn('w-full', 'bg-white', 'relative', 'py-[11.25rem]')}>
+    <div
+      id="section2"
+      className={cn('w-full', 'bg-white', 'relative', 'py-[11.25rem]', 'overflow-hidden')}
+    >
       <div
         className={cn(
           'flex',
@@ -35,9 +70,6 @@ const Section2 = () => {
           'gap-6',
           'smx:gap-[5.125rem]',
           'lg:gap-[7.5rem]',
-          'px-6',
-          'xs:px-[3.75rem]',
-          'md:px-0',
         )}
       >
         <div
@@ -46,10 +78,9 @@ const Section2 = () => {
             'flex-col',
             'items-left',
             'w-full',
-            'gap-[3.75rem]',
+            'gap-4',
             'smx:gap-4',
-            'px-0',
-            'sm:px-[3.75rem]',
+            'px-[3.75rem]',
             'md:px-[8rem]',
             'xl:px-[16rem]',
             'fhd:px-[20rem]',
@@ -75,156 +106,205 @@ const Section2 = () => {
             className={cn(
               'text-gray-600',
               'font-normal',
-              'hidden',
-              'smx:inline',
               'text-[1rem]/[1.5rem]',
+              'text-center',
+              'smx:text-left',
             )}
           >
-            우리 학교에 입학하기 위해 필요한 다섯 가지 절차를 소개해드릴게요!
+            우리 학교에 입학하기 위해 필요한 절차를 소개해드릴게요!
           </p>
-          <div className={cn('flex', 'smx:hidden', 'items-center', 'justify-center')}>
-            <div
-              className={cn(
-                'flex',
-                'items-center',
-                'px-2',
-                'py-1',
-                'gap-1',
-                'rounded-md',
-                'bg-slate-100',
-              )}
-            >
-              {stepsData.map((_, index) => (
-                <button
-                  key={index}
+          <div
+            className={cn(
+              'justify-around',
+              'mt-[7.5rem]',
+              'grid',
+              'grid-cols-4',
+              'relative',
+              'hidden',
+              'smx:flex',
+            )}
+          >
+            {stepsData.slice(0, 4).map((step, index) => (
+              <div
+                key={index}
+                className={cn('flex', 'w-[14.1875rem;]', 'flex-col', 'items-center', 'gap-6')}
+              >
+                <div
                   className={cn(
                     'flex',
-                    'px-4',
-                    'sm:px-5',
-                    'py-[0.375rem]',
-                    'flex-col',
+                    'px-[0.8125rem]',
+                    'py-[0.8125rem]',
                     'items-center',
-                    'justify-center',
-                    'gap-2',
-                    'rounded-md',
-                    index === clickedIndex ? 'bold text-slate-600' : 'text-slate-400',
-                    index === clickedIndex ? 'bg-white' : '',
-                    'text-[1rem]/[1.5rem]',
-                    'font-normal',
+                    'rounded-full',
+                    step.color,
+                    'border',
+                    'relative',
+                    'z-10',
+                    'bg-white',
+                    'border-[3px]',
                   )}
-                  onClick={() => setClickedIndex(index)}
                 >
-                  {`${index + 1}차`}
-                </button>
+                  {step.icon}
+                </div>
+                <div className={cn('flex', 'flex-col', 'items-center', 'gap-2')}>
+                  <p
+                    className={cn(
+                      'text-slate-800',
+                      'font-semibold',
+                      'md:text-[1.25rem]/[1.75rem]',
+                      'text-[1rem]/[1.5rem]',
+                    )}
+                  >
+                    {step.title}
+                  </p>
+                  <p
+                    className={cn(
+                      'text-gray-500',
+                      'font-normal',
+                      'md:text-[1rem]/[1.75rem]',
+                      'text-[0.75rem]/[1.5rem]',
+                    )}
+                  >
+                    {step.date}
+                  </p>
+                </div>
+                {index < 3 && (
+                  <div
+                    className={cn(
+                      'absolute',
+                      'top-[20%]',
+                      'left-[calc(10%+1rem)]',
+                      'w-[100vw]',
+                      'right-0',
+                      'h-[2px]',
+                      'bg-blue-200',
+                      'z-0',
+                    )}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div className={cn('flex', 'justify-around', 'mt-[3.25rem]', 'hidden', 'smx:flex')}>
+            {stepsData.slice(4).map((step, index) => (
+              <div
+                key={index}
+                className={cn('flex', 'w-[15.5rem]', 'flex-col', 'items-center', 'gap-6')}
+              >
+                <div
+                  className={cn(
+                    'flex',
+                    'px-[0.8125rem]',
+                    'py-[0.8125rem]',
+                    'items-center',
+                    'rounded-full',
+                    step.color,
+                    'border',
+                    'relative',
+                    'z-10',
+                    'bg-white',
+                    'border-[3px]',
+                  )}
+                >
+                  {step.icon}
+                </div>
+                <div className={cn('flex', 'flex-col', 'items-center', 'gap-2')}>
+                  <p
+                    className={cn(
+                      'text-slate-800',
+                      'font-semibold',
+                      'md:text-[1.25rem]/[1.75rem]',
+                      'text-[1rem]/[1.5rem]',
+                    )}
+                  >
+                    {step.title}
+                  </p>
+                  <p
+                    className={cn(
+                      'text-gray-500',
+                      'font-normal',
+                      'md:text-[1rem]/[1.75rem]',
+                      'text-[0.75rem]/[1.5rem]',
+                    )}
+                  >
+                    {step.date}
+                  </p>
+                </div>
+                {index < 1 && (
+                  <div
+                    className={cn(
+                      'absolute',
+                      'bottom-[30%]',
+                      'right-[calc(22.5%+4rem)]',
+                      'w-[100vw]',
+                      'h-[2px]',
+                      'bg-blue-200',
+                      'z-0',
+                    )}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+          <div className={cn('flex', 'smx:hidden', 'mt-[5.5rem]', 'gap-8')}>
+            <div className={cn('flex', 'flex-col', 'items-center')}>
+              {stepsData.map((step, index) => (
+                <div key={index} className={cn('flex', 'flex-col', 'items-center')}>
+                  <div
+                    className={cn(
+                      'flex',
+                      'px-[0.8125rem]',
+                      'py-[0.8125rem]',
+                      'items-center',
+                      'rounded-full',
+                      step.color,
+                      'border',
+                      'relative',
+                      'z-10',
+                      'bg-white',
+                      'border-[3px]',
+                    )}
+                  >
+                    {step.icon}
+                  </div>
+                  {index < stepsData.length - 1 && (
+                    <div className={cn('w-[2px]', 'h-[5rem]', 'bg-[#DBEAFE]')} />
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <div className={cn('flex', 'flex-col', 'gap-[4.785rem]')}>
+              {stepsData.map((step, index) => (
+                <div
+                  key={index}
+                  className={cn('flex', 'flex-col', 'justify-center', 'gap-2', 'h-[4.25rem]')}
+                >
+                  <p
+                    className={cn(
+                      'text-slate-800',
+                      'sm:text-[1.5rem]/[2rem]',
+                      'text-[1rem]/[1.75rem]',
+                      'font-semibold',
+                    )}
+                  >
+                    {step.title}
+                  </p>
+                  <p
+                    className={cn(
+                      'text-gray-500',
+                      'sm:text-[1rem]/[1.75rem]',
+                      'text-[0.75rem]/[1.5rem]',
+                      'font-normal',
+                    )}
+                  >
+                    {step.date}
+                  </p>
+                </div>
               ))}
             </div>
           </div>
-        </div>
-        <div className={cn('hidden', 'smx:flex', 'items-center', 'justify-center', 'flex-wrap')}>
-          {stepsData.map((step, index) => (
-            <div key={index} className={cn('flex', 'gap-5', 'items-center', 'flex-col', 'pb-10')}>
-              <div className={cn('flex', 'flex-col', 'items-center', 'gap-3')}>
-                <p className={cn('text-gray-600', 'text-[1.875rem]/[2.25rem]', 'font-semibold')}>
-                  {step.icon}
-                </p>
-                <p
-                  className={cn(
-                    index === activeIndex ? 'text-sky-900' : 'text-gray-400',
-                    'text-[1.25rem]/[1.75rem]',
-                    'font-semibold',
-                  )}
-                >
-                  {step.title}
-                </p>
-              </div>
-
-              {index < stepsData.length && (
-                <div className={cn('flex', 'items-center', 'gap-2')}>
-                  <div className={cn('w-[7.5rem]', 'h-px', 'bg-gray-300')}></div>{' '}
-                  <div
-                    className={cn(
-                      'w-3',
-                      'h-3',
-                      'rounded-full',
-                      index === activeIndex
-                        ? 'border-2 border-white bg-white shadow-[0_0_0_4px_rgba(0,116,217,1)]'
-                        : 'bg-gray-300',
-                    )}
-                  ></div>
-                  <div className={cn('w-[7.5rem]', 'h-px', 'bg-gray-300')}></div>{' '}
-                </div>
-              )}
-
-              <div
-                className={cn(
-                  'flex',
-                  'flex-col',
-                  'w-[16rem]',
-                  'pt-[1.25rem]',
-                  'pb-[2.75rem]',
-                  'pr-[1.25rem]',
-                  'pl-[0.75rem]',
-                  'border',
-                  'rounded-[0.75rem]',
-                  index === activeIndex ? 'border-sky-900' : 'border-gray-400',
-                  index === activeIndex ? 'text-sky-900' : 'text-gray-400',
-                  'text-[1.25rem]/[1.75rem]',
-                  'font-semibold',
-                )}
-              >
-                {step.title}
-                <p className={cn('text-[0.875rem]/[1.5rem]', 'font-normal')}>{step.date}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div
-          className={cn(
-            'flex',
-            'smx:hidden',
-            'py-[2rem]',
-            'flex-col',
-            'items-center',
-            'gap-[1.125rem]',
-            'rounded-xl',
-            'bg-slate-50',
-          )}
-        >
-          <div className={cn('flex', 'flex-col', 'gap-1', 'items-center')}>
-            <div
-              className={cn(
-                'flex',
-                'flex-col',
-                'items-center',
-                'gap-3',
-                'text-sky-800',
-                'text-[1.25rem]/[1.25rem]',
-                'xs:text-[1.5rem]/[2rem]',
-                'font-semibold',
-              )}
-            >
-              <p className={cn('text-[1.875rem]/[2.25rem]')}>{stepsData[clickedIndex].icon}</p>
-              {stepsData[clickedIndex].title}
-            </div>
-            <p className={cn('text-sky-900', 'text-[0.875rem]/[1.5rem]', 'font-normal')}>
-              {stepsData[clickedIndex].date}
-            </p>
-          </div>
-
-          <p
-            className={cn(
-              'max-w-[30rem]',
-              'px-4',
-              'text-slate-600',
-              'text-[1rem]/[1.5rem]',
-              'font-normal',
-            )}
-          >
-            직무적성소양평가는 학생들의 역량을 직무적성소양평가는 학생들의 역량을직무적성소양평가는
-            학생들의 역량을직무적성소양평가는 학생들의 역량을직무적성소양평가는 학생들의
-            역량을직무적성소양평가는 학생들의 역량을직무적성
-          </p>
         </div>
       </div>
     </div>
