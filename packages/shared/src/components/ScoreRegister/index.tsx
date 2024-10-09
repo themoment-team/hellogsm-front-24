@@ -4,7 +4,13 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { usePostImage, usePostMyOneseo, usePutOneseoByMemberId, usePostMockScore } from 'api';
+import {
+  usePostImage,
+  usePostMyOneseo,
+  usePutOneseoByMemberId,
+  usePostMockScore,
+  useGetMyOneseo,
+} from 'api';
 // import { usePostMyOneseo, usePutOneseo } from 'api';
 import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -132,6 +138,8 @@ const ScoreRegister = ({
 
     return undefined;
   };
+
+  const { refetch } = useGetMyOneseo();
 
   const [scoreWatch, setScoreWatch] = useState<ScoreFormType>(
     JSON.parse(
@@ -705,6 +713,7 @@ const ScoreRegister = ({
                 href={type === 'client' ? '/mypage' : '/'}
                 onClick={() => {
                   setShowModal(false);
+                  if (type === 'client') refetch();
                 }}
               >
                 확인
