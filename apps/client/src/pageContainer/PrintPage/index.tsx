@@ -40,7 +40,8 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
   const { data: oneseo } = useGetMyOneseo({ initialData: initialData });
 
   const artPhysicalScores = (() => {
-    if (!oneseo) return [null, null, null, null, null];
+    if (!oneseo || oneseo.privacyDetail.graduationType === 'GED')
+      return [null, null, null, null, null];
 
     let index = 0;
     return semesterArray.map((semester) => {
