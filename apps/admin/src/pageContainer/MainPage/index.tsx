@@ -77,6 +77,11 @@ const MainPage = ({ initialData }: MainPageProps) => {
     oneseoRefetch();
   }, [debouncedKeyword, page, testResultTag, isSubmitted, screeningTag]);
 
+  useEffect(() => {
+    setPage(0);
+  }, [debouncedKeyword, testResultTag, isSubmitted, screeningTag]);
+  // 필터 조건이 변경 되었을때 1번부터 다시 시작
+
   return (
     <main
       className={cn(
