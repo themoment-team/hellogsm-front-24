@@ -394,7 +394,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
                 <div
                   className={cn(
                     'mt-4',
-                    'mb-8',
+                    'mb-4',
                     'pt-4',
                     'border-t',
                     'border-solid',
@@ -402,20 +402,11 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
                     'text-gray-500',
                     'text-[0.75rem]/[1.125rem]',
                     'font-normal',
-                    'h-[8.25rem]',
                     'overflow-scroll',
                     'w-[23.75rem]',
                   )}
                 >
-                  1. 개인정보의 수집항목 및 수집방법
-                  <br />
-                  통계청 나라통계사이트에서는 기본적인 회원 서비스 제공을 위한 필수정보로 실명
-                  <br />
-                  인증정보와 가입정보로 구분하여 다음의 정보를 수집하고 있습니다. 필수정보를
-                  <br />
-                  입력해주셔야 회원 서비스 이용이 가능합니다
-                  <br />
-                  해당 회원가입은 본교 홈페이지 로그인과 연동이 되지 않습니다
+                  ㅡ 서류제출 시 [서식2] 개인정보수집활용동의서를 작성하여 제출하여 주시기 바랍니다.
                 </div>
               )}
             </div>

@@ -161,11 +161,19 @@ const ApplicantTR = ({
   };
 
   const handleAptitudeScore = () => {
-    patchAptitudeScore({ aptitudeEvaluationScore: parseInt(watch('직무적성점수')) });
+    const 직무적성점수 = parseFloat(watch('직무적성점수'));
+
+    if (직무적성점수 < 0 || 직무적성점수 > 100 || isNaN(직무적성점수)) return;
+
+    patchAptitudeScore({ aptitudeEvaluationScore: 직무적성점수 });
   };
 
   const handleInterviewScore = () => {
-    patchInterviewScore({ interviewScore: parseInt(watch('심층면접점수')) });
+    const 심층면접점수 = parseFloat(watch('심층면접점수'));
+
+    if (심층면접점수 < 0 || 심층면접점수 > 100 || isNaN(심층면접점수)) return;
+
+    patchInterviewScore({ interviewScore: 심층면접점수 });
   };
 
   const handleOneseoEdit = () => {
