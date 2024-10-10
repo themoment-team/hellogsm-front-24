@@ -676,7 +676,23 @@ const ScoreRegister = ({
                   />
                 </div>
                 <div id="nonSubject" className={cn(...formWrapper)}>
-                  비교과 내용
+                  <div className={cn('w-full', 'flex', 'justify-between')}>
+                    비교과 내용
+                    <div
+                      className={cn(
+                        'flex',
+                        'items-center',
+                        'justify-center',
+                        'gap-1',
+                        'text-red-500',
+                        'text-[0.75rem]/[1.25rem]',
+                        'font-semibold',
+                      )}
+                    >
+                      <p>*</p>
+                      <p>미인정 결석, 지각, 조퇴, 결과 횟수만 입력</p>
+                    </div>
+                  </div>
                   <NonSubjectForm register={register} liberalSystem={liberalSystem} />
                 </div>
               </div>
