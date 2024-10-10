@@ -91,7 +91,7 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
   const buttonStyle = ['px-[0.75rem]', 'py-[0.375rem]', 'text-[0.75rem]/[1.25rem]', 'h-8'];
 
   return (
-    <div className={cn('flex', 'w-full', 'h-[calc(100vh-4.625rem)]', 'justify-center', 'bg-white')}>
+    <div className={cn('flex', 'w-full', 'min-h-screen', 'justify-center', 'bg-white', 'pb-10')}>
       <div
         className={cn(
           'flex',
@@ -101,6 +101,7 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
           'justify-center',
           'items-center',
           'mx-4',
+          'pt-10',
         )}
       >
         <div className={cn('flex', 'w-fit', 'flex-col', 'items-center', 'gap-5')}>
