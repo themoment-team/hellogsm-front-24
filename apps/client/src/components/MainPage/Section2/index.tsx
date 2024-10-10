@@ -14,13 +14,25 @@ const stepsData = [
   {
     icon: <Section2Icon1 />,
     title: '원서 및 성적 입력',
-    date: '2024. 10. 14.(월)~17.(목) 09:00 ~ 17:00',
+    date: (
+      <>
+        2024. 10. 14.(월)~
+        <br className={cn('lg:hidden', 'smx:block', 'hidden')} />
+        17.(목) 09:00 ~ 17:00
+      </>
+    ),
     color: 'border-lime-500',
   },
   {
     icon: <Section2Icon2 />,
     title: '입학원서 및 증빙서류 제출',
-    date: '2024. 10. 14.(월)~17.(목) 09:00 ~ 17:00',
+    date: (
+      <>
+        2024. 10. 14.(월)~
+        <br className={cn('lg:hidden', 'smx:block', 'hidden')} />
+        17.(목) 09:00 ~ 17:00
+      </>
+    ),
     color: 'border-sky-400',
   },
   {
@@ -52,7 +64,9 @@ const stepsData = [
     title: '합격자 등록(서류 제출)',
     date: (
       <>
-        2024. 10. 30.(수) ~ 11. 4.(월) 09:00 ~ 17:00
+        2024. 10. 30.(수) ~
+        <br className={cn('lg:hidden', 'smx:block', 'hidden')} />
+        11. 4.(월) 09:00 ~ 17:00
         <br />
         (건강검진 관련서류 제출: 11. 11.(월) 17:00까지)
       </>
@@ -157,7 +171,7 @@ const Section2 = () => {
                     className={cn(
                       'text-slate-800',
                       'font-semibold',
-                      'md:text-[1.25rem]/[1.75rem]',
+                      'mdx:text-[1.25rem]/[1.75rem]',
                       'text-[1rem]/[1.5rem]',
                     )}
                   >
@@ -167,7 +181,7 @@ const Section2 = () => {
                     className={cn(
                       'text-gray-500',
                       'font-normal',
-                      'md:text-[1rem]/[1.75rem]',
+                      'mdx:text-[1rem]/[1.75rem]',
                       'text-[0.75rem]/[1.5rem]',
                     )}
                   >
@@ -178,7 +192,8 @@ const Section2 = () => {
                   <div
                     className={cn(
                       'absolute',
-                      'top-[20%]',
+                      'lg:top-[20%]',
+                      'top-[17.5%]',
                       'left-[calc(10%+1rem)]',
                       'w-[100vw]',
                       'right-0',
@@ -220,7 +235,7 @@ const Section2 = () => {
                     className={cn(
                       'text-slate-800',
                       'font-semibold',
-                      'md:text-[1.25rem]/[1.75rem]',
+                      'mdx:text-[1.25rem]/[1.75rem]',
                       'text-[1rem]/[1.5rem]',
                     )}
                   >
@@ -230,8 +245,10 @@ const Section2 = () => {
                     className={cn(
                       'text-gray-500',
                       'font-normal',
-                      'md:text-[1rem]/[1.75rem]',
+                      'mdx:text-[1rem]/[1.75rem]',
                       'text-[0.75rem]/[1.5rem]',
+                      'smx:text-center',
+                      'text-left',
                     )}
                   >
                     {step.date}
@@ -241,7 +258,8 @@ const Section2 = () => {
                   <div
                     className={cn(
                       'absolute',
-                      'bottom-[32.5%]',
+                      'lg:bottom-[32.5%]',
+                      'bottom-[33%]',
                       'right-[calc(22.5%+4rem)]',
                       'w-[100vw]',
                       'h-[2px]',
@@ -303,6 +321,8 @@ const Section2 = () => {
                       'sm:text-[1rem]/[1.75rem]',
                       'text-[0.75rem]/[1.5rem]',
                       'font-normal',
+                      'smx:text-center',
+                      'text-left',
                     )}
                   >
                     {step.date}
