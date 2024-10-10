@@ -67,9 +67,16 @@ const ApplyRegister = ({ setValue, watch }: ApplyRegisterType) => {
   };
 
   const handlCategoryChange = (value: string) => {
-    if (categoryValues.includes(value)) {
-      setValue('category', value);
+    if (!categoryValues.includes(value)) return;
+
+    if (value !== '검정고시') {
+      if (watch('schoolName') === '검정고시') {
+        setValue('schoolName', '');
+        setValue('schoolAddress', '');
+      }
     }
+
+    setValue('category', value);
   };
 
   const handleScreeningChange = (value: string) => {
