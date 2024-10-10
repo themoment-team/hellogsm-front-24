@@ -20,7 +20,7 @@ const stepsData = [
   {
     icon: <Section2Icon2 />,
     title: '입학원서 및 증빙서류 제출',
-    date: ' 2024. 10. 14.(월)~17.(목) 09:00 ~ 17:00',
+    date: '2024. 10. 14.(월)~17.(목) 09:00 ~ 17:00',
     color: 'border-sky-400',
   },
   {
@@ -32,13 +32,13 @@ const stepsData = [
   {
     icon: <Section2Icon4 />,
     title: '2차전형(직무적성 소양평가)',
-    date: '2024. 10. 25.(금) 14:30-16:30',
+    date: '2024. 10. 25.(금) 13:00-16:30',
     color: 'border-lime-500',
   },
   {
     icon: <Section2Icon5 />,
     title: '2차 전형(심층 면접)',
-    date: '2024. 10. 26.(토) 09:00-17:00 (강당)',
+    date: '2024. 10. 26.(토) 09:00-17:00',
     color: 'border-sky-600',
   },
   {
@@ -50,7 +50,13 @@ const stepsData = [
   {
     icon: <Section2Icon2 />,
     title: '합격자 등록(서류 제출)',
-    date: ' 2024. 10. 30.(수) ~ 11. 4.(월) 09:00 ~ 17:00',
+    date: (
+      <>
+        2024. 10. 30.(수) ~ 11. 4.(월) 09:00 ~ 17:00
+        <br />
+        (건강검진 관련서류 제출: 11. 11.(월) 17:00까지)
+      </>
+    ),
     color: 'border-sky-400',
   },
 ];
@@ -235,7 +241,7 @@ const Section2 = () => {
                   <div
                     className={cn(
                       'absolute',
-                      'bottom-[30%]',
+                      'bottom-[32.5%]',
                       'right-[calc(22.5%+4rem)]',
                       'w-[100vw]',
                       'h-[2px]',
