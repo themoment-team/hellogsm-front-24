@@ -133,6 +133,8 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
       if (tempBody) {
         const body: PostOneseoType = { ...tempBody, profileImg: data.url };
 
+        store.setProfileImg(data.url);
+
         postTempStorage(body);
       }
     },
@@ -256,6 +258,7 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
     if (store?.profileImg && !store.profileImg.includes('data:image')) {
       tempOneseo.profileImg = store.profileImg;
     }
+
     postTempStorage(tempOneseo);
   };
 
