@@ -14,43 +14,49 @@ const stepsData = [
   {
     icon: <Section2Icon1 />,
     title: '원서 및 성적 입력',
-    date: '2024. 10.14.(월)~17.(목) 17:00',
+    date: '2024. 10. 14.(월)~17.(목) 09:00 ~ 17:00',
     color: 'border-lime-500',
   },
   {
     icon: <Section2Icon2 />,
     title: '입학원서 및 증빙서류 제출',
-    date: '2024. 10.14.(월)~17.(목) 17:00',
+    date: '2024. 10. 14.(월)~17.(목) 09:00 ~ 17:00',
     color: 'border-sky-400',
   },
   {
     icon: <Section2Icon3 />,
     title: '1차 전형 합격자 발표',
-    date: '2024.10.21(월) 10:00',
+    date: '2024. 10. 21.(월) 10:00',
     color: 'border-sky-600',
   },
   {
     icon: <Section2Icon4 />,
     title: '2차전형(직무적성 소양평가)',
-    date: '2024. 10. 24.(금) 13:00-16:30',
+    date: '2024. 10. 25.(금) 13:00-16:30',
     color: 'border-lime-500',
   },
   {
     icon: <Section2Icon5 />,
     title: '2차 전형(심층 면접)',
-    date: '2024. 10. 25.(토) 09:00-12:00',
+    date: '2024. 10. 26.(토) 09:00-17:00',
     color: 'border-sky-600',
   },
   {
     icon: <Section2Icon6 />,
     title: '최종합격자 발표',
-    date: '2024. 10. 30.(월) 10:00',
+    date: '2024. 10. 30.(수) 10:00',
     color: 'border-lime-500',
   },
   {
     icon: <Section2Icon2 />,
     title: '합격자 등록(서류 제출)',
-    date: '2024.10.30.(수) 09:00부터 제출 가능',
+    date: (
+      <>
+        2024. 10. 30.(수) ~ 11. 4.(월) 09:00 ~ 17:00
+        <br />
+        (건강검진 관련서류 제출: 11. 11.(월) 17:00까지)
+      </>
+    ),
     color: 'border-sky-400',
   },
 ];
@@ -127,7 +133,7 @@ const Section2 = () => {
             {stepsData.slice(0, 4).map((step, index) => (
               <div
                 key={index}
-                className={cn('flex', 'w-[14.1875rem;]', 'flex-col', 'items-center', 'gap-6')}
+                className={cn('flex', 'w-[17rem]', 'flex-col', 'items-center', 'gap-6')}
               >
                 <div
                   className={cn(
@@ -190,7 +196,7 @@ const Section2 = () => {
             {stepsData.slice(4).map((step, index) => (
               <div
                 key={index}
-                className={cn('flex', 'w-[15.5rem]', 'flex-col', 'items-center', 'gap-6')}
+                className={cn('flex', 'w-[18.9375rem]', 'flex-col', 'items-center', 'gap-6')}
               >
                 <div
                   className={cn(
@@ -235,7 +241,7 @@ const Section2 = () => {
                   <div
                     className={cn(
                       'absolute',
-                      'bottom-[30%]',
+                      'bottom-[32.5%]',
                       'right-[calc(22.5%+4rem)]',
                       'w-[100vw]',
                       'h-[2px]',
