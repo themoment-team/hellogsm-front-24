@@ -42,7 +42,7 @@ const MainPage = ({ resultInfo, memberInfo }: MainPageProps) => {
   }, [resultInfo]);
 
   useEffect(() => {
-    if (window.location.href.includes('stage')) {
+    if (process.env.NEXT_STAGE === 'stage') {
       setIsStage(true);
     }
   }, []);
