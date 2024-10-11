@@ -49,9 +49,9 @@ export default function RootLayout({
         />
       </head>
       <body>
-        {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+        {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && 
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
-        ) : null}
+        }
         <Provider>{children}</Provider>
       </body>
     </html>
