@@ -73,7 +73,17 @@ const TeamSection1 = () => {
         </div>
 
         <div className={cn('flex', 'flex-col', 'justify-center', 'items-center', 'gap-5')}>
-          <p className={cn('text-[5.625rem]', 'leading-normal', 'font-bold', 'text-white')}>
+          <p
+            className={cn(
+              'smx:text-[5.625rem]',
+              'sm:text-[3.5rem]',
+              'xs:text-[3rem]',
+              'text-[2.35rem]',
+              'leading-normal',
+              'font-bold',
+              'text-white',
+            )}
+          >
             순간의 가치를 비춰내다.
           </p>
         </div>

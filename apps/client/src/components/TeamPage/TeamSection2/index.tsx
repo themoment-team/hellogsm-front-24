@@ -28,7 +28,9 @@ const TeamSection2 = () => {
         <h1
           className={cn(
             'text-[#473B6B]',
-            'text-[4.25rem]/[5.525rem]',
+            'sm:text-[4.25rem]/[5.525rem]',
+            'xs:text-[2.75rem]/[3.85rem]',
+            'text-[1.75rem]/[2.75rem]',
             'font-bold',
             'text-center',
             'md:text-left',
@@ -41,7 +43,8 @@ const TeamSection2 = () => {
         <span
           className={cn(
             'text-[#5D5B64]',
-            'text-[1.25rem]/[2rem]',
+            'sm:text-[1.25rem]/[2rem]',
+            'text-[1rem]/[1.75rem]',
             'font-normal',
             'text-center',
             'md:text-left',

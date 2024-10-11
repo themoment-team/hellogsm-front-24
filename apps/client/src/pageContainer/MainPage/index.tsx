@@ -15,6 +15,9 @@ import {
   TestResultDialog,
 } from 'client/components';
 
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from 'shared/components';
+import { cn } from 'shared/lib/utils';
+
 interface MainPageProps {
   resultInfo: MyTestResultType | undefined;
   memberInfo: MyMemberInfoType | undefined;
@@ -23,6 +26,7 @@ interface MainPageProps {
 const MainPage = ({ resultInfo, memberInfo }: MainPageProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isPassOpen, setIsPassOpen] = useState<boolean>(false);
+  const [isStage, setIsStage] = useState<boolean>(false);
 
   useEffect(() => {
     const today = new Date().toDateString();
@@ -36,6 +40,12 @@ const MainPage = ({ resultInfo, memberInfo }: MainPageProps) => {
       setIsOpen(false);
     }
   }, [resultInfo]);
+
+  useEffect(() => {
+    if (process.env.NEXT_STAGE === 'stage') {
+      setIsStage(true);
+    }
+  }, []);
 
   const isFinishFirstTest = resultInfo?.secondTestPassYn === null ? true : false;
 
@@ -60,6 +70,25 @@ const MainPage = ({ resultInfo, memberInfo }: MainPageProps) => {
         isFinishFirstTest={isFinishFirstTest}
         memberInfo={memberInfo}
       />
+
+      <Dialog open={isStage}>
+        <DialogTitle />
+        <DialogContent className="w-[400px]" onClose={() => setIsStage(false)}>
+          <DialogHeader>
+            <DialogTitle className={cn('flex', 'flex-col', 'text-center', 'gap-4', 'items-center')}>
+              <span>현재 접속하신 주소는 개발환경입니다.</span>
+              <span>아래 링크로 접속하여 원서를 작성해주세요.</span>
+              <a
+                href="https://www.hellogsm.kr"
+                className={cn('text-blue-500', 'underline', 'w-fit')}
+                rel="noreferrer"
+              >
+                www.hellogsm.kr
+              </a>
+            </DialogTitle>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

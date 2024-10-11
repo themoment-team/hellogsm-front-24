@@ -1,3 +1,5 @@
+import { GoogleAnalytics } from 'client/lib';
+
 import Provider from './provider';
 
 import type { Metadata } from 'next';
@@ -47,6 +49,9 @@ export default function RootLayout({
         />
       </head>
       <body>
+        {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+        )}
         <Provider>{children}</Provider>
       </body>
     </html>

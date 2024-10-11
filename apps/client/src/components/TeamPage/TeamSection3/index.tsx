@@ -38,13 +38,15 @@ const TeamSection3 = () => {
         'w-full',
         'bg-[#F3F6FF]',
         'py-[15rem]',
-        'gap-[7.5rem]',
+        'sm:gap-[7.5rem]',
+        'gap-[5rem]',
       )}
     >
       <h1
         className={cn(
           'text-[#473B6B]',
-          'text-[2.75rem]/[3.85rem]',
+          'xs:text-[2.75rem]/[3.85rem]',
+          'text-[1.75rem]/[2.75rem]',
           'font-bold',
           'px-0',
           'sm:px-[3.75rem]',
@@ -69,7 +71,8 @@ const TeamSection3 = () => {
                 'flex',
                 'justify-left',
                 'w-[29.75rem]',
-                'h-[12.5rem]',
+                'sm:h-[12.5rem]',
+                'h-fit',
                 'rounded-2xl',
                 'bg-white',
                 'shadow-lg',
@@ -77,7 +80,14 @@ const TeamSection3 = () => {
                 'py-8',
               )}
             >
-              <div className={cn('text-[1.75rem]/[2.8rem]', 'font-bold', 'text-left')}>
+              <div
+                className={cn(
+                  'sm:text-[1.75rem]/[2.8rem]',
+                  'text-[1.25rem]/[2.5rem]',
+                  'font-bold',
+                  'text-left',
+                )}
+              >
                 {element.description}
               </div>
             </div>
