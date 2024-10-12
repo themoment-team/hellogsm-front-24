@@ -48,6 +48,12 @@ export default function RootLayout({
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/variable/pretendardvariable-dynamic-subset.css"
         />
       </head>
+      {process.env.NEXT_PUBLIC_STAGE === 'stage' && (
+        <>
+          <meta name="robots" content="noindex, nofollow" />
+          <meta name="msvalidate.01" content="14471419A8701E4145F89E3ADCCFB1D6" />
+        </>
+      )}
       <body>
         {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
