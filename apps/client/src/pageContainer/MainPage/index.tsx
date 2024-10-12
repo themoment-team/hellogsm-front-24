@@ -42,6 +42,8 @@ const MainPage = ({ resultInfo, memberInfo }: MainPageProps) => {
   }, [resultInfo]);
 
   useEffect(() => {
+    console.log(process.env.NEXT_PUBLIC_STAGE);
+
     if (process.env.NEXT_PUBLIC_STAGE === 'stage') {
       setIsStage(true);
     }
