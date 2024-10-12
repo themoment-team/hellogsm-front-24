@@ -42,6 +42,7 @@ const MainPage = ({ resultInfo, memberInfo }: MainPageProps) => {
   }, [resultInfo]);
 
   useEffect(() => {
+    // eslint-disable-next-line no-console
     console.log(process.env.NEXT_PUBLIC_STAGE);
 
     if (process.env.NEXT_PUBLIC_STAGE === 'stage') {
