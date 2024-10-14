@@ -52,7 +52,8 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
   const [lastSubmittedCode, setLastSubmittedCode] = useState<string>('');
   const [isSuccess, setIsSuccess] = useState<boolean | undefined>(undefined);
   const [isContinue, setIsContinue] = useState<boolean>(false);
-  const [isVerifyClicked, setIsVerifyClicked] = useState(false);
+  const [isVerifyClicked, setIsVerifyClicked] = useState<boolean>(false);
+  const [isSendCode, setIsSendCode] = useState<boolean>(false);
 
   const [showModal, setShowModal] = useState<
     'duplicate' | 'date' | 'code' | 'success' | 'error' | ''
@@ -128,6 +129,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
   const { mutate: mutateSendCode } = useSendCode({
     onSuccess: () => {
       setBtnClick(true);
+      setIsSendCode(true);
       setIsVerifyClicked(true);
       formMethods.setValue('isSentCertificationNumber', true);
     },
@@ -318,12 +320,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
               </div>
             </CustomFormItem>
 
-            <CustomFormItem className="relative gap-1" text="전화번호">
-              <div
-                className={cn('absolute', 'right-0', 'text-red-500', 'text-[0.75rem]/[1.125rem]')}
-              >
-                인증번호가 국제발신으로 전송됩니다.
-              </div>
+            <CustomFormItem className="gap-1" text="전화번호">
               <div className={cn('flex', 'flex-col', 'gap-1.5')}>
                 <div className={cn('flex', 'justify-between', 'items-center')}>
                   <div className={cn('w-[18rem]', btnClick === true ? 'absolute' : '')}>
@@ -507,6 +504,26 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
             <AlertDialogAction
               onClick={() => {
                 setShowModal('');
+              }}
+            >
+              확인
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={isSendCode}>
+        <AlertDialogContent className="w-[400px]">
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              인증번호는 국제번호로 전송되오니 <br />
+              발신이 차단되어 있다면 설정을 바꿔주시기 바랍니다.
+            </AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction
+              onClick={() => {
+                setIsSendCode(false);
               }}
             >
               확인
