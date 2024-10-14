@@ -358,6 +358,12 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
     }
   }, [isBasicInfoComplete, isApplyInfoComplete, isGuardianInfoComplete, param, push, memberId]);
 
+  useEffect(() => {
+    return () => {
+      store.setAll();
+    };
+  }, []);
+
   return (
     <>
       <div
