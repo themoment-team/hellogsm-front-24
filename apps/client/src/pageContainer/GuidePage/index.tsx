@@ -12,7 +12,7 @@ import {
   AlertDialogTitle,
   Button,
 } from 'shared';
-import { GetMyOneseoType } from 'types';
+import { DateType, GetMyOneseoType } from 'types';
 
 import { BlueStarIcon, CloverIcon, CopyIcon } from 'client/assets';
 import { Footer, LoginDialog } from 'client/components';
@@ -206,11 +206,14 @@ const List = ({
 interface GuideProps {
   initialData: GetMyOneseoType | undefined;
   isOneseoWrite: boolean;
+  dateList: DateType | undefined;
 }
 
-const GuidePage = ({ initialData, isOneseoWrite }: GuideProps) => {
+const GuidePage = ({ initialData, isOneseoWrite, dateList }: GuideProps) => {
   const { data: authInfo } = useGetMyAuthInfo();
   const { data: memberInfo } = useGetMyMemberInfo();
+
+  console.log(dateList);
 
   // eslint-disable-next-line no-console
   console.log(isOneseoWrite);

@@ -13,5 +13,5 @@ export default async function Guide() {
         currentTime < new Date(dateList.oneseoSubmissionEnd).getTime()
       : false;
 
-  return <GuidePage initialData={data} isOneseoWrite={isOneseoWrite} />;
+  return <GuidePage dateList={dateList} initialData={data} isOneseoWrite={isOneseoWrite} />;
 }
