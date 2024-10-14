@@ -104,6 +104,7 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
   const [tempBody, setTempBody] = useState<PostOneseoType | null>(null);
   const [isStep4Clickable, setIsStep4Clickable] = useState<boolean>(false);
   const [isButtonClick, setIsButtonClick] = useState<boolean>(false);
+  const [isFinalButtonClick, setIsFinalButtonClick] = useState(false);
 
   const defaultDetailData = data?.privacyDetail;
   const defaultMajors = data?.desiredMajors;
@@ -417,6 +418,7 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
             )}
             {param === '4' && (
               <ScoreRegister
+                setIsFinalButtonClick={setIsFinalButtonClick}
                 type={type}
                 data={data}
                 memberId={memberId}
@@ -430,9 +432,10 @@ const StepsContainer = ({ data, param, info, memberId, type }: Props) => {
       </div>
 
       {type === 'admin' ? (
-        <EditBar id="scoreForm" step={param} />
+        <EditBar id="scoreForm" step={param} isFinalButtonClick={isFinalButtonClick} />
       ) : (
         <ConfirmBar
+          isFinalButtonClick={isFinalButtonClick}
           temporarySave={temporarySave}
           id="scoreForm"
           isStep4Clickable={isStep4Clickable}
