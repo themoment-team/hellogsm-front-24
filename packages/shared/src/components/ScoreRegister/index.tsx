@@ -16,6 +16,7 @@ import Link from 'next/link';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { GetMyOneseoType, MiddleSchoolAchievementType } from 'types';
 
+import { QuestionMarkIcon } from 'shared/assets';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -121,6 +122,7 @@ const ScoreRegister = ({
     null,
   );
   const [isDialog, setIsDialog] = useState(false);
+  const [isDocOver, setIsDocOver] = useState(false);
 
   const defaultData = data?.middleSchoolAchievement;
   const defaultSubjectLength = defaultSubjectArray.length;
@@ -614,9 +616,15 @@ const ScoreRegister = ({
                 )}
               >
                 <div className={cn(...formWrapper)}>
-                  <div className={cn('flex', 'justify-between', 'items-center')}>
+                  <div
+                    className={cn(
+                      'flex',
+                      'items-center',
+                      liberalSystem === 'freeSemester' ? 'justify-between' : 'gap-1',
+                    )}
+                  >
                     일반교과 성적
-                    {liberalSystem === 'freeSemester' && (
+                    {liberalSystem === 'freeSemester' ? (
                       <span
                         className={cn('text-[0.875rem]/[1.25rem]', 'text-blue-700', 'font-normal')}
                       >
@@ -624,6 +632,38 @@ const ScoreRegister = ({
                         이셨다면, <strong className={cn(strongStyle)}>자유학기제</strong> 선택을 안
                         해도 됩니다.
                       </span>
+                    ) : (
+                      <div
+                        onMouseOver={() => setIsDocOver(true)}
+                        onMouseLeave={() => setIsDocOver(false)}
+                        className={cn('cursor-pointer', 'relative')}
+                      >
+                        <QuestionMarkIcon />
+                        {isDocOver && (
+                          <div
+                            className={cn(
+                              'px-3',
+                              'py-4',
+                              'rounded-lg',
+                              'bg-slate-900',
+                              'text-xs',
+                              'font-semibold',
+                              'fixed',
+                              'z-[5]',
+                              'text-white',
+                              'text-center',
+                            )}
+                          >
+                            생활기록부의 <strong>&quot;교과&quot;</strong>가 아닌{' '}
+                            <strong>&quot;과목&quot;</strong>명을 보고 입력해주세요!
+                            <br />
+                            과목이 없는 학기는 <strong>&quot;없음&quot;</strong>으로 선택해주세요!
+                            <br />
+                            목록에 없는 과목은 <strong>&quot;과목 추가하기&quot;</strong>를 눌러
+                            해당 학기의 성적을 입력해주세요!
+                          </div>
+                        )}
+                      </div>
                     )}
                   </div>
                   {liberalSystem === 'freeGrade' && (
