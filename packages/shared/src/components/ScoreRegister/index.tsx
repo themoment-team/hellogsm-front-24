@@ -102,7 +102,6 @@ interface ScoreRegisterProps {
   isStep4Clickable?: boolean;
   setIsStep4Clickable?: Dispatch<SetStateAction<boolean>>;
   isButtonClick?: boolean;
-  isFinalButtonClick?: boolean;
   setIsFinalButtonClick: Dispatch<SetStateAction<boolean>>;
 }
 
