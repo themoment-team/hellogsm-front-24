@@ -33,6 +33,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  InspectionDialog,
 } from 'shared/components';
 import { useDebounce } from 'shared/hooks';
 import { cn } from 'shared/lib/utils';
@@ -514,6 +515,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      <InspectionDialog showModal={true} />
     </>
   );
 };
