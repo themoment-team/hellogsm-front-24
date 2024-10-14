@@ -13,5 +13,8 @@ export default async function Guide() {
         currentTime < new Date(dateList.oneseoSubmissionEnd).getTime()
       : false;
 
+  // eslint-disable-next-line no-console
+  console.log(isOneseoWrite);
+
   return <GuidePage initialData={data} isOneseoWrite={isOneseoWrite} />;
 }
