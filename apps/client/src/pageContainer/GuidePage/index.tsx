@@ -207,14 +207,18 @@ interface GuideProps {
   initialData: GetMyOneseoType | undefined;
   isOneseoWrite: boolean;
   dateList: DateType | undefined;
+  currentTime: number;
 }
 
-const GuidePage = ({ initialData, isOneseoWrite, dateList }: GuideProps) => {
+const GuidePage = ({ initialData, isOneseoWrite, dateList, currentTime }: GuideProps) => {
   const { data: authInfo } = useGetMyAuthInfo();
   const { data: memberInfo } = useGetMyMemberInfo();
 
   // eslint-disable-next-line no-console
   console.log(dateList);
+
+  // eslint-disable-next-line no-console
+  console.log(currentTime);
 
   // eslint-disable-next-line no-console
   console.log(isOneseoWrite);
