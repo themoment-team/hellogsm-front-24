@@ -212,6 +212,9 @@ const GuidePage = ({ initialData, isOneseoWrite }: GuideProps) => {
   const { data: authInfo } = useGetMyAuthInfo();
   const { data: memberInfo } = useGetMyMemberInfo();
 
+  // eslint-disable-next-line no-console
+  console.log(isOneseoWrite);
+
   const { data } = useGetMyOneseo({
     initialData: initialData,
   });
