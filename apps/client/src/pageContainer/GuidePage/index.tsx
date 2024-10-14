@@ -218,6 +218,12 @@ const GuidePage = ({ initialData, isOneseoWrite, dateList, currentTime }: GuideP
   console.log(dateList);
 
   // eslint-disable-next-line no-console
+  console.log(new Date(dateList!.oneseoSubmissionStart).getTime());
+
+  // eslint-disable-next-line no-console
+  console.log(new Date(dateList!.oneseoSubmissionEnd).getTime());
+
+  // eslint-disable-next-line no-console
   console.log(currentTime);
 
   // eslint-disable-next-line no-console
