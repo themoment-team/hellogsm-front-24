@@ -4,9 +4,10 @@ import { cn } from 'shared/lib/utils';
 interface EditBarProps {
   id: string;
   step: string;
+  isFinalButtonClick: boolean;
 }
 
-const EditBar = ({ id, step }: EditBarProps) => (
+const EditBar = ({ id, step, isFinalButtonClick }: EditBarProps) => (
   <div
     className={cn([
       'w-full',
@@ -24,6 +25,7 @@ const EditBar = ({ id, step }: EditBarProps) => (
   >
     {step === '4' && (
       <button
+        disabled={isFinalButtonClick}
         className={cn([
           'px-4',
           'py-2',
