@@ -230,12 +230,11 @@ const GuidePage = ({ initialData, isOneseoWrite, dateList, currentTime }: GuideP
   console.log(isOneseoWrite);
 
   // eslint-disable-next-line no-console
-  console.log(
-    new Date(dateList!.oneseoSubmissionStart).getTime() <= currentTime &&
-      currentTime < new Date(dateList!.oneseoSubmissionEnd).getTime()
+  console.log(`
+    ${new Date(dateList!.oneseoSubmissionStart).getTime()} <= currentTime &&
+      currentTime < ${new Date(dateList!.oneseoSubmissionEnd).getTime()}
       ? true
-      : false,
-  );
+      : false`);
 
   const { data } = useGetMyOneseo({
     initialData: initialData,
