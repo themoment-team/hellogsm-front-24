@@ -318,7 +318,12 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
               </div>
             </CustomFormItem>
 
-            <CustomFormItem className="gap-1" text="전화번호">
+            <CustomFormItem className="relative gap-1" text="전화번호">
+              <div
+                className={cn('absolute', 'right-0', 'text-red-500', 'text-[0.75rem]/[1.125rem]')}
+              >
+                인증번호가 국제발신으로 전송됩니다.
+              </div>
               <div className={cn('flex', 'flex-col', 'gap-1.5')}>
                 <div className={cn('flex', 'justify-between', 'items-center')}>
                   <div className={cn('w-[18rem]', btnClick === true ? 'absolute' : '')}>
