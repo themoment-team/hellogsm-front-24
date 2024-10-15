@@ -58,8 +58,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
     'duplicate' | 'date' | 'code' | 'success' | 'error' | ''
   >('');
 
-  const initialTime = 180;
-  const [timeLeft, setTimeLeft] = useState(initialTime);
+  const [timeLeft, setTimeLeft] = useState(0);
 
   const formMethods = useForm({
     resolver: zodResolver(signupFormSchema),
@@ -80,14 +79,14 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
   });
 
   useEffect(() => {
+    const initialTime = 180;
     const savedTime = sessionStorage.getItem('timerStart');
 
     if (savedTime) {
       const elapsedTime = Math.floor((Date.now() - parseInt(savedTime, 10)) / 1000);
       const remainingTime = initialTime - elapsedTime;
-
       setTimeLeft(remainingTime > 0 ? remainingTime : 0);
-    } else {
+    } else if (btnClick === true) {
       sessionStorage.setItem('timerStart', Date.now().toString());
     }
 
@@ -96,16 +95,16 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [btnClick]);
 
   useEffect(() => {
     if (timeLeft > 0) {
       setBtnClick(true);
-    } else {
+    } else if (timeLeft === 0) {
       setBtnClick(false);
       sessionStorage.removeItem('timerStart');
     }
-  }, [timeLeft]);
+  }, [btnClick, timeLeft]);
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
