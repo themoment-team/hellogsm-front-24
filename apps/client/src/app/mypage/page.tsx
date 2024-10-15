@@ -18,5 +18,5 @@ export default async function MyPage() {
         currentTime < new Date(dateList.oneseoSubmissionEnd).getTime()
       : false;
 
-  return <MyPageComponent isOneseoWrite={true} initialData={data} />;
+  return <MyPageComponent isOneseoWrite={isOneseoWrite} initialData={data} />;
 }
