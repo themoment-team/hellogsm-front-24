@@ -33,7 +33,7 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
       {admissionTickets?.map((ticket, i) => (
         <div
           key={ticket.oneseoSubmitCode}
-          className={`mx-auto h-[31.64vh] w-[920px] font-normal text-black ${
+          className={`mx-auto w-[920px] font-normal text-black ${
             i % 2 !== 0 ? 'mb-[27.14vh] mt-[8.32vh]' : ''
           }`}
         >
