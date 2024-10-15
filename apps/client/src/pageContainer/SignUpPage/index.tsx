@@ -515,7 +515,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-      <InspectionDialog showModal={false} />
+      <InspectionDialog showModal={true} />
     </>
   );
 };
