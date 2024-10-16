@@ -12,7 +12,7 @@ import {
   AlertDialogTitle,
   Button,
 } from 'shared';
-import { DateType, GetMyOneseoType } from 'types';
+import { GetMyOneseoType } from 'types';
 
 import { BlueStarIcon, CloverIcon, CopyIcon } from 'client/assets';
 import { Footer, LoginDialog } from 'client/components';
