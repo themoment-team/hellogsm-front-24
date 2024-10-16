@@ -17,7 +17,10 @@ export default async function Register({ searchParams }: RegisterProps) {
     getDate(),
   ]);
 
-  const currentTime = new Date().getTime();
+  const currentTime = new Date(
+    new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' }),
+  ).getTime();
+
   const isOneseoWrite =
     dateList?.oneseoSubmissionStart && dateList?.oneseoSubmissionEnd
       ? new Date(dateList.oneseoSubmissionStart).getTime() <= currentTime &&

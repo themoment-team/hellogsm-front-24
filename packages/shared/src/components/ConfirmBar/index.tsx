@@ -19,14 +19,20 @@ interface ConfirmBarProps {
   id: string;
   temporarySave: () => void;
   isStep4Clickable: boolean;
+  isFinalButtonClick: boolean;
 }
 
 interface FinalSubmitDialogProps {
   id: string;
+  isFinalButtonClick: boolean;
   isStep4Clickable: boolean;
 }
 
-const FinalSubmitDialog = ({ id, isStep4Clickable }: FinalSubmitDialogProps) => {
+const FinalSubmitDialog = ({
+  id,
+  isStep4Clickable,
+  isFinalButtonClick,
+}: FinalSubmitDialogProps) => {
   const searchParams = useSearchParams();
   const step = Number(searchParams.get('step'));
 
@@ -71,6 +77,7 @@ const FinalSubmitDialog = ({ id, isStep4Clickable }: FinalSubmitDialogProps) => 
               className={cn('px-4', 'py-2', 'rounded-md', 'text-white', 'bg-[#0F172A]')}
               type="submit"
               form={id}
+              disabled={isFinalButtonClick}
             >
               최종 제출
             </button>
@@ -81,7 +88,12 @@ const FinalSubmitDialog = ({ id, isStep4Clickable }: FinalSubmitDialogProps) => 
   );
 };
 
-const ConfirmBar = ({ id, temporarySave, isStep4Clickable }: ConfirmBarProps) => (
+const ConfirmBar = ({
+  id,
+  temporarySave,
+  isStep4Clickable,
+  isFinalButtonClick,
+}: ConfirmBarProps) => (
   <div
     className={cn(
       'w-full',
@@ -114,7 +126,11 @@ const ConfirmBar = ({ id, temporarySave, isStep4Clickable }: ConfirmBarProps) =>
       >
         임시저장
       </Button>
-      <FinalSubmitDialog id={id} isStep4Clickable={isStep4Clickable} />
+      <FinalSubmitDialog
+        isFinalButtonClick={isFinalButtonClick}
+        id={id}
+        isStep4Clickable={isStep4Clickable}
+      />
     </div>
   </div>
 );

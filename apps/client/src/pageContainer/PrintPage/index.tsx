@@ -556,7 +556,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                     <tr>
                       <td className="border border-black">1</td>
                       {[
-                        oneseo.middleSchoolAchievement.absentDays[1],
+                        oneseo.middleSchoolAchievement.absentDays[0],
                         oneseo.middleSchoolAchievement.attendanceDays[0],
                         oneseo.middleSchoolAchievement.attendanceDays[3],
                         oneseo.middleSchoolAchievement.attendanceDays[6],
@@ -597,7 +597,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                     <tr>
                       <td className="border border-black">3</td>
                       {[
-                        oneseo.middleSchoolAchievement.absentDays[1],
+                        oneseo.middleSchoolAchievement.absentDays[2],
                         oneseo.middleSchoolAchievement.attendanceDays[2],
                         oneseo.middleSchoolAchievement.attendanceDays[5],
                         oneseo.middleSchoolAchievement.attendanceDays[8],

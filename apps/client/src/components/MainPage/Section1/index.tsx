@@ -130,9 +130,10 @@ const Section1 = () => {
             'font-semibold',
             'text-white',
             'cursor-pointer',
+            'text-center',
           )}
         >
-          GSM 더 알아보기
+          GSM 더 알아보기 <br /> 문제 발생 시 채널톡으로 문의해주세요
         </p>
         <div onClick={scrollToSection2} className={cn('animate-bounce', 'cursor-pointer')}>
           <BottomArrow />

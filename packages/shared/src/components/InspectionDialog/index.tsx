@@ -26,9 +26,7 @@ const InspectionDialog = ({ showModal }: InspectionProps) => {
               'text-center',
             )}
           >
-            서비스 이용에 불편을 드려서 죄송합니다.
-            <br />
-            잠시 후 다시 이용해주세요.
+            현재 문자인증 오류로 잠시 시스템 점검 중입니다.
           </p>
         </div>
       </AlertDialogContent>
