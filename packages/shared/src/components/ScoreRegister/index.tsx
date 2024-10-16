@@ -102,6 +102,7 @@ interface ScoreRegisterProps {
   isStep4Clickable?: boolean;
   setIsStep4Clickable?: Dispatch<SetStateAction<boolean>>;
   isButtonClick?: boolean;
+  setIsFinalButtonClick?: Dispatch<SetStateAction<boolean>>;
 }
 
 const ScoreRegister = ({
@@ -111,6 +112,7 @@ const ScoreRegister = ({
   isStep4Clickable,
   setIsStep4Clickable,
   isButtonClick,
+  setIsFinalButtonClick,
 }: ScoreRegisterProps) => {
   const store = useStore();
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -285,8 +287,11 @@ const ScoreRegister = ({
   const { mutate: mutatePostMyOneseo } = usePostMyOneseo({
     onSuccess: () => {
       setShowModal(true);
+      if (setIsFinalButtonClick) setIsFinalButtonClick(false);
     },
-    onError: () => {},
+    onError: () => {
+      if (setIsFinalButtonClick) setIsFinalButtonClick(false);
+    },
   });
 
   const { mutate: postMockScore } = usePostMockScore(store.graduationType!, {
@@ -348,6 +353,8 @@ const ScoreRegister = ({
   };
 
   const handleFormSubmit: SubmitHandler<ScoreFormType> = (data) => {
+    if (setIsFinalButtonClick) setIsFinalButtonClick(true);
+
     const {
       guardianName,
       guardianPhoneNumber,

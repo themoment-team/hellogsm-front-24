@@ -1,4 +1,4 @@
-export const artPhysicalSubjectArray = ['체육', '미술', '음악'] as const;
+export const artPhysicalSubjectArray = ['체육', '음악', '미술'] as const;
 
 export const defaultSubjectArray = [
   '국어',

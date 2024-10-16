@@ -33,7 +33,7 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
       {admissionTickets?.map((ticket, i) => (
         <div
           key={ticket.oneseoSubmitCode}
-          className={`mx-auto h-[31.64vh] w-[920px] font-normal text-black ${
+          className={`mx-auto w-[920px] font-normal text-black ${
             i % 2 !== 0 ? 'mb-[27.14vh] mt-[8.32vh]' : ''
           }`}
         >
@@ -157,7 +157,7 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
                   colSpan={2}
                   className="border border-black pl-2 pr-[0.625rem] text-left font-normal"
                 >
-                  위 사람은 2024학년도 <br /> 본교 신입생 입학전형 지원자임을 확인함.
+                  위 사람은 2025학년도 <br /> 본교 신입생 입학전형 지원자임을 확인함.
                   <p className="pr-[0.625rem] text-center font-normal">2023년 10월 27일</p>
                   <p>광주소프트웨어마이스터고등학교장 [직인생략]</p>
                 </td>
