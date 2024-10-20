@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-import { MyMemberInfoType, MyTestResultType } from 'types';
+import { useGetMyFirstTestResultInfo, useGetMySecondTestResultInfo } from 'api';
+import { MyMemberInfoType } from 'types';
 
 import {
   Footer,
@@ -19,14 +20,23 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from 'shared/compone
 import { cn } from 'shared/lib/utils';
 
 interface MainPageProps {
-  resultInfo: MyTestResultType | undefined;
   memberInfo: MyMemberInfoType | undefined;
 }
 
-const MainPage = ({ resultInfo, memberInfo }: MainPageProps) => {
+const MainPage = ({ memberInfo }: MainPageProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isPassOpen, setIsPassOpen] = useState<boolean>(false);
   const [isStage, setIsStage] = useState<boolean>(false);
+
+  const { data: firstResultInfo } = useGetMyFirstTestResultInfo();
+
+  const { data: secondResultInfo } = useGetMySecondTestResultInfo();
+
+  const resultInfo = {
+    firstTestPassYn: firstResultInfo?.firstTestPassYn ?? null,
+    secondTestPassYn: secondResultInfo?.secondTestPassYn ?? null,
+    decidedMajor: secondResultInfo?.decidedMajor ?? null,
+  };
 
   useEffect(() => {
     const today = new Date().toDateString();
@@ -39,7 +49,7 @@ const MainPage = ({ resultInfo, memberInfo }: MainPageProps) => {
     } else {
       setIsOpen(false);
     }
-  }, [resultInfo]);
+  }, []);
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_STAGE === 'stage') {
