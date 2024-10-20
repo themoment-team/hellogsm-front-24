@@ -30,7 +30,16 @@ export interface SendCodeType {
   phoneNumber: string;
 }
 
-export interface MyTestResultType {
+export interface MyFirstTestResultType {
+  firstTestPassYn: YesNo | null;
+}
+
+export interface MySecondTestResultType {
+  secondTestPassYn: YesNo | null;
+  decidedMajor: Majors | null;
+}
+
+export interface MyTotalTestResultType {
   firstTestPassYn: YesNo | null;
   secondTestPassYn: YesNo | null;
   decidedMajor: Majors | null;
