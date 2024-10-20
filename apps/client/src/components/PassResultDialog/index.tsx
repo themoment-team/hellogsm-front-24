@@ -143,14 +143,15 @@ const PassResultDialog = ({
             <div className={cn('flex', 'gap-3')}>
               <Button
                 variant="reverseFill"
-                className={cn('w-[10.625rem]', 'text-[1rem]/[1.5rem]', 'font-semibold')}
+                className={cn('w-[10.625rem]', 'h-[3.25rem]', 'font-semibold', 'text-base')}
                 onClick={() => handleInterviewClick()}
               >
                 심층면접 예상문제 보기
               </Button>
               <Button
                 variant="fill"
-                className={cn('w-[10.625rem]', 'text-[1rem]/[1.5rem]', 'font-semibold')}
+                className={cn('w-[10.625rem]', 'h-[3.25rem]', 'font-semibold', 'text-base')}
+                onClick={() => push('/1차 전형 합격자 안내사항.hwp')}
               >
                 합격자 유의사항 다운
               </Button>
@@ -158,7 +159,7 @@ const PassResultDialog = ({
           ) : (
             <Button
               variant="fill"
-              className={cn('w-[10.625rem]', 'text-[1rem]/[1.5rem]', 'font-semibold')}
+              className={cn('w-[10.625rem]', 'h-[3.25rem]', 'font-semibold', 'text-base')}
               onClick={() => setIsPassOpen(false)}
             >
               확인
