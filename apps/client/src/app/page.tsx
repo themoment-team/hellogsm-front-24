@@ -27,7 +27,5 @@ export default async function Home() {
     decidedMajor: secondResultInfo?.decidedMajor ?? null,
   };
 
-  console.log(resultInfo);
-
   return <MainPage memberInfo={memberInfo} resultInfo={resultInfo} />;
 }
