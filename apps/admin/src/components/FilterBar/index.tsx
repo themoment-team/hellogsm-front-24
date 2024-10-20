@@ -1,5 +1,7 @@
 'use client';
 
+import { useGetOperation, usePostFirstResult, usePostSecondResult } from 'api';
+
 import { SearchIcon, FileIcon } from 'admin/assets';
 
 import { PrintIcon } from 'shared/assets';
@@ -27,6 +29,8 @@ interface FilterBarProps {
   setIsSubmitted: React.Dispatch<React.SetStateAction<YesNo | string>>;
   screeningTag: ScreeningType | string;
   setScreeningTag: React.Dispatch<React.SetStateAction<ScreeningType | string>>;
+  isBeforeFirstResults: boolean;
+  isBeforeSecondResults: boolean;
 }
 
 const FilterBar = ({
@@ -36,7 +40,25 @@ const FilterBar = ({
   setIsSubmitted,
   setScreeningTag,
   screeningTag,
+  isBeforeFirstResults,
+  isBeforeSecondResults,
 }: FilterBarProps) => {
+  const { data: operationData, refetch: operationRefetch } = useGetOperation();
+
+  const { mutate: postFirstResult } = usePostFirstResult({
+    onSuccess: () => {
+      operationRefetch();
+    },
+    onError: () => {},
+  });
+
+  const { mutate: postSecondResult } = usePostSecondResult({
+    onSuccess: () => {
+      operationRefetch();
+    },
+    onError: () => {},
+  });
+
   const handleSubmittedChange = (value: string) => {
     if (value === 'YES' || value === 'NO') {
       setIsSubmitted(value);
@@ -112,6 +134,24 @@ const FilterBar = ({
       </div>
 
       <div className={cn('flex', 'gap-2')}>
+        <Button
+          variant="outline"
+          className={cn('border-slate-900', 'gap-2', 'hover:bg-slate-200')}
+          disabled={operationData?.firstTestResultAnnouncementYn === 'YES' || isBeforeFirstResults}
+          onClick={() => postFirstResult()}
+        >
+          1차 결과 발표
+        </Button>
+        <Button
+          variant="outline"
+          className={cn('border-slate-900', 'gap-2', 'hover:bg-slate-200')}
+          disabled={
+            operationData?.secondTestResultAnnouncementYn === 'YES' || isBeforeSecondResults
+          }
+          onClick={() => postSecondResult()}
+        >
+          2차 결과 발표
+        </Button>
         <Button
           onClick={handlePrintButtonClick}
           className={cn('gap-2', 'bg-slate-900', 'hover:bg-slate-700')}

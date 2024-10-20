@@ -2,18 +2,14 @@ import { redirect } from 'next/navigation';
 
 import { MainPage } from 'client/pageContainer';
 
-import { getMyAuthInfo, getMyMemberInfo, getMyTestResult } from './apis';
+import { getMyAuthInfo, getMyMemberInfo } from './apis';
 
 export default async function Home() {
-  const [memberInfo, authInfo, resultInfo] = await Promise.all([
-    getMyMemberInfo('/'),
-    getMyAuthInfo('/'),
-    getMyTestResult(),
-  ]);
+  const [memberInfo, authInfo] = await Promise.all([getMyMemberInfo('/'), getMyAuthInfo('/')]);
 
   if (authInfo?.authReferrerType && !memberInfo?.name) {
     redirect('/signup');
   }
 
-  return <MainPage resultInfo={resultInfo} memberInfo={memberInfo} />;
+  return <MainPage memberInfo={memberInfo} />;
 }
