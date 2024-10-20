@@ -30,6 +30,13 @@ export const oneseoQueryKeys = {
 export const memberQueryKeys = {
   getMyMemberInfo: () => ['member', 'my'],
   getMyAuthInfo: () => ['member', 'my', 'auth'],
-  getMyTestResultInfo: () => ['member', 'my', 'result'],
+  getMyFirstTestResultInfo: () => ['member', 'first', 'result'],
+  getMySecondTestResultInfo: () => ['member', 'second', 'result'],
   getCheckDuplicate: (phoneNumber: string) => ['member', 'duplicate', 'check', phoneNumber],
+};
+
+export const operationQueryKeys = {
+  getOperation: () => ['operation', 'status'],
+  postFirstResult: () => ['operation', 'first', 'result'],
+  postSecondResult: () => ['operation', 'second', 'result'],
 };
