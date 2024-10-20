@@ -1,14 +1,14 @@
 import { cookies } from 'next/headers';
-import { MyFirstTestResultType } from 'types';
+import { MySecondTestResultType } from 'types';
 
 import { memberUrl } from 'api/libs';
 
-export const getMyTestResult = async (): Promise<MyFirstTestResultType | undefined> => {
+export const getMySecondTestResult = async (): Promise<MySecondTestResultType | undefined> => {
   const session = cookies().get('SESSION')?.value;
 
   try {
     const response = await fetch(
-      new URL(memberUrl.getMyFirstTestResult(), process.env.NEXT_PUBLIC_API_BASE_URL),
+      new URL(memberUrl.getMySecondTestResult(), process.env.NEXT_PUBLIC_API_BASE_URL),
       {
         method: 'GET',
         credentials: 'include',

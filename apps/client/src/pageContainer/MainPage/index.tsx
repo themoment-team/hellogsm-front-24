@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { useGetMyFirstTestResultInfo, useGetMySecondTestResultInfo } from 'api';
-import { MyMemberInfoType } from 'types';
+import { MyMemberInfoType, MyTotalTestResultType } from 'types';
 
 import {
   Footer,
@@ -21,22 +20,13 @@ import { cn } from 'shared/lib/utils';
 
 interface MainPageProps {
   memberInfo: MyMemberInfoType | undefined;
+  resultInfo: MyTotalTestResultType | undefined;
 }
 
-const MainPage = ({ memberInfo }: MainPageProps) => {
+const MainPage = ({ memberInfo, resultInfo }: MainPageProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isPassOpen, setIsPassOpen] = useState<boolean>(false);
   const [isStage, setIsStage] = useState<boolean>(false);
-
-  const { data: firstResultInfo } = useGetMyFirstTestResultInfo();
-
-  const { data: secondResultInfo } = useGetMySecondTestResultInfo();
-
-  const resultInfo = {
-    firstTestPassYn: firstResultInfo?.firstTestPassYn ?? null,
-    secondTestPassYn: secondResultInfo?.secondTestPassYn ?? null,
-    decidedMajor: secondResultInfo?.decidedMajor ?? null,
-  };
 
   useEffect(() => {
     const today = new Date().toDateString();
