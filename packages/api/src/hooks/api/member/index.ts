@@ -1,4 +1,5 @@
 export * from './useGetMyAuthInfo';
 export * from './useGetMyMemberInfo';
-export * from './useGetMyTestResultInfo';
+export * from './useGetMyFirstTestResultInfo';
 export * from './useGetDuplicateMember';
+export * from './useGetMySecondTestResultInfo';
