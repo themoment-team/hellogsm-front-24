@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { MyMemberInfoType, MyTestResultType } from 'types';
+import { MyMemberInfoType, MyTotalTestResultType } from 'types';
 
 import { BlurIcon, HelloGSMIcon } from 'client/assets';
 
@@ -11,7 +11,7 @@ import { cn } from 'shared/lib/utils';
 interface PassResultProps {
   isPassOpen: boolean;
   setIsPassOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  resultInfo: MyTestResultType | undefined;
+  resultInfo: MyTotalTestResultType | undefined;
   isFinishFirstTest: boolean;
   memberInfo: MyMemberInfoType | undefined;
 }
