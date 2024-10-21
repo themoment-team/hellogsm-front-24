@@ -148,9 +148,9 @@ const FilterBar = ({
           <Button
             variant="outline"
             className={cn('border-slate-900', 'gap-2', 'hover:bg-slate-200')}
-            disabled={
-              operationData?.firstTestResultAnnouncementYn === 'YES' || isBeforeFirstResults
-            }
+            // disabled={
+            //   operationData?.firstTestResultAnnouncementYn === 'YES' || isBeforeFirstResults
+            // }
             onClick={() => setShowFirstModal(true)}
           >
             1차 결과 발표
