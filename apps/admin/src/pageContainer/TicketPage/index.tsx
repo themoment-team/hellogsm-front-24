@@ -148,7 +148,7 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
                 )}
               </tr>
               <tr>
-                <td className="border border-black font-normal">합격자 서류</td>
+                <td className="border border-black font-normal">입학등록동의서 서식</td>
                 <td className="border border-black pl-[0.625rem] text-left font-normal">
                   본교 홈페이지에서 다운로드
                 </td>
