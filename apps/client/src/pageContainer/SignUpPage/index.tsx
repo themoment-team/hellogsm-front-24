@@ -49,7 +49,6 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
 
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
   const [btnClick, setBtnClick] = useState<boolean>(false);
-  const [timeLeft, setTimeLeft] = useState<number>(180);
   const [lastSubmittedCode, setLastSubmittedCode] = useState<string>('');
   const [isSuccess, setIsSuccess] = useState<boolean | undefined>(undefined);
   const [isContinue, setIsContinue] = useState<boolean>(false);
@@ -58,6 +57,8 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
   const [showModal, setShowModal] = useState<
     'duplicate' | 'date' | 'code' | 'success' | 'error' | ''
   >('');
+
+  const [timeLeft, setTimeLeft] = useState(0);
 
   const formMethods = useForm({
     resolver: zodResolver(signupFormSchema),
@@ -78,14 +79,30 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
   });
 
   useEffect(() => {
-    if (btnClick && timeLeft > 0) {
-      const timer = setInterval(() => {
-        setTimeLeft((prevTime) => prevTime - 1);
-      }, 1000);
-      return () => clearInterval(timer);
+    const initialTime = 180;
+    const savedTime = sessionStorage.getItem('timerStart');
+
+    if (savedTime) {
+      const elapsedTime = Math.floor((Date.now() - parseInt(savedTime, 10)) / 1000);
+      const remainingTime = initialTime - elapsedTime;
+      setTimeLeft(remainingTime > 0 ? remainingTime : 0);
+    } else if (btnClick === true) {
+      sessionStorage.setItem('timerStart', Date.now().toString());
     }
-    if (timeLeft === 0) {
-      setIsSuccess(false);
+
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [btnClick]);
+
+  useEffect(() => {
+    if (timeLeft > 0) {
+      setBtnClick(true);
+    } else if (timeLeft === 0) {
+      setBtnClick(false);
+      sessionStorage.removeItem('timerStart');
     }
   }, [btnClick, timeLeft]);
 
