@@ -18,5 +18,7 @@ export const Primary: Story = {
     setIsSubmitted: () => {},
     screeningTag: 'GENERAL',
     setScreeningTag: () => {},
+    isBeforeFirstResults: true,
+    isBeforeSecondResults: false,
   },
 };

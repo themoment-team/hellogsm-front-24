@@ -6,9 +6,10 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import {
   memberQueryKeys,
+  useGetMyFirstTestResultInfo,
+  useGetMySecondTestResultInfo,
   useGetMyMemberInfo,
   useGetMyOneseo,
-  useGetMyTestResultInfo,
   useLogout,
 } from 'api';
 import { useRouter } from 'next/navigation';
@@ -47,7 +48,15 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
 
   const { data: memberInfo } = useGetMyMemberInfo();
 
-  const { data: resultInfo } = useGetMyTestResultInfo();
+  const { data: firstResultInfo } = useGetMyFirstTestResultInfo();
+
+  const { data: secondResultInfo } = useGetMySecondTestResultInfo();
+
+  const resultInfo = {
+    firstTestPassYn: firstResultInfo?.firstTestPassYn ?? null,
+    secondTestPassYn: secondResultInfo?.secondTestPassYn ?? null,
+    decidedMajor: secondResultInfo?.decidedMajor ?? null,
+  };
 
   const logout = useLogout('client');
 
