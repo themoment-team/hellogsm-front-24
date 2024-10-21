@@ -47,7 +47,7 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
               </tr>
               <tr>
                 <td className="w-28 border border-black font-normal">
-                  2-1차 전형 <br />
+                  2차 전형 <br />
                   (직무적성소양평가)
                 </td>
                 <td className="border border-black pl-[0.625rem] text-left font-normal">
@@ -76,7 +76,7 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
               </tr>
               <tr>
                 <td className="w-28 border border-black font-normal">
-                  2-2차 전형 <br />
+                  2차 전형 <br />
                   (심층면접)
                 </td>
                 <td className="border border-black pl-[0.625rem] text-left font-normal">
