@@ -7,7 +7,7 @@ export const RECRUITMENT_PERIOD = {
 export const 직무적성일자 = '2024-07-25';
 export const 심층면접일자 = '2024-07-26';
 export const 직무적성시험기간 = '2024. 10. 25.(금) 13:00 ~ 16:10';
-export const 심층면접시험기간 = '2025. 10. 26.(토) 09:00 ~ 12:00';
+export const 심층면접시험기간 = '2024. 10. 26.(토) 09:00 ~ 12:00';
 
 // TODO 정확한 날짜 확인 후 수정
 export const visionCampDate = {
