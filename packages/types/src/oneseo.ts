@@ -195,6 +195,7 @@ export interface TicketType {
   schoolName: string;
   appliedScreening: ScreeningType;
   oneseoSubmitCode: string;
+  examinationNumber: string;
 }
 
 export interface EditabilityType {
