@@ -61,6 +61,6 @@ export const dateUrl = {
 
 export const opetaionUrl = {
   getOperation: () => '/operation/v3/operation/status',
-  postFirstResult: () => '/operation/v3/operation/announce-first-teat-result',
-  postSecondResult: () => '/operation/v3/operation/announce-second-teat-result',
+  postFirstResult: () => '/operation/v3/operation/announce-first-test-result',
+  postSecondResult: () => '/operation/v3/operation/announce-second-test-result',
 } as const;
