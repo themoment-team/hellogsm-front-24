@@ -12,14 +12,14 @@ export default async function Home() {
   const today = new Date();
   const firstResultsAnnouncement = dateList?.firstResultsAnnouncement
     ? new Date(dateList.firstResultsAnnouncement)
-    : new Date('2024-10-21T10:00:00');
-  const isBeforeFirstResults = today <= firstResultsAnnouncement;
+    : new Date('2024-10-21T09:59:59');
+  const isBeforeFirstResults = today < firstResultsAnnouncement;
 
   const secondResultsAnnouncement = dateList?.finalResultsAnnouncement
     ? new Date(dateList.finalResultsAnnouncement)
-    : new Date('2024-10-30T10:00:00');
+    : new Date('2024-10-30T09:59:59');
 
-  const isBeforeSecondResults = today <= secondResultsAnnouncement;
+  const isBeforeSecondResults = today < secondResultsAnnouncement;
 
   return (
     <MainPage
