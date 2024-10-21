@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { useGetOperation, usePostFirstResult, usePostSecondResult } from 'api';
 
-import { SearchIcon, FileIcon } from 'admin/assets';
+import { SearchIcon, FileIcon, CloverIcon, MedalIcon } from 'admin/assets';
 
 import { PrintIcon } from 'shared/assets';
 import {
@@ -153,6 +153,7 @@ const FilterBar = ({
             }
             onClick={() => setShowFirstModal(true)}
           >
+            <CloverIcon />
             1차 결과 발표
           </Button>
           <Button
@@ -163,6 +164,7 @@ const FilterBar = ({
             }
             onClick={() => setShowSecondModal(true)}
           >
+            <MedalIcon />
             2차 결과 발표
           </Button>
           <Button
