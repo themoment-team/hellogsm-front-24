@@ -174,6 +174,13 @@ const Header = () => {
             모의 성적 계산
           </ActiveLink>
           <ActiveLink
+            href="/check-result"
+            className={cn(...activeTextStyle)}
+            activeClassName={cn(...activeStyle)}
+          >
+            합격자 조회
+          </ActiveLink>
+          <ActiveLink
             href="/introduce"
             className={cn(...activeTextStyle)}
             activeClassName={cn(...activeStyle)}
