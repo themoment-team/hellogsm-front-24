@@ -6,3 +6,4 @@ export * from "./basicRegister";
 export * from "./mockScore";
 export * from "./date";
 export * from "./operation";
+export * from "./form";
