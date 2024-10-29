@@ -14,6 +14,7 @@ interface PassResultProps {
   resultInfo: MyTotalTestResultType | undefined;
   isFinishFirstTest: boolean;
   memberInfo: MyMemberInfoType | undefined;
+  onClick?: () => void;
 }
 
 const PassResultDialog = ({
@@ -22,6 +23,7 @@ const PassResultDialog = ({
   resultInfo,
   isFinishFirstTest,
   memberInfo,
+  onClick = () => setIsPassOpen(false),
 }: PassResultProps) => {
   const { push } = useRouter();
 
@@ -139,32 +141,43 @@ const PassResultDialog = ({
               </p>
             </div>
           </div>
-          {firstTestPass === true ? (
-            <div className={cn('flex', 'gap-3')}>
+          <div className={cn('flex', 'gap-3')}>
+            {secondTestPass && (
               <Button
                 variant="reverseFill"
                 className={cn('w-[10.625rem]', 'h-[3.25rem]', 'font-semibold', 'text-base')}
-                onClick={() => handleInterviewClick()}
+                onClick={() => push('/최종 합격자 제출 서류.hwpx')}
               >
-                심층면접 예상문제 보기
+                합격자 제출서류 다운
               </Button>
+            )}
+            {firstTestPass === true ? (
+              <>
+                <Button
+                  variant="reverseFill"
+                  className={cn('w-[10.625rem]', 'h-[3.25rem]', 'font-semibold', 'text-base')}
+                  onClick={() => handleInterviewClick()}
+                >
+                  심층면접 예상문제 보기
+                </Button>
+                <Button
+                  variant="fill"
+                  className={cn('w-[10.625rem]', 'h-[3.25rem]', 'font-semibold', 'text-base')}
+                  onClick={() => push('/1차 전형 합격자 안내사항.hwp')}
+                >
+                  합격자 유의사항 다운
+                </Button>
+              </>
+            ) : (
               <Button
                 variant="fill"
                 className={cn('w-[10.625rem]', 'h-[3.25rem]', 'font-semibold', 'text-base')}
-                onClick={() => push('/1차 전형 합격자 안내사항.hwp')}
+                onClick={onClick}
               >
-                합격자 유의사항 다운
+                확인
               </Button>
-            </div>
-          ) : (
-            <Button
-              variant="fill"
-              className={cn('w-[10.625rem]', 'h-[3.25rem]', 'font-semibold', 'text-base')}
-              onClick={() => setIsPassOpen(false)}
-            >
-              확인
-            </Button>
-          )}
+            )}
+          </div>
         </div>
       </DialogContent>
     </Dialog>

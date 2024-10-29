@@ -48,3 +48,12 @@ export interface MyTotalTestResultType {
 export interface DuplicateType {
   duplicateMemberYn: YesNo | null;
 }
+
+export interface FirstTestResultType extends MyFirstTestResultType {
+  name: string;
+}
+
+export interface FinalTestResultType extends MySecondTestResultType {
+  name: string;
+  firstTestPassYn: YesNo | null;
+}

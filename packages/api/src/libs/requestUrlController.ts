@@ -64,3 +64,12 @@ export const opetaionUrl = {
   postFirstResult: () => '/operation/v3/operation/announce-first-test-result',
   postSecondResult: () => '/operation/v3/operation/announce-second-test-result',
 } as const;
+
+export const testResultUrl = {
+  postSendCode: () => '/test-result/v3/send-code',
+  postAuthCode: () => '/test-result/v3/auth-code',
+  getFirstTestResult: (phoneNumber: string, code: string, submitCode: string) =>
+    `/test-result/v3/first-test?phoneNumber=${phoneNumber}&code=${code}&submitCode=${submitCode}`,
+  getFinalTestResult: (phoneNumber: string, code: string, examinationNumber: string) =>
+    `/test-result/v3/second-test?phoneNumber=${phoneNumber}&code=${code}&examinationNumber=${examinationNumber}`,
+} as const;
