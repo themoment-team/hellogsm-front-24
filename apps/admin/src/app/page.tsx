@@ -9,23 +9,27 @@ export default async function Home() {
     getDate(),
   ]);
 
-  const today = new Date();
-  const firstResultsAnnouncement = dateList?.firstResultsAnnouncement
-    ? new Date(dateList.firstResultsAnnouncement)
-    : new Date('2024-10-21T09:59:59');
-  const isBeforeFirstResults = today < firstResultsAnnouncement;
+  const currentTime = new Date(
+    new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' }),
+  ).getTime();
 
-  const secondResultsAnnouncement = dateList?.finalResultsAnnouncement
-    ? new Date(dateList.finalResultsAnnouncement)
-    : new Date('2024-10-30T09:59:59');
+  const firstResultsAnnouncement =
+    dateList?.firstResultsAnnouncement &&
+    new Date(dateList.firstResultsAnnouncement).getTime() <= currentTime
+      ? true
+      : false;
 
-  const isBeforeSecondResults = today < secondResultsAnnouncement;
+  const secondResultsAnnouncement =
+    dateList?.finalResultsAnnouncement &&
+    new Date(dateList.finalResultsAnnouncement).getTime() <= currentTime
+      ? true
+      : false;
 
   return (
     <MainPage
       initialData={data}
-      isBeforeFirstResults={isBeforeFirstResults}
-      isBeforeSecondResults={isBeforeSecondResults}
+      isBeforeFirstResults={firstResultsAnnouncement}
+      isBeforeSecondResults={secondResultsAnnouncement}
     />
   );
 }
