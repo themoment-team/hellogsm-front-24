@@ -159,9 +159,9 @@ const FilterBar = ({
           <Button
             variant="outline"
             className={cn('border-slate-900', 'gap-2', 'hover:bg-slate-200')}
-            disabled={
-              operationData?.secondTestResultAnnouncementYn === 'YES' || isBeforeSecondResults
-            }
+            // disabled={
+            //   operationData?.secondTestResultAnnouncementYn === 'YES' || isBeforeSecondResults
+            // }
             onClick={() => setShowSecondModal(true)}
           >
             <MedalIcon />
