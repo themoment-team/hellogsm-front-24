@@ -2,13 +2,11 @@
 
 import { useEffect, useState } from 'react';
 
-import { useGetMyAuthInfo } from 'api';
-import Link from 'next/link';
+// import { useGetMyAuthInfo } from 'api';
 import { MyMemberInfoType, MyTotalTestResultType } from 'types';
 
 import {
   Footer,
-  LoginDialog,
   PassResultDialog,
   Section1,
   Section2,
@@ -18,18 +16,7 @@ import {
   TestResultDialog,
 } from 'client/components';
 
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from 'shared/components';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
 interface MainPageProps {
@@ -54,7 +41,7 @@ const MainPage = ({ memberInfo, resultInfo }: MainPageProps) => {
       setIsOpen(false);
     }
   }, []);
-  const [isClicked, setIsClicked] = useState(false);
+  // const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_STAGE === 'stage') {
@@ -64,10 +51,10 @@ const MainPage = ({ memberInfo, resultInfo }: MainPageProps) => {
 
   const isFinishFirstTest = resultInfo?.secondTestPassYn === null ? true : false;
 
-  const { data: authInfo } = useGetMyAuthInfo();
+  // const { data: authInfo } = useGetMyAuthInfo();
   return (
     <>
-      <AlertDialog open={!isClicked && (!authInfo?.authReferrerType || !memberInfo?.name)}>
+      {/* <AlertDialog open={!isClicked && (!authInfo?.authReferrerType || !memberInfo?.name)}>
         <AlertDialogContent className="w-[400px]">
           <AlertDialogHeader>
             <AlertDialogTitle>
@@ -89,7 +76,7 @@ const MainPage = ({ memberInfo, resultInfo }: MainPageProps) => {
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
-      </AlertDialog>
+      </AlertDialog> */}
       <Section1 />
       <Section2 />
       <Section3 />
