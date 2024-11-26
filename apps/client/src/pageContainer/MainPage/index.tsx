@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { useGetMyAuthInfo } from 'api';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { MyMemberInfoType, MyTotalTestResultType } from 'types';
 
 import {
@@ -41,6 +42,9 @@ const MainPage = ({ memberInfo, resultInfo }: MainPageProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isPassOpen, setIsPassOpen] = useState<boolean>(false);
   const [isStage, setIsStage] = useState<boolean>(false);
+  const [isClicked, setIsClicked] = useState(false);
+
+  const pathname = usePathname();
 
   useEffect(() => {
     const today = new Date().toDateString();
@@ -54,7 +58,6 @@ const MainPage = ({ memberInfo, resultInfo }: MainPageProps) => {
       setIsOpen(false);
     }
   }, []);
-  const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_STAGE === 'stage') {
@@ -65,6 +68,7 @@ const MainPage = ({ memberInfo, resultInfo }: MainPageProps) => {
   const isFinishFirstTest = resultInfo?.secondTestPassYn === null ? true : false;
 
   const { data: authInfo } = useGetMyAuthInfo();
+
   return (
     <>
       <AlertDialog open={!isClicked && (!authInfo?.authReferrerType || !memberInfo?.name)}>
@@ -83,7 +87,7 @@ const MainPage = ({ memberInfo, resultInfo }: MainPageProps) => {
           <AlertDialogFooter>
             <LoginDialog />
             <AlertDialogAction>
-              <Link onClick={() => setIsClicked(true)} href="/">
+              <Link onClick={() => setIsClicked(true)} href="/" scroll={pathname !== '/'}>
                 다음에
               </Link>
             </AlertDialogAction>
