@@ -3,8 +3,6 @@
 import { useEffect, useState } from 'react';
 
 import { useGetMyAuthInfo } from 'api';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { MyMemberInfoType, MyTotalTestResultType } from 'types';
 
 import {
@@ -21,11 +19,11 @@ import {
 
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  Button,
   Dialog,
   DialogContent,
   DialogHeader,
@@ -43,8 +41,6 @@ const MainPage = ({ memberInfo, resultInfo }: MainPageProps) => {
   const [isPassOpen, setIsPassOpen] = useState<boolean>(false);
   const [isStage, setIsStage] = useState<boolean>(false);
   const [isClicked, setIsClicked] = useState(false);
-
-  const pathname = usePathname();
 
   useEffect(() => {
     const today = new Date().toDateString();
@@ -86,11 +82,7 @@ const MainPage = ({ memberInfo, resultInfo }: MainPageProps) => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <LoginDialog />
-            <AlertDialogAction>
-              <Link onClick={() => setIsClicked(true)} href="/" scroll={pathname !== '/'}>
-                다음에
-              </Link>
-            </AlertDialogAction>
+            <Button onClick={() => setIsClicked(true)}>다음에</Button>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
