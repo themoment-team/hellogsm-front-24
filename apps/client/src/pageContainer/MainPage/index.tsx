@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 
 import { useGetMyAuthInfo } from 'api';
-import Link from 'next/link';
 import { MyMemberInfoType, MyTotalTestResultType } from 'types';
 
 import {
@@ -20,11 +19,11 @@ import {
 
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  Button,
   Dialog,
   DialogContent,
   DialogHeader,
@@ -41,6 +40,7 @@ const MainPage = ({ memberInfo, resultInfo }: MainPageProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isPassOpen, setIsPassOpen] = useState<boolean>(false);
   const [isStage, setIsStage] = useState<boolean>(false);
+  const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
     const today = new Date().toDateString();
@@ -54,7 +54,6 @@ const MainPage = ({ memberInfo, resultInfo }: MainPageProps) => {
       setIsOpen(false);
     }
   }, []);
-  const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_STAGE === 'stage') {
@@ -65,6 +64,7 @@ const MainPage = ({ memberInfo, resultInfo }: MainPageProps) => {
   const isFinishFirstTest = resultInfo?.secondTestPassYn === null ? true : false;
 
   const { data: authInfo } = useGetMyAuthInfo();
+
   return (
     <>
       <AlertDialog open={!isClicked && (!authInfo?.authReferrerType || !memberInfo?.name)}>
@@ -82,11 +82,7 @@ const MainPage = ({ memberInfo, resultInfo }: MainPageProps) => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <LoginDialog />
-            <AlertDialogAction>
-              <Link onClick={() => setIsClicked(true)} href="/">
-                다음에
-              </Link>
-            </AlertDialogAction>
+            <Button onClick={() => setIsClicked(true)}>다음에</Button>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
