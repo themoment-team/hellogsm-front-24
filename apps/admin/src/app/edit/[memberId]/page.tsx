@@ -1,9 +1,8 @@
 import { redirect } from 'next/navigation';
-import { StepsContainer } from 'shared';
+import { StepWrapper } from 'shared';
+import { StepEnum } from 'types';
 
 import { getOneseoByMemberId } from 'admin/app/apis/oneseo/getOneseoById';
-
-const LAST_STEP = 4;
 
 interface EditProps {
   params: { memberId: string };
@@ -14,9 +13,9 @@ export default async function Edit({ params: { memberId }, searchParams }: EditP
   const step = searchParams?.step;
   const id = Number(memberId);
 
-  if (!step || (step && Number(step) > LAST_STEP)) return redirect(`/edit/${memberId}?step=1`);
+  if (!step || !['1', '2', '3', '4'].includes(step)) redirect(`/register/${id}?step=1`);
 
   const data = await getOneseoByMemberId(id);
 
-  return <StepsContainer data={data} type="admin" param={step} memberId={Number(memberId)} />;
+  return <StepWrapper data={data} type="admin" step={step as StepEnum} memberId={id} />;
 }
