@@ -11,8 +11,3 @@ export type SemesterTitleType =
   | "2학년 2학기"
   | "3학년 1학기"
   | "3학년 2학기";
-
-export interface SemesterType {
-  title: SemesterTitleType;
-  id: SemesterIdType;
-}
