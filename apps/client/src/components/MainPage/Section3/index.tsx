@@ -193,9 +193,11 @@ const Section3 = () => {
                   계산해 보세요!
                 </p>
               </div>
-              <Link href="/oneseo/calculate" className={cn(...buttonStyle, 'self-end')}>
-                바로가기
-              </Link>
+              {process.env.NEXT_PUBLIC_SERVER_STATE === 'active' && (
+                <Link href="/oneseo/calculate" className={cn(...buttonStyle, 'self-end')}>
+                  바로가기
+                </Link>
+              )}
             </div>
             <div
               className={cn(
