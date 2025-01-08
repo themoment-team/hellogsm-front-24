@@ -2,23 +2,24 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Control, Controller, UseFormSetValue } from 'react-hook-form';
-import { GradesInputMethodType, ScoreFormType } from 'types';
+import { FreeSemesterValueEnum, GraduationTypeValueEnum, Step4FormType } from 'types';
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared/components';
 import { cn } from 'shared/lib/utils';
-import { useStore } from 'shared/stores';
 
 interface ArtPhysicalFormProps {
-  control: Control<ScoreFormType, any>;
-  setValue: UseFormSetValue<ScoreFormType>;
-  liberalSystem: GradesInputMethodType | undefined;
+  control: Control<Step4FormType, any>;
+  setValue: UseFormSetValue<Step4FormType>;
+  isFreeGrade: boolean;
+  graduationType: GraduationTypeValueEnum.CANDIDATE | GraduationTypeValueEnum.GRADUATE;
+  freeSemester: FreeSemesterValueEnum | null;
 }
 
 interface ScoreSelectProps {
   name: `artsPhysicalAchievement.${number}`;
-  control: Control<ScoreFormType, any>;
-  setValue: UseFormSetValue<ScoreFormType>;
-  liberalSystem: GradesInputMethodType | undefined;
+  control: Control<Step4FormType, any>;
+  setValue: UseFormSetValue<Step4FormType>;
+  isFreeGrade: boolean;
 }
 
 const artPhysicalGraduationArray = [
@@ -51,11 +52,11 @@ const artPhysicalCandidateIndexArray = [
 ] as const;
 
 const SemesterIdToTitle = {
-  achievement1_2: '1학년 2학기',
-  achievement2_1: '2학년 1학기',
-  achievement2_2: '2학년 2학기',
-  achievement3_1: '3학년 1학기',
-  achievement3_2: '3학년 2학기',
+  '1-2': '1학년 2학기',
+  '2-1': '2학년 1학기',
+  '2-2': '2학년 2학기',
+  '3-1': '3학년 1학기',
+  '3-2': '3학년 2학기',
 };
 
 const itemStyle = [
@@ -79,12 +80,12 @@ const rowStyle = [
   'items-center',
 ];
 
-const ScoreSelect = ({ name, control, setValue, liberalSystem }: ScoreSelectProps) => (
+const ScoreSelect = ({ name, control, setValue, isFreeGrade }: ScoreSelectProps) => (
   <Controller
     name={name}
     control={control}
     render={({ field: { value } }) => (
-      <Select onValueChange={(value) => setValue(name, value)} defaultValue={value && value}>
+      <Select onValueChange={(value) => setValue(name, value)} defaultValue={value || ''}>
         <SelectTrigger
           className={cn(
             'h-[2rem]',
@@ -96,7 +97,7 @@ const ScoreSelect = ({ name, control, setValue, liberalSystem }: ScoreSelectProp
             'text-slate-900',
             'px-[0.5rem]',
             'border-slate-300',
-            liberalSystem === 'freeGrade' ? 'w-[5.47917rem]' : 'w-[8.3125rem]',
+            isFreeGrade ? 'w-[5.47917rem]' : 'w-[8.3125rem]',
           )}
         >
           <SelectValue placeholder="성적 선택" />
@@ -113,11 +114,15 @@ const ScoreSelect = ({ name, control, setValue, liberalSystem }: ScoreSelectProp
   />
 );
 
-const ArtPhysicalForm = ({ control, setValue, liberalSystem }: ArtPhysicalFormProps) => {
-  const { graduationType, freeSemester } = useStore();
-
+const ArtPhysicalForm = ({
+  control,
+  setValue,
+  isFreeGrade,
+  graduationType,
+  freeSemester,
+}: ArtPhysicalFormProps) => {
   const artPhysicalArray = (() => {
-    if (graduationType === 'CANDIDATE') {
+    if (graduationType === GraduationTypeValueEnum.CANDIDATE) {
       if (freeSemester)
         return artPhysicalCandidateArray.filter(
           (semester) => semester !== SemesterIdToTitle[freeSemester],
@@ -153,10 +158,7 @@ const ArtPhysicalForm = ({ control, setValue, liberalSystem }: ArtPhysicalFormPr
           {artPhysicalArray.map((title) => (
             <h1
               key={title}
-              className={cn(
-                ...itemStyle,
-                liberalSystem === 'freeGrade' ? 'w-[7.47917rem]' : 'w-[10.3125rem]',
-              )}
+              className={cn(...itemStyle, isFreeGrade ? 'w-[7.47917rem]' : 'w-[10.3125rem]')}
             >
               {title}
             </h1>
@@ -180,16 +182,13 @@ const ArtPhysicalForm = ({ control, setValue, liberalSystem }: ArtPhysicalFormPr
             {registerIndexList.map((registerIndex) => (
               <div
                 key={registerIndex}
-                className={cn(
-                  ...itemStyle,
-                  liberalSystem === 'freeGrade' ? 'w-[7.47917rem]' : 'w-[10.3125rem]',
-                )}
+                className={cn(...itemStyle, isFreeGrade ? 'w-[7.47917rem]' : 'w-[10.3125rem]')}
               >
                 <ScoreSelect
                   name={`artsPhysicalAchievement.${registerIndex}`}
                   control={control}
                   setValue={setValue}
-                  liberalSystem={liberalSystem}
+                  isFreeGrade={isFreeGrade}
                 />
               </div>
             ))}

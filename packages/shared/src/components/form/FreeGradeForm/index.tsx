@@ -2,41 +2,42 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { XIcon } from 'lucide-react';
-import { Control, Controller, UseFormRegister, UseFormSetValue } from 'react-hook-form';
-import { ScoreFormType, SemesterIdType, SemesterType } from 'types';
+import { Control, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form';
+import { Step4FormType } from 'types';
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared/components';
-import { defaultSubjectArray, scoreArray } from 'shared/constants';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from 'shared/components/ui';
+import { GENERAL_SUBJECTS, SCORE_VALUES } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
-import { useStore } from 'shared/stores';
 
-const defaultSubjectLength = defaultSubjectArray.length;
+const defaultSubjectLength = GENERAL_SUBJECTS.length;
 
-const freeGradeCandidateArray: SemesterType[] = [
-  { title: '2학년 1학기', id: 'achievement2_1' },
-  { title: '2학년 2학기', id: 'achievement2_2' },
-  { title: '3학년 1학기', id: 'achievement3_1' },
+const freeGradeCandidateArray = [
+  { title: '2학년 1학기', field: 'achievement2_1' },
+  { title: '2학년 2학기', field: 'achievement2_2' },
+  { title: '3학년 1학기', field: 'achievement3_1' },
 ] as const;
 
-const freeGradeGraduateArray: SemesterType[] = [
-  { title: '2학년 1학기', id: 'achievement2_1' },
-  { title: '2학년 2학기', id: 'achievement2_2' },
-  { title: '3학년 1학기', id: 'achievement3_1' },
-  { title: '3학년 2학기', id: 'achievement3_2' },
+const freeGradeGraduateArray = [
+  { title: '2학년 1학기', field: 'achievement2_1' },
+  { title: '2학년 2학기', field: 'achievement2_2' },
+  { title: '3학년 1학기', field: 'achievement3_1' },
+  { title: '3학년 2학기', field: 'achievement3_2' },
 ] as const;
 
 interface FreeGradeFormProps {
   subjectArray: string[];
-  control: Control<ScoreFormType, any>;
-  setValue: UseFormSetValue<ScoreFormType>;
-  register: UseFormRegister<ScoreFormType>;
+  control: Control<Step4FormType, any>;
+  setValue: UseFormSetValue<Step4FormType>;
+  register: UseFormRegister<Step4FormType>;
+  watch: UseFormWatch<Step4FormType>;
   handleDeleteSubjectClick: (idx: number) => void;
-}
-
-interface ScoreSelectProps {
-  name: `${SemesterIdType}.${number}`;
-  control: Control<ScoreFormType, any>;
-  setValue: UseFormSetValue<ScoreFormType>;
+  isCandidate: boolean;
 }
 
 const itemStyle = [
@@ -60,50 +61,15 @@ const rowStyle = [
   'items-center',
 ];
 
-const ScoreSelect = ({ name, control, setValue }: ScoreSelectProps) => (
-  <Controller
-    name={name}
-    control={control}
-    render={({ field: { value } }) => (
-      <Select onValueChange={(value) => setValue(name, value)} defaultValue={value && value}>
-        <SelectTrigger
-          className={cn(
-            'w-[5.47917rem]',
-            'h-[2rem]',
-            'text-sm',
-            'font-normal',
-            'leading-5',
-            'bg-white',
-            'data-[placeholder]:text-slate-500',
-            'text-slate-900',
-            'px-[0.5rem]',
-            'border-slate-300',
-          )}
-        >
-          <SelectValue placeholder="성적 선택" />
-        </SelectTrigger>
-        <SelectContent>
-          {scoreArray.map((value, idx) => (
-            <SelectItem value={String(5 - idx)} key={value}>
-              {value}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    )}
-  />
-);
-
 const FreeGradeForm = ({
   subjectArray,
-  control,
   setValue,
   register,
+  watch,
   handleDeleteSubjectClick,
+  isCandidate,
 }: FreeGradeFormProps) => {
-  const { graduationType } = useStore();
-  const freeGradeArray =
-    graduationType === 'CANDIDATE' ? freeGradeCandidateArray : freeGradeGraduateArray;
+  const freeGradeArray = isCandidate ? freeGradeCandidateArray : freeGradeGraduateArray;
 
   return (
     <div className={cn('flex', 'flex-col')}>
@@ -118,8 +84,8 @@ const FreeGradeForm = ({
       >
         <h1 className={cn(...itemStyle, 'w-[6.25rem]')}>과목명</h1>
         <div className={cn('flex')}>
-          {freeGradeArray.map(({ id, title }) => (
-            <h1 key={id} className={cn(...itemStyle, 'w-[7.47917rem]')}>
+          {freeGradeArray.map(({ title }) => (
+            <h1 key={title} className={cn(...itemStyle, 'w-[7.47917rem]')}>
               {title}
             </h1>
           ))}
@@ -160,11 +126,42 @@ const FreeGradeForm = ({
             )}
           </div>
           <div className={cn('flex')}>
-            {freeGradeArray.map(({ id }) => (
-              <div key={id} className={cn(...itemStyle, 'w-[7.47917rem]')}>
-                <ScoreSelect name={`${id}.${idx}`} control={control} setValue={setValue} />
-              </div>
-            ))}
+            {freeGradeArray.map(({ field }) => {
+              const score = watch(`${field}.${idx}`);
+
+              return (
+                <div key={field} className={cn(...itemStyle, 'w-[7.47917rem]')}>
+                  <Select
+                    onValueChange={(value) => setValue(`${field}.${idx}`, Number(value))}
+                    defaultValue={isNaN(score) ? '' : String(score)}
+                  >
+                    <SelectTrigger
+                      className={cn(
+                        'w-[5.47917rem]',
+                        'h-[2rem]',
+                        'text-sm',
+                        'font-normal',
+                        'leading-5',
+                        'bg-white',
+                        'data-[placeholder]:text-slate-500',
+                        'text-slate-900',
+                        'px-[0.5rem]',
+                        'border-slate-300',
+                      )}
+                    >
+                      <SelectValue placeholder="성적 선택" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {SCORE_VALUES.map(({ name, value }, idx) => (
+                        <SelectItem value={String(value)} key={idx}>
+                          {name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              );
+            })}
           </div>
           {idx >= defaultSubjectLength && (
             <button
