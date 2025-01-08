@@ -1,4 +1,12 @@
-import { MockScoreType } from "types";
+import {
+  DesireMajorValueEnum,
+  FreeSemesterValueEnum,
+  GraduationTypeValueEnum,
+  LiberalSystemValueEnum,
+  MockScoreType,
+  RelationshipWithGuardianValueEnum,
+  ScreeningValueEnum,
+} from "types";
 
 export type ScreeningType = "GENERAL" | "SPECIAL" | "EXTRA_VETERANS" | "EXTRA_ADMISSION";
 
@@ -62,18 +70,19 @@ export enum MajorEnum {
 }
 
 export interface MiddleSchoolAchievementType {
-  achievement1_2: number[] | null;
-  achievement2_1: number[] | null;
-  achievement2_2: number[] | null;
-  achievement3_1: number[] | null;
-  achievement3_2: number[] | null;
-  newSubjects: string[] | null;
+  achievement1_2: number[];
+  achievement2_1: number[];
+  achievement2_2: number[];
+  achievement3_1: number[];
+  achievement3_2: number[];
+  newSubjects: string[] | undefined;
   artsPhysicalAchievement: number[];
   absentDays: number[];
   attendanceDays: number[];
   volunteerTime: number[];
-  liberalSystem: LiberalSystemType | null;
-  freeSemester: FreeSemesterType | null;
+  liberalSystem: LiberalSystemValueEnum | null;
+  freeSemester: FreeSemesterValueEnum | null;
+  generalSubjects: string[];
   artsPhysicalSubjects: string[];
 }
 
@@ -82,9 +91,9 @@ export interface GEDAchievementType {
 }
 
 export interface DesireMajorsType {
-  firstDesiredMajor: MajorType;
-  secondDesiredMajor: MajorType;
-  thirdDesiredMajor: MajorType;
+  firstDesiredMajor: DesireMajorValueEnum;
+  secondDesiredMajor: DesireMajorValueEnum;
+  thirdDesiredMajor: DesireMajorValueEnum;
 }
 
 export interface PrivacyDetailType {
@@ -92,12 +101,12 @@ export interface PrivacyDetailType {
   sex: SexType;
   birth: string;
   phoneNumber: string;
-  graduationType: GraduationType;
+  graduationType: GraduationTypeValueEnum;
   address: string;
   detailAddress: string;
   guardianName: string;
   guardianPhoneNumber: string;
-  relationshipWithGuardian: string;
+  relationshipWithGuardian: RelationshipWithGuardianValueEnum | string;
   schoolName: string;
   schoolAddress: string;
   graduationDate: string;
@@ -115,17 +124,17 @@ export interface PostOneseoType {
   profileImg: string | null | undefined;
   address: string | null;
   detailAddress: string | null;
-  graduationType: GraduationType | null;
+  graduationType: GraduationTypeValueEnum | null;
   schoolTeacherName: string | null;
   schoolTeacherPhoneNumber: string | null;
-  firstDesiredMajor: MajorType | null;
-  secondDesiredMajor: MajorType | null;
-  thirdDesiredMajor: MajorType | null;
+  firstDesiredMajor: DesireMajorValueEnum | null;
+  secondDesiredMajor: DesireMajorValueEnum | null;
+  thirdDesiredMajor: DesireMajorValueEnum | null;
   middleSchoolAchievement: MiddleSchoolAchievementType | GEDAchievementType;
   schoolName: string | null;
   schoolAddress: string | null;
   graduationDate: string | null;
-  screening: ScreeningType | null;
+  screening: ScreeningValueEnum | null;
   step?: number;
 }
 
@@ -153,7 +162,7 @@ export interface CalculatedScoreType extends MockScoreType {
 export interface GetMyOneseoType {
   oneseoId: number;
   submitCode: string;
-  wantedScreening: ScreeningType;
+  wantedScreening: ScreeningValueEnum;
   desiredMajors: DesireMajorsType;
   privacyDetail: PrivacyDetailType;
   middleSchoolAchievement: MiddleSchoolAchievementType &
