@@ -92,8 +92,6 @@ const Header = () => {
           },
         ];
 
-  console.log(navLinks);
-
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 750) {
@@ -150,7 +148,6 @@ const Header = () => {
         </Link>
         <nav
           className={cn(
-            // 'w-[35.5rem]',
             'gap-[2.75rem]',
             'hidden',
             'smxm:flex',
@@ -162,6 +159,7 @@ const Header = () => {
         >
           {navLinks.map(({ label, href }) => (
             <ActiveLink
+              key={label}
               href={href}
               className={cn(...activeTextStyle)}
               activeClassName={cn(...activeStyle)}
