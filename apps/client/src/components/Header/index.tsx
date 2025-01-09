@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import { memberQueryKeys, useLogout } from 'api';
+import { memberQueryKeys } from 'api';
 import Link from 'next/link';
 
 import * as I from 'client/assets';
 import { ActiveLink, LoginDialog } from 'client/components';
 import { cn } from 'client/lib/utils';
 
-import { useGetMyAuthInfo, useGetMyMemberInfo } from 'api/hooks';
+import { useGetMyAuthInfo, useGetMyMemberInfo, useLogout } from 'api/hooks';
 
 const activeStyle = [
   'text-gray-900',
@@ -49,7 +49,11 @@ const modalBtnStyle = [
   ...activeTextStyle,
 ];
 
-const Header = () => {
+interface HeaderProps {
+  isServerHealthy: boolean;
+}
+
+const Header = ({ isServerHealthy }: HeaderProps) => {
   const { data: authInfo } = useGetMyAuthInfo();
   const { data: memberInfo } = useGetMyMemberInfo();
 
@@ -67,30 +71,29 @@ const Header = () => {
   const [isBarClicked, setIsBarClicked] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
-  const navLinks =
-    process.env.NEXT_PUBLIC_SERVER_STATE === 'active'
-      ? [
-          { href: '/', label: '홈', icon: I.HomeIcon },
-          { href: '/guide', label: '원서접수', icon: I.OneseoIcon },
-          { href: '/faq', label: '자주 묻는 질문', icon: I.FaqIcon },
-          { href: '/mypage', label: '내 정보 페이지', icon: I.HeaderProfileIcon },
-          { href: '/oneseo/calculate', label: '모의 성적 계산', icon: I.CalculateIcon },
-          {
-            href: '/introduce',
-            label: '더모먼트팀',
-            icon: I.SparcleIcon,
-          },
-        ]
-      : [
-          { href: '/', label: '홈', icon: I.HomeIcon },
-          { href: '/guide', label: '원서접수', icon: I.OneseoIcon },
-          { href: '/faq', label: '자주 묻는 질문', icon: I.FaqIcon },
-          {
-            href: '/introduce',
-            label: '더모먼트팀',
-            icon: I.SparcleIcon,
-          },
-        ];
+  const navLinks = isServerHealthy
+    ? [
+        { href: '/', label: '홈', icon: I.HomeIcon },
+        { href: '/guide', label: '원서접수', icon: I.OneseoIcon },
+        { href: '/faq', label: '자주 묻는 질문', icon: I.FaqIcon },
+        { href: '/mypage', label: '내 정보 페이지', icon: I.HeaderProfileIcon },
+        { href: '/oneseo/calculate', label: '모의 성적 계산', icon: I.CalculateIcon },
+        {
+          href: '/introduce',
+          label: '더모먼트팀',
+          icon: I.SparcleIcon,
+        },
+      ]
+    : [
+        { href: '/', label: '홈', icon: I.HomeIcon },
+        { href: '/guide', label: '원서접수', icon: I.OneseoIcon },
+        { href: '/faq', label: '자주 묻는 질문', icon: I.FaqIcon },
+        {
+          href: '/introduce',
+          label: '더모먼트팀',
+          icon: I.SparcleIcon,
+        },
+      ];
 
   useEffect(() => {
     const handleResize = () => {
@@ -168,7 +171,7 @@ const Header = () => {
             </ActiveLink>
           ))}
         </nav>
-        {process.env.NEXT_PUBLIC_SERVER_STATE === 'active' &&
+        {isServerHealthy &&
           (authInfo?.authReferrerType && memberInfo?.name ? (
             <>
               <div className={cn('relative', 'hidden', 'smxm:flex', 'w-[10rem]')}>

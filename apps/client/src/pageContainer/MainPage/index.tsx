@@ -34,9 +34,10 @@ import { cn } from 'shared/lib/utils';
 interface MainPageProps {
   memberInfo: MyMemberInfoType | undefined;
   resultInfo: MyTotalTestResultType | undefined;
+  isServerHealthy: boolean;
 }
 
-const MainPage = ({ memberInfo, resultInfo }: MainPageProps) => {
+const MainPage = ({ memberInfo, resultInfo, isServerHealthy }: MainPageProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isPassOpen, setIsPassOpen] = useState<boolean>(false);
   const [isStage, setIsStage] = useState<boolean>(false);
@@ -88,7 +89,7 @@ const MainPage = ({ memberInfo, resultInfo }: MainPageProps) => {
       </AlertDialog>
       <Section1 />
       <Section2 />
-      <Section3 />
+      <Section3 isServerHealthy={isServerHealthy} />
       <Section4 />
       <Section5 />
       <Footer />
