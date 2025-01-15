@@ -1,4 +1,6 @@
+import { Header } from 'client/components';
 import { GoogleAnalytics } from 'client/lib';
+import { getIsServerHealthy } from 'client/utils';
 
 import Provider from './provider';
 
@@ -31,12 +33,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   // TODO 로컬 font 적용시키기
+
+  const isServerHealthy = await getIsServerHealthy();
 
   return (
     <html lang="ko">
@@ -58,7 +62,10 @@ export default function RootLayout({
         {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
         )}
-        <Provider>{children}</Provider>
+        <Provider>
+          <Header isServerHealthy={isServerHealthy} />
+          {children}
+        </Provider>
       </body>
     </html>
   );

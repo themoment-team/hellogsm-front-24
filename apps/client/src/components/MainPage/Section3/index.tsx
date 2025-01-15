@@ -15,7 +15,11 @@ const buttonStyle = [
   'text-white',
 ] as const;
 
-const Section3 = () => {
+interface Section3Props {
+  isServerHealthy: boolean;
+}
+
+const Section3 = ({ isServerHealthy }: Section3Props) => {
   return (
     <div className={cn('w-full', 'bg-white', 'relative', 'py-[11.25rem]')}>
       <div
@@ -193,9 +197,11 @@ const Section3 = () => {
                   계산해 보세요!
                 </p>
               </div>
-              <Link href="/oneseo/calculate" className={cn(...buttonStyle, 'self-end')}>
-                바로가기
-              </Link>
+              {isServerHealthy && (
+                <Link href="/oneseo/calculate" className={cn(...buttonStyle, 'self-end')}>
+                  바로가기
+                </Link>
+              )}
             </div>
             <div
               className={cn(
