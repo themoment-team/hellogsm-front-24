@@ -10,8 +10,8 @@ import { cn } from 'shared/lib/utils';
 const ApplicantTH = () => {
   const defaultStyle = cn('font-semibold', 'text-zinc-500');
 
-  const [isDocOver, setIsDocOver] = useState<boolean>(false);
-  const [isAgreeOver, setisAgreeOver] = useState<boolean>(false);
+  const [isDocOver, setDocOver] = useState<boolean>(false);
+  const [isAgreeOver, setAgreeOver] = useState<boolean>(false);
 
   return (
     <>
@@ -23,8 +23,8 @@ const ApplicantTH = () => {
               <div className={cn('flex', 'gap-1', 'items-center')}>
                 서류 제출 여부
                 <div
-                  onMouseOver={() => setIsDocOver(true)}
-                  onMouseLeave={() => setIsDocOver(false)}
+                  onMouseOver={() => setDocOver(true)}
+                  onMouseLeave={() => setDocOver(false)}
                   className={cn('cursor-pointer', 'relative')}
                 >
                   <QuestionMark />
@@ -59,8 +59,8 @@ const ApplicantTH = () => {
               <div className={cn('flex', 'gap-1', 'items-center')}>
                 입학 동의서 제출 여부
                 <div
-                  onMouseOver={() => setisAgreeOver(true)}
-                  onMouseLeave={() => setisAgreeOver(false)}
+                  onMouseOver={() => setAgreeOver(true)}
+                  onMouseLeave={() => setAgreeOver(false)}
                   className={cn('cursor-pointer', 'relative')}
                 >
                   <QuestionMark />
