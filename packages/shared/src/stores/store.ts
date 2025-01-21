@@ -42,7 +42,7 @@ interface StoreType {
   setFirstDesiredMajor: (major: MajorType) => void;
   setSecondDesiredMajor: (major: MajorType) => void;
   setThirdDesiredMajor: (major: MajorType) => void;
-  setSchoolName: (schoolNmae: string) => void;
+  setSchoolName: (schoolName: string) => void;
   setSchoolAddress: (SchoolAddress: string) => void;
   setYear: (year: string) => void;
   setMonth: (month: string) => void;
@@ -89,7 +89,7 @@ const useStore = create<StoreType>((set) => ({
   setFirstDesiredMajor: (major) => set(() => ({ firstDesiredMajor: major })),
   setSecondDesiredMajor: (major) => set(() => ({ secondDesiredMajor: major })),
   setThirdDesiredMajor: (major) => set(() => ({ thirdDesiredMajor: major })),
-  setSchoolName: (schoolNmae) => set(() => ({ schoolName: schoolNmae })),
+  setSchoolName: (schoolName) => set(() => ({ schoolName: schoolName })),
   setSchoolAddress: (SchoolAddress) => set(() => ({ schoolAddress: SchoolAddress })),
   setYear: (year) => set(() => ({ year: year })),
   setMonth: (month) => set(() => ({ month: month })),
