@@ -76,7 +76,7 @@ const Header = () => {
     {
       href: '/introduce',
       label: '더모먼트팀',
-      icon: I.SparcleIcon,
+      icon: I.SparkleIcon,
     },
   ];
 
