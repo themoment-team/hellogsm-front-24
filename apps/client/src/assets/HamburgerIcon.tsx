@@ -1,4 +1,4 @@
-const HamburgurIcon = () => (
+const hamburgerIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="2rem"
@@ -16,4 +16,4 @@ const HamburgurIcon = () => (
   </svg>
 );
 
-export default HamburgurIcon;
+export default hamburgerIcon;

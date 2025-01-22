@@ -242,7 +242,7 @@ const Header = () => {
               onClick={() => setIsBarClicked(!isBarClicked)}
               className={cn('flex', 'smxm:hidden')}
             >
-              {isBarClicked ? <I.XIcon /> : <I.HamburgurIcon />}
+              {isBarClicked ? <I.XIcon /> : <I.hamburgerIcon />}
             </button>
           </>
         ) : authInfo?.authReferrerType && !memberInfo?.name ? (
