@@ -11,7 +11,7 @@ const ApplicantTH = () => {
   const defaultStyle = cn('font-semibold', 'text-zinc-500');
 
   const [isDocOver, setIsDocOver] = useState<boolean>(false);
-  const [isAgreeOver, setisAgreeOver] = useState<boolean>(false);
+  const [isAgreeOver, setIsAgreeOver] = useState<boolean>(false);
 
   return (
     <>
@@ -59,8 +59,8 @@ const ApplicantTH = () => {
               <div className={cn('flex', 'gap-1', 'items-center')}>
                 입학 동의서 제출 여부
                 <div
-                  onMouseOver={() => setisAgreeOver(true)}
-                  onMouseLeave={() => setisAgreeOver(false)}
+                  onMouseOver={() => setIsAgreeOver(true)}
+                  onMouseLeave={() => setIsAgreeOver(false)}
                   className={cn('cursor-pointer', 'relative')}
                 >
                   <QuestionMark />

@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import { BackIcon, NotFoundFourIcon } from 'client/assets';
+import { BackIcon, NotFoundFourIcon, NotFoundZeroIcon } from 'client/assets';
 import { Footer } from 'client/components';
 
 import { cn } from 'shared/lib/utils';
