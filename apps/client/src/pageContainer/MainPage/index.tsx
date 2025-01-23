@@ -7,7 +7,7 @@ import { MyMemberInfoType, MyTotalTestResultType } from 'types';
 
 import {
   Footer,
-  LoginDialog,
+  // LoginDialog,
   PassResultDialog,
   Section1,
   Section2,
@@ -18,11 +18,11 @@ import {
 } from 'client/components';
 
 import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
+  // AlertDialog,
+  // AlertDialogContent,
+  // AlertDialogFooter,
+  // AlertDialogHeader,
+  // AlertDialogTitle,
   Button,
   Dialog,
   DialogContent,
@@ -68,7 +68,7 @@ const MainPage = ({ memberInfo, resultInfo, isServerHealthy }: MainPageProps) =>
 
   return (
     <>
-      <AlertDialog open={!isClicked && (!authInfo?.authReferrerType || !memberInfo?.name)}>
+      {/* <AlertDialog open={!isClicked && (!authInfo?.authReferrerType || !memberInfo?.name)}>
         <AlertDialogContent className="w-[400px]">
           <AlertDialogHeader>
             <AlertDialogTitle>
@@ -86,7 +86,7 @@ const MainPage = ({ memberInfo, resultInfo, isServerHealthy }: MainPageProps) =>
             <Button onClick={() => setIsClicked(true)}>다음에</Button>
           </AlertDialogFooter>
         </AlertDialogContent>
-      </AlertDialog>
+      </AlertDialog> */}
       <Section1 />
       <Section2 />
       <Section3 isServerHealthy={isServerHealthy} />
