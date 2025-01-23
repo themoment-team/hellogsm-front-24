@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { useGetMyAuthInfo } from 'api';
+// import { useGetMyAuthInfo } from 'api';
 import { MyMemberInfoType, MyTotalTestResultType } from 'types';
 
 import {
@@ -23,7 +23,7 @@ import {
   // AlertDialogFooter,
   // AlertDialogHeader,
   // AlertDialogTitle,
-  Button,
+  // Button,
   Dialog,
   DialogContent,
   DialogHeader,
@@ -41,7 +41,7 @@ const MainPage = ({ memberInfo, resultInfo, isServerHealthy }: MainPageProps) =>
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isPassOpen, setIsPassOpen] = useState<boolean>(false);
   const [isStage, setIsStage] = useState<boolean>(false);
-  const [isClicked, setIsClicked] = useState(false);
+  // const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
     const today = new Date().toDateString();
@@ -64,7 +64,7 @@ const MainPage = ({ memberInfo, resultInfo, isServerHealthy }: MainPageProps) =>
 
   const isFinishFirstTest = resultInfo?.secondTestPassYn === null ? true : false;
 
-  const { data: authInfo } = useGetMyAuthInfo();
+  // const { data: authInfo } = useGetMyAuthInfo();
 
   return (
     <>
