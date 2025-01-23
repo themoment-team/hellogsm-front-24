@@ -55,14 +55,14 @@ const MainPage = ({ memberInfo, resultInfo, isServerHealthy }: MainPageProps) =>
 
   const { data: authInfo } = useGetMyAuthInfo();
 
+  const showNoticeDialog =
+    process.env.NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF === 'true' &&
+    !isClicked &&
+    (!authInfo?.authReferrerType || !memberInfo?.name);
+
   return (
     <>
-      <LoginNoticeDialog
-        isClicked={isClicked}
-        setIsClicked={setIsClicked}
-        authInfo={authInfo}
-        memberInfo={memberInfo}
-      />
+      {showNoticeDialog && <LoginNoticeDialog setIsClicked={setIsClicked} />}
       <Section1 />
       <Section2 />
       <Section3 isServerHealthy={isServerHealthy} />

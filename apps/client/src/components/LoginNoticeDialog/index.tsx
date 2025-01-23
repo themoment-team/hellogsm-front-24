@@ -6,29 +6,16 @@ import {
   AlertDialogTitle,
   Button,
 } from 'shared';
-import { MyAuthInfoType, MyMemberInfoType } from 'types';
 
 import { LoginDialog } from 'client/components';
 
 interface NoticeDialogProps {
-  isClicked: boolean;
   setIsClicked: React.Dispatch<React.SetStateAction<boolean>>;
-  authInfo: MyAuthInfoType | undefined;
-  memberInfo: MyMemberInfoType | undefined;
 }
 
-const LoginNoticeDialog = ({
-  isClicked,
-  setIsClicked,
-  authInfo,
-  memberInfo,
-}: NoticeDialogProps) => {
-  const showNoticeDialog = process.env.NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF === 'true';
-
-  if (!showNoticeDialog) return null;
-
+const LoginNoticeDialog = ({ setIsClicked }: NoticeDialogProps) => {
   return (
-    <AlertDialog open={!isClicked && (!authInfo?.authReferrerType || !memberInfo?.name)}>
+    <AlertDialog>
       <AlertDialogContent className="w-[400px]">
         <AlertDialogHeader>
           <AlertDialogTitle>
