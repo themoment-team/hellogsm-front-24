@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
+//TODO 추후 합격자 조회 기능의 변경에 따라 코드 수정
+
 // import { useGetMyAuthInfo } from 'api';
 import { MyMemberInfoType, MyTotalTestResultType } from 'types';
 
