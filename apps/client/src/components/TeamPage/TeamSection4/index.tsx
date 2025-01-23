@@ -4,28 +4,69 @@ import Image from 'next/image';
 
 import { cn } from 'shared/lib/utils';
 
-import { Members } from './about';
+import MEMBERS from './member.json';
 
-type Role = 'Back-end' | 'Front-end' | 'UI/UX Design' | 'DevOps';
+const GITHUB_URL = 'https://github.com';
 
-const roleColors: Record<Role, string> = {
+const roleColors: Record<string, string> = {
   'Back-end': 'text-orange-500',
   'Front-end': 'text-sky-600',
   'UI/UX Design': 'text-pink-600',
   DevOps: 'text-teal-500',
 };
 
+interface MemberCardProps {
+  githubId: string;
+  name: string;
+  role: string;
+}
+
+const MemberCard = ({ githubId, name, role }: MemberCardProps) => {
+  return (
+    <a
+      href={`${GITHUB_URL}/${githubId}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cn(
+        'flex',
+        'items-center',
+        'w-[18.4375rem]',
+        'h-[7rem]',
+        'rounded-xl',
+        'border',
+        'border-[#B2B2B2]',
+        'bg-white',
+        'p-5',
+        'gap-1',
+        'space-x-4',
+        'flex-shrink-0',
+        'cursor-pointer',
+      )}
+    >
+      <Image
+        src={`${GITHUB_URL}/${githubId}.png`}
+        width={72}
+        height={72}
+        alt={name}
+        className={cn('rounded-full')}
+      />
+      <div>
+        <p className={cn('text-[1.5rem]/[2rem]', 'font-medium')}>{name}</p>
+        <p className={cn('text-[1.375rem]/[1.75rem]', 'font-normal', roleColors[role])}>{role}</p>
+      </div>
+    </a>
+  );
+};
+
 const TeamSection4 = () => {
   const itemWidth = 18.4375;
   const itemSpacing = 1;
 
-  const totalItemWidth = Members.length * itemWidth;
-  const totalSpacingWidth = (Members.length - 1) * itemSpacing;
+  const totalItemWidth = MEMBERS.length * itemWidth;
+  const totalSpacingWidth = (MEMBERS.length - 1) * itemSpacing;
   const totalWidth = totalItemWidth + totalSpacingWidth;
 
-  const handleCardClick = (url: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
-  };
+  const memberListDoubled = [...MEMBERS, ...MEMBERS];
 
   return (
     <div
@@ -60,46 +101,8 @@ const TeamSection4 = () => {
             animation: 'scrollRight 25s linear infinite',
           }}
         >
-          {Members.concat(Members).map((member, index) => (
-            <div
-              key={index}
-              onClick={() => handleCardClick(member.githubURL)}
-              className={cn(
-                'flex',
-                'items-center',
-                'w-[18.4375rem]',
-                'h-[7rem]',
-                'rounded-xl',
-                'border',
-                'border-[#B2B2B2]',
-                'bg-white',
-                'p-5',
-                'gap-1',
-                'space-x-4',
-                'flex-shrink-0',
-                'cursor-pointer',
-              )}
-            >
-              <Image
-                src={member.imageURL}
-                width={72}
-                height={72}
-                alt={member.name}
-                className={cn('rounded-full')}
-              />
-              <div>
-                <p className={cn('text-[1.5rem]/[2rem]', 'font-medium')}>{member.name}</p>
-                <p
-                  className={cn(
-                    'text-[1.375rem]/[1.75rem]',
-                    'font-normal',
-                    roleColors[member.role as Role],
-                  )}
-                >
-                  {member.role}
-                </p>
-              </div>
-            </div>
+          {memberListDoubled.map((member, index) => (
+            <MemberCard key={index} {...member} />
           ))}
         </div>
         <div
@@ -109,49 +112,9 @@ const TeamSection4 = () => {
             animation: 'scrollLeft 25s linear infinite',
           }}
         >
-          {Members.concat(Members)
-            .reverse()
-            .map((member, index) => (
-              <div
-                key={index}
-                onClick={() => handleCardClick(member.githubURL)}
-                className={cn(
-                  'flex',
-                  'items-center',
-                  'w-[18.4375rem]',
-                  'h-[7rem]',
-                  'rounded-xl',
-                  'border',
-                  'border-[#B2B2B2]',
-                  'bg-white',
-                  'p-5',
-                  'gap-1',
-                  'space-x-4',
-                  'flex-shrink-0',
-                  'cursor-pointer',
-                )}
-              >
-                <Image
-                  src={member.imageURL}
-                  width={72}
-                  height={72}
-                  alt={member.name}
-                  className={cn('rounded-full')}
-                />
-                <div>
-                  <p className={cn('text-[1.5rem]/[2rem]', 'font-medium')}>{member.name}</p>
-                  <p
-                    className={cn(
-                      'text-[1.375rem]/[1.75rem]',
-                      'font-normal',
-                      roleColors[member.role as Role],
-                    )}
-                  >
-                    {member.role}
-                  </p>
-                </div>
-              </div>
-            ))}
+          {memberListDoubled.reverse().map((member, index) => (
+            <MemberCard key={index} {...member} />
+          ))}
         </div>
       </div>
       <style jsx global>{`
