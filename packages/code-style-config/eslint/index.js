@@ -1,7 +1,15 @@
+const path = require("path");
+
 module.exports = {
   plugins: ["no-relative-import-paths"],
-  extends: ["@rushstack/eslint-config/profile/web-app"],
+  extends: ["@rushstack/eslint-config/profile/web-app", "plugin:@cspell/recommended"],
   rules: {
+    "@cspell/spellchecker": [
+      "error",
+      {
+        configFile: path.resolve(__dirname, "cspell.config.yaml"),
+      },
+    ],
     quotes: ["error", "single"],
     "@typescript-eslint/no-floating-promises": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
