@@ -2,7 +2,7 @@ interface Props {
   color: string;
 }
 
-const SparcleIcon = ({ color }: Props) => (
+const SparkleIcon = ({ color }: Props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1.75rem"
@@ -20,4 +20,4 @@ const SparcleIcon = ({ color }: Props) => (
   </svg>
 );
 
-export default SparcleIcon;
+export default SparkleIcon;

@@ -81,7 +81,7 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
         {
           href: '/introduce',
           label: '더모먼트팀',
-          icon: I.SparcleIcon,
+          icon: I.SparkleIcon,
         },
       ]
     : [
@@ -91,7 +91,7 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
         {
           href: '/introduce',
           label: '더모먼트팀',
-          icon: I.SparcleIcon,
+          icon: I.SparkleIcon,
         },
       ];
 
@@ -226,7 +226,7 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
                 onClick={() => setIsBarClicked(!isBarClicked)}
                 className={cn('flex', 'smxm:hidden')}
               >
-                {isBarClicked ? <I.XIcon /> : <I.HamburgurIcon />}
+                {isBarClicked ? <I.XIcon /> : <I.HamburgerIcon />}
               </button>
             </>
           ) : authInfo?.authReferrerType && !memberInfo?.name ? (
