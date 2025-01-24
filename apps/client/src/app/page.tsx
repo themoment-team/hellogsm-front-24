@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 
 import { MainPage } from 'client/pageContainer';
+import { getIsServerHealthy } from 'client/utils';
 
 import {
   getMyAuthInfo,
@@ -10,12 +11,14 @@ import {
 } from './apis';
 
 export default async function Home() {
-  const [memberInfo, authInfo, firstResultInfo, secondResultInfo] = await Promise.all([
-    getMyMemberInfo('/'),
-    getMyAuthInfo('/'),
-    getMyFirstTestResult(),
-    getMySecondTestResult(),
-  ]);
+  const [memberInfo, authInfo, firstResultInfo, secondResultInfo, isServerHealthy] =
+    await Promise.all([
+      getMyMemberInfo('/'),
+      getMyAuthInfo('/'),
+      getMyFirstTestResult(),
+      getMySecondTestResult(),
+      getIsServerHealthy(),
+    ]);
 
   if (authInfo?.authReferrerType && !memberInfo?.name) {
     redirect('/signup');
@@ -27,5 +30,7 @@ export default async function Home() {
     decidedMajor: secondResultInfo?.decidedMajor ?? null,
   };
 
-  return <MainPage memberInfo={memberInfo} resultInfo={resultInfo} />;
+  return (
+    <MainPage memberInfo={memberInfo} resultInfo={resultInfo} isServerHealthy={isServerHealthy} />
+  );
 }

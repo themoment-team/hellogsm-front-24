@@ -5,7 +5,6 @@ import { oneseoUrl } from 'api/libs';
 
 export const getMyOneseo = async (): Promise<GetMyOneseoType | undefined> => {
   const session = cookies().get('SESSION')?.value;
-
   try {
     const response = await fetch(
       new URL(oneseoUrl.getMyOneseo(), process.env.NEXT_PUBLIC_API_BASE_URL),
@@ -24,7 +23,7 @@ export const getMyOneseo = async (): Promise<GetMyOneseoType | undefined> => {
     const myOneseo = await response.json();
 
     return myOneseo.data;
-  } catch (e) {
+  } catch {
     return undefined;
   }
 };

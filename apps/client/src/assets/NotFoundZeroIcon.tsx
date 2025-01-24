@@ -1,4 +1,4 @@
-const NotFoundZeorIcon = () => (
+const NotFoundZeroIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="7.1875rem"
@@ -15,4 +15,4 @@ const NotFoundZeorIcon = () => (
   </svg>
 );
 
-export default NotFoundZeorIcon;
+export default NotFoundZeroIcon;

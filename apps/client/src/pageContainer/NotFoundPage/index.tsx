@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import { BackIcon, NotFoundFourIcon, NotFoundZeorIcon } from 'client/assets';
+import { BackIcon, NotFoundFourIcon, NotFoundZeroIcon } from 'client/assets';
 import { Footer } from 'client/components';
 
 import { cn } from 'shared/lib/utils';
@@ -34,7 +34,7 @@ const NotFoundPage = () => {
           </div>
 
           <div className={cn('-ml-2')}>
-            <NotFoundZeorIcon />
+            <NotFoundZeroIcon />
           </div>
 
           <div className={cn('-ml-2', 'relative')}>

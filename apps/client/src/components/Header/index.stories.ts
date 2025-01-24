@@ -5,16 +5,15 @@ import type { Meta, StoryObj } from '@storybook/react';
 const meta: Meta<typeof Header> = {
   title: 'Client/Header',
   component: Header,
-  parameters: {},
+  args: { isServerHealthy: true },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Header>;
 
-export const Primary: Story = {
-  args: {
-    isLogin: true,
-    name: '사용자',
-  },
+export const 서버_활성화_상태: Story = {};
+
+export const 서버_비활성화_상태: Story = {
+  args: { isServerHealthy: false },
 };
