@@ -120,6 +120,7 @@ const NonSubjectForm = ({ register, isFreeGrade, isGraduate }: NonSubjectFormPro
                       : index === 1 || index === 2 || index === 3
                         ? `attendanceDays.${registerIndex}`
                         : `volunteerTime.${registerIndex}`,
+                    { valueAsNumber: true },
                   )}
                   type="number"
                   className={cn(
