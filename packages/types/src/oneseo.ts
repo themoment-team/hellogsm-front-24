@@ -81,7 +81,7 @@ export interface MiddleSchoolAchievementType {
   attendanceDays: number[];
   volunteerTime: number[];
   liberalSystem: LiberalSystemValueEnum | null;
-  freeSemester: FreeSemesterValueEnum | null;
+  freeSemester: FreeSemesterValueEnum | null | "";
   generalSubjects: string[];
   artsPhysicalSubjects: string[];
 }
@@ -118,23 +118,23 @@ export interface PrivacyDetailType {
 }
 
 export interface PostOneseoType {
-  guardianName: string | null;
-  guardianPhoneNumber: string | null;
-  relationshipWithGuardian: string | null;
-  profileImg: string | null | undefined;
-  address: string | null;
-  detailAddress: string | null;
-  graduationType: GraduationTypeValueEnum | null;
-  schoolTeacherName: string | null;
-  schoolTeacherPhoneNumber: string | null;
-  firstDesiredMajor: DesireMajorValueEnum | null;
-  secondDesiredMajor: DesireMajorValueEnum | null;
-  thirdDesiredMajor: DesireMajorValueEnum | null;
-  middleSchoolAchievement: MiddleSchoolAchievementType | GEDAchievementType;
-  schoolName: string | null;
-  schoolAddress: string | null;
-  graduationDate: string | null;
-  screening: ScreeningValueEnum | null;
+  guardianName?: string;
+  guardianPhoneNumber?: string;
+  relationshipWithGuardian?: string;
+  profileImg?: string;
+  address?: string;
+  detailAddress?: string;
+  graduationType?: GraduationTypeValueEnum;
+  schoolTeacherName?: string;
+  schoolTeacherPhoneNumber?: string;
+  firstDesiredMajor?: DesireMajorValueEnum;
+  secondDesiredMajor?: DesireMajorValueEnum;
+  thirdDesiredMajor?: DesireMajorValueEnum;
+  middleSchoolAchievement?: MiddleSchoolAchievementType | GEDAchievementType;
+  schoolName?: string;
+  schoolAddress?: string;
+  graduationDate?: string;
+  screening?: ScreeningValueEnum;
   step?: number;
 }
 
