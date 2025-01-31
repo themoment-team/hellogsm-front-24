@@ -1,25 +1,19 @@
 'use client';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Control, Controller, UseFormSetValue } from 'react-hook-form';
+import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { FreeSemesterValueEnum, GraduationTypeValueEnum, Step4FormType } from 'types';
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared/components';
 import { cn } from 'shared/lib/utils';
+import { SCORE_VALUES } from 'shared/constants';
+import { useEffect } from 'react';
 
 interface ArtPhysicalFormProps {
-  control: Control<Step4FormType, any>;
   setValue: UseFormSetValue<Step4FormType>;
+  watch: UseFormWatch<Step4FormType>;
   isFreeGrade: boolean;
   graduationType: GraduationTypeValueEnum.CANDIDATE | GraduationTypeValueEnum.GRADUATE;
   freeSemester: FreeSemesterValueEnum | null;
-}
-
-interface ScoreSelectProps {
-  name: `artsPhysicalAchievement.${number}`;
-  control: Control<Step4FormType, any>;
-  setValue: UseFormSetValue<Step4FormType>;
-  isFreeGrade: boolean;
 }
 
 const artPhysicalGraduationArray = [
@@ -80,46 +74,12 @@ const rowStyle = [
   'items-center',
 ];
 
-const ScoreSelect = ({ name, control, setValue, isFreeGrade }: ScoreSelectProps) => (
-  <Controller
-    name={name}
-    control={control}
-    render={({ field: { value } }) => (
-      <Select onValueChange={(value) => setValue(name, value)} defaultValue={value || ''}>
-        <SelectTrigger
-          className={cn(
-            'h-[2rem]',
-            'text-sm',
-            'font-normal',
-            'leading-5',
-            'bg-white',
-            'data-[placeholder]:text-slate-500',
-            'text-slate-900',
-            'px-[0.5rem]',
-            'border-slate-300',
-            isFreeGrade ? 'w-[5.47917rem]' : 'w-[8.3125rem]',
-          )}
-        >
-          <SelectValue placeholder="성적 선택" />
-        </SelectTrigger>
-        <SelectContent>
-          {scoreArray.map((value, idx) => (
-            <SelectItem value={value === '없음' ? '0' : String(5 - idx)} key={value}>
-              {value}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    )}
-  />
-);
-
 const ArtPhysicalForm = ({
-  control,
   setValue,
   isFreeGrade,
   graduationType,
   freeSemester,
+  watch,
 }: ArtPhysicalFormProps) => {
   const artPhysicalArray = (() => {
     if (graduationType === GraduationTypeValueEnum.CANDIDATE) {
@@ -179,19 +139,47 @@ const ArtPhysicalForm = ({
             <h1 className={cn(...itemStyle, 'w-full')}>{subject}</h1>
           </div>
           <div className={cn('flex')}>
-            {registerIndexList.map((registerIndex) => (
-              <div
-                key={registerIndex}
-                className={cn(...itemStyle, isFreeGrade ? 'w-[7.47917rem]' : 'w-[10.3125rem]')}
-              >
-                <ScoreSelect
-                  name={`artsPhysicalAchievement.${registerIndex}`}
-                  control={control}
-                  setValue={setValue}
-                  isFreeGrade={isFreeGrade}
-                />
-              </div>
-            ))}
+            {registerIndexList.map((registerIndex) => {
+              const score = watch(`artsPhysicalAchievement.${registerIndex}`);
+
+              return (
+                <div
+                  key={registerIndex}
+                  className={cn(...itemStyle, isFreeGrade ? 'w-[7.47917rem]' : 'w-[10.3125rem]')}
+                >
+                  <Select
+                    onValueChange={(value) =>
+                      setValue(`artsPhysicalAchievement.${registerIndex}`, Number(value))
+                    }
+                    defaultValue={score ? String(score) : ''}
+                  >
+                    <SelectTrigger
+                      className={cn(
+                        'h-[2rem]',
+                        'text-sm',
+                        'font-normal',
+                        'leading-5',
+                        'bg-white',
+                        'data-[placeholder]:text-slate-500',
+                        'text-slate-900',
+                        'px-[0.5rem]',
+                        'border-slate-300',
+                        isFreeGrade ? 'w-[5.47917rem]' : 'w-[8.3125rem]',
+                      )}
+                    >
+                      <SelectValue placeholder="성적 선택" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {SCORE_VALUES.map(({ name, value }) => (
+                        <SelectItem value={String(value)} key={value}>
+                          {name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              );
+            })}
           </div>
         </div>
       ))}
