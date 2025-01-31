@@ -11,7 +11,12 @@ import {
   UseFormUnregister,
   UseFormWatch,
 } from 'react-hook-form';
-import { LiberalSystemValueEnum, Step4FormType } from 'types';
+import {
+  AchievementType,
+  FreeSemesterValueEnum,
+  LiberalSystemValueEnum,
+  Step4FormType,
+} from 'types';
 import { GraduationTypeValueEnum } from 'types';
 
 import {
@@ -46,7 +51,69 @@ const widthConvertor: { [key: string]: string } = {
   freeSemester_CANDIDATE: 'w-[36.1em]',
 };
 
-// ${store.liberalSystem}_${store.graduationType!}
+const freeGradeCandidateArray = [
+  { title: '2학년 1학기', field: 'achievement2_1' },
+  { title: '2학년 2학기', field: 'achievement2_2' },
+  { title: '3학년 1학기', field: 'achievement3_1' },
+] as const;
+
+const freeGradeGraduateArray = [
+  { title: '2학년 1학기', field: 'achievement2_1' },
+  { title: '2학년 2학기', field: 'achievement2_2' },
+  { title: '3학년 1학기', field: 'achievement3_1' },
+  { title: '3학년 2학기', field: 'achievement3_2' },
+] as const;
+
+const freeSemesterCandidateArray = [
+  {
+    title: '1학년 2학기',
+    field: 'achievement1_2',
+    value: FreeSemesterValueEnum['1-2'],
+  },
+  {
+    title: '2학년 1학기',
+    field: 'achievement2_1',
+    value: FreeSemesterValueEnum['2-1'],
+  },
+  {
+    title: '2학년 2학기',
+    field: 'achievement2_2',
+    value: FreeSemesterValueEnum['2-2'],
+  },
+  {
+    title: '3학년 1학기',
+    field: 'achievement3_1',
+    value: FreeSemesterValueEnum['3-1'],
+  },
+] as const;
+
+const freeSemesterGraduateArray = [
+  {
+    title: '1학년 2학기',
+    field: 'achievement1_2',
+    value: FreeSemesterValueEnum['1-2'],
+  },
+  {
+    title: '2학년 1학기',
+    field: 'achievement2_1',
+    value: FreeSemesterValueEnum['2-1'],
+  },
+  {
+    title: '2학년 2학기',
+    field: 'achievement2_2',
+    value: FreeSemesterValueEnum['2-2'],
+  },
+  {
+    title: '3학년 1학기',
+    field: 'achievement3_1',
+    value: FreeSemesterValueEnum['3-1'],
+  },
+  {
+    title: '3학년 2학기',
+    field: 'achievement3_2',
+    value: FreeSemesterValueEnum['3-2'],
+  },
+] as const;
 
 interface Step4RegisterProps {
   type?: 'client' | 'admin' | 'calculate';
@@ -69,7 +136,6 @@ const Step4Register = ({
   watch,
   unregister,
   type,
-  reset,
   graduationType,
   isGED,
   isCandidate,
@@ -81,6 +147,14 @@ const Step4Register = ({
   const isCalculate = type === 'calculate';
   const isFreeSemester = watch('liberalSystem') === LiberalSystemValueEnum.FREE_SEMESTER;
   const isFreeGrade = watch('liberalSystem') === LiberalSystemValueEnum.FREE_GRADE;
+
+  const achievementList: AchievementType[] = isFreeSemester
+    ? isCandidate
+      ? [...freeSemesterCandidateArray]
+      : [...freeSemesterGraduateArray]
+    : isCandidate
+      ? [...freeGradeCandidateArray]
+      : [...freeGradeGraduateArray];
 
   const handleDeleteSubjectClick = (idx: number) => {
     const filteredSubjects = subjectArray.filter((_, i) => i !== idx);
@@ -115,45 +189,37 @@ const Step4Register = ({
       ? subjectName
       : `추가과목 ${subjectArray.length - defaultSubjectLength}`;
     setSubjectArray((prev) => [...prev, newSubject]);
+
+    achievementList.forEach(({ field }) =>
+      setValue(
+        `${field}.${subjectArray.length}`,
+        watch(`${field}.${subjectArray.length}`) || undefined!,
+      ),
+    );
   };
 
   useEffect(() => {
     if (isGED) {
-      reset({
-        liberalSystem: null,
-        achievement1_2: null,
-        achievement2_1: null,
-        achievement2_2: null,
-        achievement3_1: null,
-        achievement3_2: null,
-        artsPhysicalAchievement: null,
-        absentDays: null,
-        attendanceDays: null,
-        volunteerTime: null,
-        freeSemester: null,
-      });
+      setValue('liberalSystem', null);
+      setValue('achievement1_2', null);
+      setValue('achievement2_1', null);
+      setValue('achievement2_2', null);
+      setValue('achievement3_1', null);
+      setValue('achievement3_2', null);
+      setValue('artsPhysicalAchievement', null);
+      setValue('absentDays', null);
+      setValue('attendanceDays', null);
+      setValue('volunteerTime', null);
+      setValue('freeSemester', null);
     } else {
-      reset({
-        liberalSystem: watch('liberalSystem') ?? LiberalSystemValueEnum.FREE_GRADE,
-        achievement1_2: watch('achievement1_2') ?? undefined,
-        achievement2_1: watch('achievement2_1') ?? undefined,
-        achievement2_2: watch('achievement2_2') ?? undefined,
-        achievement3_1: watch('achievement3_1') ?? undefined,
-        achievement3_2: watch('achievement3_2') ?? undefined,
-        newSubjects: watch('newSubjects') ?? undefined,
-        artsPhysicalAchievement: watch('artsPhysicalAchievement') ?? undefined,
-        absentDays: watch('absentDays') ?? undefined,
-        attendanceDays: watch('attendanceDays') ?? undefined,
-        volunteerTime: watch('volunteerTime') ?? undefined,
-        freeSemester: watch('freeSemester') ?? undefined,
-        gedTotalScore: null,
-      });
+      setValue('gedTotalScore', null);
+      setValue('liberalSystem', LiberalSystemValueEnum.FREE_GRADE);
+    }
 
-      const newSubject = watch('newSubjects');
+    const newSubject = watch('newSubjects');
 
-      if (newSubject && newSubject.length) {
-        newSubject.forEach((subjectName) => handleAddSubjectClick(subjectName));
-      }
+    if (newSubject && newSubject.length) {
+      newSubject.forEach((subjectName) => handleAddSubjectClick(subjectName));
     }
   }, []);
 
@@ -187,7 +253,7 @@ const Step4Register = ({
             : '회원가입 시 입력한 기본 정보가 노출됩니다.'}
         </p>
         {graduationType === GraduationTypeValueEnum.GED ? (
-          <form onSubmit={() => {}}>
+          <form onSubmit={(e) => e.preventDefault()}>
             <div className={cn('w-[18.75rem]', 'flex', 'flex-col', 'gap-1')}>
               <p className={cn('text-slate-900', 'text-[0.875rem]/[1.25rem]')}>
                 검정고시 전과목 득점 합계 <span className={cn('text-red-600')}>*</span>
@@ -213,7 +279,10 @@ const Step4Register = ({
             )}
           >
             <FormController className={cn(['mt-[5.625rem]'])} />
-            <form className={cn('flex', 'flex-col', 'items-center')}>
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className={cn('flex', 'flex-col', 'items-center')}
+            >
               <LiberalSystemSwitch
                 isFreeGrade={isFreeGrade}
                 isFreeSemester={isFreeSemester}
@@ -244,23 +313,23 @@ const Step4Register = ({
                   </div>
                   {isFreeGrade && (
                     <FreeGradeForm
+                      achievementList={achievementList}
                       register={register}
                       setValue={setValue}
                       subjectArray={subjectArray}
                       watch={watch}
                       control={control}
                       handleDeleteSubjectClick={handleDeleteSubjectClick}
-                      isCandidate={isCandidate}
                     />
                   )}
                   {isFreeSemester && (
                     <FreeSemesterForm
+                      achievementList={achievementList}
                       register={register}
                       setValue={setValue}
                       subjectArray={subjectArray}
                       watch={watch}
                       handleDeleteSubjectClick={handleDeleteSubjectClick}
-                      isCandidate={isCandidate}
                       freeSemester={watch('freeSemester')}
                     />
                   )}
@@ -290,7 +359,7 @@ const Step4Register = ({
                   <ArtPhysicalForm
                     graduationType={graduationType}
                     setValue={setValue}
-                    control={control}
+                    watch={watch}
                     isFreeGrade={isFreeGrade}
                     freeSemester={watch('freeSemester')}
                   />
