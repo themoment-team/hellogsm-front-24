@@ -123,7 +123,6 @@ interface Step4RegisterProps {
   setValue: UseFormSetValue<Step4FormType>;
   watch: UseFormWatch<Step4FormType>;
   control: Control<Step4FormType>;
-  reset: UseFormReset<Step4FormType>;
   isGED: boolean;
   isCandidate: boolean;
   isGraduate: boolean;

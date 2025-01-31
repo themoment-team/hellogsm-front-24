@@ -41,6 +41,8 @@ const StepCircle = ({ step, isActive, isCompleted }: StepCircleType) => {
 };
 
 interface StepBarType {
+  baseUrl: string;
+  handleCheckScoreButtonClick: () => void;
   step: StepEnum;
   isStepSuccess: {
     '1': boolean;
@@ -50,7 +52,7 @@ interface StepBarType {
   };
 }
 
-const StepBar = ({ step, isStepSuccess }: StepBarType) => {
+const StepBar = ({ step, baseUrl, isStepSuccess, handleCheckScoreButtonClick }: StepBarType) => {
   const { push } = useRouter();
 
   return (
@@ -86,7 +88,7 @@ const StepBar = ({ step, isStepSuccess }: StepBarType) => {
         </div>
         <div className={cn('flex', 'gap-[0.5rem]')}>
           {step !== StepEnum.ONE && (
-            <Button variant="ghost" onClick={() => push(`/register?step=${Number(step) - 1}`)}>
+            <Button variant="ghost" onClick={() => push(`${baseUrl}?step=${Number(step) - 1}`)}>
               이전
             </Button>
           )}
@@ -95,7 +97,7 @@ const StepBar = ({ step, isStepSuccess }: StepBarType) => {
             <Button
               variant={step === StepEnum.FOUR ? 'next' : 'submit'}
               disabled={!isStepSuccess[step]}
-              onClick={() => {}}
+              onClick={handleCheckScoreButtonClick}
             >
               점수 확인하기
             </Button>
@@ -103,19 +105,13 @@ const StepBar = ({ step, isStepSuccess }: StepBarType) => {
             <Button
               variant={isStepSuccess[step] ? 'next' : 'submit'}
               disabled={!isStepSuccess[step]}
-              onClick={() => push(`/register?step=${Number(step) + 1}`)}
+              onClick={() => push(`${baseUrl}?step=${Number(step) + 1}`)}
             >
               다음으로
             </Button>
           )}
         </div>
       </div>
-      {/* <ScoreCalculateDialog
-        // isDialog={isDialog}
-        // setIsDialog={setIsDialog}
-        // scoreCalculateDialogData={scoreCalculateDialogData!}
-        type="score"
-      /> */}
     </>
   );
 };
