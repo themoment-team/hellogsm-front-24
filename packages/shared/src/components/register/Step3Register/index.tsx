@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import { UseFormRegister, UseFormReset, UseFormSetValue, UseFormWatch } from 'react-hook-form';
+import { UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { RelationshipWithGuardianValueEnum, Step3FormType } from 'types';
 
 import { CustomFormItem, RadioButton } from 'shared/components';
@@ -13,7 +13,6 @@ interface Step3RegisterProps {
   register: UseFormRegister<Step3FormType>;
   setValue: UseFormSetValue<Step3FormType>;
   watch: UseFormWatch<Step3FormType>;
-  reset: UseFormReset<Step3FormType>;
   isCandidate: boolean;
 }
 const relationshipWithGuardianList = [
@@ -22,12 +21,10 @@ const relationshipWithGuardianList = [
   { name: '기타 (직접입력)', value: RelationshipWithGuardianValueEnum.OTHER },
 ] as const;
 
-const Step3Register = ({ register, setValue, watch, reset, isCandidate }: Step3RegisterProps) => {
+const Step3Register = ({ register, setValue, watch, isCandidate }: Step3RegisterProps) => {
   const handleRelationshipWithGuardianOptionClick = (value: RelationshipWithGuardianValueEnum) => {
     if (value !== RelationshipWithGuardianValueEnum.OTHER) {
       setValue('otherRelationshipWithGuardian', null);
-    } else {
-      setValue('otherRelationshipWithGuardian', '');
     }
 
     setValue('relationshipWithGuardian', value);
@@ -35,17 +32,15 @@ const Step3Register = ({ register, setValue, watch, reset, isCandidate }: Step3R
 
   useEffect(() => {
     if (isCandidate) {
-      reset({
-        ...watch(),
-        schoolTeacherName: watch('schoolTeacherName') ?? undefined,
-        schoolTeacherPhoneNumber: watch('schoolTeacherPhoneNumber') ?? undefined,
-      });
+      setValue('schoolTeacherName', watch('schoolTeacherName') ?? '');
+      setValue('schoolTeacherPhoneNumber', watch('schoolTeacherPhoneNumber') ?? '');
     }
 
     if (!isCandidate) {
-      reset({ ...watch(), schoolTeacherName: null, schoolTeacherPhoneNumber: null });
+      setValue('schoolTeacherName', null);
+      setValue('schoolTeacherPhoneNumber', null);
     }
-  }, [isCandidate]);
+  }, []);
 
   return (
     <div className={cn('flex', 'w-full', 'flex-col', 'items-start', 'gap-10')}>
