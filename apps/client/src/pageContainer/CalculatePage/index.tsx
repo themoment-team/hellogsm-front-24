@@ -7,8 +7,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { usePostMockScore } from 'api';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
-import { Button, Step4Register, step4Schema } from 'shared';
-import { GraduationTypeValueEnum, LiberalSystemValueEnum, Step4FormType } from 'types';
+import { Button, ScoreCalculateDialog, Step4Register, step4Schema } from 'shared';
+import {
+  GraduationTypeValueEnum,
+  LiberalSystemValueEnum,
+  MockScoreType,
+  Step4FormType,
+} from 'types';
 
 import { ComputerRecommendedPage } from 'client/pageContainer';
 
@@ -30,12 +35,21 @@ const CalculatePage = () => {
   });
 
   const [graduationType, setGraduationType] = useState<GraduationTypeValueEnum | null>(null);
+  const [isDialog, setIsDialog] = useState<boolean>(false);
+  const [scoreCalculateDialogData, setScoreCalculateDialogData] = useState<MockScoreType | null>(
+    null,
+  );
   const isCandidate = graduationType === GraduationTypeValueEnum.CANDIDATE;
   const isGED = graduationType === GraduationTypeValueEnum.GED;
   const isGraduate = graduationType === GraduationTypeValueEnum.GRADUATE;
   const isStep4Success = step4Schema.safeParse(step4UseForm.watch()).success;
 
-  const { mutate: postMockScore } = usePostMockScore(graduationType!, {});
+  const { mutate: postMockScore } = usePostMockScore(graduationType!, {
+    onSuccess: (data) => {
+      setScoreCalculateDialogData(data);
+      setIsDialog(true);
+    },
+  });
 
   const handleCalculateButtonClick = () => {
     const {
@@ -167,6 +181,13 @@ const CalculatePage = () => {
           </div>
         </div>
       )}
+
+      <ScoreCalculateDialog
+        isDialog={isDialog}
+        setIsDialog={setIsDialog}
+        scoreCalculateDialogData={scoreCalculateDialogData}
+        type="score"
+      />
     </>
   );
 };
