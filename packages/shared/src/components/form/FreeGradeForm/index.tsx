@@ -1,9 +1,8 @@
 'use client';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { XIcon } from 'lucide-react';
 import { Control, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form';
-import { Step4FormType } from 'types';
+import { AchievementType, Step4FormType } from 'types';
 
 import {
   Select,
@@ -12,23 +11,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from 'shared/components/ui';
-import { GENERAL_SUBJECTS, SCORE_VALUES } from 'shared/constants';
+import { ACHIEVEMENT_FIELD_LIST, GENERAL_SUBJECTS, SCORE_VALUES } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
+import { useEffect } from 'react';
 
 const defaultSubjectLength = GENERAL_SUBJECTS.length;
-
-const freeGradeCandidateArray = [
-  { title: '2학년 1학기', field: 'achievement2_1' },
-  { title: '2학년 2학기', field: 'achievement2_2' },
-  { title: '3학년 1학기', field: 'achievement3_1' },
-] as const;
-
-const freeGradeGraduateArray = [
-  { title: '2학년 1학기', field: 'achievement2_1' },
-  { title: '2학년 2학기', field: 'achievement2_2' },
-  { title: '3학년 1학기', field: 'achievement3_1' },
-  { title: '3학년 2학기', field: 'achievement3_2' },
-] as const;
 
 interface FreeGradeFormProps {
   subjectArray: string[];
@@ -37,7 +24,7 @@ interface FreeGradeFormProps {
   register: UseFormRegister<Step4FormType>;
   watch: UseFormWatch<Step4FormType>;
   handleDeleteSubjectClick: (idx: number) => void;
-  isCandidate: boolean;
+  achievementList: AchievementType[];
 }
 
 const itemStyle = [
@@ -67,9 +54,17 @@ const FreeGradeForm = ({
   register,
   watch,
   handleDeleteSubjectClick,
-  isCandidate,
+  achievementList,
 }: FreeGradeFormProps) => {
-  const freeGradeArray = isCandidate ? freeGradeCandidateArray : freeGradeGraduateArray;
+  useEffect(() => {
+    setTimeout(() =>
+      ACHIEVEMENT_FIELD_LIST.forEach((field) => {
+        achievementList.some((freeGrade) => freeGrade.field === field)
+          ? setValue(field, watch(field) || [])
+          : setValue(field, null);
+      }),
+    );
+  }, []);
 
   return (
     <div className={cn('flex', 'flex-col')}>
@@ -84,7 +79,7 @@ const FreeGradeForm = ({
       >
         <h1 className={cn(...itemStyle, 'w-[6.25rem]')}>과목명</h1>
         <div className={cn('flex')}>
-          {freeGradeArray.map(({ title }) => (
+          {achievementList.map(({ title }) => (
             <h1 key={title} className={cn(...itemStyle, 'w-[7.47917rem]')}>
               {title}
             </h1>
@@ -126,14 +121,14 @@ const FreeGradeForm = ({
             )}
           </div>
           <div className={cn('flex')}>
-            {freeGradeArray.map(({ field }) => {
+            {achievementList.map(({ field }) => {
               const score = watch(`${field}.${idx}`);
 
               return (
                 <div key={field} className={cn(...itemStyle, 'w-[7.47917rem]')}>
                   <Select
                     onValueChange={(value) => setValue(`${field}.${idx}`, Number(value))}
-                    defaultValue={isNaN(score) ? '' : String(score)}
+                    defaultValue={Number.isInteger(score) ? String(score) : ''}
                   >
                     <SelectTrigger
                       className={cn(
@@ -152,8 +147,8 @@ const FreeGradeForm = ({
                       <SelectValue placeholder="성적 선택" />
                     </SelectTrigger>
                     <SelectContent>
-                      {SCORE_VALUES.map(({ name, value }, idx) => (
-                        <SelectItem value={String(value)} key={idx}>
+                      {SCORE_VALUES.map(({ name, value }) => (
+                        <SelectItem value={String(value)} key={value}>
                           {name}
                         </SelectItem>
                       ))}

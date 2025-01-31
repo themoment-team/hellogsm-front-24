@@ -1,67 +1,14 @@
 'use client';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @rushstack/no-new-null */
-
 import { XIcon } from 'lucide-react';
 import { UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form';
-import { FreeSemesterValueEnum, type Step4FormType } from 'types';
+import { AchievementType, FreeSemesterValueEnum, SemesterIdType, type Step4FormType } from 'types';
 
 import { PinIcon } from 'shared/assets';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared/components';
-import { GENERAL_SUBJECTS, SCORE_VALUES } from 'shared/constants';
+import { ACHIEVEMENT_FIELD_LIST, GENERAL_SUBJECTS, SCORE_VALUES } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
-
-const freeSemesterCandidateArray = [
-  {
-    title: '1학년 2학기',
-    field: 'achievement1_2',
-    value: FreeSemesterValueEnum['1-2'],
-  },
-  {
-    title: '2학년 1학기',
-    field: 'achievement2_1',
-    value: FreeSemesterValueEnum['2-1'],
-  },
-  {
-    title: '2학년 2학기',
-    field: 'achievement2_2',
-    value: FreeSemesterValueEnum['2-2'],
-  },
-  {
-    title: '3학년 1학기',
-    field: 'achievement3_1',
-    value: FreeSemesterValueEnum['3-1'],
-  },
-] as const;
-
-const freeSemesterGraduateArray = [
-  {
-    title: '1학년 2학기',
-    field: 'achievement1_2',
-    value: FreeSemesterValueEnum['1-2'],
-  },
-  {
-    title: '2학년 1학기',
-    field: 'achievement2_1',
-    value: FreeSemesterValueEnum['2-1'],
-  },
-  {
-    title: '2학년 2학기',
-    field: 'achievement2_2',
-    value: FreeSemesterValueEnum['2-2'],
-  },
-  {
-    title: '3학년 1학기',
-    field: 'achievement3_1',
-    value: FreeSemesterValueEnum['3-1'],
-  },
-  {
-    title: '3학년 2학기',
-    field: 'achievement3_2',
-    value: FreeSemesterValueEnum['3-2'],
-  },
-] as const;
+import { useEffect } from 'react';
 
 const defaultSubjectLength = GENERAL_SUBJECTS.length;
 
@@ -71,8 +18,8 @@ interface FreeSemesterFormProps {
   register: UseFormRegister<Step4FormType>;
   watch: UseFormWatch<Step4FormType>;
   handleDeleteSubjectClick: (idx: number) => void;
-  isCandidate: boolean;
   freeSemester: FreeSemesterValueEnum | null;
+  achievementList: AchievementType[];
 }
 
 const itemStyle = [
@@ -111,16 +58,38 @@ const freeSemesterButtonStyle = [
   'gap-[0.38rem]',
 ];
 
+const freeSemesterToAchievementField: Record<FreeSemesterValueEnum, SemesterIdType> = {
+  [FreeSemesterValueEnum['1-2']]: 'achievement1_2',
+  [FreeSemesterValueEnum['2-1']]: 'achievement2_1',
+  [FreeSemesterValueEnum['2-2']]: 'achievement2_2',
+  [FreeSemesterValueEnum['3-1']]: 'achievement3_1',
+  [FreeSemesterValueEnum['3-2']]: 'achievement3_2',
+};
+
 const FreeSemesterForm = ({
   register,
   subjectArray,
   setValue,
   watch,
   handleDeleteSubjectClick,
-  isCandidate,
   freeSemester,
+  achievementList,
 }: FreeSemesterFormProps) => {
-  const freeSemesterArray = isCandidate ? freeSemesterCandidateArray : freeSemesterGraduateArray;
+  useEffect(() => {
+    ACHIEVEMENT_FIELD_LIST.forEach((field) => {
+      achievementList.some((freeGrade) => freeGrade.field === field)
+        ? setValue(field, watch(field) || [])
+        : setValue(field, null);
+    });
+  }, []);
+
+  useEffect(() => {
+    achievementList.forEach(({ field }) => {
+      freeSemester && field === freeSemesterToAchievementField[freeSemester]
+        ? setValue(field, null)
+        : setValue(field, watch(field) || undefined!);
+    });
+  }, [freeSemester]);
 
   return (
     <div className={cn('flex', 'flex-col')}>
@@ -136,7 +105,7 @@ const FreeSemesterForm = ({
       >
         <h1 className={cn(...itemStyle, 'w-[6.75rem]')}>과목명</h1>
         <div className={cn('flex')}>
-          {freeSemesterArray.map(({ title }) => (
+          {achievementList.map(({ title }) => (
             <h1 key={title} className={cn(...itemStyle, 'w-[7.3375rem]')}>
               {title}
             </h1>
@@ -147,7 +116,7 @@ const FreeSemesterForm = ({
       <div className={cn(...rowStyle, 'bg-white', 'h-[3.5rem]')}>
         <h1 className={cn(...itemStyle, 'w-[6.75rem]')}>자유학기제</h1>
         <div className={cn('flex')}>
-          {freeSemesterArray.map(({ value, field }) => (
+          {achievementList.map(({ value, field }) => (
             <div key={field} className={cn(...itemStyle, 'w-[7.3375rem]')}>
               {freeSemester === value ? (
                 <button
@@ -166,7 +135,7 @@ const FreeSemesterForm = ({
                 <button
                   className={cn(...freeSemesterButtonStyle)}
                   type="button"
-                  onClick={() => setValue('freeSemester', value)}
+                  onClick={() => setValue('freeSemester', value!)}
                 >
                   <PinIcon type="OFF" />
                   off
@@ -211,7 +180,7 @@ const FreeSemesterForm = ({
             )}
           </div>
           <div className={cn('flex', 'items-center')}>
-            {freeSemesterArray.map(({ value, field }) => {
+            {achievementList.map(({ value, field }) => {
               const score = watch(`${field}.${idx}`);
 
               return (
@@ -235,7 +204,7 @@ const FreeSemesterForm = ({
                     <div className={cn('w-[7.3375rem]', 'flex', 'justify-center')}>
                       <Select
                         onValueChange={(value) => setValue(`${field}.${idx}`, Number(value))}
-                        defaultValue={isNaN(score) ? '' : String(score)}
+                        defaultValue={Number.isInteger(score) ? String(score) : ''}
                       >
                         <SelectTrigger
                           className={cn(
