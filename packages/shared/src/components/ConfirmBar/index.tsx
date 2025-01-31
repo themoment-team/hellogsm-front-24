@@ -70,7 +70,7 @@ const FinalSubmitDialog = ({
           <button
             className={cn('px-4', 'py-2', 'rounded-md', 'text-white', 'bg-[#0F172A]')}
             type="submit"
-            disabled={isStep4Success}
+            disabled={!isStep4Success}
             onClick={handleOneseoSubmitButtonClick}
           >
             최종 제출
