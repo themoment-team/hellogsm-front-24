@@ -2,15 +2,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import {
+  GEDAchievementType,
   GetMyOneseoType,
   GraduationTypeValueEnum,
   LiberalSystemValueEnum,
+  MiddleSchoolAchievementType,
+  MockScoreType,
   MyMemberInfoType,
   PostOneseoType,
   RelationshipWithGuardianValueEnum,
@@ -22,8 +25,15 @@ import {
 } from 'types';
 
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
   ConfirmBar,
   EditBar,
+  ScoreCalculateDialog,
   Step1Register,
   Step2Register,
   Step3Register,
@@ -34,7 +44,14 @@ import { ARTS_PHYSICAL_SUBJECTS, GENERAL_SUBJECTS } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
 import { step1Schema, step2Schema, step3Schema, step4Schema } from 'shared/schemas';
 
-import { usePostMyOneseo, usePostTempStorage, usePutOneseoByMemberId } from 'api/hooks';
+import {
+  usePostMockScore,
+  usePostMyOneseo,
+  usePostTempStorage,
+  usePutOneseoByMemberId,
+} from 'api/hooks';
+import { toast } from 'react-toastify';
+import { CloseIcon, InfoIcon } from 'shared/assets';
 
 interface StepWrapperProps {
   data: GetMyOneseoType | undefined;
@@ -43,10 +60,6 @@ interface StepWrapperProps {
   memberId?: number;
   type: 'client' | 'admin';
 }
-
-const step1Url = '/register?step=1';
-const step2Url = '/register?step=2';
-const step3Url = '/register?step=3';
 
 const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => {
   const step1UseForm = useForm<Step1FormType>({
@@ -75,17 +88,22 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
   const step3UseForm = useForm<Step3FormType>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
-      guardianName: data?.privacyDetail.guardianName,
-      guardianPhoneNumber: data?.privacyDetail.guardianPhoneNumber,
+      guardianName: data?.privacyDetail.guardianName || '',
+      guardianPhoneNumber: data?.privacyDetail.guardianPhoneNumber || '',
       relationshipWithGuardian:
         data?.privacyDetail.relationshipWithGuardian === RelationshipWithGuardianValueEnum.FATHER ||
         data?.privacyDetail.relationshipWithGuardian === RelationshipWithGuardianValueEnum.MOTHER
           ? data?.privacyDetail.relationshipWithGuardian
-          : RelationshipWithGuardianValueEnum.OTHER,
-      otherRelationshipWithGuardian:
-        data?.privacyDetail.relationshipWithGuardian === RelationshipWithGuardianValueEnum.OTHER
+          : (data?.privacyDetail.relationshipWithGuardian &&
+              RelationshipWithGuardianValueEnum.OTHER) ||
+            undefined,
+      otherRelationshipWithGuardian: data?.privacyDetail.relationshipWithGuardian
+        ? data?.privacyDetail.relationshipWithGuardian !==
+            RelationshipWithGuardianValueEnum.FATHER &&
+          data?.privacyDetail.relationshipWithGuardian !== RelationshipWithGuardianValueEnum.MOTHER
           ? data?.privacyDetail.relationshipWithGuardian
-          : null,
+          : null
+        : undefined,
       schoolTeacherName: data?.privacyDetail.schoolTeacherName,
       schoolTeacherPhoneNumber: data?.privacyDetail.schoolTeacherPhoneNumber,
     },
@@ -96,21 +114,26 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
     defaultValues: {
       liberalSystem:
         data?.middleSchoolAchievement.liberalSystem || LiberalSystemValueEnum.FREE_GRADE,
-      achievement1_2: data?.middleSchoolAchievement.achievement1_2,
-      achievement2_1: data?.middleSchoolAchievement.achievement2_1,
-      achievement2_2: data?.middleSchoolAchievement.achievement2_2,
-      achievement3_1: data?.middleSchoolAchievement.achievement3_1,
-      achievement3_2: data?.middleSchoolAchievement.achievement3_2,
-      newSubjects: data?.middleSchoolAchievement.newSubjects,
-      artsPhysicalAchievement: data?.middleSchoolAchievement.artsPhysicalAchievement,
-      absentDays: data?.middleSchoolAchievement.absentDays,
-      attendanceDays: data?.middleSchoolAchievement.attendanceDays,
-      volunteerTime: data?.middleSchoolAchievement.volunteerTime,
-      freeSemester: data?.middleSchoolAchievement.freeSemester,
-      gedTotalScore: data?.middleSchoolAchievement.gedTotalScore,
+      achievement1_2: data?.middleSchoolAchievement.achievement1_2 || undefined,
+      achievement2_1: data?.middleSchoolAchievement.achievement2_1 || undefined,
+      achievement2_2: data?.middleSchoolAchievement.achievement2_2 || undefined,
+      achievement3_1: data?.middleSchoolAchievement.achievement3_1 || undefined,
+      achievement3_2: data?.middleSchoolAchievement.achievement3_2 || undefined,
+      newSubjects: data?.middleSchoolAchievement.newSubjects || undefined,
+      artsPhysicalAchievement: data?.middleSchoolAchievement.artsPhysicalAchievement || undefined,
+      absentDays: data?.middleSchoolAchievement.absentDays || undefined,
+      attendanceDays: data?.middleSchoolAchievement.attendanceDays || undefined,
+      volunteerTime: data?.middleSchoolAchievement.volunteerTime || undefined,
+      freeSemester: data?.middleSchoolAchievement.freeSemester || null,
+      gedTotalScore: data?.middleSchoolAchievement.gedTotalScore || undefined,
     },
   });
 
+  const [isScoreCalculateDialog, setIsScoreCalculateDialog] = useState<boolean>(false);
+  const [isOneseoSubmitDialog, setIsOneseoSubmitDialog] = useState<boolean>(false);
+  const [scoreCalculateDialogData, setScoreCalculateDialogData] = useState<MockScoreType | null>(
+    null,
+  );
   const { push } = useRouter();
   const graduationType = step2UseForm.watch('graduationType');
 
@@ -119,6 +142,8 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
   const isGraduate = graduationType === GraduationTypeValueEnum.GRADUATE;
   const isGED = graduationType === GraduationTypeValueEnum.GED;
   const isStep4 = step === StepEnum.FOUR;
+
+  const BASE_URL = isClient ? '/register' : `/edit/${memberId}`;
 
   const name = isClient ? info!.name : data!.privacyDetail.name;
   const birth = isClient ? info!.birth : data!.privacyDetail.birth;
@@ -132,11 +157,33 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
     '4': step4Schema.safeParse(step4UseForm.watch()).success,
   };
 
-  const { mutate: postMyOneseo } = usePostMyOneseo({});
+  const { mutate: postMyOneseo } = usePostMyOneseo({
+    onSuccess: () => setIsOneseoSubmitDialog(true),
+  });
 
-  const { mutate: putOneseoByMemberId } = usePutOneseoByMemberId(memberId!, {});
+  const { mutate: putOneseoByMemberId } = usePutOneseoByMemberId(memberId!, {
+    onSuccess: () => setIsOneseoSubmitDialog(true),
+  });
 
-  const { mutate: postTempStorage } = usePostTempStorage(Number(step), {});
+  const { mutate: postTempStorage } = usePostTempStorage(Number(step), {
+    onSuccess: () =>
+      toast.success('임시 저장 되었습니다.', {
+        icon: InfoIcon,
+        closeButton: (
+          <button className="cursor" onClick={() => toast.dismiss()}>
+            <CloseIcon />
+          </button>
+        ),
+      }),
+    onError: () => toast.error('임시 저장을 실패하였습니다.'),
+  });
+
+  const { mutate: postMockScore } = usePostMockScore(graduationType, {
+    onSuccess: (data) => {
+      setScoreCalculateDialogData(data);
+      setIsScoreCalculateDialog(true);
+    },
+  });
 
   const getOneseo = (isTemp: boolean = false) => {
     const { profileImg, address, detailAddress } = step1UseForm.watch();
@@ -176,29 +223,32 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
 
     const body: PostOneseoType = {
       // step 1
-      profileImg: profileImg,
-      address: address,
-      detailAddress: detailAddress,
+      profileImg: profileImg || undefined,
+      address: address || undefined,
+      detailAddress: detailAddress || undefined,
 
       // step 2
-      graduationType: graduationType,
-      schoolName: schoolName,
-      schoolAddress: schoolAddress,
-      graduationDate: graduationDate,
-      screening: screening,
-      firstDesiredMajor: firstDesiredMajor,
-      secondDesiredMajor: secondDesiredMajor,
-      thirdDesiredMajor: thirdDesiredMajor,
+      graduationType: graduationType || undefined,
+      schoolName: schoolName || undefined,
+      schoolAddress: schoolAddress || undefined,
+      graduationDate:
+        graduationDate.split('-')[0] !== '0000' && graduationDate.split('-')[1] !== '00'
+          ? graduationDate
+          : undefined,
+      screening: screening || undefined,
+      firstDesiredMajor: firstDesiredMajor || undefined,
+      secondDesiredMajor: secondDesiredMajor || undefined,
+      thirdDesiredMajor: thirdDesiredMajor || undefined,
 
       // step 3
-      guardianName: guardianName,
-      guardianPhoneNumber: guardianPhoneNumber,
+      guardianName: guardianName || undefined,
+      guardianPhoneNumber: guardianPhoneNumber || undefined,
       relationshipWithGuardian:
-        relationshipWithGuardian === RelationshipWithGuardianValueEnum.OTHER
+        (relationshipWithGuardian === RelationshipWithGuardianValueEnum.OTHER
           ? otherRelationshipWithGuardian
-          : relationshipWithGuardian,
-      schoolTeacherName: schoolTeacherName,
-      schoolTeacherPhoneNumber: schoolTeacherPhoneNumber,
+          : relationshipWithGuardian) || undefined,
+      schoolTeacherName: schoolTeacherName || undefined,
+      schoolTeacherPhoneNumber: schoolTeacherPhoneNumber || undefined,
 
       // step 4
       middleSchoolAchievement: isGED
@@ -246,13 +296,55 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
     putOneseoByMemberId(body);
   };
 
-  useEffect(() => {
-    if (step === StepEnum.TWO && !isStepSuccess[1]) push(step1Url);
+  const handleCheckScoreButtonClick = () => {
+    const {
+      liberalSystem,
+      achievement1_2,
+      achievement2_1,
+      achievement2_2,
+      achievement3_1,
+      achievement3_2,
+      newSubjects,
+      artsPhysicalAchievement,
+      absentDays,
+      attendanceDays,
+      volunteerTime,
+      freeSemester,
+      gedTotalScore,
+    } = step4UseForm.watch();
 
-    if (step === StepEnum.THREE && (!isStepSuccess[1] || !isStepSuccess[2])) push(step2Url);
+    const body: MiddleSchoolAchievementType | GEDAchievementType = isGED
+      ? {
+          gedTotalScore: gedTotalScore!,
+        }
+      : {
+          liberalSystem: liberalSystem,
+          achievement1_2: achievement1_2!,
+          achievement2_1: achievement2_1!,
+          achievement2_2: achievement2_2!,
+          achievement3_1: achievement3_1!,
+          achievement3_2: achievement3_2!,
+          newSubjects: newSubjects,
+          artsPhysicalAchievement: artsPhysicalAchievement!,
+          absentDays: absentDays!,
+          attendanceDays: attendanceDays!,
+          volunteerTime: volunteerTime!,
+          freeSemester: freeSemester || '',
+          generalSubjects: [...GENERAL_SUBJECTS],
+          artsPhysicalSubjects: [...ARTS_PHYSICAL_SUBJECTS],
+        };
+
+    postMockScore(body);
+  };
+
+  useEffect(() => {
+    if (step === StepEnum.TWO && !isStepSuccess[1]) push(`${BASE_URL}?step=1`);
+
+    if (step === StepEnum.THREE && (!isStepSuccess[1] || !isStepSuccess[2]))
+      push(`${BASE_URL}?step=2`);
 
     if (step === StepEnum.FOUR && (!isStepSuccess[1] || !isStepSuccess[2] || !isStepSuccess[3]))
-      push(step3Url);
+      push(`${BASE_URL}?step=3`);
   }, [step]);
 
   return (
@@ -279,7 +371,12 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
             'rounded-b-lg-[1.125rem]',
           ])}
         >
-          <StepBar step={step} isStepSuccess={isStepSuccess} />
+          <StepBar
+            step={step}
+            baseUrl={BASE_URL}
+            isStepSuccess={isStepSuccess}
+            handleCheckScoreButtonClick={handleCheckScoreButtonClick}
+          />
           <div
             className={cn([
               'flex',
@@ -315,7 +412,6 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
           </div>
         </div>
       </div>
-
       {isClient ? (
         <ConfirmBar
           isStep4Success={isStepSuccess[4]}
@@ -330,6 +426,43 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
           handleOneseoEditButtonClick={handleOneseoEditButtonClick}
         />
       )}
+
+      <ScoreCalculateDialog
+        isDialog={isScoreCalculateDialog}
+        setIsDialog={setIsScoreCalculateDialog}
+        scoreCalculateDialogData={scoreCalculateDialogData}
+        type="score"
+      />
+
+      <AlertDialog open={isOneseoSubmitDialog}>
+        <AlertDialogContent className="w-[400px]">
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {type === 'client' ? (
+                <>
+                  원서가 제출되었습니다.
+                  <br />
+                  문제가 있다면
+                  <br />
+                  062-949-6800(교무실)로 연락주세요.
+                </>
+              ) : (
+                <>원서가 수정되었습니다.</>
+              )}
+            </AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction
+              onClick={() => {
+                push(type === 'client' ? '/mypage' : '/');
+                setIsOneseoSubmitDialog(false);
+              }}
+            >
+              확인
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };
