@@ -18,6 +18,8 @@ export const getMyOneseo = async (): Promise<GetMyOneseoType | undefined> => {
       },
     );
 
+    if (response.status === 404 || !response.ok) return undefined;
+
     const myOneseo = await response.json();
 
     return myOneseo.data;

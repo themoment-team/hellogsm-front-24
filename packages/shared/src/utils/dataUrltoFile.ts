@@ -1,7 +1,7 @@
 const dataURLtoFile = (dataUrl: string, filename: string) => {
-  const splitedUrl = dataUrl.split(',');
-  const mime = splitedUrl?.[0].match(/:(.*?);/)?.[1];
-  const byteString = atob(splitedUrl[1]);
+  const splitUrl = dataUrl.split(',');
+  const mime = splitUrl?.[0].match(/:(.*?);/)?.[1];
+  const byteString = atob(splitUrl[1]);
   let n = byteString.length;
   const uint8Array = new Uint8Array(n);
   while (n--) {

@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { ToastContainer } from 'react-toastify';
 
-import { ChannelTalk, Header } from 'client/components';
+import { ChannelTalk } from 'client/components';
 import { cn } from 'client/lib/utils';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -17,7 +17,6 @@ const Provider = ({ children }: PropsWithChildren) => {
   return (
     <QueryClientProvider client={queryClient}>
       <div className={cn('min-h-screen', 'flex', 'flex-col')}>
-        <Header />
         {children}
         <ChannelTalk />
         <ToastContainer />
