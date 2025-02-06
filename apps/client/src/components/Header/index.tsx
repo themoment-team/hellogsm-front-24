@@ -74,7 +74,7 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
   const navLinks = isServerHealthy
     ? [
         { href: '/', label: '홈', icon: I.HomeIcon },
-        { href: '/guide', label: '원서접수', icon: I.OneseoIcon },
+        { href: '/guide', label: '원서 접수', icon: I.OneseoIcon },
         { href: '/faq', label: '자주 묻는 질문', icon: I.FaqIcon },
         { href: '/mypage', label: '내 정보 페이지', icon: I.HeaderProfileIcon },
         { href: '/oneseo/calculate', label: '모의 성적 계산', icon: I.CalculateIcon },
@@ -86,7 +86,7 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
       ]
     : [
         { href: '/', label: '홈', icon: I.HomeIcon },
-        { href: '/guide', label: '원서접수', icon: I.OneseoIcon },
+        { href: '/guide', label: '원서 접수', icon: I.OneseoIcon },
         { href: '/faq', label: '자주 묻는 질문', icon: I.FaqIcon },
         {
           href: '/introduce',
