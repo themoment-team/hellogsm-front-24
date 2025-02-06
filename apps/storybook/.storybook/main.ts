@@ -20,7 +20,7 @@ const config: StorybookConfig = {
       nextConfigPath: "../../admin/next.config.js",
     },
   },
-  staticDirs: ["../../admin/public", "../../client/public"],
+  staticDirs: ["../../admin/public", "../../client/public", "../../../packages/shared/public"],
   babel: async (config) => ({
     ...config,
     presets: [

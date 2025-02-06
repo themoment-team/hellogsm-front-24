@@ -1,3 +1,5 @@
+import { pretendardFont } from 'shared/fonts';
+
 import Provider from './provider';
 
 import type { Metadata } from 'next';
@@ -14,18 +16,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // TODO 로컬 font 적용시키기
   return (
     <html lang="ko">
-      <head>
-        <link
-          rel="stylesheet"
-          as="style"
-          crossOrigin=""
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/variable/pretendardvariable-dynamic-subset.css"
-        />
-      </head>
-      <body>
+      <body className={pretendardFont.className}>
         <Provider>{children}</Provider>
       </body>
     </html>
