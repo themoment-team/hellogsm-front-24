@@ -1,6 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+import { useSearchParams } from 'next/navigation';
 
 import { FaqElement, Footer } from 'client/components';
 
@@ -24,6 +26,14 @@ const FaqPage = () => {
   const [keyword, setKeyword] = useState<string>('');
   const [faqStates, setFaqStates] = useState<{ [key: number]: boolean }>({});
   const [isPageChanging, setIsPageChanging] = useState<boolean>(false);
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get('dropdown') === 'open' && Element.length > 0) {
+      setFaqStates({ 0: true });
+    }
+  }, [searchParams]);
 
   const totalItems = Element.filter((item) => item.title.toLowerCase().includes(keyword));
   const totalPages = Math.ceil(totalItems.length / ITEMS_PER_PAGE);
