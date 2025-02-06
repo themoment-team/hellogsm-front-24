@@ -56,7 +56,7 @@ const Section3 = ({ isServerHealthy }: Section3Props) => {
             2025 신입생 모집
           </h1>
           <p className={cn('mb-0', 'lg:mb-8', 'mt-[1rem]', 'hidden', 'smx:flex', 'text-gray-500')}>
-            접수기간: {RECRUITMENT_PERIOD.startDate} ~ {RECRUITMENT_PERIOD.endDate}
+            접수 기간: {RECRUITMENT_PERIOD.startDate} ~ {RECRUITMENT_PERIOD.endDate}
           </p>
           <Link
             href="/guide"
@@ -70,7 +70,7 @@ const Section3 = ({ isServerHealthy }: Section3Props) => {
               'lg:inline',
             )}
           >
-            원서접수 바로가기
+            원서 접수 바로가기
           </Link>
         </div>
         <div
@@ -192,7 +192,7 @@ const Section3 = ({ isServerHealthy }: Section3Props) => {
                   모의 성적 계산하기
                 </p>
                 <p className={cn('font-400', 'self-start', 'text-sm')}>
-                  본격적인 원서접수 전, 모의 성적을
+                  본격적인 원서 접수 전, 모의 성적을
                   <br />
                   계산해 보세요!
                 </p>

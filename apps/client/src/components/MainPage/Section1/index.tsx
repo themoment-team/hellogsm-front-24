@@ -96,7 +96,7 @@ const Section1 = () => {
                 'sm:text-[1.25rem]/[1.75rem]',
               )}
             >
-              접수기간 : {RECRUITMENT_PERIOD.startDate} ~ {RECRUITMENT_PERIOD.endDate}
+              접수 기간 : {RECRUITMENT_PERIOD.startDate} ~ {RECRUITMENT_PERIOD.endDate}
             </p>
           </div>
 
@@ -117,7 +117,7 @@ const Section1 = () => {
               'border-solid',
             )}
           >
-            원서접수 하러 가기
+            원서 접수 하러 가기
           </button>
         </div>
       </div>
