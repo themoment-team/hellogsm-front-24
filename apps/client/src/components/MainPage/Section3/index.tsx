@@ -59,7 +59,7 @@ const Section3 = ({ isServerHealthy }: Section3Props) => {
             접수기간: {RECRUITMENT_PERIOD.startDate} ~ {RECRUITMENT_PERIOD.endDate}
           </p>
           <Link
-            href="/"
+            href="/guide"
             className={cn(
               ...buttonStyle,
               'text-sky-900',
