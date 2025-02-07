@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react';
 
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 
 import { FaqElement, Footer } from 'client/components';
 
@@ -28,15 +28,17 @@ const FaqPageComponent = () => {
   const [isPageChanging, setIsPageChanging] = useState<boolean>(false);
 
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const totalItems = Element.filter((item) => item.title.toLowerCase().includes(keyword));
+  const totalPages = Math.ceil(totalItems.length / ITEMS_PER_PAGE);
 
   useEffect(() => {
     if (searchParams.get('dropdown') === 'open' && Element.length > 0) {
       setFaqStates({ 0: true });
     }
   }, [searchParams]);
-
-  const totalItems = Element.filter((item) => item.title.toLowerCase().includes(keyword));
-  const totalPages = Math.ceil(totalItems.length / ITEMS_PER_PAGE);
 
   const handlePageChange = (pageNumber: number) => {
     const newPageNumber = Math.max(1, Math.min(pageNumber, totalPages));
@@ -58,10 +60,18 @@ const FaqPageComponent = () => {
   );
 
   const toggleFaqContent = (index: number) => {
-    setFaqStates((prevStates) => ({
-      ...prevStates,
-      [index]: !prevStates[index],
-    }));
+    setFaqStates((prevStates) => {
+      const newFaqStates = {
+        ...prevStates,
+        [index]: !prevStates[index],
+      };
+      if (!newFaqStates[index]) {
+        const newSearchParams = new URLSearchParams(searchParams.toString());
+        newSearchParams.delete('dropdown');
+        router.replace(`${pathname}?${newSearchParams.toString()}`);
+      }
+      return newFaqStates;
+    });
   };
 
   return (
