@@ -91,6 +91,7 @@ const Section5 = () => {
             'px-4',
             'px-4',
             'xs:px-[3.75rem]',
+            'smx:px-[5.75rem]',
             'md:px-[8rem]',
           )}
         >
