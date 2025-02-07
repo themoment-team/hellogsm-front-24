@@ -80,7 +80,7 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
         { href: '/oneseo/calculate', label: '모의 성적 계산', icon: I.CalculateIcon },
         {
           href: '/introduce',
-          label: '더모먼트팀',
+          label: '더모먼트',
           icon: I.SparkleIcon,
         },
       ]
@@ -90,7 +90,7 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
         { href: '/faq', label: '자주 묻는 질문', icon: I.FaqIcon },
         {
           href: '/introduce',
-          label: '더모먼트팀',
+          label: '더모먼트',
           icon: I.SparkleIcon,
         },
       ];

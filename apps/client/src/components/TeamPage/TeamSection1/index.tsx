@@ -68,7 +68,7 @@ const TeamSection1 = () => {
             <SmallTheMomentIcon />
           </div>
           <p className={cn('text-[2.1875rem]', 'leading-normal', 'font-medium', 'text-white')}>
-            the_moment Team
+            the_moment
           </p>
         </div>
 
