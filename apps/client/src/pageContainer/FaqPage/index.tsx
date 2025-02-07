@@ -35,7 +35,7 @@ const FaqPageComponent = () => {
   const totalPages = Math.ceil(totalItems.length / ITEMS_PER_PAGE);
 
   useEffect(() => {
-    if (searchParams.get('dropdown') === 'open' && Element.length > 0) {
+    if (searchParams.get('openIndex') === '0' && Element.length > 0) {
       setFaqStates({ 0: true });
     }
   }, [searchParams]);
@@ -67,7 +67,7 @@ const FaqPageComponent = () => {
       };
       if (!newFaqStates[index]) {
         const newSearchParams = new URLSearchParams(searchParams.toString());
-        newSearchParams.delete('dropdown');
+        newSearchParams.delete('openIndex');
         router.replace(`${pathname}?${newSearchParams.toString()}`);
       }
       return newFaqStates;
