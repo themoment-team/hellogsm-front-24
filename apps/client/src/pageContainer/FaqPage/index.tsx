@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 
@@ -21,7 +21,7 @@ import { Element } from './exampleElement';
 
 const ITEMS_PER_PAGE = 10;
 
-const FaqPageComponent = () => {
+const FaqPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [keyword, setKeyword] = useState<string>('');
   const [faqStates, setFaqStates] = useState<{ [key: number]: boolean }>({});
@@ -35,8 +35,9 @@ const FaqPageComponent = () => {
   const totalPages = Math.ceil(totalItems.length / ITEMS_PER_PAGE);
 
   useEffect(() => {
-    if (searchParams.get('openIndex') === '0' && Element.length > 0) {
-      setFaqStates({ 0: true });
+    const openIndex = searchParams.get('openIndex');
+    if (openIndex && !isNaN(Number(openIndex))) {
+      setFaqStates({ [Number(openIndex)]: true });
     }
   }, [searchParams]);
 
@@ -61,15 +62,16 @@ const FaqPageComponent = () => {
 
   const toggleFaqContent = (index: number) => {
     setFaqStates((prevStates) => {
-      const newFaqStates = {
-        ...prevStates,
-        [index]: !prevStates[index],
-      };
-      if (!newFaqStates[index]) {
-        const newSearchParams = new URLSearchParams(searchParams.toString());
+      const isOpen = !prevStates[index];
+      const newFaqStates = { [index]: isOpen };
+
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      if (isOpen) {
+        newSearchParams.set('openIndex', String(index));
+      } else {
         newSearchParams.delete('openIndex');
-        router.replace(`${pathname}?${newSearchParams.toString()}`);
       }
+      router.replace(`${pathname}?${newSearchParams.toString()}`);
       return newFaqStates;
     });
   };
@@ -165,14 +167,6 @@ const FaqPageComponent = () => {
       </div>
       <Footer />
     </div>
-  );
-};
-
-const FaqPage = () => {
-  return (
-    <Suspense>
-      <FaqPageComponent />
-    </Suspense>
   );
 };
 
