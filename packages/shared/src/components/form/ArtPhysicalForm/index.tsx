@@ -4,9 +4,8 @@ import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { FreeSemesterValueEnum, GraduationTypeValueEnum, Step4FormType } from 'types';
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared/components';
+import { ART_PHYSICAL_SCORE_VALUES } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
-import { SCORE_VALUES } from 'shared/constants';
-import { useEffect } from 'react';
 
 interface ArtPhysicalFormProps {
   setValue: UseFormSetValue<Step4FormType>;
@@ -30,8 +29,6 @@ const artPhysicalCandidateArray = [
   '2학년 2학기',
   '3학년 1학기',
 ] as const;
-
-const scoreArray = ['A', 'B', 'C', '없음'] as const;
 
 const artPhysicalGraduationIndexArray = [
   { subject: '체육', registerIndexList: [0, 3, 6, 9] },
@@ -170,7 +167,7 @@ const ArtPhysicalForm = ({
                       <SelectValue placeholder="성적 선택" />
                     </SelectTrigger>
                     <SelectContent>
-                      {SCORE_VALUES.map(({ name, value }) => (
+                      {ART_PHYSICAL_SCORE_VALUES.map(({ name, value }) => (
                         <SelectItem value={String(value)} key={value}>
                           {name}
                         </SelectItem>

@@ -1,14 +1,15 @@
 'use client';
 
+import { useEffect } from 'react';
+
 import { XIcon } from 'lucide-react';
 import { UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { AchievementType, FreeSemesterValueEnum, SemesterIdType, type Step4FormType } from 'types';
 
 import { PinIcon } from 'shared/assets';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared/components';
-import { ACHIEVEMENT_FIELD_LIST, GENERAL_SUBJECTS, SCORE_VALUES } from 'shared/constants';
+import { ACHIEVEMENT_FIELD_LIST, GENERAL_SUBJECTS, GENERAL_SCORE_VALUES } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
-import { useEffect } from 'react';
 
 const defaultSubjectLength = GENERAL_SUBJECTS.length;
 
@@ -223,7 +224,7 @@ const FreeSemesterForm = ({
                           <SelectValue placeholder="성적 선택" />
                         </SelectTrigger>
                         <SelectContent>
-                          {SCORE_VALUES.map(({ name, value }, idx) => (
+                          {GENERAL_SCORE_VALUES.map(({ name, value }, idx) => (
                             <SelectItem value={String(value)} key={idx}>
                               {name}
                             </SelectItem>
