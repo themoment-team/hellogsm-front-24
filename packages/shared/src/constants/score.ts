@@ -13,8 +13,6 @@ export const ART_PHYSICAL_SCORE_VALUES = [
   { name: 'A', value: AchievementValueEnum.A },
   { name: 'B', value: AchievementValueEnum.B },
   { name: 'C', value: AchievementValueEnum.C },
-  { name: 'D', value: AchievementValueEnum.D },
-  { name: 'E', value: AchievementValueEnum.E },
   { name: '없음', value: AchievementValueEnum.NONE },
 ] as const;
 
