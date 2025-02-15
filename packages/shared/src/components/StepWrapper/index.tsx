@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import {
   GEDAchievementType,
   GetMyOneseoType,
@@ -24,6 +25,7 @@ import {
   StepEnum,
 } from 'types';
 
+import { CloseIcon, InfoIcon } from 'shared/assets';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -50,8 +52,6 @@ import {
   usePostTempStorage,
   usePutOneseoByMemberId,
 } from 'api/hooks';
-import { toast } from 'react-toastify';
-import { CloseIcon, InfoIcon } from 'shared/assets';
 
 interface StepWrapperProps {
   data: GetMyOneseoType | undefined;

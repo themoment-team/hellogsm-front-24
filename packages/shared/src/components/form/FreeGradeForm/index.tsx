@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from 'shared/components/ui';
-import { ACHIEVEMENT_FIELD_LIST, GENERAL_SUBJECTS, GENERAL_SCORE_VALUES } from 'shared/constants';
+import { GENERAL_SUBJECTS, GENERAL_SCORE_VALUES, ACHIEVEMENT_FIELD_LIST } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
 
 const defaultSubjectLength = GENERAL_SUBJECTS.length;

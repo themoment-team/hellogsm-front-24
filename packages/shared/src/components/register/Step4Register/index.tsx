@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import {
   Control,
   UseFormRegister,
-  UseFormReset,
   UseFormSetValue,
   UseFormUnregister,
   UseFormWatch,
