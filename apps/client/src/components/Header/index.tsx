@@ -190,9 +190,10 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
         </nav>
 
         {/* PC width 일떄 */}
-        <div className={cn('hidden', 'md:flex')}>
-          {isServerHealthy &&
-            (isSignup ? (
+
+        {isServerHealthy && (
+          <div className={cn('hidden', 'md:flex')}>
+            {isSignup ? (
               <>
                 <div className={cn('relative', 'w-[10rem]')}>
                   <button
@@ -249,8 +250,9 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
               '회원가입을 진행해주세요'
             ) : (
               <LoginDialog />
-            ))}
-        </div>
+            )}
+          </div>
+        )}
 
         {/* Mobile width 일떄 */}
         <div className={cn('md:hidden')}>
