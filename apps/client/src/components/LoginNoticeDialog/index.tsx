@@ -1,3 +1,5 @@
+'use client'
+
 import {
   AlertDialog,
   AlertDialogContent,
@@ -8,12 +10,21 @@ import {
 } from 'shared';
 
 import { LoginDialog } from 'client/components';
+import { useGetMyAuthInfo } from 'api/hooks';
+import { useState } from 'react';
 
-interface NoticeDialogProps {
-  setIsClicked: React.Dispatch<React.SetStateAction<boolean>>;
+interface memberInfoType {
+  userName: any | unknown | undefined;
 }
 
-const LoginNoticeDialog = ({ setIsClicked }: NoticeDialogProps) => {
+const LoginNoticeDialog = ({ memberInfo }: { memberInfo: memberInfoType }) => {
+  const { data: authInfo } = useGetMyAuthInfo();
+  const [isClicked, setIsClicked] = useState(false);
+  const showNoticeDialog =
+    process.env.NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF === 'true' &&
+    !isClicked &&
+    (!authInfo?.authReferrerType || !memberInfo?.userName);
+
   return (
     <AlertDialog>
       <AlertDialogContent className="w-[400px]">
