@@ -188,12 +188,23 @@ const Step4Register = ({
       : `추가과목 ${subjectArray.length - defaultSubjectLength}`;
     setSubjectArray((prev) => [...prev, newSubject]);
 
-    achievementList.forEach(({ field }) =>
-      setValue(
-        `${field}.${subjectArray.length}`,
-        watch(`${field}.${subjectArray.length}`) || undefined!,
-      ),
-    );
+    if (watch('liberalSystem') === LiberalSystemValueEnum.FREE_GRADE) {
+      achievementList.forEach(({ field }) =>
+        setValue(
+          `${field}.${subjectArray.length}`,
+          watch(`${field}.${subjectArray.length}`) || undefined!,
+        ),
+      );
+    } else {
+      achievementList.forEach(
+        ({ field, value }) =>
+          value !== watch('freeSemester') &&
+          setValue(
+            `${field}.${subjectArray.length}`,
+            watch(`${field}.${subjectArray.length}`) || undefined!,
+          ),
+      );
+    }
   };
 
   useEffect(() => {
@@ -211,7 +222,7 @@ const Step4Register = ({
       setValue('freeSemester', null);
     } else {
       setValue('gedTotalScore', null);
-      setValue('liberalSystem', LiberalSystemValueEnum.FREE_GRADE);
+      setValue('liberalSystem', watch('liberalSystem') || LiberalSystemValueEnum.FREE_GRADE);
     }
 
     const newSubject = watch('newSubjects');
