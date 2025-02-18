@@ -9,8 +9,10 @@ import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { Button, ScoreCalculateDialog, Step4Register, step4Schema } from 'shared';
 import {
+  GEDAchievementType,
   GraduationTypeValueEnum,
   LiberalSystemValueEnum,
+  MiddleSchoolAchievementType,
   MockScoreType,
   Step4FormType,
 } from 'types';
@@ -31,6 +33,7 @@ const CalculatePage = () => {
     resolver: zodResolver(step4Schema),
     defaultValues: {
       liberalSystem: LiberalSystemValueEnum.FREE_GRADE,
+      freeSemester: null,
     },
   });
 
@@ -68,8 +71,10 @@ const CalculatePage = () => {
       gedTotalScore,
     } = step4UseForm.watch();
 
-    const body = isGED
-      ? { gedTotalScore: gedTotalScore! }
+    const body: MiddleSchoolAchievementType | GEDAchievementType = isGED
+      ? {
+          gedTotalScore: gedTotalScore!,
+        }
       : {
           liberalSystem: liberalSystem,
           achievement1_2: achievement1_2!,
