@@ -77,11 +77,15 @@ const FreeSemesterForm = ({
   achievementList,
 }: FreeSemesterFormProps) => {
   useEffect(() => {
-    ACHIEVEMENT_FIELD_LIST.forEach((field) => {
-      achievementList.some((freeGrade) => freeGrade.field === field)
-        ? setValue(field, watch(field) || [])
-        : setValue(field, null);
-    });
+    setTimeout(
+      () =>
+        ACHIEVEMENT_FIELD_LIST.forEach((field) => {
+          achievementList.some((freeGrade) => freeGrade.field === field)
+            ? setValue(field, watch(field) || [])
+            : setValue(field, null);
+        }),
+      0,
+    );
   }, []);
 
   useEffect(() => {
