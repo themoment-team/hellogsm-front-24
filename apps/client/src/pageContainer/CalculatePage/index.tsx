@@ -87,7 +87,7 @@ const CalculatePage = () => {
           absentDays: absentDays!,
           attendanceDays: attendanceDays!,
           volunteerTime: volunteerTime!,
-          freeSemester: freeSemester,
+          freeSemester: freeSemester || '',
           generalSubjects: [...GENERAL_SUBJECTS],
           artsPhysicalSubjects: [...ARTS_PHYSICAL_SUBJECTS],
         };
