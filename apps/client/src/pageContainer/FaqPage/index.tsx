@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 
@@ -21,7 +21,7 @@ import { Element } from './exampleElement';
 
 const ITEMS_PER_PAGE = 10;
 
-const FaqPage = () => {
+const FaqPageComponent = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [keyword, setKeyword] = useState<string>('');
   const [faqStates, setFaqStates] = useState<{ [key: number]: boolean }>({});
@@ -167,6 +167,14 @@ const FaqPage = () => {
       </div>
       <Footer />
     </div>
+  );
+};
+
+const FaqPage = () => {
+  return (
+    <Suspense>
+      <FaqPageComponent />
+    </Suspense>
   );
 };
 
