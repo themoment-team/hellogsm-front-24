@@ -166,7 +166,7 @@ const Section3 = ({ isServerHealthy }: Section3Props) => {
                   여러 계정으로 로그인 하는 방법을 알려드릴게요!
                 </p>
               </div>
-              <Link href="/faq" className={cn(...buttonStyle, 'self-end')}>
+              <Link href="/faq?openIndex=0" className={cn(...buttonStyle, 'self-end')}>
                 바로가기
               </Link>
             </div>
