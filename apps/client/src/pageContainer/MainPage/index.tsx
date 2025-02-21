@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 
-import { useGetMyAuthInfo } from 'api';
 import { MyMemberInfoType, MyTotalTestResultType } from 'types';
 
 import {
@@ -17,8 +16,7 @@ import {
   TestResultDialog,
 } from 'client/components';
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from 'shared/components';
-import { cn } from 'shared/lib/utils';
+import Test from './Diolog';
 
 interface MainPageProps {
   memberInfo: MyMemberInfoType | undefined;
@@ -29,8 +27,7 @@ interface MainPageProps {
 const MainPage = ({ memberInfo, resultInfo, isServerHealthy }: MainPageProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isPassOpen, setIsPassOpen] = useState<boolean>(false);
-  const [isStage, setIsStage] = useState<boolean>(false);
-  const [isClicked, setIsClicked] = useState(false);
+  const { component, setIsStage } = Test();
 
   useEffect(() => {
     const today = new Date().toDateString();
@@ -53,17 +50,14 @@ const MainPage = ({ memberInfo, resultInfo, isServerHealthy }: MainPageProps) =>
 
   const isFinishFirstTest = resultInfo?.secondTestPassYn === null ? true : false;
 
-  const { data: authInfo } = useGetMyAuthInfo();
-
-  const showNoticeDialog =
-    process.env.NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF === 'true' &&
-    !isClicked &&
-    (!authInfo?.authReferrerType || !memberInfo?.name);
-
   return (
     <>
-      {showNoticeDialog && <LoginNoticeDialog setIsClicked={setIsClicked} />}
-      <Section1 />
+      <LoginNoticeDialog
+        memberInfo={{
+          userName: memberInfo?.name,
+        }}
+      />
+      <Section1 isServerCurrentActive={isServerHealthy} />
       <Section2 />
       <Section3 isServerHealthy={isServerHealthy} />
       <Section4 />
@@ -82,24 +76,7 @@ const MainPage = ({ memberInfo, resultInfo, isServerHealthy }: MainPageProps) =>
         isFinishFirstTest={isFinishFirstTest}
         memberInfo={memberInfo}
       />
-      <Dialog open={isStage}>
-        <DialogTitle />
-        <DialogContent className="w-[400px]" onClose={() => setIsStage(false)}>
-          <DialogHeader>
-            <DialogTitle className={cn('flex', 'flex-col', 'text-center', 'gap-4', 'items-center')}>
-              <span>현재 접속하신 주소는 개발환경입니다.</span>
-              <span>아래 링크로 접속하여 원서를 작성해주세요.</span>
-              <a
-                href="https://www.hellogsm.kr"
-                className={cn('text-blue-500', 'underline', 'w-fit')}
-                rel="noreferrer"
-              >
-                www.hellogsm.kr
-              </a>
-            </DialogTitle>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+      {component}
     </>
   );
 };
