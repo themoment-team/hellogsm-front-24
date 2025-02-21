@@ -2,20 +2,18 @@
 
 import { useEffect } from 'react';
 
-import { StepsContainer, useStore } from 'shared';
-import { GetMyOneseoType, MyMemberInfoType } from 'types';
+import { StepWrapper } from 'shared';
+import { GetMyOneseoType, MyMemberInfoType, StepEnum } from 'types';
 
 import { ComputerRecommendedPage } from 'client/pageContainer';
 
 interface RegisterStepsPageProps {
   data: GetMyOneseoType | undefined;
   info: MyMemberInfoType;
-  param: string;
+  step: StepEnum;
 }
 
-const RegisterStepsPage = ({ data, param, info }: RegisterStepsPageProps) => {
-  const { setAll } = useStore();
-
+const RegisterStepsPage = ({ data, step, info }: RegisterStepsPageProps) => {
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
       event.preventDefault();
@@ -30,16 +28,10 @@ const RegisterStepsPage = ({ data, param, info }: RegisterStepsPageProps) => {
     };
   }, []);
 
-  useEffect(() => {
-    return () => {
-      setAll();
-    };
-  }, []);
-
   return (
     <>
       <ComputerRecommendedPage />
-      <StepsContainer data={data} info={info} param={param} type="client" />;
+      <StepWrapper data={data} info={info} step={step} type="client" />;
     </>
   );
 };

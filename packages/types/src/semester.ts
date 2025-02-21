@@ -1,3 +1,5 @@
+import { FreeSemesterValueEnum } from "./value";
+
 export type SemesterIdType =
   | "achievement1_2"
   | "achievement2_1"
@@ -12,7 +14,8 @@ export type SemesterTitleType =
   | "3학년 1학기"
   | "3학년 2학기";
 
-export interface SemesterType {
+export interface AchievementType {
   title: SemesterTitleType;
-  id: SemesterIdType;
+  field: SemesterIdType;
+  value?: FreeSemesterValueEnum;
 }

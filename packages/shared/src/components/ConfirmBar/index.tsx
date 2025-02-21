@@ -1,7 +1,5 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
-
 import { MouseIcon } from 'shared/assets';
 import {
   Dialog,
@@ -16,83 +14,78 @@ import {
 import { cn } from 'shared/lib/utils';
 
 interface ConfirmBarProps {
-  id: string;
-  temporarySave: () => void;
-  isStep4Clickable: boolean;
-  isFinalButtonClick: boolean;
+  handleTemporarySaveButtonClick: () => void;
+  handleOneseoSubmitButtonClick: () => void;
+  isStep4Success: boolean;
+  isStep4: boolean;
 }
 
 interface FinalSubmitDialogProps {
-  id: string;
-  isFinalButtonClick: boolean;
-  isStep4Clickable: boolean;
+  isStep4Success: boolean;
+  handleOneseoSubmitButtonClick: () => void;
+  isStep4: boolean;
 }
 
 const FinalSubmitDialog = ({
-  id,
-  isStep4Clickable,
-  isFinalButtonClick,
-}: FinalSubmitDialogProps) => {
-  const searchParams = useSearchParams();
-  const step = Number(searchParams.get('step'));
-
-  return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button
-          disabled={step !== 4 || !isStep4Clickable}
-          variant={step === 4 && isStep4Clickable ? 'next' : 'submit'}
-          className={cn('flex', 'gap-2', 'items-center')}
-        >
-          <MouseIcon />
-          <p>원서 최종 제출</p>
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="bg-white" showCloseIcon={false}>
-        <DialogHeader>
-          <DialogTitle>원서를 최종 제출 하시겠습니까?</DialogTitle>
-          <DialogDescription>
-            제출 후에는 정보를 수정할 수 없으니, 모든 정보가 맞는지 확인 후 제출해주세요.
-          </DialogDescription>
-        </DialogHeader>
-        <div className={cn('flex', 'justify-end', 'gap-2')}>
-          <DialogClose asChild>
-            <button
-              className={cn(
-                'bg-white',
-                'px-4',
-                'py-2',
-                'text-[#0F172A]',
-                'rounded-md',
-                'border-[0.0625rem]',
-                'border-slate-200',
-                'font-semibold',
-              )}
-            >
-              취소
-            </button>
-          </DialogClose>
-          <DialogClose asChild>
-            <button
-              className={cn('px-4', 'py-2', 'rounded-md', 'text-white', 'bg-[#0F172A]')}
-              type="submit"
-              form={id}
-              disabled={isFinalButtonClick}
-            >
-              최종 제출
-            </button>
-          </DialogClose>
-        </div>
-      </DialogContent>
-    </Dialog>
-  );
-};
+  isStep4Success,
+  isStep4,
+  handleOneseoSubmitButtonClick,
+}: FinalSubmitDialogProps) => (
+  <Dialog>
+    <DialogTrigger asChild>
+      <Button
+        disabled={!isStep4 || !isStep4Success}
+        variant={isStep4 && isStep4Success ? 'next' : 'submit'}
+        className={cn('flex', 'gap-2', 'items-center')}
+      >
+        <MouseIcon />
+        <p>원서 최종 제출</p>
+      </Button>
+    </DialogTrigger>
+    <DialogContent className="bg-white" showCloseIcon={false}>
+      <DialogHeader>
+        <DialogTitle>원서를 최종 제출 하시겠습니까?</DialogTitle>
+        <DialogDescription>
+          제출 후에는 정보를 수정할 수 없으니, 모든 정보가 맞는지 확인 후 제출해주세요.
+        </DialogDescription>
+      </DialogHeader>
+      <div className={cn('flex', 'justify-end', 'gap-2')}>
+        <DialogClose asChild>
+          <button
+            className={cn(
+              'bg-white',
+              'px-4',
+              'py-2',
+              'text-[#0F172A]',
+              'rounded-md',
+              'border-[0.0625rem]',
+              'border-slate-200',
+              'font-semibold',
+            )}
+          >
+            취소
+          </button>
+        </DialogClose>
+        <DialogClose asChild>
+          <button
+            className={cn('px-4', 'py-2', 'rounded-md', 'text-white', 'bg-[#0F172A]')}
+            type="submit"
+            disabled={!isStep4Success}
+            onClick={handleOneseoSubmitButtonClick}
+          >
+            최종 제출
+          </button>
+        </DialogClose>
+      </div>
+    </DialogContent>
+  </Dialog>
+);
 
 const ConfirmBar = ({
-  id,
-  temporarySave,
-  isStep4Clickable,
-  isFinalButtonClick,
+  handleTemporarySaveButtonClick,
+  handleOneseoSubmitButtonClick,
+  isStep4Success,
+  isStep4,
 }: ConfirmBarProps) => (
   <div
     className={cn(
@@ -118,18 +111,13 @@ const ConfirmBar = ({
       <span className={cn('text-body1', 'text-slate-900')}>정확히 입력 후 제출해주세요!</span>
     </div>
     <div className={cn('flex', 'items-center', 'gap-[0.5rem]')}>
-      <Button
-        onClick={() => {
-          temporarySave();
-        }}
-        variant="outline"
-      >
+      <Button onClick={handleTemporarySaveButtonClick} variant="outline">
         임시저장
       </Button>
       <FinalSubmitDialog
-        isFinalButtonClick={isFinalButtonClick}
-        id={id}
-        isStep4Clickable={isStep4Clickable}
+        handleOneseoSubmitButtonClick={handleOneseoSubmitButtonClick}
+        isStep4={isStep4}
+        isStep4Success={isStep4Success}
       />
     </div>
   </div>

@@ -7,12 +7,12 @@ import { Button } from 'shared/index';
 import { cn } from 'shared/lib/utils';
 
 interface EditBarProps {
-  id: string;
-  step: string;
-  isFinalButtonClick: boolean;
+  isStep4: boolean;
+  isStep4Success: boolean;
+  handleOneseoEditButtonClick: () => void;
 }
 
-const EditBar = ({ id, step, isFinalButtonClick }: EditBarProps) => {
+const EditBar = ({ isStep4, isStep4Success, handleOneseoEditButtonClick }: EditBarProps) => {
   const { push } = useRouter();
 
   return (
@@ -35,9 +35,10 @@ const EditBar = ({ id, step, isFinalButtonClick }: EditBarProps) => {
       <Button variant="outline" onClick={() => push('/')}>
         홈으로
       </Button>
-      {step === '4' && (
+      {isStep4 && (
         <button
-          disabled={isFinalButtonClick}
+          disabled={!isStep4Success}
+          onClick={handleOneseoEditButtonClick}
           className={cn([
             'px-4',
             'py-2',
@@ -53,8 +54,6 @@ const EditBar = ({ id, step, isFinalButtonClick }: EditBarProps) => {
             'items-center',
             'h-10',
           ])}
-          type="submit"
-          form={id}
         >
           <EditCheckIcon />
           원서 수정 완료

@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
-import { basicRegisterType } from 'types';
+import { Step1FormType } from 'types';
 
 import { UploadIcon } from 'shared/assets';
 import {
@@ -16,44 +16,36 @@ import {
   CustomFormItem,
 } from 'shared/components';
 import { cn } from 'shared/lib/utils';
-import { useStore } from 'shared/stores';
+
+import { usePostImage } from 'api/hooks';
 
 interface UploadPhotoProps {
-  setValue: UseFormSetValue<basicRegisterType>;
-  watch: UseFormWatch<basicRegisterType>;
+  setValue: UseFormSetValue<Step1FormType>;
+  watch: UseFormWatch<Step1FormType>;
 }
 
 const UploadPhoto = ({ setValue, watch }: UploadPhotoProps) => {
-  const store = useStore();
-  const { profileImg, setProfileImg } = store;
+  const profileImg = watch('profileImg');
   const [showModal, setShowModal] = useState(false);
+
+  const { mutate: postImage } = usePostImage({
+    onSuccess: ({ url }) => setValue('profileImg', url),
+  });
 
   const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
-  const PhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const reader = new FileReader();
-      const file = e.target.files[0];
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
 
-      if (file.size > MAX_FILE_SIZE) {
-        setShowModal(true);
-        return;
-      }
-      if (file.size < MAX_FILE_SIZE) {
-        reader.readAsDataURL(e.target.files[0]);
-        reader.onload = () => {
-          if (typeof reader.result === 'string') {
-            setProfileImg(reader.result);
-            setValue('img', reader.result);
-          }
-        };
-      }
-    }
+    const file = e.target.files[0];
+
+    if (file.size >= MAX_FILE_SIZE) return setShowModal(true);
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    postImage(formData);
   };
-
-  useEffect(() => {
-    if (watch('img')) setProfileImg(watch('img'));
-  }, []);
 
   return (
     <>
@@ -66,7 +58,7 @@ const UploadPhoto = ({ setValue, watch }: UploadPhotoProps) => {
               id="file-input"
               multiple
               accept=".jpg, .jpeg, .png"
-              onChange={PhotoUpload}
+              onChange={handlePhotoUpload}
             />
 
             <label

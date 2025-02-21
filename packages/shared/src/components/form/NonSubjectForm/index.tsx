@@ -1,14 +1,14 @@
 'use client';
 
 import { UseFormRegister } from 'react-hook-form';
-import { GradesInputMethodType, ScoreFormType } from 'types';
+import { Step4FormType } from 'types';
 
 import { cn } from 'shared/lib/utils';
-import { useStore } from 'shared/stores';
 
 interface NonSubjectFormProps {
-  register: UseFormRegister<ScoreFormType>;
-  liberalSystem: GradesInputMethodType | undefined;
+  register: UseFormRegister<Step4FormType>;
+  isFreeGrade: boolean;
+  isGraduate: boolean;
 }
 
 const nonSubjectArray = [
@@ -51,9 +51,7 @@ const rowStyle = [
   'items-center',
 ];
 
-const NonSubjectForm = ({ register, liberalSystem }: NonSubjectFormProps) => {
-  const { graduationType } = useStore();
-
+const NonSubjectForm = ({ register, isFreeGrade, isGraduate }: NonSubjectFormProps) => {
   return (
     <div className={cn('flex', 'flex-col', 'w-full')}>
       <div
@@ -73,9 +71,9 @@ const NonSubjectForm = ({ register, liberalSystem }: NonSubjectFormProps) => {
               className={cn(
                 ...itemStyle,
                 idx === volunteerTimeIndex
-                  ? liberalSystem === 'freeGrade'
+                  ? isFreeGrade
                     ? 'w-[9.1875rem]'
-                    : graduationType === 'GRADUATE'
+                    : isGraduate
                       ? 'w-[17.1875rem]'
                       : 'w-[9.75rem]'
                   : 'w-[5.625rem]',
@@ -107,9 +105,9 @@ const NonSubjectForm = ({ register, liberalSystem }: NonSubjectFormProps) => {
                   ...itemStyle,
                   'px-[0.75rem]',
                   index === volunteerTimeIndex
-                    ? liberalSystem === 'freeGrade'
+                    ? isFreeGrade
                       ? 'w-[9.1875rem]'
-                      : graduationType === 'GRADUATE'
+                      : isGraduate
                         ? 'w-[17.1875rem]'
                         : 'w-[9.75rem]'
                     : 'w-[5.625rem]',
@@ -122,6 +120,7 @@ const NonSubjectForm = ({ register, liberalSystem }: NonSubjectFormProps) => {
                       : index === 1 || index === 2 || index === 3
                         ? `attendanceDays.${registerIndex}`
                         : `volunteerTime.${registerIndex}`,
+                    { valueAsNumber: true },
                   )}
                   type="number"
                   className={cn(

@@ -1,84 +1,54 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
-import { UseFormWatch } from 'react-hook-form';
-import { basicRegisterType } from 'types';
-
 import { cn } from 'shared/lib/utils';
 
-type FormField = keyof basicRegisterType;
+const textStyle = ['text-slate-900', 'text-body2', 'font-medium'];
 
-interface RadioButtonProps {
+interface RadioButtonProps<T> {
   title: string;
-  options: string[];
   required?: boolean;
   disabled?: boolean;
   disabledOption?: string;
-  onChange?: (value: string) => void;
-  watch?: UseFormWatch<basicRegisterType>;
-  watchContent?: FormField;
-  defaultValue?: string;
+  handleOptionClick?: (option: T) => void;
+  selectedValue: string;
+  list: { name: string; value: T }[];
 }
 
-const RadioButton = ({
+const RadioButton = <T,>({
   title,
-  options,
   required,
   disabled,
   disabledOption,
-  onChange,
-  watch,
-  watchContent,
-  defaultValue,
-}: RadioButtonProps) => {
-  const [selectedOption, setSelectedOption] = useState<string>(defaultValue ? defaultValue : '');
-
-  useEffect(() => {
-    if (watch && watchContent) {
-      const watchValue = watch(watchContent);
-
-      if (typeof watchValue === 'string' && options.includes(watchValue)) {
-        setSelectedOption(watchValue);
-      } else if (
-        Array.isArray(watchValue) &&
-        watchValue.length > 0 &&
-        options.includes(watchValue[0])
-      ) {
-        setSelectedOption(watchValue[0]);
-      } else {
-        setSelectedOption('');
-      }
-    }
-  }, [watch, watchContent, options]);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setSelectedOption(value);
-    if (onChange) {
-      onChange(value);
-    }
-  };
-
-  const textStyle = ['text-slate-900', 'text-body2', 'font-medium'];
+  selectedValue,
+  handleOptionClick,
+  list,
+}: RadioButtonProps<T>) => {
   return (
     <div className={cn('w-full', 'flex', 'flex-col', 'items-start', 'gap-[0.75rem]')}>
       <div className={cn(...textStyle)}>
         {title} {required && <span className="text-red-600">*</span>}
       </div>
       <div className={cn('flex', 'items-start', 'gap-[1.25rem]')}>
-        {options.map((option, index) => (
-          <div key={index} className={cn('flex', 'items-center', 'gap-[0.5rem]')}>
+        {list.map(({ name, value }, index) => (
+          <div
+            key={index}
+            className={cn(
+              'flex',
+              'items-center',
+              'gap-[0.5rem]',
+              disabled ? 'cursor-not-allowed' : 'cursor-pointer',
+            )}
+            onClick={() => {
+              if (handleOptionClick) handleOptionClick(value);
+            }}
+          >
             <input
+              readOnly
               type="radio"
-              name={title}
-              value={option}
-              checked={selectedOption === option}
-              disabled={disabled || option === disabledOption}
-              onChange={handleChange}
+              checked={selectedValue === value}
+              disabled={disabled || name === disabledOption}
               className={cn(
                 'appearance-none',
-                'cursor-pointer',
                 'w-4',
                 'h-4',
                 'border-[1px]',
@@ -98,10 +68,12 @@ const RadioButton = ({
                 'checked:after:scale-100',
                 'after:scale-0',
                 'transition-transform',
-                disabled ? 'after:bg-slate-400' : 'after:bg-black',
+                disabled
+                  ? ['cursor-not-allowed', 'after:bg-slate-400']
+                  : ['cursor-pointer', 'after:bg-black'],
               )}
             />
-            <p className={cn(...textStyle)}>{option}</p>
+            <p className={cn(...textStyle)}>{name}</p>
           </div>
         ))}
       </div>

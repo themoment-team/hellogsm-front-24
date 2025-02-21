@@ -1,31 +1,106 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 'use client';
 
 import { useState } from 'react';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { usePostMockScore } from 'api';
 import Image from 'next/image';
-import { Button, ScoreRegister, useStore } from 'shared';
-import { GraduationType } from 'types';
+import { useForm } from 'react-hook-form';
+import { Button, ScoreCalculateDialog, Step4Register, step4Schema } from 'shared';
+import {
+  GEDAchievementType,
+  GraduationTypeValueEnum,
+  LiberalSystemValueEnum,
+  MiddleSchoolAchievementType,
+  MockScoreType,
+  Step4FormType,
+} from 'types';
 
 import { ComputerRecommendedPage } from 'client/pageContainer';
 
+import { ARTS_PHYSICAL_SUBJECTS, GENERAL_SUBJECTS } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
 
-const graduationArray: { text: string; value: GraduationType; img: string }[] = [
-  { text: '졸업 예정', value: 'CANDIDATE', img: '/images/candidate.png' },
-  { text: '졸업자', value: 'GRADUATE', img: '/images/graduate.png' },
-  { text: '검정고시', value: 'GED', img: '/images/ged.png' },
+const graduationArray = [
+  { text: '졸업 예정', value: GraduationTypeValueEnum.CANDIDATE, img: '/images/candidate.png' },
+  { text: '졸업자', value: GraduationTypeValueEnum.GRADUATE, img: '/images/graduate.png' },
+  { text: '검정고시', value: GraduationTypeValueEnum.GED, img: '/images/ged.png' },
 ];
 
 const CalculatePage = () => {
-  const { graduationType, setGraduationType } = useStore();
-  const [isClickable, setIsClickable] = useState(false);
+  const step4UseForm = useForm<Step4FormType>({
+    resolver: zodResolver(step4Schema),
+    defaultValues: {
+      liberalSystem: LiberalSystemValueEnum.FREE_GRADE,
+      freeSemester: null,
+    },
+  });
+
+  const [graduationType, setGraduationType] = useState<GraduationTypeValueEnum | null>(null);
+  const [isDialog, setIsDialog] = useState<boolean>(false);
+  const [scoreCalculateDialogData, setScoreCalculateDialogData] = useState<MockScoreType | null>(
+    null,
+  );
+  const isCandidate = graduationType === GraduationTypeValueEnum.CANDIDATE;
+  const isGED = graduationType === GraduationTypeValueEnum.GED;
+  const isGraduate = graduationType === GraduationTypeValueEnum.GRADUATE;
+  const isStep4Success = step4Schema.safeParse(step4UseForm.watch()).success;
+
+  const { mutate: postMockScore } = usePostMockScore(graduationType!, {
+    onSuccess: (data) => {
+      setScoreCalculateDialogData(data);
+      setIsDialog(true);
+    },
+  });
+
+  const handleCalculateButtonClick = () => {
+    const {
+      liberalSystem,
+      achievement1_2,
+      achievement2_1,
+      achievement2_2,
+      achievement3_1,
+      achievement3_2,
+      newSubjects,
+      artsPhysicalAchievement,
+      absentDays,
+      attendanceDays,
+      volunteerTime,
+      freeSemester,
+      gedTotalScore,
+    } = step4UseForm.watch();
+
+    const body: MiddleSchoolAchievementType | GEDAchievementType = isGED
+      ? {
+          gedTotalScore: gedTotalScore!,
+        }
+      : {
+          liberalSystem: liberalSystem,
+          achievement1_2: achievement1_2!,
+          achievement2_1: achievement2_1!,
+          achievement2_2: achievement2_2!,
+          achievement3_1: achievement3_1!,
+          achievement3_2: achievement3_2!,
+          newSubjects: newSubjects,
+          artsPhysicalAchievement: artsPhysicalAchievement!,
+          absentDays: absentDays!,
+          attendanceDays: attendanceDays!,
+          volunteerTime: volunteerTime!,
+          freeSemester: freeSemester || '',
+          generalSubjects: [...GENERAL_SUBJECTS],
+          artsPhysicalSubjects: [...ARTS_PHYSICAL_SUBJECTS],
+        };
+
+    postMockScore(body);
+  };
 
   return (
     <>
       <ComputerRecommendedPage />
       {graduationType ? (
         <div className={cn('sm:flex', 'justify-center', 'rounded-[1.25rem]', 'hidden')}>
-          <div className={cn('pb-10', 'mb-40', 'bg-white', 'mt-[3.56rem]', 'rounded-[1.25rem]')}>
+          <div className={cn('mb-[3.56rem]', 'bg-white', 'mt-[3.56rem]', 'rounded-[1.25rem]')}>
             <header
               className={cn(
                 'w-266',
@@ -40,25 +115,29 @@ const CalculatePage = () => {
                 'border-gray-100',
               )}
             >
-              <Button onClick={() => setGraduationType(undefined)} variant="ghost">
+              <Button onClick={() => setGraduationType(null)} variant="ghost">
                 이전
               </Button>
               <Button
                 form="scoreForm"
                 type="submit"
-                variant={isClickable ? 'next' : 'submit'}
-                disabled={!isClickable}
+                variant={isStep4Success ? 'next' : 'submit'}
+                disabled={!isStep4Success}
+                onClick={handleCalculateButtonClick}
               >
                 내 성적 계산하기
               </Button>
             </header>
-            <div className={cn('w-full', 'h-6')} />
-            <ScoreRegister
-              type="calculate"
-              data={undefined}
-              isStep4Clickable={isClickable}
-              setIsStep4Clickable={setIsClickable}
-            />
+            <div className={cn('p-8', 'pt-6', 'pb-10')}>
+              <Step4Register
+                graduationType={graduationType}
+                isCandidate={isCandidate}
+                isGED={isGED}
+                isGraduate={isGraduate}
+                type="calculate"
+                {...step4UseForm}
+              />
+            </div>
           </div>
         </div>
       ) : (
@@ -107,6 +186,13 @@ const CalculatePage = () => {
           </div>
         </div>
       )}
+
+      <ScoreCalculateDialog
+        isDialog={isDialog}
+        setIsDialog={setIsDialog}
+        scoreCalculateDialogData={scoreCalculateDialogData}
+        type="score"
+      />
     </>
   );
 };
