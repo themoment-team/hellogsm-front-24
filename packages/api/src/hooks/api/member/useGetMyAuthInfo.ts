@@ -8,7 +8,6 @@ import { minutesToMs } from 'shared/utils';
 import { memberUrl, memberQueryKeys, get } from 'api/libs';
 
 export const useGetMyAuthInfo = (
-  initialData?: MyAuthInfoType | undefined,
   options?: Omit<UseQueryOptions<MyAuthInfoType | undefined>, 'queryKey'>,
 ) =>
   useQuery({
@@ -17,5 +16,4 @@ export const useGetMyAuthInfo = (
     staleTime: minutesToMs(5),
     gcTime: minutesToMs(5),
     ...options,
-    initialData: initialData,
   });

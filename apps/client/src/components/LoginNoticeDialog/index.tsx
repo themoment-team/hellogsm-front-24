@@ -1,21 +1,41 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
 import {
   AlertDialog,
+  AlertDialogAction,
   AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  Button,
 } from 'shared';
 
 import { LoginDialog } from 'client/components';
 
-interface NoticeDialogProps {
-  setIsClicked: React.Dispatch<React.SetStateAction<boolean>>;
+import { useGetMyAuthInfo } from 'api/hooks';
+
+interface LoginNoticeDialogProps {
+  userName: string | undefined;
 }
 
-const LoginNoticeDialog = ({ setIsClicked }: NoticeDialogProps) => {
+const LoginNoticeDialog = ({ userName }: LoginNoticeDialogProps) => {
+  const { data: authInfo, isLoading } = useGetMyAuthInfo();
+  const [isDialog, setIsDialog] = useState(false);
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (
+      process.env.NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF === 'true' &&
+      (!authInfo?.authReferrerType || !userName)
+    ) {
+      setIsDialog(true);
+    }
+  }, [isLoading]);
+
   return (
-    <AlertDialog>
+    <AlertDialog open={isDialog} onOpenChange={setIsDialog}>
       <AlertDialogContent className="w-[400px]">
         <AlertDialogHeader>
           <AlertDialogTitle>
@@ -30,7 +50,7 @@ const LoginNoticeDialog = ({ setIsClicked }: NoticeDialogProps) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <LoginDialog />
-          <Button onClick={() => setIsClicked(true)}>다음에</Button>
+          <AlertDialogAction>다음에</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

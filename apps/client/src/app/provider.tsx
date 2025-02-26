@@ -12,7 +12,13 @@ import { cn } from 'client/lib/utils';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Provider = ({ children }: PropsWithChildren) => {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
 
   return (
     <QueryClientProvider client={queryClient}>
