@@ -1,32 +1,41 @@
-'use client'
+'use client';
+
+import { useEffect, useState } from 'react';
 
 import {
   AlertDialog,
+  AlertDialogAction,
   AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  Button,
 } from 'shared';
 
 import { LoginDialog } from 'client/components';
-import { useGetMyAuthInfo } from 'api/hooks';
-import { useState } from 'react';
 
-interface memberInfoType {
-  userName: any | unknown | undefined;
+import { useGetMyAuthInfo } from 'api/hooks';
+
+interface LoginNoticeDialogProps {
+  userName: string | undefined;
 }
 
-const LoginNoticeDialog = ({ memberInfo }: { memberInfo: memberInfoType }) => {
-  const { data: authInfo } = useGetMyAuthInfo();
-  const [isClicked, setIsClicked] = useState(false);
-  const showNoticeDialog =
-    process.env.NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF === 'true' &&
-    !isClicked &&
-    (!authInfo?.authReferrerType || !memberInfo?.userName);
+const LoginNoticeDialog = ({ userName }: LoginNoticeDialogProps) => {
+  const { data: authInfo, isLoading } = useGetMyAuthInfo();
+  const [isDialog, setIsDialog] = useState(false);
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (
+      process.env.NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF === 'true' &&
+      (!authInfo?.authReferrerType || !userName)
+    ) {
+      setIsDialog(true);
+    }
+  }, [isLoading]);
 
   return (
-    <AlertDialog>
+    <AlertDialog open={isDialog} onOpenChange={setIsDialog}>
       <AlertDialogContent className="w-[400px]">
         <AlertDialogHeader>
           <AlertDialogTitle>
@@ -41,7 +50,7 @@ const LoginNoticeDialog = ({ memberInfo }: { memberInfo: memberInfoType }) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <LoginDialog />
-          <Button onClick={() => setIsClicked(true)}>다음에</Button>
+          <AlertDialogAction>다음에</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
