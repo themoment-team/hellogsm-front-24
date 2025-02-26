@@ -16,7 +16,7 @@ import {
   TestResultDialog,
 } from 'client/components';
 
-import Test from './Diolog';
+import DevNoticeDialog from './DevNoticeDialog';
 
 interface MainPageProps {
   memberInfo: MyMemberInfoType | undefined;
@@ -27,7 +27,6 @@ interface MainPageProps {
 const MainPage = ({ memberInfo, resultInfo, isServerHealthy }: MainPageProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isPassOpen, setIsPassOpen] = useState<boolean>(false);
-  const { component, setIsStage } = Test();
 
   useEffect(() => {
     const today = new Date().toDateString();
@@ -42,21 +41,11 @@ const MainPage = ({ memberInfo, resultInfo, isServerHealthy }: MainPageProps) =>
     }
   }, []);
 
-  useEffect(() => {
-    if (process.env.NEXT_PUBLIC_STAGE === 'stage') {
-      setIsStage(true);
-    }
-  }, []);
-
   const isFinishFirstTest = resultInfo?.secondTestPassYn === null ? true : false;
 
   return (
     <>
-      <LoginNoticeDialog
-        memberInfo={{
-          userName: memberInfo?.name,
-        }}
-      />
+      <LoginNoticeDialog userName={memberInfo?.name} />
       <Section1 isServerCurrentActive={isServerHealthy} />
       <Section2 />
       <Section3 isServerHealthy={isServerHealthy} />
@@ -76,7 +65,8 @@ const MainPage = ({ memberInfo, resultInfo, isServerHealthy }: MainPageProps) =>
         isFinishFirstTest={isFinishFirstTest}
         memberInfo={memberInfo}
       />
-      {component}
+
+      <DevNoticeDialog />
     </>
   );
 };
