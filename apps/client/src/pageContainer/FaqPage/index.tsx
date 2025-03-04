@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState } from 'react';
 
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 
@@ -21,10 +21,12 @@ import { Element } from './exampleElement';
 
 const ITEMS_PER_PAGE = 10;
 
-const FaqPageComponent = () => {
+const FaqPage = ({ openIndex }: { openIndex?: number }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [keyword, setKeyword] = useState<string>('');
-  const [faqStates, setFaqStates] = useState<{ [key: number]: boolean }>({});
+  const [faqStates, setFaqStates] = useState<{ [key: number]: boolean }>(
+    openIndex !== undefined ? { [openIndex]: true } : {},
+  );
   const [isPageChanging, setIsPageChanging] = useState<boolean>(false);
 
   const searchParams = useSearchParams();
@@ -33,13 +35,6 @@ const FaqPageComponent = () => {
 
   const totalItems = Element.filter((item) => item.title.toLowerCase().includes(keyword));
   const totalPages = Math.ceil(totalItems.length / ITEMS_PER_PAGE);
-
-  useEffect(() => {
-    const openIndex = searchParams.get('openIndex');
-    if (openIndex && !isNaN(Number(openIndex))) {
-      setFaqStates({ [Number(openIndex)]: true });
-    }
-  }, [searchParams]);
 
   const handlePageChange = (pageNumber: number) => {
     const newPageNumber = Math.max(1, Math.min(pageNumber, totalPages));
@@ -167,14 +162,6 @@ const FaqPageComponent = () => {
       </div>
       <Footer />
     </div>
-  );
-};
-
-const FaqPage = () => {
-  return (
-    <Suspense>
-      <FaqPageComponent />
-    </Suspense>
   );
 };
 
