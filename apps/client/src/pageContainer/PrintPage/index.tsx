@@ -7,7 +7,7 @@ import { cn } from 'client/lib/utils';
 
 import { PrintIcon } from 'shared/assets';
 import { Button } from 'shared/components';
-import { artPhysicalSubjectArray, defaultSubjectArray } from 'shared/constants';
+import { ARTS_PHYSICAL_SUBJECTS, GENERAL_SUBJECTS } from 'shared/constants';
 
 import { useGetMyOneseo } from 'api/hooks';
 
@@ -296,7 +296,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                       <div className="h-[2.2vh] text-left">과목</div>
                     </div>
                     {[
-                      ...defaultSubjectArray,
+                      ...GENERAL_SUBJECTS,
                       ...(oneseo.middleSchoolAchievement.newSubjects ?? []),
                     ].map((subject) => (
                       <div
@@ -463,7 +463,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                       <div className="h-[2.2vh] text-right">학년</div>
                       <div className="h-[2.2vh] text-left">과목</div>
                     </div>
-                    {[...artPhysicalSubjectArray].map((subject) => (
+                    {[...ARTS_PHYSICAL_SUBJECTS].map((subject) => (
                       <div
                         key={subject}
                         className="flex items-center justify-center border-b border-black"

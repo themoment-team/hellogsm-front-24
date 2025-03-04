@@ -2,6 +2,8 @@ import { Header } from 'client/components';
 import { GoogleAnalytics } from 'client/lib';
 import { getIsServerHealthy } from 'client/utils';
 
+import { pretendardFont } from 'shared/fonts';
+
 import Provider from './provider';
 
 import type { Metadata } from 'next';
@@ -38,27 +40,17 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // TODO 로컬 font 적용시키기
-
   const isServerHealthy = await getIsServerHealthy();
 
   return (
     <html lang="ko">
-      <head>
-        <link
-          rel="stylesheet"
-          as="style"
-          crossOrigin=""
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/variable/pretendardvariable-dynamic-subset.css"
-        />
-      </head>
       {process.env.NEXT_PUBLIC_STAGE === 'stage' && (
         <>
           <meta name="robots" content="noindex, nofollow" />
           <meta name="msvalidate.01" content="14471419A8701E4145F89E3ADCCFB1D6" />
         </>
       )}
-      <body>
+      <body className={pretendardFont.className}>
         {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
         )}

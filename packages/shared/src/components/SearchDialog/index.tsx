@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 import { UseFormSetValue } from 'react-hook-form';
-import { basicRegisterType } from 'types';
+import { Step2FormType } from 'types';
 
 import { SearchIcon } from 'shared/assets';
 import { SearchElements } from 'shared/components';
@@ -20,8 +20,7 @@ import { useDebounce } from 'shared/hooks';
 import { cn } from 'shared/lib/utils';
 
 interface SearchDialogProps {
-  setSelectedSchool: React.Dispatch<React.SetStateAction<string>>;
-  setValue: UseFormSetValue<basicRegisterType>;
+  setValue: UseFormSetValue<Step2FormType>;
 }
 
 interface SchoolType {
@@ -29,7 +28,7 @@ interface SchoolType {
   ORG_RDNMA: string;
 }
 
-const SearchDialog = ({ setSelectedSchool, setValue }: SearchDialogProps) => {
+const SearchDialog = ({ setValue }: SearchDialogProps) => {
   const [schools, setSchools] = useState<SchoolType[]>([]);
   const [keyword, setKeyword] = useState<string>('');
   const [isSelecting, setIsSelecting] = useState<boolean>(false);
@@ -120,7 +119,7 @@ const SearchDialog = ({ setSelectedSchool, setValue }: SearchDialogProps) => {
               <Button variant="submit">확인</Button>
             ) : (
               <DialogClose asChild>
-                <Button onClick={() => setSelectedSchool(keyword)}>확인</Button>
+                <Button>확인</Button>
               </DialogClose>
             )}
           </div>

@@ -12,7 +12,7 @@ import Video from './Video';
 
 const flexColStyle = ['flex', 'flex-col', 'items-center'];
 
-const Section1 = () => {
+const Section1 = ({ isServerCurrentActive }: { isServerCurrentActive: boolean }) => {
   const { push } = useRouter();
 
   const scrollToSection2 = () => {
@@ -87,17 +87,19 @@ const Section1 = () => {
               <br />
               광주소프트웨어마이스터고등학교
             </h1>
-
-            <p
-              className={cn(
-                'text-[0.75rem]/[1.25rem]',
-                'font-normal',
-                'text-white',
-                'sm:text-[1.25rem]/[1.75rem]',
-              )}
-            >
-              접수 기간 : {RECRUITMENT_PERIOD.startDate} ~ {RECRUITMENT_PERIOD.endDate}
-            </p>
+            
+            {isServerCurrentActive && (
+              <p
+                className={cn(
+                  'text-[0.75rem]/[1.25rem]',
+                  'font-normal',
+                  'text-white',
+                  'sm:text-[1.25rem]/[1.75rem]',
+                )}
+              >
+                접수기간 : {RECRUITMENT_PERIOD.startDate} ~ {RECRUITMENT_PERIOD.endDate}
+              </p>
+            )}
           </div>
 
           <button

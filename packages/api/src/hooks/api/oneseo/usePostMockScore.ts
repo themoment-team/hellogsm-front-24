@@ -13,7 +13,7 @@ import { oneseoQueryKeys, oneseoUrl, post } from 'api/libs';
 
 export const usePostMockScore = (
   type: GraduationType,
-  options: UseMutationOptions<
+  options?: UseMutationOptions<
     MockScoreType,
     AxiosError,
     MiddleSchoolAchievementType | GEDAchievementType
