@@ -25,7 +25,7 @@ const stepsData = [
   },
   {
     icon: <Section2Icon2 />,
-    title: '입학원서 및 증빙서류 제출',
+    title: '입학 원서 및 증빙서류 제출',
     date: (
       <>
         2024. 10. 14.(월)~

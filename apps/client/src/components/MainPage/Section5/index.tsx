@@ -91,13 +91,25 @@ const Section5 = () => {
             'px-4',
             'px-4',
             'xs:px-[3.75rem]',
+            'smx:px-[5.75rem]',
             'md:px-[8rem]',
+            'max-sm:overflow-x-scroll',
+            'max-sm:flex-nowrap',
+            'max-sm:justify-start',
+            'max-sm:pb-4',
           )}
         >
           {Elements.map((element, index) => (
             <div
               key={index}
-              className={cn('flex', 'w-[26rem]', 'flex-col', 'items-start', 'gap-6')}
+              className={cn(
+                'flex',
+                'w-[26rem]',
+                'flex-col',
+                'items-start',
+                'gap-6',
+                'max-sm:flex-shrink-0',
+              )}
             >
               <Image
                 src={element.Img}

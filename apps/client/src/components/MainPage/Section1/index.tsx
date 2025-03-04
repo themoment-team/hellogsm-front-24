@@ -87,7 +87,7 @@ const Section1 = ({ isServerCurrentActive }: { isServerCurrentActive: boolean })
               <br />
               광주소프트웨어마이스터고등학교
             </h1>
-
+            
             {isServerCurrentActive && (
               <p
                 className={cn(
@@ -119,7 +119,7 @@ const Section1 = ({ isServerCurrentActive }: { isServerCurrentActive: boolean })
               'border-solid',
             )}
           >
-            원서접수 하러 가기
+            원서 접수 하러 가기
           </button>
         </div>
       </div>

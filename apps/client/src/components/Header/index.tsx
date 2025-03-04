@@ -53,6 +53,8 @@ interface HeaderProps {
   isServerHealthy: boolean;
 }
 
+const mobileWithSize = 1024;
+
 const Header = ({ isServerHealthy }: HeaderProps) => {
   const { data: authInfo } = useGetMyAuthInfo();
   const { data: memberInfo } = useGetMyMemberInfo();
@@ -67,38 +69,65 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
     queryClient.removeQueries({ queryKey: memberQueryKeys.getMyMemberInfo() });
   };
 
-  const [isLogoutClicked, setIsLogoutClicked] = useState(false);
-  const [isBarClicked, setIsBarClicked] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  const [isDropdown, setIsDropdown] = useState(false);
+  const [isMenu, setIsMenu] = useState(false);
+  const isLogin = authInfo?.authReferrerType && !memberInfo?.name;
+  const isSignup = authInfo?.authReferrerType && memberInfo?.name;
 
-  const navLinks = isServerHealthy
+  const MenuToggleButton = () => (
+    <button onClick={() => setIsMenu(!isMenu)}>{isMenu ? <I.XIcon /> : <I.HamburgerIcon />}</button>
+  );
+
+  const mobileNavLinks = isServerHealthy
     ? [
         { href: '/', label: '홈', icon: I.HomeIcon },
-        { href: '/guide', label: '원서접수', icon: I.OneseoIcon },
+        { href: '/guide', label: '원서 접수', icon: I.OneseoIcon },
         { href: '/faq', label: '자주 묻는 질문', icon: I.FaqIcon },
         { href: '/mypage', label: '내 정보 페이지', icon: I.HeaderProfileIcon },
-        { href: '/oneseo/calculate', label: '모의 성적 계산', icon: I.CalculateIcon },
         {
           href: '/introduce',
-          label: '더모먼트팀',
+          label: '더모먼트',
           icon: I.SparkleIcon,
         },
       ]
     : [
         { href: '/', label: '홈', icon: I.HomeIcon },
-        { href: '/guide', label: '원서접수', icon: I.OneseoIcon },
+        { href: '/guide', label: '원서 접수', icon: I.OneseoIcon },
         { href: '/faq', label: '자주 묻는 질문', icon: I.FaqIcon },
         {
           href: '/introduce',
-          label: '더모먼트팀',
+          label: '더모먼트',
           icon: I.SparkleIcon,
+        },
+      ];
+
+  const pcNavLinks = isServerHealthy
+    ? [
+        { href: '/', label: '홈' },
+        { href: '/guide', label: '원서 접수' },
+        { href: '/faq', label: '자주 묻는 질문' },
+        { href: '/oneseo/calculate', label: '모의 성적 계산' },
+        { href: '/check-result', label: '합격자 조회' },
+        {
+          href: '/introduce',
+          label: '더모먼트',
+        },
+      ]
+    : [
+        { href: '/', label: '홈' },
+        { href: '/guide', label: '원서 접수' },
+        { href: '/faq', label: '자주 묻는 질문' },
+        {
+          href: '/introduce',
+          label: '더모먼트',
         },
       ];
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 750) {
-        setIsBarClicked(false);
+      if (window.innerWidth >= mobileWithSize) {
+        setIsMenu(false);
       }
     };
 
@@ -108,18 +137,6 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
-  useEffect(() => {
-    if (isBarClicked) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isBarClicked]);
 
   return (
     <>
@@ -153,14 +170,14 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
           className={cn(
             'gap-[2.75rem]',
             'hidden',
-            'smxm:flex',
+            'md:flex',
             'justify-between',
             'text-lg',
             'font-[600]',
             'text-gray-500',
           )}
         >
-          {navLinks.map(({ label, href }) => (
+          {pcNavLinks.map(({ label, href }) => (
             <ActiveLink
               key={label}
               href={href}
@@ -171,71 +188,87 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
             </ActiveLink>
           ))}
         </nav>
-        {isServerHealthy &&
-          (authInfo?.authReferrerType && memberInfo?.name ? (
-            <>
-              <div className={cn('relative', 'hidden', 'smxm:flex', 'w-[10rem]')}>
-                <button
-                  className={cn(...loginLinkStyle, 'gap-2', 'relative')}
-                  onClick={() => setIsLogoutClicked(!isLogoutClicked)}
-                >
-                  <div className={cn('flex', 'items-center', 'gap-[0.125rem]', ...activeTextStyle)}>
-                    <I.HeaderProfileIcon size="1.5rem" color="#2563EB" />
-                    <span className={cn('text-blue-600')}>{memberInfo.name}</span> 님
-                  </div>
-                  <I.ChevronIcon />
-                </button>
-                {isLogoutClicked === true && (
-                  <div
-                    className={cn(
-                      'absolute',
-                      'top-full',
-                      'left-[-17.5%]',
-                      'mt-2',
-                      'flex',
-                      'w-[10rem]',
-                      'flex-col',
-                      'items-start',
-                      'shadow-sm',
-                      'rounded-md',
-                      'bg-white',
-                    )}
-                  >
-                    <Link
-                      href="/mypage"
-                      className={cn(...modalBtnStyle)}
-                      onClick={() => setIsLogoutClicked(!isLogoutClicked)}
-                    >
-                      <I.HomeIcon size="1.5rem" color="#475569" /> 내 정보 페이지
-                    </Link>
-                    <Link
-                      href="/"
-                      className={cn(...modalBtnStyle, 'text-red-600')}
-                      onClick={() => {
-                        handleLogout();
-                        setIsLogoutClicked(!isLogoutClicked);
-                      }}
-                    >
-                      <I.LogoutIcon /> 로그아웃
-                    </Link>
-                  </div>
-                )}
-              </div>
 
-              <button
-                onClick={() => setIsBarClicked(!isBarClicked)}
-                className={cn('flex', 'smxm:hidden')}
-              >
-                {isBarClicked ? <I.XIcon /> : <I.HamburgerIcon />}
-              </button>
-            </>
-          ) : authInfo?.authReferrerType && !memberInfo?.name ? (
-            '회원가입을 진행해주세요'
+        {/* PC width 일떄 */}
+
+        {isServerHealthy && (
+          <div className={cn('hidden', 'md:flex')}>
+            {isSignup ? (
+              <>
+                <div className={cn('relative', 'w-[10rem]')}>
+                  <button
+                    className={cn(...loginLinkStyle, 'gap-2', 'relative')}
+                    onClick={() => setIsDropdown(!isDropdown)}
+                  >
+                    <div
+                      className={cn('flex', 'items-center', 'gap-[0.125rem]', ...activeTextStyle)}
+                    >
+                      <I.HeaderProfileIcon size="1.5rem" color="#2563EB" />
+                      <span className={cn('text-blue-600')}>{memberInfo.name}</span> 님
+                    </div>
+                    <I.ChevronIcon />
+                  </button>
+
+                  {isDropdown && (
+                    <div
+                      className={cn(
+                        'absolute',
+                        'top-full',
+                        'left-[-17.5%]',
+                        'mt-2',
+                        'flex',
+                        'w-[10rem]',
+                        'flex-col',
+                        'items-start',
+                        'shadow-sm',
+                        'rounded-md',
+                        'bg-white',
+                      )}
+                    >
+                      <Link
+                        href="/mypage"
+                        className={cn(...modalBtnStyle)}
+                        onClick={() => setIsDropdown(false)}
+                      >
+                        <I.HomeIcon size="1.5rem" color="#475569" /> 내 정보 페이지
+                      </Link>
+                      <Link
+                        href="/"
+                        className={cn(...modalBtnStyle, 'text-red-600')}
+                        onClick={() => {
+                          handleLogout();
+                          setIsDropdown(false);
+                        }}
+                      >
+                        <I.LogoutIcon /> 로그아웃
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              </>
+            ) : isLogin ? (
+              '회원가입을 진행해주세요'
+            ) : (
+              <LoginDialog />
+            )}
+          </div>
+        )}
+
+        {/* Mobile width 일떄 */}
+        <div className={cn('md:hidden')}>
+          {isServerHealthy ? (
+            isSignup ? (
+              <MenuToggleButton />
+            ) : (
+              <LoginDialog />
+            )
           ) : (
-            <LoginDialog />
-          ))}
+            <MenuToggleButton />
+          )}
+        </div>
       </header>
-      {isBarClicked && (
+
+      {isMenu && (
         <div
           className={cn(
             'flex',
@@ -256,13 +289,13 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
           )}
         >
           <div className={cn('flex', 'flex-col', 'items-start', 'gap-[2.25rem]')}>
-            {navLinks.map((link) => {
+            {mobileNavLinks.map((link) => {
               const IconComponent = link.icon;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  onClick={() => setIsBarClicked(!isBarClicked)}
+                  onClick={() => setIsMenu(false)}
                   className={cn(
                     'flex',
                     'items-center',
@@ -286,23 +319,25 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
               );
             })}
           </div>
-          <button
-            className={cn(
-              'flex',
-              'items-center',
-              'gap-4',
-              'text-red-600',
-              'text-[1.5rem]',
-              'leading-normal',
-              'font-bold',
-            )}
-            onClick={() => {
-              handleLogout();
-              setIsBarClicked(!isBarClicked);
-            }}
-          >
-            <I.LogoutIcon /> 로그아웃
-          </button>
+          {isServerHealthy && (
+            <button
+              className={cn(
+                'flex',
+                'items-center',
+                'gap-4',
+                'text-red-600',
+                'text-[1.5rem]',
+                'leading-normal',
+                'font-bold',
+              )}
+              onClick={() => {
+                handleLogout();
+                setIsMenu(false);
+              }}
+            >
+              <I.LogoutIcon /> 로그아웃
+            </button>
+          )}
         </div>
       )}
     </>

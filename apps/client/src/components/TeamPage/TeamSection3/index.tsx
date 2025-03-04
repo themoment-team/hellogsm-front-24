@@ -58,7 +58,7 @@ const TeamSection3 = () => {
           'md:text-left',
         )}
       >
-        <span className={cn('text-[#7C58E9]')}>더모먼트팀</span>은
+        <span className={cn('text-[#7C58E9]')}>더모먼트</span>는
         <br />
         아래의 비전을 가지고 활동해요.
       </h1>
