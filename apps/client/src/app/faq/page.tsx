@@ -1,7 +1,7 @@
 import { FaqPage } from 'client/pageContainer';
 
-export default function Faq({ searchParams }: { searchParams: { openIndex?: string } }) {
+export default function Faq({ searchParams: {openIndex} }: { searchParams: { openIndex?: string } }) {
   return (
-    <FaqPage openIndex={searchParams.openIndex ? Number(searchParams.openIndex) : undefined} />
+    <FaqPage openIndex={openIndex ? Number(openIndex) : undefined} />
   );
 }
