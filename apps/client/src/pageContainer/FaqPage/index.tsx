@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+
 import { FaqElement, Footer } from 'client/components';
 
 import { SearchIcon } from 'shared/assets';
@@ -19,11 +21,17 @@ import { Element } from './exampleElement';
 
 const ITEMS_PER_PAGE = 10;
 
-const FaqPage = () => {
+const FaqPage = ({ openIndex }: { openIndex?: number }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [keyword, setKeyword] = useState<string>('');
-  const [faqStates, setFaqStates] = useState<{ [key: number]: boolean }>({});
+  const [faqStates, setFaqStates] = useState<{ [key: number]: boolean }>(
+    openIndex !== undefined ? { [openIndex]: true } : {},
+  );
   const [isPageChanging, setIsPageChanging] = useState<boolean>(false);
+
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
 
   const totalItems = Element.filter((item) => item.title.toLowerCase().includes(keyword));
   const totalPages = Math.ceil(totalItems.length / ITEMS_PER_PAGE);
@@ -48,10 +56,19 @@ const FaqPage = () => {
   );
 
   const toggleFaqContent = (index: number) => {
-    setFaqStates((prevStates) => ({
-      ...prevStates,
-      [index]: !prevStates[index],
-    }));
+    setFaqStates((prevStates) => {
+      const isOpen = !prevStates[index];
+      const newFaqStates = { [index]: isOpen };
+
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      if (isOpen) {
+        newSearchParams.set('openIndex', String(index));
+      } else {
+        newSearchParams.delete('openIndex');
+      }
+      router.replace(`${pathname}?${newSearchParams.toString()}`);
+      return newFaqStates;
+    });
   };
 
   return (
