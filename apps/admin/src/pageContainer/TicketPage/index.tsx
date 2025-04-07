@@ -48,7 +48,7 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
               <tr>
                 <td className="w-28 border border-black font-normal">
                   2차 전형 <br />
-                  (직무적성소양평가)
+                  (역량 평가)
                 </td>
                 <td className="border border-black pl-[0.625rem] text-left font-normal">
                   {직무적성시험기간}

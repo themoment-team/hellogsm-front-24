@@ -114,7 +114,7 @@ const Elements: ElementType[] = [
     description: (
       <>
         소프트웨어마이스터고등학교 학업수행에 필요한 기본 자질과 능력을 중심으로{' '}
-        <strong className="font-semibold">직무적성 소양평가</strong>를 진행합니다.
+        <strong className="font-semibold"> 역량 평가</strong>를 진행합니다.
       </>
     ),
     subDescription: <>소양평가 이후 면접을 통해 지원자의 역량을 확인 후 2차 전형은 마무리됩니다.</>,
@@ -125,7 +125,7 @@ const Elements: ElementType[] = [
     description: (
       <>
         <strong className="font-semibold">
-          1차 서류심사(50%)와 2차 직무적성 소양평가(30%), 심층면접(20%)
+          1차 서류심사(50%)와 2차 역량 평가(30%), 심층면접(20%)
         </strong>
         를 통해 최종 합격자를 선발합니다.
       </>

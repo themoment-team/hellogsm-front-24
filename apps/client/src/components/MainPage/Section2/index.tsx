@@ -43,7 +43,7 @@ const stepsData = [
   },
   {
     icon: <Section2Icon4 />,
-    title: '2차전형(직무적성 소양평가)',
+    title: '2차전형(역량 평가)',
     date: '2024. 10. 25.(금) 13:00-16:30',
     color: 'border-lime-500',
   },
