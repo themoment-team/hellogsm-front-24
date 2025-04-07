@@ -117,7 +117,9 @@ const Elements: ElementType[] = [
         <strong className="font-semibold">역량 평가</strong>를 진행합니다.
       </>
     ),
-    subDescription: <>소양평가 이후 면접을 통해 지원자의 역량을 확인 후 2차 전형은 마무리됩니다.</>,
+    subDescription: (
+      <>역량 평가 이후 면접을 통해 지원자의 역량을 확인 후 2차 전형은 마무리됩니다.</>
+    ),
   },
   {
     background: 'bg-blue-700',
