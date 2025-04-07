@@ -67,8 +67,6 @@ const stepsData = [
         2024. 10. 30.(수) ~
         <br className={cn('lg:hidden', 'smx:block', 'hidden')} />
         11. 4.(월) 09:00 ~ 17:00
-        <br />
-        (건강검진 관련서류 제출: 11. 11.(월) 17:00까지)
       </>
     ),
     color: 'border-sky-400',

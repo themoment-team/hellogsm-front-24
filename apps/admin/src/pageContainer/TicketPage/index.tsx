@@ -127,7 +127,6 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
               <tr>
                 <td className="border border-black pl-[0.625rem] text-left font-normal">
                   (1) 입학등록동의서 1부 (11. 4.(월) 17시 마감) <br />
-                  (2) 건강진단서 1부 (11. 11.(월) 17시 마감) <br />
                   토, 일요일 제외 / 마감시간 이전 도착분에 한하여 유효함.
                 </td>
                 <td
