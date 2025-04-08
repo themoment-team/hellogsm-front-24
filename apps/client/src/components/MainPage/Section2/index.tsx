@@ -16,9 +16,9 @@ const stepsData = [
     title: '원서 및 성적 입력',
     date: (
       <>
-        2024. 10. 14.(월)~
+        2025. 10. 20.(월)~
         <br className={cn('lg:hidden', 'smx:block', 'hidden')} />
-        17.(목) 09:00 ~ 17:00
+        23.(목) 09:00 ~ 17:00
       </>
     ),
     color: 'border-lime-500',
@@ -28,9 +28,9 @@ const stepsData = [
     title: '입학 원서 및 증빙서류 제출',
     date: (
       <>
-        2024. 10. 14.(월)~
+        2025. 10. 20.(월)~
         <br className={cn('lg:hidden', 'smx:block', 'hidden')} />
-        17.(목) 09:00 ~ 17:00
+        23.(목) 09:00 ~ 17:00
       </>
     ),
     color: 'border-sky-400',
@@ -38,25 +38,25 @@ const stepsData = [
   {
     icon: <Section2Icon3 />,
     title: '1차 전형 합격자 발표',
-    date: '2024. 10. 21.(월) 10:00',
+    date: '2025. 10. 28.(화) 10:00',
     color: 'border-sky-600',
   },
   {
     icon: <Section2Icon4 />,
     title: '2차전형(역량 평가)',
-    date: '2024. 10. 25.(금) 13:00-16:30',
+    date: '2025. 10. 31.(금) 13:00-16:30',
     color: 'border-lime-500',
   },
   {
     icon: <Section2Icon5 />,
     title: '2차 전형(심층 면접)',
-    date: '2024. 10. 26.(토) 09:00-17:00',
+    date: '2025. 11. 1.(토) 09:00-17:00',
     color: 'border-sky-600',
   },
   {
     icon: <Section2Icon6 />,
     title: '최종합격자 발표',
-    date: '2024. 10. 30.(수) 10:00',
+    date: '2025. 11. 5.(수) 10:00',
     color: 'border-lime-500',
   },
   {
@@ -64,9 +64,9 @@ const stepsData = [
     title: '합격자 등록(서류 제출)',
     date: (
       <>
-        2024. 10. 30.(수) ~
+        2025. 11. 5.(수) ~
         <br className={cn('lg:hidden', 'smx:block', 'hidden')} />
-        11. 4.(월) 09:00 ~ 17:00
+        11. 10.(월) 09:00 ~ 17:00
       </>
     ),
     color: 'border-sky-400',
