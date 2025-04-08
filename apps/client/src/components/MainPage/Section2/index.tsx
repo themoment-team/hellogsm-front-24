@@ -181,6 +181,7 @@ const Section2 = () => {
                       'font-normal',
                       'mdx:text-[1rem]/[1.75rem]',
                       'text-[0.75rem]/[1.5rem]',
+                      'whitespace-nowrap',
                     )}
                   >
                     {step.date}
