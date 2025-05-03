@@ -5,7 +5,8 @@ import { PropsWithChildren } from 'react';
 import Link, { LinkProps } from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { cn } from 'client/lib/utils';
+import { cn } from 'shared/lib/utils';
+
 
 type ActiveLinkProps = LinkProps & {
   className?: string;

@@ -7,9 +7,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ToastContainer } from 'react-toastify';
 
 import { ChannelTalk } from 'client/components';
-import { cn } from 'client/lib/utils';
 
 import 'react-toastify/dist/ReactToastify.css';
+import { cn } from 'shared/lib/utils';
 
 const Provider = ({ children }: PropsWithChildren) => {
   const queryClient = new QueryClient({

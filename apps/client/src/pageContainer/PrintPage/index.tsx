@@ -3,11 +3,11 @@
 import { artsPhysicalSubjectsScoreDetailType, GetMyOneseoType, SexEnum } from 'types';
 
 import { OneseoStatus } from 'client/components';
-import { cn } from 'client/lib/utils';
 
 import { PrintIcon } from 'shared/assets';
 import { Button } from 'shared/components';
 import { ARTS_PHYSICAL_SUBJECTS, GENERAL_SUBJECTS } from 'shared/constants';
+import { cn } from 'shared/lib/utils';
 
 import { useGetMyOneseo } from 'api/hooks';
 

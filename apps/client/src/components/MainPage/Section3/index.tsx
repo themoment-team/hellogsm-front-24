@@ -4,7 +4,8 @@ import Link from 'next/link';
 
 import * as I from 'client/assets';
 import { RECRUITMENT_PERIOD } from 'client/constants';
-import { cn } from 'client/lib/utils';
+
+import { cn } from 'shared/lib/utils';
 
 const buttonStyle = [
   'font-semibold',
