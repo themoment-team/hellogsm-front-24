@@ -9,7 +9,8 @@ import Link from 'next/link';
 
 import * as I from 'client/assets';
 import { ActiveLink, LoginDialog } from 'client/components';
-import { cn } from 'client/lib/utils';
+
+import { cn } from 'shared/lib/utils';
 
 import { useGetMyAuthInfo, useGetMyMemberInfo, useLogout } from 'api/hooks';
 
