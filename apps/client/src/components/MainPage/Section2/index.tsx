@@ -8,7 +8,8 @@ import {
   Section2Icon5,
   Section2Icon6,
 } from 'client/assets';
-import { cn } from 'client/lib/utils';
+
+import { cn } from 'shared/lib/utils';
 
 const stepsData = [
   {
