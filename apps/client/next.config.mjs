@@ -19,6 +19,7 @@ const nextConfig = {
       destination: `${process.env.NEXT_PUBLIC_API_BASE_URL}/:path*`,
     },
   ],
+  output: 'standalone',
 };
 
 export default nextConfig;
