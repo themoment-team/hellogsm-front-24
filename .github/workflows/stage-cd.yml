@@ -1,0 +1,111 @@
+name: hello-gsm-stage-cd
+
+on:
+  push:
+    branches: develop
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Docker Client build
+        run: |
+          docker build \
+          --build-arg NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_STAGE_API_BASE_URL }} \
+          --build-arg NEXT_PUBLIC_CHANNEL_IO_KEY=${{ secrets.NEXT_PUBLIC_CHANNEL_IO_KEY }} \
+          --build-arg NEXT_PUBLIC_IMAGE_URL=${{ secrets.NEXT_PUBLIC_IMAGE_URL }} \
+          --build-arg NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF=${{ secrets.NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF }} \
+          --build-arg NEXT_PUBLIC_NEIS_API_KEY=${{ secrets.NEXT_PUBLIC_NEIS_API_KEY }} \
+          -f ./client.Dockerfile \
+          -t ${{ secrets.AWS_ECR_STAGE_CLIENT_REPOSITORY }}:latest \
+          .
+
+      - name: Docker Admin build
+        run: |
+          docker build \
+          --build-arg NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_STAGE_API_BASE_URL }} \
+          --build-arg NEXT_PUBLIC_IMAGE_URL=${{ secrets.NEXT_PUBLIC_IMAGE_URL }} \
+          --build-arg NEXT_PUBLIC_NEIS_API_KEY=${{ secrets.NEXT_PUBLIC_NEIS_API_KEY }} \
+          -f ./admin.Dockerfile \
+          -t ${{ secrets.AWS_ECR_STAGE_ADMIN_REPOSITORY }}:latest \
+          .
+
+      - name: Push image to ECR
+        run: |
+          docker push ${{ secrets.AWS_ECR_STAGE_CLIENT_REPOSITORY }}:latest
+          docker push ${{ secrets.AWS_ECR_STAGE_ADMIN_REPOSITORY }}:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Connect to Bastion EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.BASTION_EC2_IP }}
+          port: ${{ secrets.BASTION_EC2_PORT }}
+          username: ${{ secrets.BASTION_EC2_USERNAME }}
+          key: ${{ secrets.BASTION_EC2_SSH_KEY }}
+          script: |
+            ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_KEY_NAME }} ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_IP }} << 'EOF'
+            docker pull ${{ secrets.AWS_ECR_STAGE_CLIENT_REPOSITORY }}:latest
+            docker pull ${{ secrets.AWS_ECR_STAGE_ADMIN_REPOSITORY }}:latest
+            docker stop hello-stage-client || true
+            docker stop hello-stage-admin || true
+            docker rm hello-stage-client || true
+            docker rm hello-stage-admin || true
+
+            docker run -d \
+              --name hello-stage-client \
+              -p 3004:3000 \
+              -e NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_STAGE_API_BASE_URL }} \
+              -e NEXT_PUBLIC_CHANNEL_IO_KEY=${{ secrets.NEXT_PUBLIC_CHANNEL_IO_KEY }} \
+              -e NEXT_PUBLIC_IMAGE_URL=${{ secrets.NEXT_PUBLIC_IMAGE_URL }} \
+              -e NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF=${{ secrets.NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF }} \
+              -e NEXT_PUBLIC_NEIS_API_KEY=${{ secrets.NEXT_PUBLIC_NEIS_API_KEY }} \
+              ${{ secrets.AWS_ECR_STAGE_CLIENT_REPOSITORY }}:latest
+            docker run -d \
+              --name hello-stage-admin \
+              -p 3005:3000 \
+              -e NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_STAGE_API_BASE_URL }} \
+              -e NEXT_PUBLIC_IMAGE_URL=${{ secrets.NEXT_PUBLIC_IMAGE_URL }} \
+              -e NEXT_PUBLIC_NEIS_API_KEY=${{ secrets.NEXT_PUBLIC_NEIS_API_KEY }} \
+              ${{ secrets.AWS_ECR_STAGE_ADMIN_REPOSITORY }}:latest
+
+            EOF
+
+      - name: Success Discord Notification
+        uses: sarisia/actions-status-discord@v1.11.0
+        if: success()
+        with:
+          webhook: ${{ secrets.WEBHOOK_URL }}
+          title: "✅ hello-gsm stage CD"
+          status: ${{ job.status }}
+          content: "배포가 성공적으로 완료되었습니다."
+          username: hello-gsm bot
+          color: 4CAF50
+
+      - name: Failure notification to discord
+        uses: sarisia/actions-status-discord@v1.11.0
+        if: failure()
+        with:
+          webhook: ${{ secrets.WEBHOOK_URL }}
+          title: "❌ hello-gsm stage CD"
+          content: "배포 중 에러가 발생했습니다."
+          status: ${{ job.status }}
+          username: hello-gsm bot
+          color: e74c3c
