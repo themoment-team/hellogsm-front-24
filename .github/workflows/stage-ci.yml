@@ -1,0 +1,57 @@
+name: hello-gsm-stage-ci
+
+on:
+  pull_request:
+    branches: develop
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Docker Client build
+        run: |
+          docker build \
+          --build-arg NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_STAGE_API_BASE_URL }} \
+          --build-arg NEXT_PUBLIC_CHANNEL_IO_KEY=${{ secrets.NEXT_PUBLIC_CHANNEL_IO_KEY }} \
+          --build-arg NEXT_PUBLIC_IMAGE_URL=${{ secrets.NEXT_PUBLIC_IMAGE_URL }} \
+          --build-arg NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF=${{ secrets.NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF }} \
+          --build-arg NEXT_PUBLIC_NEIS_API_KEY=${{ secrets.NEXT_PUBLIC_NEIS_API_KEY }} \
+          -f ./client.Dockerfile \
+          -t hello-stage-client:latest \
+          .
+
+      - name: Docker Admin build
+        run: |
+          docker build \
+          --build-arg NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_STAGE_API_BASE_URL }} \
+          --build-arg NEXT_PUBLIC_IMAGE_URL=${{ secrets.NEXT_PUBLIC_IMAGE_URL }} \
+          --build-arg NEXT_PUBLIC_NEIS_API_KEY=${{ secrets.NEXT_PUBLIC_NEIS_API_KEY }} \
+          -f ./admin.Dockerfile \
+          -t hello-stage-admin:latest \
+          .
+
+      - name: Success Discord Notification
+        uses: sarisia/actions-status-discord@v1.11.0
+        if: success()
+        with:
+          webhook: ${{ secrets.WEBHOOK_URL }}
+          title: "✅ hello-gsm stage CI"
+          status: ${{ job.status }}
+          content: "PR을 확인해주세요."
+          username: hello-gsm bot
+          color: 4CAF50
+
+      - name: Failure notification to discord
+        uses: sarisia/actions-status-discord@v1.11.0
+        if: failure()
+        with:
+          webhook: ${{ secrets.WEBHOOK_URL }}
+          title: "❌ hello-gsm stage CI"
+          content: "에러를 확인해주세요."
+          status: ${{ job.status }}
+          username: hello-gsm bot
+          color: e74c3c
