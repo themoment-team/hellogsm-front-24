@@ -62,6 +62,7 @@ jobs:
           key: ${{ secrets.BASTION_EC2_SSH_KEY }}
           script: |
             ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_KEY_NAME }} ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_IP }} << 'EOF'
+            aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${{ secrets.AWS_ECR_URL }}
             docker pull ${{ secrets.AWS_ECR_PROD_CLIENT_REPOSITORY }}:latest
             docker pull ${{ secrets.AWS_ECR_PROD_ADMIN_REPOSITORY }}:latest
 
