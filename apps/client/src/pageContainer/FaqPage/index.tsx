@@ -17,7 +17,7 @@ import {
 } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
-import { Element } from './exampleElement';
+import exampleElement from './exampleElement.json';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -33,7 +33,7 @@ const FaqPage = ({ openIndex }: { openIndex?: number }) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const totalItems = Element.filter((item) => item.title.toLowerCase().includes(keyword));
+  const totalItems = exampleElement.filter((item) => item.title.toLowerCase().includes(keyword));
   const totalPages = Math.ceil(totalItems.length / ITEMS_PER_PAGE);
 
   const handlePageChange = (pageNumber: number) => {
