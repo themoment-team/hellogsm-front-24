@@ -66,7 +66,7 @@ const FaqPage = ({ openIndex }: { openIndex?: number }) => {
       } else {
         newSearchParams.delete('openIndex');
       }
-      router.replace(`${pathname}?${newSearchParams.toString()}`);
+      router.replace(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
       return newFaqStates;
     });
   };
@@ -123,17 +123,20 @@ const FaqPage = ({ openIndex }: { openIndex?: number }) => {
             </div>
             <div className={cn('w-full', 'h-[0.0625rem]', 'bg-slate-300')} />
             <div className={cn('flex', 'flex-col', 'gap-4', 'pt-8')}>
-              {currentItems.map((faq, index) => (
-                <FaqElement
-                  key={index}
-                  title={faq.title}
-                  content={faq.content}
-                  keyword={keyword}
-                  showContent={!!faqStates[index]}
-                  onToggle={() => toggleFaqContent(index)}
-                  isPageChanging={isPageChanging}
-                />
-              ))}
+              {currentItems.map((faq, index) => {
+                const globalIndex = (currentPage - 1) * ITEMS_PER_PAGE + index;
+                return (
+                  <FaqElement
+                    key={globalIndex}
+                    title={faq.title}
+                    content={faq.content}
+                    keyword={keyword}
+                    showContent={!!faqStates[globalIndex]}
+                    onToggle={() => toggleFaqContent(globalIndex)}
+                    isPageChanging={isPageChanging}
+                  />
+                );
+              })}
             </div>
           </div>
           {totalPages > 1 && (
