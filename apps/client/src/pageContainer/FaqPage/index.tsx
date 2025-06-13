@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 
@@ -24,10 +24,9 @@ const ITEMS_PER_PAGE = 10;
 const FaqPage = ({ openIndex }: { openIndex?: number }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [keyword, setKeyword] = useState<string>('');
-  const [faqStates, setFaqStates] = useState<{ [key: number]: boolean }>(
-    openIndex !== undefined ? { [openIndex]: true } : {},
-  );
+  const [faqStates, setFaqStates] = useState<{ [key: number]: boolean }>({});
   const [isPageChanging, setIsPageChanging] = useState<boolean>(false);
+  const [isInitialOpenIndexHandled, setIsInitialOpenIndexHandled] = useState<boolean>(false);
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -55,21 +54,30 @@ const FaqPage = ({ openIndex }: { openIndex?: number }) => {
     currentPage * ITEMS_PER_PAGE,
   );
 
-  const toggleFaqContent = (index: number) => {
+  const toggleFaqContent = (index: number, updateUrl = false) => {
     setFaqStates((prevStates) => {
       const isOpen = !prevStates[index];
       const newFaqStates = { [index]: isOpen };
 
-      const newSearchParams = new URLSearchParams(searchParams.toString());
-      if (isOpen) {
-        newSearchParams.set('openIndex', String(index));
-      } else {
-        newSearchParams.delete('openIndex');
+      if (updateUrl) {
+        const newSearchParams = new URLSearchParams(searchParams.toString());
+        if (isOpen) {
+          newSearchParams.set('openIndex', String(index));
+        } else {
+          newSearchParams.delete('openIndex');
+        }
+        router.replace(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
       }
-      router.replace(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
       return newFaqStates;
     });
   };
+
+  useEffect(() => {
+    if (!isInitialOpenIndexHandled && openIndex !== undefined) {
+      setFaqStates({ [openIndex]: true });
+      setIsInitialOpenIndexHandled(true);
+    }
+  }, [openIndex, isInitialOpenIndexHandled]);
 
   return (
     <div className={cn('flex', 'flex-col', 'h-[100vh]', 'justify-between', 'bg-white')}>
