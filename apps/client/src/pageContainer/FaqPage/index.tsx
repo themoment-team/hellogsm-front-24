@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 
@@ -17,23 +17,22 @@ import {
 } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
-import { Element } from './exampleElement';
+import exampleElement from './exampleElement.json';
 
 const ITEMS_PER_PAGE = 10;
 
 const FaqPage = ({ openIndex }: { openIndex?: number }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [keyword, setKeyword] = useState<string>('');
-  const [faqStates, setFaqStates] = useState<{ [key: number]: boolean }>(
-    openIndex !== undefined ? { [openIndex]: true } : {},
-  );
+  const [faqStates, setFaqStates] = useState<{ [key: number]: boolean }>({});
   const [isPageChanging, setIsPageChanging] = useState<boolean>(false);
+  const [isInitialOpenIndexHandled, setIsInitialOpenIndexHandled] = useState<boolean>(false);
 
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
-  const totalItems = Element.filter((item) => item.title.toLowerCase().includes(keyword));
+  const totalItems = exampleElement.filter((item) => item.title.toLowerCase().includes(keyword));
   const totalPages = Math.ceil(totalItems.length / ITEMS_PER_PAGE);
 
   const handlePageChange = (pageNumber: number) => {
@@ -55,21 +54,30 @@ const FaqPage = ({ openIndex }: { openIndex?: number }) => {
     currentPage * ITEMS_PER_PAGE,
   );
 
-  const toggleFaqContent = (index: number) => {
+  const toggleFaqContent = (index: number, updateUrl = false) => {
     setFaqStates((prevStates) => {
       const isOpen = !prevStates[index];
       const newFaqStates = { [index]: isOpen };
 
-      const newSearchParams = new URLSearchParams(searchParams.toString());
-      if (isOpen) {
-        newSearchParams.set('openIndex', String(index));
-      } else {
-        newSearchParams.delete('openIndex');
+      if (updateUrl) {
+        const newSearchParams = new URLSearchParams(searchParams.toString());
+        if (isOpen) {
+          newSearchParams.set('openIndex', String(index));
+        } else {
+          newSearchParams.delete('openIndex');
+        }
+        router.replace(`${pathname}?${newSearchParams.toString()}`, { scroll: false });
       }
-      router.replace(`${pathname}?${newSearchParams.toString()}`);
       return newFaqStates;
     });
   };
+
+  useEffect(() => {
+    if (!isInitialOpenIndexHandled && openIndex !== undefined) {
+      setFaqStates({ [openIndex]: true });
+      setIsInitialOpenIndexHandled(true);
+    }
+  }, [openIndex, isInitialOpenIndexHandled]);
 
   return (
     <div className={cn('flex', 'flex-col', 'h-[100vh]', 'justify-between', 'bg-white')}>
@@ -123,17 +131,20 @@ const FaqPage = ({ openIndex }: { openIndex?: number }) => {
             </div>
             <div className={cn('w-full', 'h-[0.0625rem]', 'bg-slate-300')} />
             <div className={cn('flex', 'flex-col', 'gap-4', 'pt-8')}>
-              {currentItems.map((faq, index) => (
-                <FaqElement
-                  key={index}
-                  title={faq.title}
-                  content={faq.content}
-                  keyword={keyword}
-                  showContent={!!faqStates[index]}
-                  onToggle={() => toggleFaqContent(index)}
-                  isPageChanging={isPageChanging}
-                />
-              ))}
+              {currentItems.map((faq, index) => {
+                const globalIndex = (currentPage - 1) * ITEMS_PER_PAGE + index;
+                return (
+                  <FaqElement
+                    key={globalIndex}
+                    title={faq.title}
+                    content={faq.content}
+                    keyword={keyword}
+                    showContent={!!faqStates[globalIndex]}
+                    onToggle={() => toggleFaqContent(globalIndex)}
+                    isPageChanging={isPageChanging}
+                  />
+                );
+              })}
             </div>
           </div>
           {totalPages > 1 && (
