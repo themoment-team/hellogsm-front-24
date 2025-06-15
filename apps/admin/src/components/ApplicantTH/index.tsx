@@ -52,7 +52,7 @@ const ApplicantTH = () => {
             <TableCell className={cn(defaultStyle, 'w-[8.75rem]')}>출신 중학교</TableCell>
             <TableCell className={cn(defaultStyle, 'w-[6.75rem]')}>전형</TableCell>
             <TableCell className={cn(defaultStyle, 'w-[5.3125rem]')}>1차 결과</TableCell>
-            <TableCell className={cn(defaultStyle, 'w-[10rem]')}>직무적성 점수</TableCell>
+            <TableCell className={cn(defaultStyle, 'w-[10rem]')}>역량검사 점수</TableCell>
             <TableCell className={cn(defaultStyle, 'w-[10rem]')}>심층면접 점수</TableCell>
             <TableCell className={cn(defaultStyle, 'w-[5.625rem]')}>2차 결과</TableCell>
             <TableCell className={cn(defaultStyle, 'w-[15rem]')}>

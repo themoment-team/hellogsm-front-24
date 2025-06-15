@@ -8,7 +8,7 @@ import {
   visionCampDate,
   passedMemberAnnounceDate,
   심층면접시험기간,
-  직무적성시험기간,
+  역량검사시험기간,
 } from 'shared/constants';
 
 import { useGetAdmissionTickets } from 'api/hooks';
@@ -48,10 +48,10 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
               <tr>
                 <td className="w-28 border border-black font-normal">
                   2차 전형 <br />
-                  (직무적성소양평가)
+                  (역량검사)
                 </td>
                 <td className="border border-black pl-[0.625rem] text-left font-normal">
-                  {직무적성시험기간}
+                  {역량검사시험기간}
                 </td>
 
                 <td rowSpan={6} className="h-[200px] w-[150px] border border-black">
