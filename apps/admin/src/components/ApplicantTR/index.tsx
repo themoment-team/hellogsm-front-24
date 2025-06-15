@@ -28,7 +28,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from 'shared/components';
-import { 심층면접일자, 직무적성일자 } from 'shared/constants';
+import { 심층면접일자, 역량검사일자 } from 'shared/constants';
 import { useDebounce } from 'shared/hooks';
 import { cn } from 'shared/lib/utils';
 import { formatScore } from 'shared/utils';
@@ -75,7 +75,7 @@ const ApplicantTR = ({
 
   const { push } = useRouter();
 
-  const 직무적성처리시작일자 = new Date(직무적성일자);
+  const 역량검사처리시작일자 = new Date(역량검사일자);
   const 심층면접처리시작일자 = new Date(심층면접일자);
 
   const [isRealOneseoArrived, setIsRealOneseoArrived] = useState<boolean>(
@@ -121,31 +121,31 @@ const ApplicantTR = ({
   const secondTestResult =
     secondTestPassYn === 'YES' ? '합격' : secondTestPassYn === 'NO' ? '불합격' : '미정';
 
-  const is직무적성처리기간 = checkIsPassedDate(직무적성처리시작일자);
+  const is역량검사처리기간 = checkIsPassedDate(역량검사처리시작일자);
   const is심층면접처리기간 = checkIsPassedDate(심층면접처리시작일자);
 
-  const formatted직무적성점수 = formatScore(String(aptitudeEvaluationScore ?? ''));
+  const formatted역량검사점수 = formatScore(String(aptitudeEvaluationScore ?? ''));
   const formatted심층면접점수 = formatScore(String(interviewScore ?? ''));
 
   const { control, watch, setValue } = useForm({
     defaultValues: {
-      직무적성점수: formatted직무적성점수,
+      역량검사점수: formatted역량검사점수,
       심층면접점수: formatted심층면접점수,
     },
   });
 
-  const debounced직무적성점수 = useDebounce(watch('직무적성점수'), 1000);
+  const debounced역량검사점수 = useDebounce(watch('역량검사점수'), 1000);
   const debounced심층면접점수 = useDebounce(watch('심층면접점수'), 1000);
 
   useEffect(() => {
-    const formatAndSetScore = (score: string, fieldName: '직무적성점수' | '심층면접점수') => {
+    const formatAndSetScore = (score: string, fieldName: '역량검사점수' | '심층면접점수') => {
       const formattedScore = formatScore(score);
       setValue(fieldName, formattedScore !== 'NaN' ? formattedScore : '');
     };
 
-    formatAndSetScore(debounced직무적성점수, '직무적성점수');
+    formatAndSetScore(debounced역량검사점수, '역량검사점수');
     formatAndSetScore(debounced심층면접점수, '심층면접점수');
-  }, [debounced직무적성점수, debounced심층면접점수, setValue]);
+  }, [debounced역량검사점수, debounced심층면접점수, setValue]);
 
   const handleRealOneseoArrived = () => {
     setRealOneseoDialogOpen(false);
@@ -161,11 +161,11 @@ const ApplicantTR = ({
   };
 
   const handleAptitudeScore = () => {
-    const 직무적성점수 = parseFloat(watch('직무적성점수'));
+    const 역량검사점수 = parseFloat(watch('역량검사점수'));
 
-    if (직무적성점수 < 0 || 직무적성점수 > 100 || isNaN(직무적성점수)) return;
+    if (역량검사점수 < 0 || 역량검사점수 > 100 || isNaN(역량검사점수)) return;
 
-    patchAptitudeScore({ aptitudeEvaluationScore: 직무적성점수 });
+    patchAptitudeScore({ aptitudeEvaluationScore: 역량검사점수 });
   };
 
   const handleInterviewScore = () => {
@@ -221,16 +221,16 @@ const ApplicantTR = ({
             <Badge variant={firstTestResult}>{firstTestResult}</Badge>
           </TableCell>
           <TableCell className="w-[11.25rem] text-zinc-400">
-            {firstTestPassYn === 'YES' && is직무적성처리기간 ? (
+            {firstTestPassYn === 'YES' && is역량검사처리기간 ? (
               <div className={cn('flex', 'gap-1.5')}>
                 <Controller
-                  name="직무적성점수"
+                  name="역량검사점수"
                   control={control}
                   render={({ field }) => <TextField {...field} disabled={!!secondTestPassYn} />}
                 />
                 <Button
                   variant={
-                    watch('직무적성점수') && formatted직무적성점수 !== watch('직무적성점수')
+                    watch('역량검사점수') && formatted역량검사점수 !== watch('역량검사점수')
                       ? 'default'
                       : 'subtitle'
                   }
