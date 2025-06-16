@@ -21,7 +21,7 @@ const RegisterStepsPage = ({ data, step, info }: RegisterStepsPageProps) => {
       return '작성하던 내용이 모두 사라집니다. 계속하시겠습니까?';
     };
 
-    if (window !== undefined) window.addEventListener('beforeunload', handleBeforeUnload);
+    if (typeof window !== 'undefined') window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
