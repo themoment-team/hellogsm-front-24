@@ -20,16 +20,18 @@ const RegisterStepsPage = ({ data, step, info }: RegisterStepsPageProps) => {
   const router = useRouter();
 
   useEffect(() => {
+    const warningMessage = '작성하던 내용이 모두 사라집니다. 계속하시겠습니까?';
+
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
       if (!isTempSaved) {
         event.preventDefault();
         event.returnValue = '';
-        return '작성하던 내용이 모두 사라집니다. 계속하시겠습니까?';
+        return warningMessage;
       }
     };
 
     const handlePopState = (event: PopStateEvent) => {
-      if (!isTempSaved && !confirm('작성하던 내용이 모두 사라집니다. 계속하시겠습니까?')) {
+      if (!isTempSaved && !confirm(warningMessage)) {
         history.pushState(null, '', window.location.href);
         return;
       }
@@ -37,7 +39,7 @@ const RegisterStepsPage = ({ data, step, info }: RegisterStepsPageProps) => {
 
     const originalPush = router.push;
     const newPush = (href: string): void => {
-      if (!isTempSaved && !confirm('작성하던 내용이 모두 사라집니다. 계속하시겠습니까?')) {
+      if (!isTempSaved && !confirm(warningMessage)) {
         return;
       }
       originalPush(href);
