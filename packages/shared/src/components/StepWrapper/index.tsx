@@ -354,16 +354,12 @@ const StepWrapper = ({ data, step, info, memberId, type, onTempSave, onFormChang
   }, [step]);
 
   useEffect(() => {
-    const handleFormChange = () => {
-      if (onFormChange) {
-        onFormChange();
-      }
-    };
+    if (!onFormChange) return;
 
-    const step1Subscription = step1UseForm.watch(handleFormChange);
-    const step2Subscription = step2UseForm.watch(handleFormChange);
-    const step3Subscription = step3UseForm.watch(handleFormChange);
-    const step4Subscription = step4UseForm.watch(handleFormChange);
+    const step1Subscription = step1UseForm.watch(onFormChange);
+    const step2Subscription = step2UseForm.watch(onFormChange);
+    const step3Subscription = step3UseForm.watch(onFormChange);
+    const step4Subscription = step4UseForm.watch(onFormChange);
 
     return () => {
       step1Subscription.unsubscribe();
