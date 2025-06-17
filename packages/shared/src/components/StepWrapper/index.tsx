@@ -177,7 +177,9 @@ const StepWrapper = ({ data, step, info, memberId, type, onTempSave, onFormChang
           </button>
         ),
       });
-      onTempSave?.();
+      if (onTempSave) {
+        onTempSave();
+      }
     },
     onError: () => toast.error('임시 저장을 실패하였습니다.'),
   });
@@ -352,10 +354,16 @@ const StepWrapper = ({ data, step, info, memberId, type, onTempSave, onFormChang
   }, [step]);
 
   useEffect(() => {
-    const step1Subscription = step1UseForm.watch(() => onFormChange?.());
-    const step2Subscription = step2UseForm.watch(() => onFormChange?.());
-    const step3Subscription = step3UseForm.watch(() => onFormChange?.());
-    const step4Subscription = step4UseForm.watch(() => onFormChange?.());
+    const handleFormChange = () => {
+      if (onFormChange) {
+        onFormChange();
+      }
+    };
+
+    const step1Subscription = step1UseForm.watch(handleFormChange);
+    const step2Subscription = step2UseForm.watch(handleFormChange);
+    const step3Subscription = step3UseForm.watch(handleFormChange);
+    const step4Subscription = step4UseForm.watch(handleFormChange);
 
     return () => {
       step1Subscription.unsubscribe();
