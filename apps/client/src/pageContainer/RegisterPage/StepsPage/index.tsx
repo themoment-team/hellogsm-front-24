@@ -35,6 +35,7 @@ const RegisterStepsPage = ({ data, step, info }: RegisterStepsPageProps) => {
         history.pushState(null, '', window.location.href);
         return;
       }
+      history.back();
     };
 
     const originalPush = router.push;
