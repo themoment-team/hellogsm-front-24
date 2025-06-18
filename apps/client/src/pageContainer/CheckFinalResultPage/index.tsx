@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { getFinalTestResult } from 'api';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,23 +17,35 @@ import {
   Button,
   checkFinalTestResultSchema,
   CustomFormItem,
+  FormControl,
+  FormItem,
   Input,
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
 } from 'shared';
 import { checkFinalTestResultFormType, MyMemberInfoType, MyTotalTestResultType } from 'types';
 
 import { PassResultDialog } from 'client/components';
-import { useTestResultAuthCode, useTestResultSendCode, useTimer } from 'client/hooks';
 
-import { phoneNumberRegex } from 'shared/constants';
-import { useDebounce } from 'shared/hooks';
 import { cn } from 'shared/lib/utils';
 
 const prevUrl = '/check-result';
 
-const timerSeconde = 180;
+const PERMIT_YEAR = 50;
 
 interface CheckFinalResultProps {
   isCheckFinalResult: boolean;
+}
+
+interface Birth {
+  year: string;
+  month: string;
+  day: string;
 }
 
 const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => {
@@ -41,53 +53,27 @@ const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => 
   const [resultInfo, setResultInfo] = useState<MyTotalTestResultType>();
   const [isDialog, setIsDialog] = useState<boolean>(false);
   const [isButtonClickable, setIsButtonClickable] = useState<boolean>(false);
-  const [isAuthenticationButtonClickable, setIsAuthenticationButtonClickable] =
-    useState<boolean>(false);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [isFirst, setIsFirst] = useState<boolean>(true);
   const [isFailRequestDialog, setIsFailRequestDialog] = useState<boolean>(false);
   const { push } = useRouter();
 
-  const { register, watch, handleSubmit } = useForm<checkFinalTestResultFormType>({
+  const formMethods = useForm<checkFinalTestResultFormType>({
     resolver: zodResolver(checkFinalTestResultSchema),
     mode: 'onChange',
   });
 
-  const codeDebounce = useDebounce(watch('code'), 500);
+  const targetYear = new Date().getFullYear();
 
-  const { count, startTimer, stopTimer } = useTimer({
-    sec: timerSeconde,
-    setIsFirst: setIsFirst,
-    keepAfterRefresh: false,
-  });
+  const birthYear = formMethods.watch('birth.year');
+  const birthMonth = formMethods.watch('birth.month');
+  const birthDay = formMethods.watch('birth.day');
 
-  const { mutate: mutateSendCode } = useTestResultSendCode({
-    onSuccess: () => {
-      startTimer();
-    },
-    onError: () => {},
-  });
-
-  const { mutate: mutateAuthCode } = useTestResultAuthCode({
-    onSuccess: () => {
-      stopTimer();
-      setIsAuthenticated(true);
-    },
-    onError: () => setIsAuthenticated(false),
-  });
-
-  const handleAuthenticationButtonClick = () => {
-    mutateSendCode({
-      phoneNumber: watch('phoneNumber'),
-    });
+  const formattedBirthDate = (birth: Birth): string => {
+    return `${birth.year}-${birth.month.padStart(2, '0')}-${birth.day.padStart(2, '0')}`;
   };
 
-  const handleFormSubmit = async ({
-    phoneNumber,
-    code,
-    examinationNumber,
-  }: checkFinalTestResultFormType) => {
-    const data = await getFinalTestResult(phoneNumber, code, examinationNumber);
+  const handleFormSubmit = async ({ name, birth, phoneNumber }: checkFinalTestResultFormType) => {
+    const formattedBirth = formattedBirthDate(birth);
+    const data = await getFinalTestResult(name, formattedBirth, phoneNumber);
 
     if (!data) return setIsFailRequestDialog(true);
 
@@ -105,31 +91,11 @@ const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => 
     push(prevUrl);
   };
 
-  const secToMinFormat = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
-  };
-
   useEffect(() => {
-    if (!codeDebounce || codeDebounce.length !== 6) return;
-
-    mutateAuthCode({ code: codeDebounce });
-  }, [codeDebounce, mutateAuthCode]);
-
-  useEffect(() => {
-    if (phoneNumberRegex.test(watch('phoneNumber')) && !count) {
-      setIsAuthenticationButtonClickable(true);
-    } else {
-      setIsAuthenticationButtonClickable(false);
-    }
-  }, [watch('phoneNumber'), count]);
-
-  useEffect(() => {
-    if (checkFinalTestResultSchema.safeParse(watch()).success && isAuthenticated)
+    if (checkFinalTestResultSchema.safeParse(formMethods.watch()).success)
       setIsButtonClickable(true);
     else setIsButtonClickable(false);
-  }, [watch()]);
+  }, [formMethods.watch()]);
 
   return (
     <>
@@ -137,77 +103,110 @@ const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => 
         <h1 className={cn('text-gray-900', 'text-[1.5rem]/[2rem]', 'font-semibold')}>
           최종 합격자 조회
         </h1>
-        <form
-          onSubmit={handleSubmit(handleFormSubmit)}
-          className={cn('flex', 'flex-col', 'items-center', 'gap-4')}
-        >
-          <CustomFormItem className="gap-1" text="수험번호">
-            <Input {...register('examinationNumber')} placeholder="수험번호 입력" />
-          </CustomFormItem>
-          <CustomFormItem className="gap-1" text="선생님/부모님 전화번호">
-            <div className={cn('flex', 'gap-2', 'mb-[0.15rem]')}>
-              <div className={cn('w-[18rem]', 'relative')}>
-                <Input {...register('phoneNumber')} placeholder="번호 입력(- 제외)" />
-                {!!count && (
-                  <p
-                    className={cn(
-                      'text-blue-500',
-                      'text-[0.875rem]/[1.25rem]',
-                      'font-medium',
-                      'absolute',
-                      'top-1/2',
-                      'right-4',
-                      '-translate-y-1/2 transform',
-                    )}
+        <FormProvider {...formMethods}>
+          <form
+            onSubmit={formMethods.handleSubmit(handleFormSubmit)}
+            className={cn('flex', 'flex-col', 'items-center', 'gap-4')}
+          >
+            <CustomFormItem className="gap-1" text="수험자 성명">
+              <Input {...formMethods.register('name')} placeholder="수험자 성명 입력" />
+            </CustomFormItem>
+            <CustomFormItem className="gap-1" text="생년월일">
+              <div className={cn('flex', 'gap-2')}>
+                <FormItem>
+                  <Select
+                    onValueChange={(value) => formMethods.setValue('birth.year', value)}
+                    defaultValue={birthYear ?? ''}
                   >
-                    {secToMinFormat(count)}
-                  </p>
-                )}
+                    <FormControl>
+                      <SelectTrigger className="w-[7.5625rem]">
+                        <SelectValue placeholder="년도" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>년도 선택</SelectLabel>
+                        {Array.from({ length: PERMIT_YEAR }, (_, index) => targetYear - index).map(
+                          (year) => (
+                            <SelectItem key={year} value={year.toString()}>
+                              {year}
+                            </SelectItem>
+                          ),
+                        )}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+                <FormItem>
+                  <Select
+                    onValueChange={(value) => formMethods.setValue('birth.month', value)}
+                    defaultValue={birthMonth ?? ''}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="w-[7.5625rem]">
+                        <SelectValue placeholder="월" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>월 선택</SelectLabel>
+                        {Array.from({ length: 12 }, (_, index) => index + 1).map((month) => (
+                          <SelectItem key={month} value={month.toString()}>
+                            {month}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+                <FormItem>
+                  <Select
+                    onValueChange={(value) => formMethods.setValue('birth.day', value)}
+                    defaultValue={birthDay ?? ''}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="w-[7.5625rem]">
+                        <SelectValue placeholder="일" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>일 선택</SelectLabel>
+                        {Array.from({ length: 31 }, (_, index) => index + 1).map((day) => (
+                          <SelectItem key={day} value={day.toString()}>
+                            {day}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </FormItem>
               </div>
+            </CustomFormItem>
+            <CustomFormItem className="gap-1" text="수험자 전화번호">
+              <Input
+                {...formMethods.register('phoneNumber')}
+                placeholder="수험자 전화번호 입력(-제외)"
+              />
+            </CustomFormItem>
+            <div className={cn('flex', 'flex-col', 'gap-6', 'items-center')}>
               <Button
-                type="button"
-                disabled={isAuthenticated ? true : isAuthenticationButtonClickable ? false : true}
-                variant={
-                  isAuthenticated
-                    ? 'disabled'
-                    : isAuthenticationButtonClickable
-                      ? 'disabled'
-                      : 'submit'
-                }
-                className="w-[5.25rem]"
-                onClick={handleAuthenticationButtonClick}
+                type="submit"
+                disabled={isButtonClickable ? false : true}
+                variant={isButtonClickable ? 'blue' : 'disabled'}
+                className={cn('w-[23.7rem]', 'h-[3.25rem]', 'text-[1rem]/[1.5rem]')}
               >
-                {isAuthenticated ? '인증됨' : isFirst ? '번호 인증' : '재전송'}
+                조회하기
               </Button>
+              <Link
+                href={prevUrl}
+                className={cn('text-slate-500', 'text-[0.875rem]/[1.5rem]', 'flex')}
+              >
+                이전으로
+              </Link>
             </div>
-            <Input
-              {...register('code')}
-              placeholder="인증번호 6자리 입력"
-              successMessage={isAuthenticated ? '번호 인증이 완료되었습니다' : undefined}
-              errorMessage={
-                !isAuthenticated && !isFirst && count <= 0
-                  ? '번호 인증에 실패하였습니다'
-                  : undefined
-              }
-            />
-          </CustomFormItem>
-          <div className={cn('flex', 'flex-col', 'gap-6', 'items-center')}>
-            <Button
-              type="submit"
-              disabled={isButtonClickable ? false : true}
-              variant={isButtonClickable ? 'blue' : 'disabled'}
-              className={cn('w-[23.7rem]', 'h-[3.25rem]', 'text-[1rem]/[1.5rem]')}
-            >
-              조회하기
-            </Button>
-            <Link
-              href={prevUrl}
-              className={cn('text-slate-500', 'text-[0.875rem]/[1.5rem]', 'flex')}
-            >
-              이전으로
-            </Link>
-          </div>
-        </form>
+          </form>
+        </FormProvider>
       </div>
 
       <AlertDialog open={!isCheckFinalResult}>
