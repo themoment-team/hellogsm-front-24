@@ -16,7 +16,7 @@ export default async function Guide() {
       baseTime: new Date(dateList.oneseoSubmissionStart),
       compareTime: currentTime,
     }) &&
-    isTimeBefore({ baseTime: currentTime, compareTime: new Date(dateList.oneseoSubmissionEnd) });
+    isTimeBefore({ baseTime: new Date(dateList.oneseoSubmissionEnd), compareTime: currentTime });
 
   return <GuidePage initialData={data} isOneseoWrite={isOneseoWrite} />;
 }

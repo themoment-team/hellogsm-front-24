@@ -20,15 +20,14 @@ export default async function Register({ searchParams }: RegisterProps) {
   ]);
 
   const currentTime = getKoreanDate();
-
   const isOneseoWrite =
-    dateList?.oneseoSubmissionStart && dateList?.oneseoSubmissionEnd
-      ? isTimeAfter({
-          baseTime: new Date(dateList.oneseoSubmissionStart),
-          compareTime: currentTime,
-        }) &&
-        isTimeBefore({ baseTime: currentTime, compareTime: new Date(dateList.oneseoSubmissionEnd) })
-      : false;
+    !!dateList?.oneseoSubmissionStart &&
+    !!dateList?.oneseoSubmissionEnd &&
+    isTimeAfter({
+      baseTime: new Date(dateList.oneseoSubmissionStart),
+      compareTime: currentTime,
+    }) &&
+    isTimeBefore({ baseTime: new Date(dateList.oneseoSubmissionEnd), compareTime: currentTime });
 
   if (!info || (data && !data.step) || !isOneseoWrite) redirect('/');
 
