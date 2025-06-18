@@ -69,7 +69,7 @@ export const testResultUrl = {
   postSendCode: () => '/test-result/v3/send-code',
   postAuthCode: () => '/test-result/v3/auth-code',
   getFirstTestResult: (name: string, birth: string, phoneNumber: string) =>
-    `/test-result/v3/public/first-test?&name=${name}&birth=${birth}phoneNumber=${phoneNumber}`,
+    `/test-result/v3/public/first-test?&name=${name}&birth=${birth}&phoneNumber=${phoneNumber}`,
   getFinalTestResult: (name: string, birth: string, phoneNumber: string) =>
-    `/test-result/v3/public/second-test?&name=${name}&birth=${birth}phoneNumber=${phoneNumber}`,
+    `/test-result/v3/public/second-test?&name=${name}&birth=${birth}&phoneNumber=${phoneNumber}`,
 } as const;
