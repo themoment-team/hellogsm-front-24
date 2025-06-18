@@ -1,4 +1,5 @@
 import { getDate } from 'api';
+import { getKoreanDate, isTimeAfter, isTimeBefore } from 'shared';
 
 import { getMyOneseo } from 'client/app/apis';
 import { GuidePage } from 'client/pageContainer';
@@ -6,15 +7,16 @@ import { GuidePage } from 'client/pageContainer';
 export default async function Guide() {
   const [data, dateList] = await Promise.all([getMyOneseo(), getDate()]);
 
-  const currentTime = new Date(
-    new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' }),
-  ).getTime();
+  const currentTime = getKoreanDate();
 
   const isOneseoWrite =
-    dateList?.oneseoSubmissionStart && dateList?.oneseoSubmissionEnd
-      ? new Date(dateList.oneseoSubmissionStart).getTime() <= currentTime &&
-        currentTime < new Date(dateList.oneseoSubmissionEnd).getTime()
-      : false;
+    !!dateList?.oneseoSubmissionStart &&
+    !!dateList?.oneseoSubmissionEnd &&
+    isTimeAfter({
+      baseTime: new Date(dateList.oneseoSubmissionStart),
+      compareTime: currentTime,
+    }) &&
+    isTimeBefore({ baseTime: currentTime, compareTime: new Date(dateList.oneseoSubmissionEnd) });
 
   return <GuidePage initialData={data} isOneseoWrite={isOneseoWrite} />;
 }
