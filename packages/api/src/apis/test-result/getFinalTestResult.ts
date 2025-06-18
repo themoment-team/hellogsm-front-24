@@ -9,13 +9,13 @@ import { FinalTestResultType } from 'types';
 import { get, testResultUrl } from 'api/libs';
 
 export const getFinalTestResult = async (
+  name: string,
+  birth: string,
   phoneNumber: string,
-  code: string,
-  examinationNumber: string,
 ): Promise<FinalTestResultType | undefined> => {
   try {
     const finalTestResult = await get<FinalTestResultType>(
-      testResultUrl.getFinalTestResult(phoneNumber, code, examinationNumber),
+      testResultUrl.getFinalTestResult(name, birth, phoneNumber),
     );
 
     return finalTestResult;
