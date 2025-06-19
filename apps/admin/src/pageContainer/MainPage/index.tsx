@@ -21,8 +21,8 @@ import { useGetEditability, useGetOneseoList } from 'api/hooks';
 
 interface MainPageProps {
   initialData: OneseoListType | undefined;
-  isBeforeFirstResults: boolean;
-  isBeforeSecondResults: boolean;
+  isAfterFirstResults: boolean;
+  isAfterSecondResults: boolean;
 }
 
 const flexColStyle = ['flex', 'flex-col'] as const;
@@ -37,7 +37,7 @@ const testResultTypeConvertor: { [key: string]: string } = {
   FALL: '불합격자 관리',
 };
 
-const MainPage = ({ initialData, isBeforeFirstResults, isBeforeSecondResults }: MainPageProps) => {
+const MainPage = ({ initialData, isAfterFirstResults, isAfterSecondResults }: MainPageProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
   const [keyword, setKeyword] = useState<string>('');
@@ -112,8 +112,8 @@ const MainPage = ({ initialData, isBeforeFirstResults, isBeforeSecondResults }: 
             setKeyword={setKeyword}
             isSubmitted={isSubmitted}
             setIsSubmitted={setIsSubmitted}
-            isBeforeFirstResults={isBeforeFirstResults}
-            isBeforeSecondResults={isBeforeSecondResults}
+            isAfterFirstResults={isAfterFirstResults}
+            isAfterSecondResults={isAfterSecondResults}
           />
           <div
             className={cn(

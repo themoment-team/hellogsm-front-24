@@ -1,19 +1,19 @@
 import { getDate } from 'api';
+import { getKoreanDate, isTimeAfter } from 'shared';
 
 import { CheckFinalResultPage } from 'client/pageContainer';
 
 export default async function CheckFinalResult() {
   const dateList = await getDate();
 
-  const currentTime = new Date(
-    new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' }),
-  ).getTime();
+  const currentTime = getKoreanDate();
 
   const isCheckFinalResult =
-    dateList?.finalResultsAnnouncement &&
-    new Date(dateList.finalResultsAnnouncement).getTime() <= currentTime
-      ? true
-      : false;
+    !!dateList?.finalResultsAnnouncement &&
+    isTimeAfter({
+      baseTime: new Date(dateList.finalResultsAnnouncement),
+      compareTime: currentTime,
+    });
 
   return <CheckFinalResultPage isCheckFinalResult={isCheckFinalResult} />;
 }
