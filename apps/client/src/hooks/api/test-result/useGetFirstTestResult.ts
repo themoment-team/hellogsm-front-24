@@ -1,19 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { getFirstTestResult } from 'api';
+import { get, testResultQueryKeys, testResultUrl } from 'api';
+import { minutesToMs } from 'shared';
+import { CheckResultParams, FirstTestResultType } from 'types';
 
-interface GetFirstTestResultParams {
-  name: string;
-  birth: string;
-  phoneNumber: string;
-}
-
-export const useGetFirstTestResult = (params: GetFirstTestResultParams | undefined) =>
+export const useGetFirstTestResult = ({ name, birth, phoneNumber }: CheckResultParams) =>
   useQuery({
-    queryKey: ['firstTestResult', params],
-    queryFn: () => {
-      if (!params) return Promise.resolve(undefined);
-      return getFirstTestResult(params.name, params.birth, params.phoneNumber);
-    },
-    enabled: !!params,
+    queryKey: testResultQueryKeys.getFirstTestResult(name, birth, phoneNumber),
+    queryFn: () =>
+      get<FirstTestResultType>(testResultUrl.getFirstTestResult(name, birth, phoneNumber)),
+    staleTime: minutesToMs(5),
+    gcTime: minutesToMs(5),
+    enabled: !!name && !!birth && !!phoneNumber,
   });

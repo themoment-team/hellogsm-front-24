@@ -49,14 +49,11 @@ const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => 
   const [isDialog, setIsDialog] = useState<boolean>(false);
   const [isButtonClickable, setIsButtonClickable] = useState<boolean>(false);
   const [isFailRequestDialog, setIsFailRequestDialog] = useState<boolean>(false);
-  const [queryParams, setQueryParams] = useState<
-    | {
-        name: string;
-        birth: string;
-        phoneNumber: string;
-      }
-    | undefined
-  >(undefined);
+  const [queryParams, setQueryParams] = useState<{
+    name: string;
+    birth: string;
+    phoneNumber: string;
+  }>({ name: '', birth: '', phoneNumber: '' });
   const { push } = useRouter();
 
   const formMethods = useForm<checkFinalTestResultFormType>({
@@ -64,7 +61,7 @@ const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => 
     mode: 'onChange',
   });
 
-  const { data, error, isPending } = useGetFinalTestResult(queryParams);
+  const { data, error } = useGetFinalTestResult(queryParams);
 
   const targetYear = new Date().getFullYear();
 
@@ -205,7 +202,7 @@ const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => 
                 variant={isButtonClickable ? 'blue' : 'disabled'}
                 className={cn('w-[23.7rem]', 'h-[3.25rem]', 'text-[1rem]/[1.5rem]')}
               >
-                {isPending ? '조회 중...' : '조회하기'}
+                조회하기
               </Button>
               <Link
                 href={prevUrl}
