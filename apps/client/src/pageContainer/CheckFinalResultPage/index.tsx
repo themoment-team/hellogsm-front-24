@@ -33,6 +33,7 @@ import { checkFinalTestResultFormType, MyMemberInfoType, MyTotalTestResultType }
 import { PassResultDialog } from 'client/components';
 
 import { cn } from 'shared/lib/utils';
+import formattedBirthDate from 'shared/utils/formatBirth';
 
 const prevUrl = '/check-result';
 
@@ -40,12 +41,6 @@ const PERMIT_YEAR = 50;
 
 interface CheckFinalResultProps {
   isCheckFinalResult: boolean;
-}
-
-interface Birth {
-  year: string;
-  month: string;
-  day: string;
 }
 
 const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => {
@@ -66,10 +61,6 @@ const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => 
   const birthYear = formMethods.watch('birth.year');
   const birthMonth = formMethods.watch('birth.month');
   const birthDay = formMethods.watch('birth.day');
-
-  const formattedBirthDate = (birth: Birth): string => {
-    return `${birth.year}-${birth.month.padStart(2, '0')}-${birth.day.padStart(2, '0')}`;
-  };
 
   const handleFormSubmit = async ({ name, birth, phoneNumber }: checkFinalTestResultFormType) => {
     const formattedBirth = formattedBirthDate(birth);
