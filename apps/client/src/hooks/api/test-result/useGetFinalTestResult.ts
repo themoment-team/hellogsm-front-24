@@ -8,9 +8,9 @@ interface GetFinalTestResultParams {
   phoneNumber: string;
 }
 
-export const useGetFinalTestResult = (params: GetFinalTestResultParams | null) =>
+export const useGetFinalTestResult = (params: GetFinalTestResultParams | undefined) =>
   useQuery({
-    queryKey: ['finalTestResult', params?.name, params?.birth, params?.phoneNumber],
+    queryKey: ['finalTestResult', params],
     queryFn: () => {
       if (!params) return Promise.resolve(undefined);
       return getFinalTestResult(params.name, params.birth, params.phoneNumber);

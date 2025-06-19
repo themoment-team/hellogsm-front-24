@@ -8,9 +8,9 @@ interface GetFirstTestResultParams {
   phoneNumber: string;
 }
 
-export const useGetFirstTestResult = (params: GetFirstTestResultParams | null) =>
+export const useGetFirstTestResult = (params: GetFirstTestResultParams | undefined) =>
   useQuery({
-    queryKey: ['firstTestResult', params?.name, params?.birth, params?.phoneNumber],
+    queryKey: ['firstTestResult', params],
     queryFn: () => {
       if (!params) return Promise.resolve(undefined);
       return getFirstTestResult(params.name, params.birth, params.phoneNumber);

@@ -49,11 +49,14 @@ const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => 
   const [isDialog, setIsDialog] = useState<boolean>(false);
   const [isButtonClickable, setIsButtonClickable] = useState<boolean>(false);
   const [isFailRequestDialog, setIsFailRequestDialog] = useState<boolean>(false);
-  const [queryParams, setQueryParams] = useState<{
-    name: string;
-    birth: string;
-    phoneNumber: string;
-  } | null>(null);
+  const [queryParams, setQueryParams] = useState<
+    | {
+        name: string;
+        birth: string;
+        phoneNumber: string;
+      }
+    | undefined
+  >(undefined);
   const { push } = useRouter();
 
   const formMethods = useForm<checkFinalTestResultFormType>({
