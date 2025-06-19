@@ -18,6 +18,7 @@ import {
   CustomFormItem,
   FormControl,
   FormItem,
+  getKoreanDate,
   Input,
   Select,
   SelectContent,
@@ -68,7 +69,7 @@ const CheckFirstResultPage = ({ isCheckFirstResult }: CheckFirstResultPageProps)
 
   const { data, error } = useGetFirstTestResult(queryParams);
 
-  const targetYear = new Date().getFullYear();
+  const targetYear = getKoreanDate().getFullYear();
 
   const birthYear = formMethods.watch('birth.year');
   const birthMonth = formMethods.watch('birth.month');
@@ -99,7 +100,13 @@ const CheckFirstResultPage = ({ isCheckFirstResult }: CheckFirstResultPageProps)
       setName(data.name);
       setFirstTestPassYn(data.firstTestPassYn!);
       setIsDialog(true);
-    } else if (error || (data === undefined && queryParams)) {
+    } else if (
+      (error || data === undefined) &&
+      queryParams &&
+      queryParams.name !== '' &&
+      queryParams.birth !== '' &&
+      queryParams.phoneNumber !== ''
+    ) {
       setIsFailRequestDialog(true);
     }
   }, [data, error, queryParams]);
