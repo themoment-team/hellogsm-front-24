@@ -215,7 +215,7 @@ const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => 
         </FormProvider>
       </div>
 
-      {/* <AlertDialog open={!isCheckFinalResult}>
+      <AlertDialog open={!isCheckFinalResult}>
         <AlertDialogContent className="w-[400px]">
           <AlertDialogHeader>
             <AlertDialogTitle>현재 최종 합격 여부를 조회할 수 없는 기간입니다.</AlertDialogTitle>
@@ -226,9 +226,9 @@ const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => 
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
-      </AlertDialog> */}
+      </AlertDialog>
 
-      {/* <AlertDialog open={isFailRequestDialog}>
+      <AlertDialog open={isFailRequestDialog}>
         <AlertDialogContent className="w-[400px]">
           <AlertDialogHeader>
             <AlertDialogTitle>
@@ -243,7 +243,7 @@ const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => 
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
-      </AlertDialog> */}
+      </AlertDialog>
 
       <PassResultDialog
         isPassOpen={isDialog}
