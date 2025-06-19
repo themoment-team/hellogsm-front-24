@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { getFinalTestResult } from 'api';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -31,6 +30,7 @@ import {
 import { checkFinalTestResultFormType, MyMemberInfoType, MyTotalTestResultType } from 'types';
 
 import { PassResultDialog } from 'client/components';
+import { useGetFinalTestResult } from 'client/hooks/api';
 
 import { cn } from 'shared/lib/utils';
 import formattedBirthDate from 'shared/utils/formatBirth';
@@ -49,12 +49,19 @@ const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => 
   const [isDialog, setIsDialog] = useState<boolean>(false);
   const [isButtonClickable, setIsButtonClickable] = useState<boolean>(false);
   const [isFailRequestDialog, setIsFailRequestDialog] = useState<boolean>(false);
+  const [queryParams, setQueryParams] = useState<{
+    name: string;
+    birth: string;
+    phoneNumber: string;
+  } | null>(null);
   const { push } = useRouter();
 
   const formMethods = useForm<checkFinalTestResultFormType>({
     resolver: zodResolver(checkFinalTestResultSchema),
     mode: 'onChange',
   });
+
+  const { data, error, isPending } = useGetFinalTestResult(queryParams);
 
   const targetYear = new Date().getFullYear();
 
@@ -64,18 +71,12 @@ const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => 
 
   const handleFormSubmit = async ({ name, birth, phoneNumber }: checkFinalTestResultFormType) => {
     const formattedBirth = formattedBirthDate(birth);
-    const data = await getFinalTestResult(name, formattedBirth, phoneNumber);
 
-    if (!data) return setIsFailRequestDialog(true);
-
-    setName(data.name);
-    setResultInfo({
-      decidedMajor: data.decidedMajor,
-      firstTestPassYn: 'YES',
-      secondTestPassYn: data.secondTestPassYn,
+    setQueryParams({
+      name,
+      birth: formattedBirth,
+      phoneNumber,
     });
-
-    setIsDialog(true);
   };
 
   const handleDialogClick = () => {
@@ -87,6 +88,20 @@ const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => 
       setIsButtonClickable(true);
     else setIsButtonClickable(false);
   }, [formMethods.watch()]);
+
+  useEffect(() => {
+    if (data) {
+      setName(data.name);
+      setResultInfo({
+        decidedMajor: data.decidedMajor,
+        firstTestPassYn: 'YES',
+        secondTestPassYn: data.secondTestPassYn,
+      });
+      setIsDialog(true);
+    } else if (error || (data === undefined && queryParams)) {
+      setIsFailRequestDialog(true);
+    }
+  }, [data, error, queryParams]);
 
   return (
     <>
@@ -187,7 +202,7 @@ const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => 
                 variant={isButtonClickable ? 'blue' : 'disabled'}
                 className={cn('w-[23.7rem]', 'h-[3.25rem]', 'text-[1rem]/[1.5rem]')}
               >
-                조회하기
+                {isPending ? '조회 중...' : '조회하기'}
               </Button>
               <Link
                 href={prevUrl}
@@ -200,7 +215,7 @@ const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => 
         </FormProvider>
       </div>
 
-      <AlertDialog open={!isCheckFinalResult}>
+      {/* <AlertDialog open={!isCheckFinalResult}>
         <AlertDialogContent className="w-[400px]">
           <AlertDialogHeader>
             <AlertDialogTitle>현재 최종 합격 여부를 조회할 수 없는 기간입니다.</AlertDialogTitle>
@@ -211,9 +226,9 @@ const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => 
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
-      </AlertDialog>
+      </AlertDialog> */}
 
-      <AlertDialog open={isFailRequestDialog}>
+      {/* <AlertDialog open={isFailRequestDialog}>
         <AlertDialogContent className="w-[400px]">
           <AlertDialogHeader>
             <AlertDialogTitle>
@@ -228,7 +243,7 @@ const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => 
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
-      </AlertDialog>
+      </AlertDialog> */}
 
       <PassResultDialog
         isPassOpen={isDialog}

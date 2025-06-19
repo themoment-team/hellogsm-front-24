@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { getFirstTestResult } from 'api';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -36,6 +35,7 @@ import {
 } from 'types';
 
 import { PassResultDialog } from 'client/components';
+import { useGetFirstTestResult } from 'client/hooks/api';
 
 import { cn } from 'shared/lib/utils';
 import formattedBirthDate from 'shared/utils/formatBirth';
@@ -54,12 +54,19 @@ const CheckFirstResultPage = ({ isCheckFirstResult }: CheckFirstResultPageProps)
   const [isDialog, setIsDialog] = useState<boolean>(false);
   const [isButtonClickable, setIsButtonClickable] = useState<boolean>(false);
   const [isFailRequestDialog, setIsFailRequestDialog] = useState<boolean>(false);
+  const [queryParams, setQueryParams] = useState<{
+    name: string;
+    birth: string;
+    phoneNumber: string;
+  } | null>(null);
   const { push } = useRouter();
 
   const formMethods = useForm<checkFirstTestResultFormType>({
     resolver: zodResolver(checkFirstTestResultSchema),
     mode: 'onChange',
   });
+
+  const { data, error, isPending } = useGetFirstTestResult(queryParams);
 
   const targetYear = new Date().getFullYear();
 
@@ -69,14 +76,12 @@ const CheckFirstResultPage = ({ isCheckFirstResult }: CheckFirstResultPageProps)
 
   const handleFormSubmit = async ({ name, birth, phoneNumber }: checkFirstTestResultFormType) => {
     const formattedBirth = formattedBirthDate(birth);
-    const data = await getFirstTestResult(name, formattedBirth, phoneNumber);
 
-    if (!data) return setIsFailRequestDialog(true);
-
-    setName(data.name);
-    setFirstTestPassYn(data.firstTestPassYn!);
-
-    setIsDialog(true);
+    setQueryParams({
+      name,
+      birth: formattedBirth,
+      phoneNumber,
+    });
   };
 
   const handleDialogClick = () => {
@@ -88,6 +93,16 @@ const CheckFirstResultPage = ({ isCheckFirstResult }: CheckFirstResultPageProps)
       setIsButtonClickable(true);
     else setIsButtonClickable(false);
   }, [formMethods.watch()]);
+
+  useEffect(() => {
+    if (data) {
+      setName(data.name);
+      setFirstTestPassYn(data.firstTestPassYn!);
+      setIsDialog(true);
+    } else if (error || (data === undefined && queryParams)) {
+      setIsFailRequestDialog(true);
+    }
+  }, [data, error, queryParams]);
 
   return (
     <>
@@ -188,7 +203,7 @@ const CheckFirstResultPage = ({ isCheckFirstResult }: CheckFirstResultPageProps)
                 variant={isButtonClickable ? 'blue' : 'disabled'}
                 className={cn('w-[23.7rem]', 'h-[3.25rem]', 'text-[1rem]/[1.5rem]')}
               >
-                조회하기
+                {isPending ? '조회 중...' : '조회하기'}
               </Button>
               <Link
                 href={prevUrl}
@@ -220,7 +235,7 @@ const CheckFirstResultPage = ({ isCheckFirstResult }: CheckFirstResultPageProps)
             <AlertDialogTitle>
               조회된 사람이 없습니다.
               <br />
-              접수번호와 전화번호를 확인해주세요.
+              수험번호와 전화번호를 확인해주세요.
             </AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -235,7 +250,11 @@ const CheckFirstResultPage = ({ isCheckFirstResult }: CheckFirstResultPageProps)
         isPassOpen={isDialog}
         setIsPassOpen={setIsDialog}
         isFinishFirstTest={true}
-        resultInfo={{ firstTestPassYn: firstTestPassYn } as MyTotalTestResultType}
+        resultInfo={
+          {
+            firstTestPassYn: firstTestPassYn,
+          } as MyTotalTestResultType
+        }
         memberInfo={{ name: name } as MyMemberInfoType}
         onClick={handleDialogClick}
       />
