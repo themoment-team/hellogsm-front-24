@@ -108,8 +108,8 @@ const CheckFirstResultPage = ({ isCheckFirstResult }: CheckFirstResultPageProps)
             onSubmit={formMethods.handleSubmit(handleFormSubmit)}
             className={cn('flex', 'flex-col', 'items-center', 'gap-4')}
           >
-            <CustomFormItem className="gap-1" text="수험자 성명">
-              <Input {...formMethods.register('name')} placeholder="수험자 성명 입력" />
+            <CustomFormItem className="gap-1" text="지원자 성명">
+              <Input {...formMethods.register('name')} placeholder="지원자 성명 입력" />
             </CustomFormItem>
             <CustomFormItem className="gap-1" text="생년월일">
               <div className={cn('flex', 'gap-2')}>
@@ -183,10 +183,10 @@ const CheckFirstResultPage = ({ isCheckFirstResult }: CheckFirstResultPageProps)
                 </FormItem>
               </div>
             </CustomFormItem>
-            <CustomFormItem className="gap-1" text="수험자 전화번호">
+            <CustomFormItem className="gap-1" text="지원자 전화번호">
               <Input
                 {...formMethods.register('phoneNumber')}
-                placeholder="수험자 전화번호 입력(-제외)"
+                placeholder="지원자 전화번호 입력(-제외)"
               />
             </CustomFormItem>
             <div className={cn('flex', 'flex-col', 'gap-6', 'items-center')}>
