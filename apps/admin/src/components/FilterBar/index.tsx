@@ -36,8 +36,8 @@ interface FilterBarProps {
   setIsSubmitted: React.Dispatch<React.SetStateAction<YesNo | string>>;
   screeningTag: ScreeningType | string;
   setScreeningTag: React.Dispatch<React.SetStateAction<ScreeningType | string>>;
-  isBeforeFirstResults: boolean;
-  isBeforeSecondResults: boolean;
+  isAfterFirstResults: boolean;
+  isAfterSecondResults: boolean;
 }
 
 const FilterBar = ({
@@ -47,8 +47,8 @@ const FilterBar = ({
   setIsSubmitted,
   setScreeningTag,
   screeningTag,
-  isBeforeFirstResults,
-  isBeforeSecondResults,
+  isAfterFirstResults,
+  isAfterSecondResults,
 }: FilterBarProps) => {
   const [showFirstModal, setShowFirstModal] = useState<boolean>(false);
   const [showSecondModal, setShowSecondModal] = useState<boolean>(false);
@@ -149,7 +149,7 @@ const FilterBar = ({
             variant="outline"
             className={cn('border-slate-900', 'gap-2', 'hover:bg-slate-200')}
             disabled={
-              operationData?.firstTestResultAnnouncementYn === 'YES' || isBeforeFirstResults
+              operationData?.firstTestResultAnnouncementYn === 'YES' || !isAfterFirstResults
             }
             onClick={() => setShowFirstModal(true)}
           >
@@ -159,9 +159,9 @@ const FilterBar = ({
           <Button
             variant="outline"
             className={cn('border-slate-900', 'gap-2', 'hover:bg-slate-200')}
-            // disabled={
-            //   operationData?.secondTestResultAnnouncementYn === 'YES' || isBeforeSecondResults
-            // }
+            disabled={
+              operationData?.secondTestResultAnnouncementYn === 'YES' || !isAfterSecondResults
+            }
             onClick={() => setShowSecondModal(true)}
           >
             <MedalIcon />

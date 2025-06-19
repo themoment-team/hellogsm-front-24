@@ -1,4 +1,5 @@
 import { getDate } from 'api';
+import { getKoreanDate, isTimeAfter } from 'shared';
 
 import { getOneseoList } from 'admin/app/apis/oneseo/getOneseoList';
 import { MainPage } from 'admin/pageContainer';
@@ -9,27 +10,27 @@ export default async function Home() {
     getDate(),
   ]);
 
-  const currentTime = new Date(
-    new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' }),
-  ).getTime();
+  const currentTime = getKoreanDate();
 
-  const firstResultsAnnouncement =
-    dateList?.firstResultsAnnouncement &&
-    new Date(dateList.firstResultsAnnouncement).getTime() <= currentTime
-      ? true
-      : false;
+  const isAfterFirstResults =
+    !!dateList?.firstResultsAnnouncement &&
+    isTimeAfter({
+      baseTime: new Date(dateList.firstResultsAnnouncement),
+      compareTime: currentTime,
+    });
 
-  const secondResultsAnnouncement =
-    dateList?.finalResultsAnnouncement &&
-    new Date(dateList.finalResultsAnnouncement).getTime() <= currentTime
-      ? true
-      : false;
+  const isAfterSecondResults =
+    !!dateList?.finalResultsAnnouncement &&
+    isTimeAfter({
+      baseTime: new Date(dateList.finalResultsAnnouncement),
+      compareTime: currentTime,
+    });
 
   return (
     <MainPage
       initialData={data}
-      isBeforeFirstResults={firstResultsAnnouncement}
-      isBeforeSecondResults={secondResultsAnnouncement}
+      isAfterFirstResults={isAfterFirstResults}
+      isAfterSecondResults={isAfterSecondResults}
     />
   );
 }
