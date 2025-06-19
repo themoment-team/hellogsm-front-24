@@ -5,3 +5,4 @@ export { default as plusAll } from './plusAll';
 export { default as dataUrltoFile } from './dataUrltoFile';
 export { default as getValuesByEnum } from './getValuesByEnum';
 export * from './scroll';
+export * from './formatBirth';
