@@ -42,7 +42,7 @@ const FinalSubmitDialog = ({
         <p>원서 최종 제출</p>
       </Button>
     </DialogTrigger>
-    <DialogContent className="bg-white" showCloseIcon={false}>
+    <DialogContent className={cn('bg-white')} showCloseIcon={false}>
       <DialogHeader>
         <DialogTitle>원서를 최종 제출 하시겠습니까?</DialogTitle>
         <DialogDescription>
@@ -52,7 +52,7 @@ const FinalSubmitDialog = ({
       <div className={cn('flex', 'justify-end', 'gap-2')}>
         <DialogClose asChild>
           <button
-            className={cn(
+            className={cn([
               'bg-white',
               'px-4',
               'py-2',
@@ -61,7 +61,7 @@ const FinalSubmitDialog = ({
               'border-[0.0625rem]',
               'border-slate-200',
               'font-semibold',
-            )}
+            ])}
           >
             취소
           </button>
@@ -88,7 +88,7 @@ const ConfirmBar = ({
   isStep4,
 }: ConfirmBarProps) => (
   <div
-    className={cn(
+    className={cn([
       'w-full',
       'h-[5rem]',
       'bg-white',
@@ -102,7 +102,7 @@ const ConfirmBar = ({
       'items-center',
       'fixed',
       'bottom-0',
-    )}
+    ])}
   >
     <div>
       <span className={cn('text-body1', 'text-blue-600')}>

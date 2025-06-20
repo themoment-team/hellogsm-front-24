@@ -18,8 +18,8 @@ const ApplicantTH = () => {
       <Table>
         <TableBody>
           <TableRow>
-            <TableCell className={cn(defaultStyle, 'w-[5.25rem]')}>접수 번호</TableCell>
-            <TableCell className={cn(defaultStyle, 'w-[7.5rem]')}>
+            <TableCell className={cn([defaultStyle, 'w-[5.25rem]'])}>접수 번호</TableCell>
+            <TableCell className={cn([defaultStyle, 'w-[7.5rem]'])}>
               <div className={cn('flex', 'gap-1', 'items-center')}>
                 서류 제출 여부
                 <div
@@ -30,7 +30,7 @@ const ApplicantTH = () => {
                   <QuestionMark />
                   {isDocOver && (
                     <div
-                      className={cn(
+                      className={cn([
                         'px-3',
                         'py-4',
                         'rounded-lg',
@@ -40,7 +40,7 @@ const ApplicantTH = () => {
                         'fixed',
                         'z-[5]',
                         'text-white',
-                      )}
+                      ])}
                     >
                       지원자가 실물 서류를 제출했다면 클릭하여 상태를 변경해주세요!
                     </div>
@@ -48,14 +48,14 @@ const ApplicantTH = () => {
                 </div>
               </div>
             </TableCell>
-            <TableCell className={cn(defaultStyle, 'w-[7rem]')}>지원자 정보</TableCell>
-            <TableCell className={cn(defaultStyle, 'w-[8.75rem]')}>출신 중학교</TableCell>
-            <TableCell className={cn(defaultStyle, 'w-[6.75rem]')}>전형</TableCell>
-            <TableCell className={cn(defaultStyle, 'w-[5.3125rem]')}>1차 결과</TableCell>
-            <TableCell className={cn(defaultStyle, 'w-[10rem]')}>역량검사 점수</TableCell>
-            <TableCell className={cn(defaultStyle, 'w-[10rem]')}>심층면접 점수</TableCell>
-            <TableCell className={cn(defaultStyle, 'w-[5.625rem]')}>2차 결과</TableCell>
-            <TableCell className={cn(defaultStyle, 'w-[15rem]')}>
+            <TableCell className={cn([defaultStyle, 'w-[7rem]'])}>지원자 정보</TableCell>
+            <TableCell className={cn([defaultStyle, 'w-[8.75rem]'])}>출신 중학교</TableCell>
+            <TableCell className={cn([defaultStyle, 'w-[6.75rem]'])}>전형</TableCell>
+            <TableCell className={cn([defaultStyle, 'w-[5.3125rem]'])}>1차 결과</TableCell>
+            <TableCell className={cn([defaultStyle, 'w-[10rem]'])}>역량검사 점수</TableCell>
+            <TableCell className={cn([defaultStyle, 'w-[10rem]'])}>심층면접 점수</TableCell>
+            <TableCell className={cn([defaultStyle, 'w-[5.625rem]'])}>2차 결과</TableCell>
+            <TableCell className={cn([defaultStyle, 'w-[15rem]'])}>
               <div className={cn('flex', 'gap-1', 'items-center')}>
                 입학 동의서 제출 여부
                 <div
@@ -66,7 +66,7 @@ const ApplicantTH = () => {
                   <QuestionMark />
                   {isAgreeOver && (
                     <div
-                      className={cn(
+                      className={cn([
                         'px-3',
                         'py-4',
                         'rounded-lg',
@@ -76,7 +76,7 @@ const ApplicantTH = () => {
                         'fixed',
                         'z-[5]',
                         'text-white',
-                      )}
+                      ])}
                     >
                       지원자가 입학 동의서 서류를 제출했다면 클릭하여 상태를 변경해주세요!
                     </div>

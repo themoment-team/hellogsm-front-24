@@ -47,7 +47,7 @@ const FaqElement = ({
 
   return (
     <button
-      className={cn(
+      className={cn([
         'flex',
         'w-full',
         'px-8',
@@ -56,46 +56,46 @@ const FaqElement = ({
         'bg-slate-50',
         'rounded-2xl',
         'flex-col',
-      )}
+      ])}
       onClick={onToggle}
     >
       <div className={cn('flex', 'w-full', 'items-center', 'justify-between')}>
         <div className={cn('flex', 'items-center')}>
           <p
-            className={cn(
+            className={cn([
               'text-sky-500',
               'text-[1rem]/[1.25rem]',
               'sm:text-[1.25rem]/[1.8125rem]',
               'font-bold',
               'mr-1',
-            )}
+            ])}
           >
             Q.
           </p>
           <p
-            className={cn(
+            className={cn([
               'text-slate-700',
               'text-[0.75rem]/[1rem]',
               'xs:text-[0.75rem]/[1.25rem]',
               'sm:text-[1.125rem]/[1.6875rem]',
               'font-semibold',
-            )}
+            ])}
           >
             {getHighlightedText(title, keyword)}
           </p>
         </div>
         <div
-          className={cn(
+          className={cn([
             'transition-transform duration-300',
             showContent ? 'rotate-180' : 'rotate-0',
-          )}
+          ])}
         >
           <ChevronIcon />
         </div>
       </div>
 
       <div
-        className={cn(
+        className={cn([
           'w-full',
           'flex-col',
           'gap-4',
@@ -106,10 +106,10 @@ const FaqElement = ({
           'ease-in-out',
           `${isPageChanging ? 'transition-none' : ''}`,
           showContent ? ['max-h-48', 'pt-4'] : ['max-h-0', 'pt-0'],
-        )}
+        ])}
       >
         <div
-          className={cn(
+          className={cn([
             'w-full',
             'h-[0.05rem]',
             'bg-slate-300',
@@ -117,16 +117,16 @@ const FaqElement = ({
             'duration-500',
             'ease-in-out',
             showContent ? ['max-h-[0.05rem]', 'opacity-100'] : ['max-h-0', 'opacity-0'],
-          )}
+          ])}
         />
         <p
-          className={cn(
+          className={cn([
             'text-slate-700',
             'text-[0.875rem]/[1.25rem]',
             'font-normal',
             'text-left',
             'pt-4',
-          )}
+          ])}
         >
           {content}
         </p>

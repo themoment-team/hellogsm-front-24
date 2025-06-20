@@ -36,7 +36,7 @@ const LoginNoticeDialog = ({ userName }: LoginNoticeDialogProps) => {
 
   return (
     <AlertDialog open={isDialog} onOpenChange={setIsDialog}>
-      <AlertDialogContent className="w-[400px]">
+      <AlertDialogContent className={cn('w-[400px]')}>
         <AlertDialogHeader>
           <AlertDialogTitle>
             <strong>로그인을 먼저 진행해주세요</strong>

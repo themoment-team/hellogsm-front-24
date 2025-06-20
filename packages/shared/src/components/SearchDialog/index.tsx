@@ -89,9 +89,9 @@ const SearchDialog = ({ setValue }: SearchDialogProps) => {
         <Button>학교 찾기</Button>
       </DialogTrigger>
       <DialogContent className={cn('w-fit', 'p-0', 'rounded-lg')} showCloseIcon={false}>
-        <DialogTitle className="sr-only">학교 찾기</DialogTitle>
+        <DialogTitle className={cn('sr-only')}>학교 찾기</DialogTitle>
         <div
-          className={cn(
+          className={cn([
             'w-[29.5rem]',
             'flex',
             'p-6',
@@ -99,7 +99,7 @@ const SearchDialog = ({ setValue }: SearchDialogProps) => {
             'items-start',
             'gap-6',
             'shadow-lg',
-          )}
+          ])}
         >
           <div className={cn('flex', 'w-full', 'flex-col', 'items-start', 'gap-4', 'relative')}>
             <p className={cn('text-zinc-950', 'text-[1.125rem]/[1.75rem]', 'font-semibold')}>

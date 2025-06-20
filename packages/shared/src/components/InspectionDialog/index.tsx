@@ -19,12 +19,12 @@ const InspectionDialog = ({ showModal }: InspectionProps) => {
             서비스 점검 중
           </p>
           <p
-            className={cn(
+            className={cn([
               'text-gray-500',
               'text-[1.25rem]/[1.75rem]',
               'font-normal',
               'text-center',
-            )}
+            ])}
           >
             현재 문자인증 오류로 잠시 시스템 점검 중입니다.
           </p>

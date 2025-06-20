@@ -18,11 +18,15 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
   const graduationDate = oneseo.privacyDetail.graduationDate.split('-');
 
   return (
-    <table className="mx-auto w-full border-collapse text-center text-[1.2vh] leading-[2.2vh]">
+    <table
+      className={cn('mx-auto', 'w-full', 'border-collapse', 'text-center', 'text-[1.2vh]', 'leading-[2.2vh]')}
+    >
       <tbody>
         <tr>
           <td
-            className="h-[26vh] w-[3%] border border-l-0 border-t-0 border-black bg-[#e9e9e9] p-[0.2vh] align-middle font-medium"
+            className={cn([
+              'h-[26vh] w-[3%] border border-l-0 border-t-0 border-black bg-[#e9e9e9] p-[0.2vh] align-middle font-medium',
+            ])}
             rowSpan={9}
           >
             지원자 현황
@@ -30,63 +34,65 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
         </tr>
         <tr>
           <td
-            className="border border-t-0 border-black bg-[#e9e9e9] p-[0.2vh] align-middle font-medium"
+            className={cn([
+              'border border-t-0 border-black bg-[#e9e9e9] p-[0.2vh] align-middle font-medium',
+            ])}
             colSpan={2}
             rowSpan={2}
           >
             출신중학교
           </td>
           {oneseo.privacyDetail.graduationType === 'GED' ? (
-            <td colSpan={2} className="bg-slash bg-contain bg-no-repeat" />
+            <td colSpan={2} className={cn('bg-slash', 'bg-contain', 'bg-no-repeat')} />
           ) : (
-            <td className="border border-t-0 border-black" colSpan={2}>
+            <td className={cn('border', 'border-t-0', 'border-black')} colSpan={2}>
               {oneseo.privacyDetail.schoolName}
             </td>
           )}
-          <td className="border-r border-black" colSpan={6}>
+          <td className={cn('border-r', 'border-black')} colSpan={6}>
             {graduationDate[0]}년 {graduationDate[1]}월{' '}
             {GraduationEnum[oneseo.privacyDetail.graduationType]}
           </td>
         </tr>
         <tr>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] align-middle font-medium">
+          <td className={cn('border', 'border-black', 'bg-[#e9e9e9]', 'p-[0.2vh]', 'align-middle', 'font-medium')}>
             지역명
           </td>
           {oneseo.privacyDetail.graduationType === 'GED' ? (
-            <td colSpan={7} className="border border-black bg-slash" />
+            <td colSpan={7} className={cn('border', 'border-black', 'bg-slash')} />
           ) : (
-            <td className="border border-black" colSpan={7}>
+            <td className={cn('border', 'border-black')} colSpan={7}>
               {oneseo.privacyDetail.schoolAddress}
             </td>
           )}
         </tr>
         <tr>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium" colSpan={10}>
+          <td className={cn('border', 'border-black', 'bg-[#e9e9e9]', 'p-[0.2vh]', 'font-medium')} colSpan={10}>
             전 형 구 분
           </td>
         </tr>
         <tr>
-          <td className="border border-black" colSpan={10}>
+          <td className={cn('border', 'border-black')} colSpan={10}>
             {ScreeningEnum[oneseo.wantedScreening]}
           </td>
         </tr>
         <tr>
           <td
-            className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium"
+            className={cn('border', 'border-black', 'bg-[#e9e9e9]', 'p-[0.2vh]', 'font-medium')}
             rowSpan={2}
             style={{ width: '10%' }}
           >
             교과 <br /> 성적
           </td>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium">1-1</td>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium">1-2</td>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium">2-1</td>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium">2-2</td>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium">3-1</td>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium">3-2</td>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium">예체능</td>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium">소계</td>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium" rowSpan={2}>
+          <td className={cn('border', 'border-black', 'bg-[#e9e9e9]', 'p-[0.2vh]', 'font-medium')}>1-1</td>
+          <td className={cn('border', 'border-black', 'bg-[#e9e9e9]', 'p-[0.2vh]', 'font-medium')}>1-2</td>
+          <td className={cn('border', 'border-black', 'bg-[#e9e9e9]', 'p-[0.2vh]', 'font-medium')}>2-1</td>
+          <td className={cn('border', 'border-black', 'bg-[#e9e9e9]', 'p-[0.2vh]', 'font-medium')}>2-2</td>
+          <td className={cn('border', 'border-black', 'bg-[#e9e9e9]', 'p-[0.2vh]', 'font-medium')}>3-1</td>
+          <td className={cn('border', 'border-black', 'bg-[#e9e9e9]', 'p-[0.2vh]', 'font-medium')}>3-2</td>
+          <td className={cn('border', 'border-black', 'bg-[#e9e9e9]', 'p-[0.2vh]', 'font-medium')}>예체능</td>
+          <td className={cn('border', 'border-black', 'bg-[#e9e9e9]', 'p-[0.2vh]', 'font-medium')}>소계</td>
+          <td className={cn('border', 'border-black', 'bg-[#e9e9e9]', 'p-[0.2vh]', 'font-medium')} rowSpan={2}>
             합계 (환산총점)
           </td>
         </tr>
@@ -107,7 +113,7 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
             return isGEDScore || !oneseo.middleSchoolAchievement[gradeKey]?.length ? (
               <td key={gradeKey} className={tdStyle + 'w-[2.6875rem] bg-slash'}></td>
             ) : (
-              <td key={gradeKey} className="border border-black">
+              <td key={gradeKey} className={cn('border', 'border-black')}>
                 {
                   oneseo.calculatedScore.generalSubjectsScoreDetail[
                     achievementScoreConvertor[gradeKey]
@@ -119,11 +125,11 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
           {isGEDScore ? (
             <td className={tdStyle + 'w-[2.6875rem] bg-slash'}></td>
           ) : (
-            <td className="border border-black">
+            <td className={cn('border', 'border-black')}>
               {oneseo.calculatedScore.artsPhysicalSubjectsScore}
             </td>
           )}
-          <td className="border border-black">
+          <td className={cn('border', 'border-black')}>
             {oneseo.privacyDetail.graduationType === 'GED'
               ? oneseo.middleSchoolAchievement.gedTotalScore
               : oneseo.calculatedScore.generalSubjectsScore! +
@@ -131,28 +137,28 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
           </td>
         </tr>
         <tr>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium" rowSpan={2}>
+          <td className={cn('border', 'border-black', 'bg-[#e9e9e9]', 'p-[0.2vh]', 'font-medium')} rowSpan={2}>
             비교과 <br /> 성적
           </td>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium" colSpan={3}>
+          <td className={cn('border', 'border-black', 'bg-[#e9e9e9]', 'p-[0.2vh]', 'font-medium')} colSpan={3}>
             출석
           </td>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium" colSpan={4}>
+          <td className={cn('border', 'border-black', 'bg-[#e9e9e9]', 'p-[0.2vh]', 'font-medium')} colSpan={4}>
             봉사활동
           </td>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium">소계</td>
-          <td className="border border-black" colSpan={2} rowSpan={2}>
+          <td className={cn('border', 'border-black', 'bg-[#e9e9e9]', 'p-[0.2vh]', 'font-medium')}>소계</td>
+          <td className={cn('border', 'border-black')} colSpan={2} rowSpan={2}>
             {oneseo.calculatedScore.totalScore}
           </td>
         </tr>
         <tr>
-          <td className="border border-black" colSpan={3}>
+          <td className={cn('border', 'border-black')} colSpan={3}>
             {oneseo.calculatedScore.attendanceScore}
           </td>
-          <td className="border border-black" colSpan={4}>
+          <td className={cn('border', 'border-black')} colSpan={4}>
             {oneseo.calculatedScore.volunteerScore}
           </td>
-          <td className="border border-black">
+          <td className={cn('border', 'border-black')}>
             {oneseo.privacyDetail.graduationType === 'GED'
               ? 600
               : oneseo.calculatedScore.attendanceScore + oneseo.calculatedScore.volunteerScore}
@@ -160,7 +166,7 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
         </tr>
         <tr>
           <td
-            className="border border-l-0 border-black bg-[#e9e9e9] p-[0.2vh] font-medium"
+            className={cn('border', 'border-l-0', 'border-black', 'bg-[#e9e9e9]', 'p-[0.2vh]', 'font-medium')}
             rowSpan={4}
             colSpan={2}
             style={{ height: '7vh' }}
@@ -169,29 +175,29 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
           </td>
         </tr>
         <tr>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium" colSpan={4}>
+          <td className={cn('border', 'border-black', 'bg-[#e9e9e9]', 'p-[0.2vh]', 'font-medium')} colSpan={4}>
             1지망 학과
           </td>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium" colSpan={4}>
+          <td className={cn('border', 'border-black', 'bg-[#e9e9e9]', 'p-[0.2vh]', 'font-medium')} colSpan={4}>
             2지망 학과
           </td>
-          <td className="border border-black bg-[#e9e9e9] p-[0.2vh] font-medium" colSpan={4}>
+          <td className={cn('border', 'border-black', 'bg-[#e9e9e9]', 'p-[0.2vh]', 'font-medium')} colSpan={4}>
             3지망 학과
           </td>
         </tr>
         <tr>
-          <td className="border border-black" colSpan={4}>
+          <td className={cn('border', 'border-black')} colSpan={4}>
             {MajorEnum[oneseo.desiredMajors.firstDesiredMajor]}
           </td>
-          <td className="border border-black" colSpan={4}>
+          <td className={cn('border', 'border-black')} colSpan={4}>
             {MajorEnum[oneseo.desiredMajors.secondDesiredMajor]}
           </td>
-          <td className="border border-black" colSpan={4}>
+          <td className={cn('border', 'border-black')} colSpan={4}>
             {MajorEnum[oneseo.desiredMajors.thirdDesiredMajor]}
           </td>
         </tr>
         <tr>
-          <td className="border border-black" colSpan={9} style={{ textAlign: 'start' }}>
+          <td className={cn('border', 'border-black')} colSpan={9} style={{ textAlign: 'start' }}>
             1.(인공지능과/ 스마트IoT과/ 소프트웨어개발과) 중 지망 학과를 순서대로 기록. <br />
             2. 지원학과는 희망 순에 따라 3개 학과를 모두 기록해야 함.
           </td>

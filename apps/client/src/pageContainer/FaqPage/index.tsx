@@ -82,7 +82,7 @@ const FaqPage = ({ openIndex }: { openIndex?: number }) => {
   return (
     <div className={cn('flex', 'flex-col', 'h-[100vh]', 'justify-between', 'bg-white')}>
       <div
-        className={cn(
+        className={cn([
           'flex',
           'justify-center',
           'items-center',
@@ -90,10 +90,10 @@ const FaqPage = ({ openIndex }: { openIndex?: number }) => {
           'w-full',
           'bg-white',
           'pb-20',
-        )}
+        ])}
       >
         <div
-          className={cn(
+          className={cn([
             'flex',
             'w-[38.75rem]',
             'h-full',
@@ -102,15 +102,15 @@ const FaqPage = ({ openIndex }: { openIndex?: number }) => {
             'gap-10',
             'pt-20',
             'px-4',
-          )}
+          ])}
         >
           <p
-            className={cn(
+            className={cn([
               'text-slate-800',
               'text-center',
               'text-[1.875rem]/[2.25rem]',
               'font-semibold',
-            )}
+            ])}
           >
             자주 묻는 질문
           </p>

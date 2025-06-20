@@ -17,7 +17,7 @@ const EditBar = ({ isStep4, isStep4Success, handleOneseoEditButtonClick }: EditB
 
   return (
     <div
-      className={cn([
+      className={cn([[
         'w-full',
         'h-20',
         'flex',
@@ -30,7 +30,7 @@ const EditBar = ({ isStep4, isStep4Success, handleOneseoEditButtonClick }: EditB
         'border-t-[0.0625rem]',
         'border-gray-100',
         'gap-2',
-      ])}
+      ]])}
     >
       <Button variant="outline" onClick={() => push('/')}>
         홈으로
@@ -39,7 +39,7 @@ const EditBar = ({ isStep4, isStep4Success, handleOneseoEditButtonClick }: EditB
         <button
           disabled={!isStep4Success}
           onClick={handleOneseoEditButtonClick}
-          className={cn([
+          className={cn([[
             'px-4',
             'py-2',
             'flex',
@@ -53,7 +53,7 @@ const EditBar = ({ isStep4, isStep4Success, handleOneseoEditButtonClick }: EditB
             'rounded-md',
             'items-center',
             'h-10',
-          ])}
+          ]])}
         >
           <EditCheckIcon />
           원서 수정 완료

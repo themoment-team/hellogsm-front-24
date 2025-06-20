@@ -63,7 +63,15 @@ interface StepWrapperProps {
   onFormChange?: () => void;
 }
 
-const StepWrapper = ({ data, step, info, memberId, type, onTempSave, onFormChange }: StepWrapperProps) => {
+const StepWrapper = ({
+  data,
+  step,
+  info,
+  memberId,
+  type,
+  onTempSave,
+  onFormChange,
+}: StepWrapperProps) => {
   const step1UseForm = useForm<Step1FormType>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
@@ -172,7 +180,7 @@ const StepWrapper = ({ data, step, info, memberId, type, onTempSave, onFormChang
       toast.success('임시 저장 되었습니다.', {
         icon: InfoIcon,
         closeButton: (
-          <button className="cursor" onClick={() => toast.dismiss()}>
+          <button className={cn('cursor')} onClick={() => toast.dismiss()}>
             <CloseIcon />
           </button>
         ),
@@ -372,7 +380,7 @@ const StepWrapper = ({ data, step, info, memberId, type, onTempSave, onFormChang
   return (
     <>
       <div
-        className={cn([
+        className={cn([[
           'w-full',
           'h-full',
           'bg-slate-50',
@@ -381,17 +389,17 @@ const StepWrapper = ({ data, step, info, memberId, type, onTempSave, onFormChang
           'hidden',
           'justify-center',
           'pb-[5rem]',
-        ])}
+        ]])}
       >
         <div
-          className={cn([
+          className={cn([[
             'w-[66.5rem]',
             'flex',
             'flex-col',
             'bg-white',
             'rounded-[1.25rem]',
             'rounded-b-lg-[1.125rem]',
-          ])}
+          ]])}
         >
           <StepBar
             step={step}
@@ -400,7 +408,7 @@ const StepWrapper = ({ data, step, info, memberId, type, onTempSave, onFormChang
             handleCheckScoreButtonClick={handleCheckScoreButtonClick}
           />
           <div
-            className={cn([
+            className={cn([[
               'flex',
               'justify-center',
               'w-full',
@@ -409,7 +417,7 @@ const StepWrapper = ({ data, step, info, memberId, type, onTempSave, onFormChang
               'py-[1.5rem]',
               'bg-white',
               'rounded-b-lg-[1.125rem]',
-            ])}
+            ]])}
           >
             {step === '1' && (
               <Step1Register
@@ -457,7 +465,7 @@ const StepWrapper = ({ data, step, info, memberId, type, onTempSave, onFormChang
       />
 
       <AlertDialog open={isOneseoSubmitDialog}>
-        <AlertDialogContent className="w-[400px]">
+        <AlertDialogContent className={cn('w-[400px]')}>
           <AlertDialogHeader>
             <AlertDialogTitle>
               {type === 'client' ? (

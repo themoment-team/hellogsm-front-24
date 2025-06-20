@@ -23,7 +23,7 @@ const ActiveLink = ({
   const isActive = props.href === pathname;
 
   return (
-    <Link className={cn(className, isActive && activeClassName)} {...props}>
+    <Link className={cn([className, isActive && activeClassName])} {...props}>
       {children}
     </Link>
   );

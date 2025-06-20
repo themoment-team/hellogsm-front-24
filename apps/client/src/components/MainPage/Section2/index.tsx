@@ -17,9 +17,9 @@ const stepsData = [
     title: '원서 및 성적 입력',
     date: (
       <>
-        <span className="whitespace-nowrap">2025. 10. 20.(월)~</span>
+        <span className={cn('whitespace-nowrap')}>2025. 10. 20.(월)~</span>
         <br className={cn('lg:hidden', 'smx:block', 'hidden')} />
-        <span className="whitespace-nowrap">23.(목) 09:00 ~ 16:30</span>
+        <span className={cn('whitespace-nowrap')}>23.(목) 09:00 ~ 16:30</span>
       </>
     ),
     color: 'border-lime-500',
@@ -29,9 +29,9 @@ const stepsData = [
     title: '입학 원서 및 증빙서류 제출',
     date: (
       <>
-        <span className="whitespace-nowrap">2025. 10. 20.(월)~</span>
+        <span className={cn('whitespace-nowrap')}>2025. 10. 20.(월)~</span>
         <br className={cn('lg:hidden', 'smx:block', 'hidden')} />
-        <span className="whitespace-nowrap">23.(목) 09:00 ~ 16:30</span>
+        <span className={cn('whitespace-nowrap')}>23.(목) 09:00 ~ 16:30</span>
       </>
     ),
     color: 'border-sky-400',
@@ -65,11 +65,13 @@ const stepsData = [
     title: '합격자 등록(서류 제출)',
     date: (
       <>
-        <span className="whitespace-nowrap">2025. 11. 5.(수) ~</span>
+        <span className={cn('whitespace-nowrap')}>2025. 11. 5.(수) ~</span>
         <br className={cn('lg:hidden', 'smx:block', 'hidden')} />
-        <span className="whitespace-nowrap">11. 10.(월) 16:30</span>
+        <span className={cn('whitespace-nowrap')}>11. 10.(월) 16:30</span>
         <br />
-        <span className="whitespace-nowrap">(건강검진 관련서류 제출: 11. 10.(월) 16:30까지)</span>
+        <span className={cn('whitespace-nowrap')}>
+          (건강검진 관련서류 제출: 11. 10.(월) 16:30까지)
+        </span>
       </>
     ),
     color: 'border-sky-400',
@@ -83,7 +85,7 @@ const Section2 = () => {
       className={cn('w-full', 'bg-white', 'relative', 'py-[11.25rem]', 'overflow-hidden')}
     >
       <div
-        className={cn(
+        className={cn([
           'flex',
           'flex-col',
           'justify-between',
@@ -91,10 +93,10 @@ const Section2 = () => {
           'gap-6',
           'smx:gap-[5.125rem]',
           'lg:gap-[7.5rem]',
-        )}
+        ])}
       >
         <div
-          className={cn(
+          className={cn([
             'flex',
             'flex-col',
             'items-left',
@@ -106,10 +108,10 @@ const Section2 = () => {
             'xl:px-[16rem]',
             'fhd:px-[20rem]',
             'uhd:px-[32.5rem]',
-          )}
+          ])}
         >
           <h1
-            className={cn(
+            className={cn([
               'text-[#0F2E4D]',
               'font-semibold',
               'text-center',
@@ -117,25 +119,25 @@ const Section2 = () => {
               'text-[1.25rem]/[1.25rem]',
               'xs:text-[1.5rem]/[2rem]',
               'sm:text-[2rem]/[2.5rem]',
-            )}
+            ])}
           >
             광주소프트웨어마이스터고등학교
             <br />
             2025 신입생 모집절차
           </h1>
           <p
-            className={cn(
+            className={cn([
               'text-gray-600',
               'font-normal',
               'text-[1rem]/[1.5rem]',
               'text-center',
               'smx:text-left',
-            )}
+            ])}
           >
             우리 학교에 입학하기 위해 필요한 절차를 소개해드릴게요!
           </p>
           <div
-            className={cn(
+            className={cn([
               'justify-around',
               'mt-[7.5rem]',
               'grid',
@@ -143,7 +145,7 @@ const Section2 = () => {
               'relative',
               'hidden',
               'smx:flex',
-            )}
+            ])}
           >
             {stepsData.slice(0, 4).map((step, index) => (
               <div
@@ -151,7 +153,7 @@ const Section2 = () => {
                 className={cn('flex', 'w-[17rem]', 'flex-col', 'items-center', 'gap-6')}
               >
                 <div
-                  className={cn(
+                  className={cn([
                     'flex',
                     'px-[0.8125rem]',
                     'py-[0.8125rem]',
@@ -163,28 +165,28 @@ const Section2 = () => {
                     'z-10',
                     'bg-white',
                     'border-[3px]',
-                  )}
+                  ])}
                 >
                   {step.icon}
                 </div>
                 <div className={cn('flex', 'flex-col', 'items-center', 'gap-2')}>
                   <p
-                    className={cn(
+                    className={cn([
                       'text-slate-800',
                       'font-semibold',
                       'mdx:text-[1.25rem]/[1.75rem]',
                       'text-[1rem]/[1.5rem]',
-                    )}
+                    ])}
                   >
                     {step.title}
                   </p>
                   <p
-                    className={cn(
+                    className={cn([
                       'text-gray-500',
                       'font-normal',
                       'mdx:text-[1rem]/[1.75rem]',
                       'text-[0.75rem]/[1.5rem]',
-                    )}
+                    ])}
                   >
                     {step.date}
                   </p>
@@ -215,7 +217,7 @@ const Section2 = () => {
                 className={cn('flex', 'w-[18.9375rem]', 'flex-col', 'items-center', 'gap-6')}
               >
                 <div
-                  className={cn(
+                  className={cn([
                     'flex',
                     'px-[0.8125rem]',
                     'py-[0.8125rem]',
@@ -227,30 +229,30 @@ const Section2 = () => {
                     'z-10',
                     'bg-white',
                     'border-[3px]',
-                  )}
+                  ])}
                 >
                   {step.icon}
                 </div>
                 <div className={cn('flex', 'flex-col', 'items-center', 'gap-2')}>
                   <p
-                    className={cn(
+                    className={cn([
                       'text-slate-800',
                       'font-semibold',
                       'mdx:text-[1.25rem]/[1.75rem]',
                       'text-[1rem]/[1.5rem]',
-                    )}
+                    ])}
                   >
                     {step.title}
                   </p>
                   <p
-                    className={cn(
+                    className={cn([
                       'text-gray-500',
                       'font-normal',
                       'mdx:text-[1rem]/[1.75rem]',
                       'text-[0.75rem]/[1.5rem]',
                       'smx:text-center',
                       'text-left',
-                    )}
+                    ])}
                   >
                     {step.date}
                   </p>
@@ -277,7 +279,7 @@ const Section2 = () => {
               {stepsData.map((step, index) => (
                 <div key={index} className={cn('flex', 'flex-col', 'items-center')}>
                   <div
-                    className={cn(
+                    className={cn([
                       'flex',
                       'px-[0.8125rem]',
                       'py-[0.8125rem]',
@@ -289,7 +291,7 @@ const Section2 = () => {
                       'z-10',
                       'bg-white',
                       'border-[3px]',
-                    )}
+                    ])}
                   >
                     {step.icon}
                   </div>
@@ -307,24 +309,24 @@ const Section2 = () => {
                   className={cn('flex', 'flex-col', 'justify-center', 'gap-2', 'h-[4.25rem]')}
                 >
                   <p
-                    className={cn(
+                    className={cn([
                       'text-slate-800',
                       'sm:text-[1.5rem]/[2rem]',
                       'text-[1rem]/[1.75rem]',
                       'font-semibold',
-                    )}
+                    ])}
                   >
                     {step.title}
                   </p>
                   <p
-                    className={cn(
+                    className={cn([
                       'text-gray-500',
                       'sm:text-[1rem]/[1.75rem]',
                       'text-[0.75rem]/[1.5rem]',
                       'font-normal',
                       'smx:text-center',
                       'text-left',
-                    )}
+                    ])}
                   >
                     {step.date}
                   </p>

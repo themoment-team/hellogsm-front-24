@@ -130,12 +130,12 @@ const PassResultDialog = ({
             <div className={cn('flex', 'flex-col', 'items-center', 'gap-3')}>
               <h3 className={cn('text-[1.25rem]/[1.5rem]', 'font-semibold')}>{title}</h3>
               <p
-                className={cn(
+                className={cn([
                   'text-gray-500',
                   'text-[1rem]/[1.5rem]',
                   'font-medium',
                   'text-center',
-                )}
+                ])}
               >
                 {message}
               </p>

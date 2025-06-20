@@ -27,7 +27,7 @@ const TestResultDialog = ({
         onClose={() => setIsOpen(false)}
       >
         <div
-          className={cn(
+          className={cn([
             'relative',
             'flex',
             'flex-col',
@@ -35,7 +35,7 @@ const TestResultDialog = ({
             'items-center',
             'gap-4',
             'mt-4',
-          )}
+          ])}
         >
           <div className={cn('relative')}>
             <Image
@@ -43,7 +43,7 @@ const TestResultDialog = ({
               width={156}
               height={156}
               alt="hello"
-              className="relative z-10"
+              className={cn('relative', 'z-10')}
             />
             <div className={cn('absolute', '-top-[20px]', 'left-[25px]')}>
               <BlurIcon color="#A8E3FF" />
@@ -56,7 +56,7 @@ const TestResultDialog = ({
             </div>
           </div>
           <div
-            className={cn(
+            className={cn([
               'flex',
               'flex-col',
               'justify-center',
@@ -64,7 +64,7 @@ const TestResultDialog = ({
               'gap-1',
               'mt-10',
               'mb-2',
-            )}
+            ])}
           >
             <h1 className={cn('text-[1.5rem]/[2rem]', 'font-semibold')}>
               {isFinishFirstTest ? '1차 서류 합격자 ' : '최종 합격자 '}
@@ -82,7 +82,7 @@ const TestResultDialog = ({
           <div className={cn('flex', 'justify-center', 'gap-4')}>
             <Button
               variant="reverseFill"
-              className={cn(...buttonStyle)}
+              className={cn([...buttonStyle])}
               onClick={() => {
                 const today = new Date().toDateString();
                 localStorage.setItem('hideTestResultDialog', today);
@@ -93,7 +93,7 @@ const TestResultDialog = ({
             </Button>
             <Button
               variant="fill"
-              className={cn(...buttonStyle)}
+              className={cn([...buttonStyle])}
               onClick={() => {
                 setIsOpen(false);
                 onOpenPassResultDialog();

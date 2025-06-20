@@ -20,7 +20,7 @@ const StepCircle = ({ step, isActive, isCompleted }: StepCircleType) => {
 
   return (
     <div
-      className={cn(
+      className={cn([
         'flex',
         'justify-center',
         'items-center',
@@ -33,7 +33,7 @@ const StepCircle = ({ step, isActive, isCompleted }: StepCircleType) => {
         'duration-500',
         'transform',
         isActiveOrCompleted ? 'bg-blue-500 text-white' : 'border-[1px] text-slate-300',
-      )}
+      ])}
     >
       {isCompleted ? <StepCheckIcon /> : step}
     </div>
@@ -58,7 +58,7 @@ const StepBar = ({ step, baseUrl, isStepSuccess, handleCheckScoreButtonClick }: 
   return (
     <>
       <div
-        className={cn(
+        className={cn([
           'flex',
           'h-[4.25rem]',
           'px-[1.75rem]',
@@ -70,7 +70,7 @@ const StepBar = ({ step, baseUrl, isStepSuccess, handleCheckScoreButtonClick }: 
           'border-solid',
           'border-b',
           'border-gray-100',
-        )}
+        ])}
       >
         <div className={cn('flex', 'items-center', 'gap-[0.5rem]')}>
           {steps.map((value) => (

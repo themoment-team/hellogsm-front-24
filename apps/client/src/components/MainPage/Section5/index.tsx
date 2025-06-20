@@ -45,7 +45,7 @@ const Section5 = () => {
     <div className={cn('flex', 'flex-col', 'gap-[4.25rem]', 'bg-white', 'py-[11.25rem]', 'w-full')}>
       <div className={cn('flex', 'justify-center', 'gap-[3.75rem]', 'flex-col')}>
         <div
-          className={cn(
+          className={cn([
             'flex',
             'flex-col',
             'items-center',
@@ -57,11 +57,11 @@ const Section5 = () => {
             'fhd:px-[20rem]',
             'uhd:px-[32.5rem]',
             'xl:items-start',
-          )}
+          ])}
         >
           <div className={cn('flex', 'items-end')}>
             <span
-              className={cn(
+              className={cn([
                 'text-gray-900',
                 'font-semibold',
                 'xl:text-left',
@@ -69,7 +69,7 @@ const Section5 = () => {
                 'text-[1.25rem]/[1.25rem]',
                 'xs:text-[1.5rem]/[2rem]',
                 'sm:text-[2rem]/[2.5rem]',
-              )}
+              ])}
             >
               창의 융합력을 갖춘 <br />
               글로벌 소프트웨어 학과 소개
@@ -81,7 +81,7 @@ const Section5 = () => {
         </div>
 
         <div
-          className={cn(
+          className={cn([
             'flex',
             'flex-wrap',
             'w-full',
@@ -97,19 +97,19 @@ const Section5 = () => {
             'max-sm:flex-nowrap',
             'max-sm:justify-start',
             'max-sm:pb-4',
-          )}
+          ])}
         >
           {Elements.map((element, index) => (
             <div
               key={index}
-              className={cn(
+              className={cn([
                 'flex',
                 'w-[26rem]',
                 'flex-col',
                 'items-start',
                 'gap-6',
                 'max-sm:flex-shrink-0',
-              )}
+              ])}
             >
               <Image
                 src={element.Img}
@@ -120,13 +120,13 @@ const Section5 = () => {
               <div className={cn('w-full', 'flex', 'flex-col', 'flex-start', 'gap-3')}>
                 <div className={cn('w-full', 'flex', 'flex-col', 'items-start', 'gap-4')}>
                   <p
-                    className={cn(
+                    className={cn([
                       'text-gray-900',
                       'text-[0.75rem]/[1.25rem]',
                       'font-semibold',
                       'sm:text-[1rem]/[1.5rem]',
                       'sm:text-[1.5rem]/[2rem]',
-                    )}
+                    ])}
                   >
                     {element.department}
                   </p>
@@ -134,7 +134,7 @@ const Section5 = () => {
                     {element.learn.map((item, idx) => (
                       <div
                         key={idx}
-                        className={cn(
+                        className={cn([
                           'flex',
                           'px-1',
                           'py-1',
@@ -143,16 +143,16 @@ const Section5 = () => {
                           'rounded-[5rem]',
                           'sm:px-2',
                           element.tagColor,
-                        )}
+                        ])}
                       >
                         <p
-                          className={cn(
+                          className={cn([
                             element.textColor,
                             'text-[0.5rem]/[0.75rem]',
                             'font-normal',
                             'sm:text-[0.75rem]/[1rem]',
                             'sm:text-[0.875rem]/[1.25rem]',
-                          )}
+                          ])}
                         >
                           #{item}
                         </p>
@@ -161,13 +161,13 @@ const Section5 = () => {
                   </div>
                 </div>
                 <span
-                  className={cn(
+                  className={cn([
                     'text-gray-600',
                     'text-[0.75rem]/[1.25rem]',
                     'font-normal',
                     'sm:text-[1rem]/[1.5rem]',
                     'sm:text-[1.125rem]/[1.75rem]',
-                  )}
+                  ])}
                 >
                   {element.description}
                 </span>

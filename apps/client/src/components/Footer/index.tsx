@@ -26,7 +26,7 @@ const Footer = () => {
 
   return (
     <footer
-      className={cn(
+      className={cn([
         'bg-gray-100',
         'py-15',
         'relative',
@@ -37,10 +37,10 @@ const Footer = () => {
         'sm:px-[6.25rem]',
         '2xl:px-[12.5rem]',
         'w-full',
-      )}
+      ])}
     >
       <div
-        className={cn(
+        className={cn([
           'flex',
           'items-start',
           'sm:items-center',
@@ -51,12 +51,12 @@ const Footer = () => {
           'justify-between',
           'sm:flex-row',
           'flex-col',
-        )}
+        ])}
       >
         <FooterGSMLogo />
         <div className={cn('flex', 'flex-col', 'items-start', 'gap-16', 'md:items-start')}>
           <div
-            className={cn(
+            className={cn([
               'flex',
               'flex-col',
               'items-start',
@@ -64,19 +64,19 @@ const Footer = () => {
               'gap-2',
               'text-white',
               'md:items-start',
-            )}
+            ])}
           >
             <p
-              className={cn(
+              className={cn([
                 'w-full',
                 'text-left',
                 'sm:text-right',
                 'font-normal',
                 'text-slate-600',
-              )}
+              ])}
             >
               ©{year} Copyright 광주소프트웨어마이스터고등학교 &nbsp;
-              <br className="sm:hidden" />
+              <br className={cn('sm:hidden')} />
               ALL RIGHTS RESERVED.
             </p>
             <div className={cn('flex', 'gap-2', 'sm:flex-row', 'flex-col', 'sm:gap-6')}>
@@ -94,7 +94,7 @@ const Footer = () => {
             </div>
           </div>
           <p
-            className={cn(
+            className={cn([
               'text-body2',
               'w-full',
               'text-right',
@@ -102,7 +102,7 @@ const Footer = () => {
               'text-slate-400',
               'hidden',
               'sm:block',
-            )}
+            ])}
           >
             우) 62423 광주광역시 광산구 상무대로 312
             <br />

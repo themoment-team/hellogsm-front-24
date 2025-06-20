@@ -215,7 +215,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
   return (
     <>
       <main
-        className={cn(
+        className={cn([
           'flex',
           'flex-col',
           'items-center',
@@ -223,7 +223,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
           'pb-40',
           'pt-[7.5rem]',
           'bg-white',
-        )}
+        ])}
       >
         <div className={cn('flex', 'flex-col', 'gap-3', 'items-center')}>
           <h1 className={cn('text-2xl', 'font-semibold')}>회원가입</h1>
@@ -239,14 +239,14 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
             className={cn('flex', 'flex-col', 'gap-4')}
           >
             <FormItem>
-              <CustomFormItem className="gap-1" text="이름">
+              <CustomFormItem className={cn('gap-1')} text="이름">
                 <FormControl>
                   <Input {...formMethods.register('name')} placeholder="이름 입력" />
                 </FormControl>
               </CustomFormItem>
             </FormItem>
 
-            <CustomFormItem className="gap-1.5" text="성별">
+            <CustomFormItem className={cn('gap-1.5')} text="성별">
               <div className={cn('flex', 'gap-2')}>
                 <SexToggle
                   isSelected={sex === 'MALE'}
@@ -263,7 +263,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
               </div>
             </CustomFormItem>
 
-            <CustomFormItem className="gap-1" text="생년월일">
+            <CustomFormItem className={cn('gap-1')} text="생년월일">
               <div className={cn('flex', 'gap-2')}>
                 <FormItem>
                   <Select
@@ -271,7 +271,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
                     defaultValue={birthYear ?? ''}
                   >
                     <FormControl>
-                      <SelectTrigger className="w-[7.5625rem]">
+                      <SelectTrigger className={cn('w-[7.5625rem]')}>
                         <SelectValue placeholder="년도" />
                       </SelectTrigger>
                     </FormControl>
@@ -295,7 +295,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
                     defaultValue={birthMonth ?? ''}
                   >
                     <FormControl>
-                      <SelectTrigger className="w-[7.5625rem]">
+                      <SelectTrigger className={cn('w-[7.5625rem]')}>
                         <SelectValue placeholder="월" />
                       </SelectTrigger>
                     </FormControl>
@@ -317,7 +317,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
                     defaultValue={birthDay ?? ''}
                   >
                     <FormControl>
-                      <SelectTrigger className="w-[7.5625rem]">
+                      <SelectTrigger className={cn('w-[7.5625rem]')}>
                         <SelectValue placeholder="일" />
                       </SelectTrigger>
                     </FormControl>
@@ -336,7 +336,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
               </div>
             </CustomFormItem>
 
-            <CustomFormItem className="relative gap-1" text="전화번호">
+            <CustomFormItem className={cn('relative', 'gap-1')} text="전화번호">
               <div
                 className={cn('absolute', 'right-0', 'text-red-500', 'text-[0.75rem]/[1.125rem]')}
               >
@@ -344,7 +344,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
               </div>
               <div className={cn('flex', 'flex-col', 'gap-1.5')}>
                 <div className={cn('flex', 'justify-between', 'items-center')}>
-                  <div className={cn('w-[18rem]', btnClick === true ? 'absolute' : '')}>
+                  <div className={cn(['w-[18rem]', btnClick === true ? 'absolute' : ''])}>
                     <Input
                       {...formMethods.register('phoneNumber')}
                       placeholder="번호 입력"
@@ -353,13 +353,13 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
                   </div>
                   {btnClick === true && (
                     <p
-                      className={cn(
+                      className={cn([
                         'text-blue-500',
                         'text-[0.875rem]/[1.25rem]',
                         'font-medium',
                         'relative',
                         'left-[15rem]',
-                      )}
+                      ])}
                     >
                       {formatTime(timeLeft)}
                     </p>
@@ -405,17 +405,17 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
                 <button
                   type="button"
                   onClick={() => setShowPrivacyPolicy(!showPrivacyPolicy)}
-                  className={cn(
+                  className={cn([
                     'transition-transform duration-300',
                     showPrivacyPolicy ? 'rotate-180' : 'rotate-0',
-                  )}
+                  ])}
                 >
                   <ChevronIcon />
                 </button>
               </div>
               {showPrivacyPolicy && (
                 <div
-                  className={cn(
+                  className={cn([
                     'mt-4',
                     'mb-4',
                     'pt-4',
@@ -427,7 +427,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
                     'font-normal',
                     'overflow-scroll',
                     'w-[23.75rem]',
-                  )}
+                  ])}
                 >
                   ㅡ 서류제출 시 [서식2] 개인정보수집활용동의서를 작성하여 제출하여 주시기 바랍니다.
                 </div>
@@ -448,7 +448,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
       <Footer />
 
       <AlertDialog open={showModal === 'code'}>
-        <AlertDialogContent className="w-[400px]">
+        <AlertDialogContent className={cn('w-[400px]')}>
           <AlertDialogHeader>
             <AlertDialogTitle>
               인증번호 전송에 실패하였습니다. <br /> (인증번호는 최대 5번만 전송가능합니다.)
@@ -461,7 +461,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
       </AlertDialog>
 
       <AlertDialog open={showModal === 'success' || showModal === 'error'}>
-        <AlertDialogContent className="w-[400px]">
+        <AlertDialogContent className={cn('w-[400px]')}>
           <AlertDialogHeader>
             <AlertDialogTitle>
               {showModal === 'success' ? '회원가입에 성공했습니다!' : '오류가 발생했습니다.'}
@@ -481,7 +481,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
       </AlertDialog>
 
       <AlertDialog open={showModal === 'duplicate'}>
-        <AlertDialogContent className="w-[520px]">
+        <AlertDialogContent className={cn('w-[520px]')}>
           <AlertDialogHeader>
             <AlertDialogTitle>
               같은 전화번호로 생성된 계정이 이미 존재합니다.
@@ -515,7 +515,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
       </AlertDialog>
 
       <AlertDialog open={showModal === 'date'}>
-        <AlertDialogContent className="w-[400px]">
+        <AlertDialogContent className={cn('w-[400px]')}>
           <AlertDialogHeader>
             <AlertDialogTitle>
               1차 합격 결과 발표 이후에는 기존 회원 정보를 <br /> 삭제할 수 없습니다.

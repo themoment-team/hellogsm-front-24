@@ -85,7 +85,7 @@ const Elements: ElementType[] = [
     description: (
       <>
         작성하신 입학 원서와 추가 서류는{' '}
-        <strong className="font-semibold">마이페이지에서 출력</strong> 가능합니다.
+        <strong className={cn('font-semibold')}>마이페이지에서 출력</strong> 가능합니다.
       </>
     ),
     subDescription: (
@@ -104,7 +104,7 @@ const Elements: ElementType[] = [
     description: (
       <>
         내신과 봉사시간, 출결현황을 점수로 환산하여{' '}
-        <strong className="font-semibold">정원의 1.3배 인원</strong>을 발표합니다.
+        <strong className={cn('font-semibold')}>정원의 1.3배 인원</strong>을 발표합니다.
       </>
     ),
   },
@@ -114,7 +114,7 @@ const Elements: ElementType[] = [
     description: (
       <>
         소프트웨어마이스터고등학교 학업수행에 필요한 기본 자질과 능력을 중심으로{' '}
-        <strong className="font-semibold">역량검사</strong>를 진행합니다.
+        <strong className={cn('font-semibold')}>역량검사</strong>를 진행합니다.
       </>
     ),
     subDescription: <>역량검사 이후 면접을 통해 지원자의 역량을 확인 후 2차 전형은 마무리됩니다.</>,
@@ -124,7 +124,7 @@ const Elements: ElementType[] = [
     title: '결과 발표',
     description: (
       <>
-        <strong className="font-semibold">
+        <strong className={cn('font-semibold')}>
           1차 서류심사(50%)와 2차 역량검사(30%), 심층면접(20%)
         </strong>
         를 통해 최종 합격자를 선발합니다.
@@ -144,7 +144,7 @@ const Steps = ({
 }) => {
   return (
     <div
-      className={cn(
+      className={cn([
         'flex',
         'flex-col',
         'justify-center',
@@ -159,7 +159,7 @@ const Steps = ({
         'md:text-[1.25rem]/[2rem]',
         'text-white',
         'font-semibold',
-      )}
+      ])}
     >
       <p>{String(number).padStart(2, '0')}</p>
       <p>{text}</p>
@@ -182,17 +182,17 @@ const List = ({
     <div className={cn('w-full', 'flex', 'flex-col', 'gap-10')}>
       <div className={cn('flex', 'flex-col', 'items-start', 'gap-2')}>
         <div className={cn('flex', 'flex-row')}>
-          <p className={cn(...textStyle, 'text-blue-600')}>
+          <p className={cn([...textStyle, 'text-blue-600'])}>
             {String(number).padStart(2, '0')}.&nbsp;
           </p>
-          <p className={cn(...textStyle, 'text-gray-900')}>{title}</p>
+          <p className={cn([...textStyle, 'text-gray-900'])}>{title}</p>
         </div>
         <ul className={cn('pl-2')}>
-          <div className={cn(...descriptionStyle, 'text-gray-900', 'flex', 'gap-1')}>
+          <div className={cn([...descriptionStyle, 'text-gray-900', 'flex', 'gap-1'])}>
             &middot; <span>{description}</span>
           </div>
           {subDescription && (
-            <div className={cn(...descriptionStyle, 'text-gray-900', 'flex', 'gap-1')}>
+            <div className={cn([...descriptionStyle, 'text-gray-900', 'flex', 'gap-1'])}>
               &middot; <span>{subDescription}</span>
             </div>
           )}
@@ -237,7 +237,7 @@ const GuidePage = ({ initialData, isOneseoWrite }: GuideProps) => {
   return (
     <div className={cn('w-full', 'flex', 'flex-col', 'justify-center', 'items-center')}>
       <div
-        className={cn(
+        className={cn([
           'relative',
           'w-full',
           'flex',
@@ -248,7 +248,7 @@ const GuidePage = ({ initialData, isOneseoWrite }: GuideProps) => {
           'text-white',
           'text-[2.125rem]/[3.125rem]',
           'font-semibold',
-        )}
+        ])}
       >
         <div className={cn('absolute', 'top-0', 'left-[15%]')}>
           <BlueStarIcon />
@@ -259,7 +259,7 @@ const GuidePage = ({ initialData, isOneseoWrite }: GuideProps) => {
         원서 접수 및 내용 안내
       </div>
       <div
-        className={cn(
+        className={cn([
           'md:w-[66.5625rem]',
           'w-full',
           'px-[2rem]',
@@ -271,10 +271,10 @@ const GuidePage = ({ initialData, isOneseoWrite }: GuideProps) => {
           'gap-20',
           'pt-[6.25rem]',
           'pb-[7.5rem]',
-        )}
+        ])}
       >
         <div
-          className={cn(
+          className={cn([
             'w-full',
             'flex',
             'items-center',
@@ -282,7 +282,7 @@ const GuidePage = ({ initialData, isOneseoWrite }: GuideProps) => {
             'gap-4',
             'md:gap-5',
             'justify-center',
-          )}
+          ])}
         >
           {Elements.map((element, index) => (
             <Steps
@@ -305,8 +305,8 @@ const GuidePage = ({ initialData, isOneseoWrite }: GuideProps) => {
           ))}
 
           <div className={cn('w-full', 'flex', 'flex-col', 'gap-5')}>
-            <p className={cn(...textStyle, 'text-gray-900')}>원서 접수 전 꼭 읽어주세요!</p>
-            <div className={cn(...descriptionStyle, '[&>span]:font-semibold')}>
+            <p className={cn([...textStyle, 'text-gray-900'])}>원서 접수 전 꼭 읽어주세요!</p>
+            <div className={cn([...descriptionStyle, '[&>span]:font-semibold'])}>
               {/* <p className={cn('text-red-600')}>
                 본교 최종 합격자는 당해 학년도에는 다른 고등학교 입학전형에 지원할 수 없습니다.
               </p>
@@ -317,7 +317,7 @@ const GuidePage = ({ initialData, isOneseoWrite }: GuideProps) => {
               기숙사 생활관은 평일 교육과정을 위하여 운영하는 것을 원칙으로합니다. <br />
               주말과 공휴일 등 학교 휴무일에 기숙사를 운영하지 않습니다. <br /> */}
               {mustReadArticles.map((article, idx) => (
-                <div className="flex" key={idx}>
+                <div className={cn('flex')} key={idx}>
                   <li />
                   <div>{article}</div>
                 </div>
@@ -330,7 +330,7 @@ const GuidePage = ({ initialData, isOneseoWrite }: GuideProps) => {
       <Button
         variant={buttonVariant}
         disabled={buttonVariant === 'fill' ? false : true}
-        className={cn(
+        className={cn([
           'sticky',
           'bottom-10',
           'w-[20rem]',
@@ -342,7 +342,7 @@ const GuidePage = ({ initialData, isOneseoWrite }: GuideProps) => {
           'text-[1.25rem]/[1.75rem]',
           'rounded-[0.75rem]',
           isTempOneseo && ['cursor-not-allowed', 'opacity-100'],
-        )}
+        ])}
         onClick={() => {
           if (!authInfo?.authReferrerType) {
             setShowModal(true);
@@ -360,7 +360,7 @@ const GuidePage = ({ initialData, isOneseoWrite }: GuideProps) => {
       <Footer />
 
       <AlertDialog open={showModal}>
-        <AlertDialogContent className="w-[400px]">
+        <AlertDialogContent className={cn('w-[400px]')}>
           <AlertDialogHeader>
             <AlertDialogTitle>로그인을 먼저 진행해주세요</AlertDialogTitle>
           </AlertDialogHeader>

@@ -57,13 +57,13 @@ const DotWithText = ({ color, text, textColor }: DotWithTextProps) => (
       <Dot color={color} />
     </div>
     <p
-      className={cn(
+      className={cn([
         textColor,
         'text-[1.25rem]/[1.25rem]',
         'xs:text-[1.5rem]/[2rem]',
         'sm:text-[2rem]/[2.5rem]',
         'font-[600]',
-      )}
+      ])}
     >
       {text}
     </p>
@@ -78,7 +78,7 @@ interface TitleCardProps {
 
 const TitleCard = ({ firstText, lastText, icon }: TitleCardProps) => (
   <div
-    className={cn(
+    className={cn([
       'flex',
       'pt-[2rem]',
       'pb-[1.5rem]',
@@ -91,7 +91,7 @@ const TitleCard = ({ firstText, lastText, icon }: TitleCardProps) => (
       'w-[30rem]',
       'sm:w-[25.1875rem]',
       'md:w-[20rem]',
-    )}
+    ])}
   >
     <div className={cn('flex', 'w-[16.4375rem]', 'flex-col', 'items-start')}>
       <p className={cn('text-sky-800', 'font-[600]', 'text-[1.5rem]/[2.25rem]')}>
@@ -107,7 +107,7 @@ const TitleCard = ({ firstText, lastText, icon }: TitleCardProps) => (
 const Section4 = () => {
   return (
     <section
-      className={cn(
+      className={cn([
         'gap-[3.75rem]',
         'flex',
         'items-center',
@@ -115,21 +115,21 @@ const Section4 = () => {
         'bg-[#F5F9FB]',
         'py-[11.25rem]',
         'w-full',
-      )}
+      ])}
     >
       <div className={cn('flex', 'flex-col', 'items-center', 'w-full')}>
         <div className={cn('flex', 'items-end')}>
           <DotWithText color="#84CC16" text="인성" textColor="text-[#84CC16]" />
-          <p className={cn(...textStyle)}>과 &nbsp;</p>
+          <p className={cn([...textStyle])}>과 &nbsp;</p>
           <DotWithText color="#84CC16" text="감성" textColor="text-[#84CC16]" />
-          <p className={cn(...textStyle)}>으로 &nbsp;</p>
+          <p className={cn([...textStyle])}>으로 &nbsp;</p>
           <DotWithText color="#38BDF8" text="감동" textColor="text-[#38BDF8]" />
-          <p className={cn(...textStyle)}>을 만드는</p>
+          <p className={cn([...textStyle])}>을 만드는</p>
         </div>
-        <p className={cn(...textStyle)}>광주소프트웨어마이스터고등학교</p>
+        <p className={cn([...textStyle])}>광주소프트웨어마이스터고등학교</p>
       </div>
       <div
-        className={cn(
+        className={cn([
           'flex',
           'flex-wrap',
           'w-full',
@@ -138,7 +138,7 @@ const Section4 = () => {
           'justify-center',
           'px-4',
           'xs:px-[3.75rem]',
-        )}
+        ])}
       >
         {TITLES.map(({ firstText, lastText, icon }) => (
           <TitleCard key={firstText} firstText={firstText} lastText={lastText} icon={icon} />

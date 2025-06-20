@@ -10,7 +10,7 @@ const LoginDialog = () => {
       </DialogTrigger>
       <DialogContent className={cn('w-fit', 'p-0', '!rounded-[20px]')}>
         <div
-          className={cn(
+          className={cn([
             'w-fit',
             'flex',
             'pt-8',
@@ -19,7 +19,7 @@ const LoginDialog = () => {
             'flex-col',
             'items-center',
             'gap-8',
-          )}
+          ])}
         >
           {/* <h1>현재는 로그인을 할 수 없습니다.</h1> */}
           <span className={cn('text-2xl', 'font-semibold', 'text-gray-900')}>로그인</span>

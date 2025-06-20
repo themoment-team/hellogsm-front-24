@@ -12,7 +12,7 @@ import { cn } from 'shared/lib/utils';
 
 const Item = ({ children }: PropsWithChildren) => (
   <div
-    className={cn(
+    className={cn([
       'flex',
       'gap-2',
       'py-2',
@@ -21,7 +21,7 @@ const Item = ({ children }: PropsWithChildren) => (
       'text-sm',
       'font-semibold',
       'leading-5',
-    )}
+    ])}
   >
     {children}
   </div>
@@ -46,16 +46,16 @@ const SubItem = ({
     className={cn('flex', 'gap-2', 'py-2', 'px-3', 'items-center', 'pl-10', 'cursor-pointer')}
   >
     <div
-      className={cn('w-2', 'h-2', 'rounded-full', 'border-solid', 'border-2', circleClassName)}
+      className={cn(['w-2', 'h-2', 'rounded-full', 'border-solid', 'border-2', circleClassName])}
     />
     <span
-      className={cn(
+      className={cn([
         'font-normal',
         'text-sm',
         'leading-5',
         'text-gray-400',
         isSelected && textClassName,
-      )}
+      ])}
     >
       {children}
     </span>
@@ -101,7 +101,7 @@ const SideMenu = ({ isOpen, setIsOpen, testResultTag, setTestResultTag }: SideMe
 
   return (
     <aside
-      className={cn(
+      className={cn([
         'w-60',
         'h-dvh',
         'border-r-gray-30',
@@ -120,7 +120,7 @@ const SideMenu = ({ isOpen, setIsOpen, testResultTag, setTestResultTag }: SideMe
         'transition-all',
         'left-0',
         'top-0',
-      )}
+      ])}
     >
       <div className={cn('flex', 'flex-col', 'gap-10')}>
         <div className={cn('flex', 'w-full', 'justify-between')}>
@@ -128,7 +128,7 @@ const SideMenu = ({ isOpen, setIsOpen, testResultTag, setTestResultTag }: SideMe
             HELLO <span className={cn('text-[#2563EB]')}>ADMIN!</span>
           </span>
           <div
-            className={cn('cursor-pointer', !isOpen && 'scale-x-[-1]')}
+            className={cn(['cursor-pointer', !isOpen && 'scale-x-[-1]'])}
             onClick={() => setIsOpen((prev) => !prev)}
           >
             <ChevronsLeft />

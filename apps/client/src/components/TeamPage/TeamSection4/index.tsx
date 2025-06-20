@@ -27,7 +27,7 @@ const MemberCard = ({ githubId, name, role }: MemberCardProps) => {
       href={`${GITHUB_URL}/${githubId}`}
       target="_blank"
       rel="noopener noreferrer"
-      className={cn(
+      className={cn([
         'flex',
         'items-center',
         'w-[18.4375rem]',
@@ -41,7 +41,7 @@ const MemberCard = ({ githubId, name, role }: MemberCardProps) => {
         'space-x-4',
         'flex-shrink-0',
         'cursor-pointer',
-      )}
+      ])}
     >
       <Image
         src={`${GITHUB_URL}/${githubId}.png`}
@@ -52,7 +52,7 @@ const MemberCard = ({ githubId, name, role }: MemberCardProps) => {
       />
       <div>
         <p className={cn('text-[1.5rem]/[2rem]', 'font-medium')}>{name}</p>
-        <p className={cn('text-[1.375rem]/[1.75rem]', 'font-normal', roleColors[role])}>{role}</p>
+        <p className={cn(['text-[1.375rem]/[1.75rem]', 'font-normal', roleColors[role]])}>{role}</p>
       </div>
     </a>
   );
@@ -70,7 +70,7 @@ const TeamSection4 = () => {
 
   return (
     <div
-      className={cn(
+      className={cn([
         'flex',
         'flex-col',
         'overflow-hidden',
@@ -79,16 +79,16 @@ const TeamSection4 = () => {
         'py-[15rem]',
         'items-center',
         'gap-[6.25rem]',
-      )}
+      ])}
     >
       <h3
-        className={cn(
+        className={cn([
           'text-[#0F0921]',
           'xs:text-[2.75rem]/[3.85rem]',
           'text-[1.75rem]/[2.75rem]',
           'font-bold',
           'text-center',
-        )}
+        ])}
       >
         &quot;입학지원시스템, <br className={cn('block', 'sm:hidden')} />
         누가 만들었을까요?&quot;

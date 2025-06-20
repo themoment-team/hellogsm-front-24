@@ -152,7 +152,7 @@ const Step2Register = ({ register, setValue, watch, reset }: Step2RegisterProps)
 
           <CustomFormItem
             text={isGED ? '검정고시 합격일' : '출신 중학교 & 졸업일'}
-            className="gap-1"
+            className={cn('gap-1')}
             required
             fullWidth
           >
@@ -171,7 +171,7 @@ const Step2Register = ({ register, setValue, watch, reset }: Step2RegisterProps)
             </div>
             <div className={cn('flex', 'w-full', 'justify-between')}>
               <Select value={year === '0000' ? '' : year} onValueChange={handleYearSelectChange}>
-                <SelectTrigger className="w-[14.6785rem]">
+                <SelectTrigger className={cn('w-[14.6785rem]')}>
                   <SelectValue placeholder="년도 선택" />
                 </SelectTrigger>
                 <SelectContent>
@@ -191,7 +191,7 @@ const Step2Register = ({ register, setValue, watch, reset }: Step2RegisterProps)
                 value={month === '00' ? '' : Number(month).toString()}
                 onValueChange={handleMonthSelectChange}
               >
-                <SelectTrigger className="w-[14.6785rem]">
+                <SelectTrigger className={cn('w-[14.6785rem]')}>
                   <SelectValue placeholder="월 선택" />
                 </SelectTrigger>
                 <SelectContent>
@@ -218,7 +218,12 @@ const Step2Register = ({ register, setValue, watch, reset }: Step2RegisterProps)
           />
           <div className={cn('flex', 'flex-col', 'gap-3', 'w-full')}>
             <div className={cn('flex', 'flex-col', 'items-start', 'gap-1.5', 'w-full')}>
-              <CustomFormItem text={'지원학과'} className="gap-1" required={true} fullWidth={true}>
+              <CustomFormItem
+                text={'지원학과'}
+                className={cn('gap-1')}
+                required={true}
+                fullWidth={true}
+              >
                 <div className={cn('flex', 'w-full', 'justify-between')}>
                   {majorFieldList.map((fieldName, index) => {
                     const desiredSequence = index + 1;
@@ -242,7 +247,7 @@ const Step2Register = ({ register, setValue, watch, reset }: Step2RegisterProps)
                           handleDesiredMajorChange(fieldName, value)
                         }
                       >
-                        <SelectTrigger className="w-[9.3785rem]">
+                        <SelectTrigger className={cn('w-[9.3785rem]')}>
                           <SelectValue placeholder={`${desiredSequence}지망`} />
                         </SelectTrigger>
                         <SelectContent>
@@ -262,7 +267,7 @@ const Step2Register = ({ register, setValue, watch, reset }: Step2RegisterProps)
               </CustomFormItem>
             </div>
             <div
-              className={cn(
+              className={cn([
                 'flex',
                 'flex-col',
                 'w-full',
@@ -271,22 +276,22 @@ const Step2Register = ({ register, setValue, watch, reset }: Step2RegisterProps)
                 'items-center',
                 'bg-slate-100',
                 'rounded-md',
-              )}
+              ])}
             >
               <ul
-                className={cn(
+                className={cn([
                   'flex',
                   'flex-col',
                   'items-start',
                   'w-[26.5rem]',
                   'gap-1',
                   'list-disc',
-                )}
+                ])}
               >
                 {majorIntroductions.map(({ name, description }, index) => (
                   <li key={index} className={cn('text-slate-600', 'text-[0.75rem]/[1.125rem]')}>
-                    <span className="font-semibold">{name}</span>
-                    <span className="font-normal"> - {description}</span>
+                    <span className={cn('font-semibold')}>{name}</span>
+                    <span className={cn('font-normal')}> - {description}</span>
                   </li>
                 ))}
               </ul>

@@ -28,7 +28,7 @@ const LiberalSystemSwitch = ({
 }: LiberalSystemSwitchProps) => (
   <div
     id="generalSubject"
-    className={cn(
+    className={cn([
       'bg-slate-100',
       'subtle-medium',
       'p-[0.3125rem]',
@@ -36,7 +36,7 @@ const LiberalSystemSwitch = ({
       'rounded-md',
       'w-fit',
       className,
-    )}
+    ])}
   >
     <button
       type="button"

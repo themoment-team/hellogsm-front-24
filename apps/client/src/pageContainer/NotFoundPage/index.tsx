@@ -44,13 +44,13 @@ const NotFoundPage = () => {
               {squares.map((square, index) => (
                 <div
                   key={index}
-                  className={cn(
+                  className={cn([
                     'w-[0.9375rem]',
                     'h-[0.9375rem]',
                     'rounded',
                     square.bgColor,
                     square.rotate,
-                  )}
+                  ])}
                 />
               ))}
             </div>
@@ -67,7 +67,7 @@ const NotFoundPage = () => {
               </p>
             </div>
             <button
-              className={cn(
+              className={cn([
                 'flex',
                 'px-5',
                 'py-2',
@@ -80,7 +80,7 @@ const NotFoundPage = () => {
                 'text-slate-500',
                 'text-[1rem]/[1.75rem]',
                 'font-normal',
-              )}
+              ])}
               onClick={() => back()}
             >
               <BackIcon />

@@ -51,7 +51,7 @@ const UploadPhoto = ({ setValue, watch }: UploadPhotoProps) => {
     <>
       <div className={cn('flex', 'items-end', 'gap-[0.5rem]')}>
         <div className={cn('flex', 'w-[8.75rem]', 'flex-col', 'items-start', 'gap-[0.25rem]')}>
-          <CustomFormItem text={'증명사진'} required={true} className="gap-1">
+          <CustomFormItem text={'증명사진'} required={true} className={cn('gap-1')}>
             <input
               className={cn('hidden')}
               type="file"
@@ -62,7 +62,7 @@ const UploadPhoto = ({ setValue, watch }: UploadPhotoProps) => {
             />
 
             <label
-              className={cn(
+              className={cn([
                 'flex',
                 'w-[8.75rem]',
                 'h-[10rem]',
@@ -74,7 +74,7 @@ const UploadPhoto = ({ setValue, watch }: UploadPhotoProps) => {
                 'items-center',
                 'gap-[0.625rem]',
                 'cursor-pointer',
-              )}
+              ])}
               htmlFor="file-input"
             >
               {profileImg ? (
@@ -82,24 +82,24 @@ const UploadPhoto = ({ setValue, watch }: UploadPhotoProps) => {
                 <img
                   src={profileImg}
                   alt="Uploaded"
-                  className={cn(
+                  className={cn([
                     'w-[8.75rem]',
                     'h-[10rem]',
                     'object-cover',
                     'rounded-lg',
                     'h-[10rem]',
                     'w-[8.75rem]',
-                  )}
+                  ])}
                 />
               ) : (
                 <div
-                  className={cn(
+                  className={cn([
                     'flex',
                     'w-[2.8125rem]',
                     'flex-col',
                     'items-center',
                     'gap-[0.25rem]',
-                  )}
+                  ])}
                 >
                   <UploadIcon />
                   <p className={cn('text-gray-400', 'text-[0.75rem]/[1.125rem]', 'font-normal')}>
@@ -116,7 +116,7 @@ const UploadPhoto = ({ setValue, watch }: UploadPhotoProps) => {
         </ul>
       </div>
       <AlertDialog open={showModal}>
-        <AlertDialogContent className="w-[400px]">
+        <AlertDialogContent className={cn('w-[400px]')}>
           <AlertDialogHeader>
             <AlertDialogTitle>이미지는 5MB 이하만 가능합니다.</AlertDialogTitle>
           </AlertDialogHeader>

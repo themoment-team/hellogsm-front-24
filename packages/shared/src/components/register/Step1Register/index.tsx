@@ -73,23 +73,28 @@ const Step1Register = ({
       <div className={cn('flex', 'items-end', 'gap-[3rem]')}>
         <div className={cn('flex', 'w-[29.75rem]', 'flex-col', 'items-start', 'gap-[2rem]')}>
           <UploadPhoto setValue={setValue} watch={watch} />
-          <CustomFormItem text={'이름'} className="gap-1" required={true} fullWidth={true}>
+          <CustomFormItem text={'이름'} className={cn('gap-1')} required={true} fullWidth={true}>
             <Input placeholder={name} disabled={true} />
           </CustomFormItem>
-          <CustomFormItem text={'생년월일'} className="gap-1" required={true} fullWidth={true}>
+          <CustomFormItem
+            text={'생년월일'}
+            className={cn('gap-1')}
+            required={true}
+            fullWidth={true}
+          >
             <div className={cn('flex', 'w-full', 'justify-between')}>
               <Select>
-                <SelectTrigger className="w-[9.3785rem]" disabled={true}>
+                <SelectTrigger className={cn('w-[9.3785rem]')} disabled={true}>
                   <SelectValue placeholder={birthYear} />
                 </SelectTrigger>
               </Select>
               <Select>
-                <SelectTrigger className="w-[9.3785rem]" disabled={true}>
+                <SelectTrigger className={cn('w-[9.3785rem]')} disabled={true}>
                   <SelectValue placeholder={birthMonth} />
                 </SelectTrigger>
               </Select>
               <Select>
-                <SelectTrigger className="w-[9.3785rem]" disabled={true}>
+                <SelectTrigger className={cn('w-[9.3785rem]')} disabled={true}>
                   <SelectValue placeholder={birthDay} />
                 </SelectTrigger>
               </Select>
@@ -107,7 +112,12 @@ const Step1Register = ({
           />
 
           <div className={cn('flex', 'flex-col', 'items-start', 'gap-[0.375rem]', 'w-full')}>
-            <CustomFormItem text={'주소지'} className="gap-1" required={true} fullWidth={true}>
+            <CustomFormItem
+              text={'주소지'}
+              className={cn('gap-1')}
+              required={true}
+              fullWidth={true}
+            >
               <div className={cn('w-full', 'flex', 'gap-2')}>
                 <Input
                   placeholder={'주소를 입력해 주세요'}
@@ -122,7 +132,12 @@ const Step1Register = ({
             <Input placeholder="상세주소" width="full" {...register('detailAddress')} />
           </div>
 
-          <CustomFormItem text={'휴대폰 번호'} className="gap-1" required={true} fullWidth={true}>
+          <CustomFormItem
+            text={'휴대폰 번호'}
+            className={cn('gap-1')}
+            required={true}
+            fullWidth={true}
+          >
             <Input placeholder={phoneNumber} disabled width="full" />
           </CustomFormItem>
         </div>

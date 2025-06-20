@@ -102,7 +102,7 @@ const CalculatePage = () => {
         <div className={cn('sm:flex', 'justify-center', 'rounded-[1.25rem]', 'hidden')}>
           <div className={cn('mb-[3.56rem]', 'bg-white', 'mt-[3.56rem]', 'rounded-[1.25rem]')}>
             <header
-              className={cn(
+              className={cn([
                 'w-266',
                 'flex',
                 'justify-end',
@@ -113,7 +113,7 @@ const CalculatePage = () => {
                 'gap-2',
                 'border-b-[0.0625rem]',
                 'border-gray-100',
-              )}
+              ])}
             >
               <Button onClick={() => setGraduationType(null)} variant="ghost">
                 이전
@@ -150,7 +150,7 @@ const CalculatePage = () => {
               {graduationArray.map(({ text, value, img }) => (
                 <button
                   key={value}
-                  className={cn(
+                  className={cn([
                     'h-28',
                     'pt-5',
                     'pl-5',
@@ -160,16 +160,16 @@ const CalculatePage = () => {
                     'flex',
                     'flex-col',
                     'justify-between',
-                  )}
+                  ])}
                   onClick={() => setGraduationType(value)}
                 >
                   <h1
-                    className={cn(
+                    className={cn([
                       'text-[1rem]/[1.5rem]',
                       'text-gray-800',
                       'font-semibold',
                       'text-start',
-                    )}
+                    ])}
                   >
                     {text}
                   </h1>
@@ -178,7 +178,7 @@ const CalculatePage = () => {
                     width={56}
                     height={56}
                     alt={text}
-                    className={cn(['ml-[5.81rem]'])}
+                    className={cn([['ml-[5.81rem]']])}
                   />
                 </button>
               ))}
