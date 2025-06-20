@@ -30,7 +30,7 @@ const Elements = [
 const TeamSection3 = () => {
   return (
     <div
-      className={cn([
+      className={cn(
         'flex',
         'flex-col',
         'items-center',
@@ -40,10 +40,10 @@ const TeamSection3 = () => {
         'py-[15rem]',
         'sm:gap-[7.5rem]',
         'gap-[5rem]',
-      ])}
+      )}
     >
       <h1
-        className={cn([
+        className={cn(
           'text-[#473B6B]',
           'xs:text-[2.75rem]/[3.85rem]',
           'text-[1.75rem]/[2.75rem]',
@@ -56,7 +56,7 @@ const TeamSection3 = () => {
           'uhd:px-[22.5rem]',
           'text-center',
           'md:text-left',
-        ])}
+        )}
       >
         <span className={cn('text-[#7C58E9]')}>더모먼트</span>는
         <br />
@@ -67,7 +67,7 @@ const TeamSection3 = () => {
           {Elements.map((element, index) => (
             <div
               key={index}
-              className={cn([
+              className={cn(
                 'flex',
                 'justify-left',
                 'w-[29.75rem]',
@@ -78,15 +78,15 @@ const TeamSection3 = () => {
                 'shadow-lg',
                 'px-8',
                 'py-8',
-              ])}
+              )}
             >
               <div
-                className={cn([
+                className={cn(
                   'sm:text-[1.75rem]/[2.8rem]',
                   'text-[1.25rem]/[2.5rem]',
                   'font-bold',
                   'text-left',
-                ])}
+                )}
               >
                 {element.description}
               </div>

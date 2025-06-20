@@ -49,7 +49,7 @@ const Section1 = ({ isServerCurrentActive }: { isServerCurrentActive: boolean })
         <div className={cn([...flexColStyle, 'gap-14'])}>
           <div className={cn([...flexColStyle, 'gap-6'])}>
             <h1
-              className={cn([
+              className={cn(
                 'w-full',
                 'text-center',
                 'font-bold',
@@ -58,7 +58,7 @@ const Section1 = ({ isServerCurrentActive }: { isServerCurrentActive: boolean })
                 'xs:text-[1.75rem]',
                 'sm:text-[2.75rem]',
                 'lg:text-[3.25rem]',
-              ])}
+              )}
             >
               꿈🌟과 끼🤘🏻를 마음껏{' '}
               <span
@@ -87,15 +87,15 @@ const Section1 = ({ isServerCurrentActive }: { isServerCurrentActive: boolean })
               <br />
               광주소프트웨어마이스터고등학교
             </h1>
-            
+
             {isServerCurrentActive && (
               <p
-                className={cn([
+                className={cn(
                   'text-[0.75rem]/[1.25rem]',
                   'font-normal',
                   'text-white',
                   'sm:text-[1.25rem]/[1.75rem]',
-                ])}
+                )}
               >
                 접수기간 : {RECRUITMENT_PERIOD.startDate} ~ {RECRUITMENT_PERIOD.endDate}
               </p>
@@ -104,7 +104,7 @@ const Section1 = ({ isServerCurrentActive }: { isServerCurrentActive: boolean })
 
           <button
             onClick={() => push('/guide')}
-            className={cn([
+            className={cn(
               'text-[#F7F7F7]',
               'text-[1rem]/[1.5rem]',
               'sm:text-2xl',
@@ -117,7 +117,7 @@ const Section1 = ({ isServerCurrentActive }: { isServerCurrentActive: boolean })
               'border',
               'border-white',
               'border-solid',
-            ])}
+            )}
           >
             원서 접수 하러 가기
           </button>
@@ -127,13 +127,13 @@ const Section1 = ({ isServerCurrentActive }: { isServerCurrentActive: boolean })
       <div className={cn(['absolute', 'bottom-14', ...flexColStyle, 'gap-1', 'z-[3]'])}>
         <p
           onClick={scrollToSection2}
-          className={cn([
+          className={cn(
             'text-[1.125rem]/[1.75rem]',
             'font-semibold',
             'text-white',
             'cursor-pointer',
             'text-center',
-          ])}
+          )}
         >
           GSM 더 알아보기 <br /> 문제 발생 시 채널톡으로 문의해주세요
         </p>

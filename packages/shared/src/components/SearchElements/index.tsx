@@ -15,7 +15,7 @@ const SearchElements = ({ schools, onSelectSchool }: SearchElementsProps) => {
 
   return (
     <div
-      className={cn([
+      className={cn(
         'absolute',
         'top-full',
         'left-0',
@@ -32,12 +32,12 @@ const SearchElements = ({ schools, onSelectSchool }: SearchElementsProps) => {
         'shadow-md',
         'overflow-y-auto',
         'max-h-32',
-      ])}
+      )}
     >
       {schools.map((school, index) => (
         <div
           key={index}
-          className={cn([
+          className={cn(
             'flex',
             'w-full',
             'py-2',
@@ -45,7 +45,7 @@ const SearchElements = ({ schools, onSelectSchool }: SearchElementsProps) => {
             'items-center',
             'cursor-pointer',
             'hover:bg-zinc-100',
-          ])}
+          )}
           onClick={() => onSelectSchool(school)}
         >
           <p className={cn('text-zinc-950', 'text-body1', 'font-normal')}>

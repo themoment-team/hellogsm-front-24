@@ -236,26 +236,28 @@ const Step4Register = ({
     <>
       <div className={cn([['w-[66.5rem]', 'flex', 'flex-col', type === 'admin' && 'pb-20']])}>
         <h1
-          className={cn([[
-            'text-[1.25rem]',
-            'font-normal',
-            'font-semibold',
-            'leading-[1.75rem]',
-            'tracking-[-0.00625rem]',
-            'text-gray-900',
-          ]])}
+          className={cn([
+            [
+              'text-[1.25rem]',
+              'font-normal',
+              'font-semibold',
+              'leading-[1.75rem]',
+              'tracking-[-0.00625rem]',
+              'text-gray-900',
+            ],
+          ])}
         >
           {isCalculate ? '모의 성적 계산하기' : '성적을 입력해 주세요.'}
         </h1>
         <p
-          className={cn([
+          className={cn(
             'text-sm',
             'font-normal',
             'leading-5',
             'text-gray-600',
             'mt-[0.125rem]',
             'mb-[2rem]',
-          ])}
+          )}
         >
           {isCalculate
             ? '성적을 정확히 입력해 주세요.'
@@ -277,7 +279,7 @@ const Step4Register = ({
           </form>
         ) : (
           <div
-            className={cn([
+            className={cn(
               'flex',
               'h-lvh',
               'justify-center',
@@ -285,7 +287,7 @@ const Step4Register = ({
               'w-full',
               'h-fit',
               'gap-[2.5rem]',
-            ])}
+            )}
           >
             <FormController className={cn([['mt-[5.625rem]']])} />
             <form
@@ -315,8 +317,8 @@ const Step4Register = ({
                         className={cn('text-[0.875rem]/[1.25rem]', 'text-blue-700', 'font-normal')}
                       >
                         1학년 1학기에 <strong className={cn([strongStyle])}>자유학기제</strong>{' '}
-                        이셨다면, <strong className={cn([strongStyle])}>자유학기제</strong> 선택을 안
-                        해도 됩니다.
+                        이셨다면, <strong className={cn([strongStyle])}>자유학기제</strong> 선택을
+                        안 해도 됩니다.
                       </span>
                     )}
                   </div>
@@ -345,7 +347,7 @@ const Step4Register = ({
                   <button
                     type="button"
                     onClick={() => handleAddSubjectClick()}
-                    className={cn([
+                    className={cn(
                       'text-sm',
                       'font-semibold',
                       'leading-6',
@@ -358,7 +360,7 @@ const Step4Register = ({
                       'rounded-md',
                       'border-[0.0625rem]',
                       'border-slate-200',
-                    ])}
+                    )}
                   >
                     + 과목 추가하기
                   </button>
@@ -377,7 +379,7 @@ const Step4Register = ({
                   <div className={cn('w-full', 'flex', 'justify-between')}>
                     비교과 내용
                     <div
-                      className={cn([
+                      className={cn(
                         'flex',
                         'items-center',
                         'justify-center',
@@ -385,7 +387,7 @@ const Step4Register = ({
                         'text-red-500',
                         'text-[0.75rem]/[1.25rem]',
                         'font-semibold',
-                      ])}
+                      )}
                     >
                       <p>*</p>
                       <p>미인정 결석, 지각, 조퇴, 결과 횟수만 입력</p>

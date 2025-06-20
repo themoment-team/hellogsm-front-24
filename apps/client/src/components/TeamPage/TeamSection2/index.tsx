@@ -6,7 +6,7 @@ const TeamSection2 = () => {
   return (
     <div
       id="section2"
-      className={cn([
+      className={cn(
         'flex',
         'flex-col-reverse',
         'md:flex-row',
@@ -22,11 +22,11 @@ const TeamSection2 = () => {
         'uhd:px-[22.5rem]',
         'gap-[5rem]',
         'md:gap-0',
-      ])}
+      )}
     >
       <div className={cn('flex', 'w-fit', 'flex-col', 'gap-6')}>
         <h1
-          className={cn([
+          className={cn(
             'text-[#473B6B]',
             'sm:text-[4.25rem]/[5.525rem]',
             'xs:text-[2.75rem]/[3.85rem]',
@@ -34,21 +34,21 @@ const TeamSection2 = () => {
             'font-bold',
             'text-center',
             'md:text-left',
-          ])}
+          )}
         >
           <span className={cn('text-[#7C58E9]')}>더모먼트</span>는
           <br />
           어떤 팀 인가요?
         </h1>
         <span
-          className={cn([
+          className={cn(
             'text-[#5D5B64]',
             'sm:text-[1.25rem]/[2rem]',
             'text-[1rem]/[1.75rem]',
             'font-normal',
             'text-center',
             'md:text-left',
-          ])}
+          )}
         >
           더모먼트는 광주소프트웨어마이스터고등학교의 전공 동아리입니다. <br />
           약 30명의 재학생, 졸업생들이 모여서 활동하고, <br

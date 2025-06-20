@@ -62,7 +62,7 @@ const UploadPhoto = ({ setValue, watch }: UploadPhotoProps) => {
             />
 
             <label
-              className={cn([
+              className={cn(
                 'flex',
                 'w-[8.75rem]',
                 'h-[10rem]',
@@ -74,7 +74,7 @@ const UploadPhoto = ({ setValue, watch }: UploadPhotoProps) => {
                 'items-center',
                 'gap-[0.625rem]',
                 'cursor-pointer',
-              ])}
+              )}
               htmlFor="file-input"
             >
               {profileImg ? (
@@ -82,24 +82,24 @@ const UploadPhoto = ({ setValue, watch }: UploadPhotoProps) => {
                 <img
                   src={profileImg}
                   alt="Uploaded"
-                  className={cn([
+                  className={cn(
                     'w-[8.75rem]',
                     'h-[10rem]',
                     'object-cover',
                     'rounded-lg',
                     'h-[10rem]',
                     'w-[8.75rem]',
-                  ])}
+                  )}
                 />
               ) : (
                 <div
-                  className={cn([
+                  className={cn(
                     'flex',
                     'w-[2.8125rem]',
                     'flex-col',
                     'items-center',
                     'gap-[0.25rem]',
-                  ])}
+                  )}
                 >
                   <UploadIcon />
                   <p className={cn('text-gray-400', 'text-[0.75rem]/[1.125rem]', 'font-normal')}>

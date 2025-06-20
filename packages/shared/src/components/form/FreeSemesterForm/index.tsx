@@ -167,7 +167,7 @@ const FreeSemesterForm = ({
             ) : (
               <input
                 type="text"
-                className={cn([
+                className={cn(
                   'w-[5.25rem]',
                   'h-[2rem]',
                   'text-center',
@@ -179,7 +179,7 @@ const FreeSemesterForm = ({
                   'text-[0.875rem]',
                   'font-normal',
                   'leading-[1.25rem]',
-                ])}
+                )}
                 {...register(`newSubjects.${idx - defaultSubjectLength}`)}
               />
             )}
@@ -192,7 +192,7 @@ const FreeSemesterForm = ({
                 <div key={field} className={cn([...itemStyle, 'w-[7.3375rem]'])}>
                   {freeSemester === value ? (
                     <div
-                      className={cn([
+                      className={cn(
                         'px-[0.25rem]',
                         'py-[0.125rem]',
                         'text-gray-500',
@@ -201,7 +201,7 @@ const FreeSemesterForm = ({
                         'leading-5',
                         'rounded-[0.25rem]',
                         'bg-gray-100',
-                      ])}
+                      )}
                     >
                       자유학기제
                     </div>
@@ -212,7 +212,7 @@ const FreeSemesterForm = ({
                         defaultValue={Number.isInteger(score) ? String(score) : ''}
                       >
                         <SelectTrigger
-                          className={cn([
+                          className={cn(
                             'w-[5.47917rem]',
                             'h-[2rem]',
                             'text-sm',
@@ -223,7 +223,7 @@ const FreeSemesterForm = ({
                             'text-slate-900',
                             'px-[0.5rem]',
                             'border-slate-300',
-                          ])}
+                          )}
                         >
                           <SelectValue placeholder="성적 선택" />
                         </SelectTrigger>

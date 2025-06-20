@@ -267,7 +267,7 @@ const Step2Register = ({ register, setValue, watch, reset }: Step2RegisterProps)
               </CustomFormItem>
             </div>
             <div
-              className={cn([
+              className={cn(
                 'flex',
                 'flex-col',
                 'w-full',
@@ -276,17 +276,17 @@ const Step2Register = ({ register, setValue, watch, reset }: Step2RegisterProps)
                 'items-center',
                 'bg-slate-100',
                 'rounded-md',
-              ])}
+              )}
             >
               <ul
-                className={cn([
+                className={cn(
                   'flex',
                   'flex-col',
                   'items-start',
                   'w-[26.5rem]',
                   'gap-1',
                   'list-disc',
-                ])}
+                )}
               >
                 {majorIntroductions.map(({ name, description }, index) => (
                   <li key={index} className={cn('text-slate-600', 'text-[0.75rem]/[1.125rem]')}>

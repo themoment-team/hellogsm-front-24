@@ -102,7 +102,7 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
   return (
     <div className={cn('flex', 'w-full', 'min-h-screen', 'justify-center', 'bg-white', 'pb-10')}>
       <div
-        className={cn([
+        className={cn(
           'flex',
           'flex-col',
           '33.5rem',
@@ -111,11 +111,11 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
           'items-center',
           'mx-4',
           'pt-10',
-        ])}
+        )}
       >
         <div className={cn('flex', 'w-fit', 'flex-col', 'items-center', 'gap-5')}>
           <div
-            className={cn([
+            className={cn(
               'flex',
               'w-[5.5rem]',
               'h-[5.5rem]',
@@ -123,7 +123,7 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
               'justify-center',
               'rounded-3xl',
               'bg-slate-100',
-            ])}
+            )}
           >
             <ProfileIcon />
           </div>
@@ -138,7 +138,7 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
             ) : (
               <div className={cn('flex', 'items-center', 'gap-2')}>
                 <div
-                  className={cn([
+                  className={cn(
                     'flex',
                     'px-3',
                     'py-1',
@@ -146,14 +146,14 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
                     'justify-center',
                     'rounded-[3.5rem]',
                     'bg-slate-100',
-                  ])}
+                  )}
                 >
                   <p className={cn('text-slate-500', 'text-[0.875rem]/[1.25rem]', 'font-normal')}>
                     접수번호 {submitCode}
                   </p>
                 </div>
                 <div
-                  className={cn([
+                  className={cn(
                     'flex',
                     'px-3',
                     'py-1',
@@ -161,7 +161,7 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
                     'justify-center',
                     'rounded-[3.5rem]',
                     'bg-slate-100',
-                  ])}
+                  )}
                 >
                   <p className={cn('text-slate-500', 'text-[0.875rem]/[1.25rem]', 'font-normal')}>
                     {screeningLabel}
@@ -210,7 +210,7 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
                 {departments.map((dept, index) => (
                   <div
                     key={index}
-                    className={cn([
+                    className={cn(
                       'flex',
                       'flex-col',
                       'px-[0.75rem]',
@@ -223,7 +223,7 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
                       'border-solid',
                       'border-slate-300',
                       'w-full',
-                    ])}
+                    )}
                   >
                     <p className={cn('text-slate-600', 'text-[1rem]/[1.75rem]', 'font-normal')}>
                       {index + 1}지망 : {dept}
@@ -235,7 +235,7 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
                 <div className={cn('flex', 'flex-col', 'w-full')}>
                   <div className={cn('flex', 'flex-col', 'gap-2')}>
                     <div
-                      className={cn([
+                      className={cn(
                         'flex',
                         'p-4',
                         'items-center',
@@ -244,7 +244,7 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
                         'border',
                         'border-solid',
                         'border-slate-300',
-                      ])}
+                      )}
                     >
                       <div className={cn('flex', 'items-center', 'gap-3')}>
                         <ParticleIcon />
@@ -284,7 +284,7 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
                   {relatedDocuments.map((doc, index) => (
                     <div
                       key={index}
-                      className={cn([
+                      className={cn(
                         'flex',
                         'p-4',
                         'items-center',
@@ -293,7 +293,7 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
                         'border',
                         'border-solid',
                         'border-slate-300',
-                      ])}
+                      )}
                     >
                       <div className={cn('flex', 'items-center', 'gap-3')}>
                         {doc.icon}
@@ -314,7 +314,7 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
                 </div>
               </div>
               <div
-                className={cn([
+                className={cn(
                   'flex',
                   'px-3',
                   'py-4',
@@ -322,7 +322,7 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
                   'gap-2',
                   'rounded-[0.375rem]',
                   'bg-slate-100',
-                ])}
+                )}
               >
                 <AlertIcon />
                 <span className={cn('text-slate-500', 'text-[0.875rem]/[1.5rem]', 'font-normal')}>

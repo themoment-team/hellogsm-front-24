@@ -67,7 +67,7 @@ const NotFoundPage = () => {
               </p>
             </div>
             <button
-              className={cn([
+              className={cn(
                 'flex',
                 'px-5',
                 'py-2',
@@ -80,7 +80,7 @@ const NotFoundPage = () => {
                 'text-slate-500',
                 'text-[1rem]/[1.75rem]',
                 'font-normal',
-              ])}
+              )}
               onClick={() => back()}
             >
               <BackIcon />

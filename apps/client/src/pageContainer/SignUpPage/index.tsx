@@ -215,7 +215,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
   return (
     <>
       <main
-        className={cn([
+        className={cn(
           'flex',
           'flex-col',
           'items-center',
@@ -223,7 +223,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
           'pb-40',
           'pt-[7.5rem]',
           'bg-white',
-        ])}
+        )}
       >
         <div className={cn('flex', 'flex-col', 'gap-3', 'items-center')}>
           <h1 className={cn('text-2xl', 'font-semibold')}>회원가입</h1>
@@ -353,13 +353,13 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
                   </div>
                   {btnClick === true && (
                     <p
-                      className={cn([
+                      className={cn(
                         'text-blue-500',
                         'text-[0.875rem]/[1.25rem]',
                         'font-medium',
                         'relative',
                         'left-[15rem]',
-                      ])}
+                      )}
                     >
                       {formatTime(timeLeft)}
                     </p>
@@ -415,7 +415,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
               </div>
               {showPrivacyPolicy && (
                 <div
-                  className={cn([
+                  className={cn(
                     'mt-4',
                     'mb-4',
                     'pt-4',
@@ -427,7 +427,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
                     'font-normal',
                     'overflow-scroll',
                     'w-[23.75rem]',
-                  ])}
+                  )}
                 >
                   ㅡ 서류제출 시 [서식2] 개인정보수집활용동의서를 작성하여 제출하여 주시기 바랍니다.
                 </div>

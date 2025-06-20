@@ -86,7 +86,15 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
       `}</style>
       {/* 입학원서 */}
       <Button
-        className={cn('fixed', 'bottom-10', 'right-24', 'z-50', 'items-center', 'gap-2', 'print:hidden')}
+        className={cn(
+          'fixed',
+          'bottom-10',
+          'right-24',
+          'z-50',
+          'items-center',
+          'gap-2',
+          'print:hidden',
+        )}
         onClick={handlePrint}
       >
         <PrintIcon />
@@ -94,16 +102,16 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
       </Button>
 
       <div
-        className={cn([
+        className={cn(
           'flex h-fit flex-col items-center justify-center overflow-hidden bg-white p-2 text-[1vh]',
-        ])}
+        )}
       >
         <div className={cn('relative', 'z-[2]', 'w-[63vh]')}>
           <div
             id="sample"
-            className={cn([
+            className={cn(
               'absolute z-[-1] rotate-[-30deg] select-none text-center text-[40vh] text-gray-200',
-            ])}
+            )}
           >
             견본
           </div>
@@ -119,9 +127,9 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
               <table>
                 <tr>
                   <th
-                    className={cn([
+                    className={cn(
                       'w-20 border border-b-0 border-black bg-[#e9e9e9] p-[0.2vh] align-middle font-medium',
-                    ])}
+                    )}
                   >
                     접수번호
                   </th>
@@ -274,12 +282,22 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
         {oneseo.privacyDetail.graduationType !== 'GED' && (
           <div className={cn('relative', 'z-[2]', 'w-[66vh]', 'overflow-hidden')}>
             <div className={cn('relative', 'bg-white', 'p-4', 'text-black')}>
-              <div className={cn('relative', 'z-[2]', 'border', 'border-gray-300', 'bg-white', 'p-6', 'shadow-md')}>
+              <div
+                className={cn(
+                  'relative',
+                  'z-[2]',
+                  'border',
+                  'border-gray-300',
+                  'bg-white',
+                  'p-6',
+                  'shadow-md',
+                )}
+              >
                 <div
                   id="sample"
-                  className={cn([
+                  className={cn(
                     'absolute top-[-60px] z-[-2] rotate-[-30deg] transform select-none text-center text-[40vh] text-gray-200',
-                  ])}
+                  )}
                 >
                   견본
                 </div>
@@ -293,13 +311,21 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                     <table>
                       <tr>
                         <th
-                          className={cn([
+                          className={cn(
                             'w-20 border border-b-0 border-black bg-[#e9e9e9] p-[0.2vh] align-middle font-medium',
-                          ])}
+                          )}
                         >
                           접수번호
                         </th>
-                        <td className={cn('w-40', 'border', 'border-b-0', 'border-black', 'text-center')}>
+                        <td
+                          className={cn(
+                            'w-40',
+                            'border',
+                            'border-b-0',
+                            'border-black',
+                            'text-center',
+                          )}
+                        >
                           {oneseo.submitCode}
                         </td>
                       </tr>
@@ -309,7 +335,9 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
 
                 <div className={cn('flex', 'h-fit', 'border', 'border-black')}>
                   <div className={cn('flex', 'w-full', 'flex-col', 'border-r', 'border-black')}>
-                    <div className={cn('relative', 'z-10', 'border-b', 'border-black', 'bg-backslash')}>
+                    <div
+                      className={cn('relative', 'z-10', 'border-b', 'border-black', 'bg-backslash')}
+                    >
                       <div className={cn('h-[2.2vh]', 'text-right')}>학년</div>
                       <div className={cn('h-[2.2vh]', 'text-left')}>과목</div>
                     </div>
@@ -319,26 +347,41 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                     ].map((subject) => (
                       <div
                         key={subject}
-                        className={cn('flex', 'items-center', 'justify-center', 'border-b', 'border-black')}
+                        className={cn(
+                          'flex',
+                          'items-center',
+                          'justify-center',
+                          'border-b',
+                          'border-black',
+                        )}
                       >
                         {subject}
                       </div>
                     ))}
                     <div className={cn('flex', 'items-center', 'justify-center')}>환산점</div>
                   </div>
-                  <div className={cn('flex', 'w-full', 'flex-col', 'border-b-0', 'border-r', 'border-black')}>
+                  <div
+                    className={cn(
+                      'flex',
+                      'w-full',
+                      'flex-col',
+                      'border-b-0',
+                      'border-r',
+                      'border-black',
+                    )}
+                  >
                     <div className={cn('flex', 'flex-col')}>
                       <div
-                        className={cn([
+                        className={cn(
                           'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        ])}
+                        )}
                       >
                         1학년 1학기
                       </div>
                       <div
-                        className={cn([
+                        className={cn(
                           'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        ])}
+                        )}
                       >
                         성취도/평어
                       </div>
@@ -348,16 +391,16 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                   <div className={cn('flex', 'w-full', 'flex-col', 'border-r', 'border-black')}>
                     <div className={cn('flex', 'flex-col')}>
                       <div
-                        className={cn([
+                        className={cn(
                           'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        ])}
+                        )}
                       >
                         1학년 2학기
                       </div>
                       <div
-                        className={cn([
+                        className={cn(
                           'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        ])}
+                        )}
                       >
                         성취도/평어
                       </div>
@@ -369,13 +412,25 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                         {oneseo.middleSchoolAchievement.achievement1_2!.map((score, i) => (
                           <div
                             key={i}
-                            className={cn('flex', 'items-center', 'justify-center', 'border-b', 'border-black')}
+                            className={cn(
+                              'flex',
+                              'items-center',
+                              'justify-center',
+                              'border-b',
+                              'border-black',
+                            )}
                           >
                             {scoreToAlphabet[score]}
                           </div>
                         ))}
                         <div
-                          className={cn('flex', 'items-center', 'justify-center', 'border-b-0', 'border-black')}
+                          className={cn(
+                            'flex',
+                            'items-center',
+                            'justify-center',
+                            'border-b-0',
+                            'border-black',
+                          )}
                         >
                           {oneseo.calculatedScore.generalSubjectsScoreDetail.score1_2}
                         </div>
@@ -385,16 +440,16 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                   <div className={cn('flex', 'w-full', 'flex-col', 'border-r', 'border-black')}>
                     <div className={cn('flex', 'flex-col')}>
                       <div
-                        className={cn([
+                        className={cn(
                           'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        ])}
+                        )}
                       >
                         2학년 1학기
                       </div>
                       <div
-                        className={cn([
+                        className={cn(
                           'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        ])}
+                        )}
                       >
                         성취도/평어
                       </div>
@@ -406,13 +461,25 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                         {oneseo.middleSchoolAchievement.achievement2_1!.map((score, i) => (
                           <div
                             key={i}
-                            className={cn('flex', 'items-center', 'justify-center', 'border-b', 'border-black')}
+                            className={cn(
+                              'flex',
+                              'items-center',
+                              'justify-center',
+                              'border-b',
+                              'border-black',
+                            )}
                           >
                             {scoreToAlphabet[score]}
                           </div>
                         ))}
                         <div
-                          className={cn('flex', 'items-center', 'justify-center', 'border-b-0', 'border-black')}
+                          className={cn(
+                            'flex',
+                            'items-center',
+                            'justify-center',
+                            'border-b-0',
+                            'border-black',
+                          )}
                         >
                           {oneseo.calculatedScore.generalSubjectsScoreDetail.score2_1}
                         </div>
@@ -422,16 +489,16 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                   <div className={cn('flex', 'w-full', 'flex-col', 'border-r', 'border-black')}>
                     <div className={cn('flex', 'flex-col')}>
                       <div
-                        className={cn([
+                        className={cn(
                           'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        ])}
+                        )}
                       >
                         2학년 2학기
                       </div>
                       <div
-                        className={cn([
+                        className={cn(
                           'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        ])}
+                        )}
                       >
                         성취도/평어
                       </div>
@@ -443,13 +510,25 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                         {oneseo.middleSchoolAchievement.achievement2_2!.map((score, i) => (
                           <div
                             key={i}
-                            className={cn('flex', 'items-center', 'justify-center', 'border-b', 'border-black')}
+                            className={cn(
+                              'flex',
+                              'items-center',
+                              'justify-center',
+                              'border-b',
+                              'border-black',
+                            )}
                           >
                             {scoreToAlphabet[score]}
                           </div>
                         ))}
                         <div
-                          className={cn('flex', 'items-center', 'justify-center', 'border-b-0', 'border-black')}
+                          className={cn(
+                            'flex',
+                            'items-center',
+                            'justify-center',
+                            'border-b-0',
+                            'border-black',
+                          )}
                         >
                           {oneseo.calculatedScore.generalSubjectsScoreDetail.score2_2}
                         </div>
@@ -459,16 +538,16 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                   <div className={cn('flex', 'w-full', 'flex-col', 'border-r', 'border-black')}>
                     <div className={cn('flex', 'flex-col')}>
                       <div
-                        className={cn([
+                        className={cn(
                           'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        ])}
+                        )}
                       >
                         3학년 1학기
                       </div>
                       <div
-                        className={cn([
+                        className={cn(
                           'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        ])}
+                        )}
                       >
                         성취도/평어
                       </div>
@@ -480,13 +559,25 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                         {oneseo.middleSchoolAchievement.achievement3_1!.map((score, i) => (
                           <div
                             key={i}
-                            className={cn('flex', 'items-center', 'justify-center', 'border-b', 'border-black')}
+                            className={cn(
+                              'flex',
+                              'items-center',
+                              'justify-center',
+                              'border-b',
+                              'border-black',
+                            )}
                           >
                             {scoreToAlphabet[score]}
                           </div>
                         ))}
                         <div
-                          className={cn('flex', 'items-center', 'justify-center', 'border-b-0', 'border-black')}
+                          className={cn(
+                            'flex',
+                            'items-center',
+                            'justify-center',
+                            'border-b-0',
+                            'border-black',
+                          )}
                         >
                           {oneseo.calculatedScore.generalSubjectsScoreDetail.score3_1}
                         </div>
@@ -496,16 +587,16 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                   <div className={cn('flex', 'w-full', 'flex-col', 'border-black')}>
                     <div className={cn('flex', 'flex-col')}>
                       <div
-                        className={cn([
+                        className={cn(
                           'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        ])}
+                        )}
                       >
                         3학년 2학기
                       </div>
                       <div
-                        className={cn([
+                        className={cn(
                           'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        ])}
+                        )}
                       >
                         성취도/평어
                       </div>
@@ -518,13 +609,25 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                         {oneseo.middleSchoolAchievement.achievement3_1!.map((score, i) => (
                           <div
                             key={i}
-                            className={cn('flex', 'items-center', 'justify-center', 'border-b', 'border-black')}
+                            className={cn(
+                              'flex',
+                              'items-center',
+                              'justify-center',
+                              'border-b',
+                              'border-black',
+                            )}
                           >
                             {scoreToAlphabet[score]}
                           </div>
                         ))}
                         <div
-                          className={cn('flex', 'items-center', 'justify-center', 'border-b-0', 'border-black')}
+                          className={cn(
+                            'flex',
+                            'items-center',
+                            'justify-center',
+                            'border-b-0',
+                            'border-black',
+                          )}
                         >
                           {oneseo.calculatedScore.generalSubjectsScoreDetail.score3_1}
                         </div>
@@ -535,14 +638,22 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                 <h2 className={cn('mt-[1.5vh]', 'text-[1.2vh]', 'leading-[2vh]')}>체육예술교과</h2>
                 <div className={cn('flex', 'h-fit', 'border', 'border-black')}>
                   <div className={cn('flex', 'w-full', 'flex-col', 'border-r', 'border-black')}>
-                    <div className={cn('relative', 'z-10', 'border-b', 'border-black', 'bg-backslash')}>
+                    <div
+                      className={cn('relative', 'z-10', 'border-b', 'border-black', 'bg-backslash')}
+                    >
                       <div className={cn('h-[2.2vh]', 'text-right')}>학년</div>
                       <div className={cn('h-[2.2vh]', 'text-left')}>과목</div>
                     </div>
                     {[...ARTS_PHYSICAL_SUBJECTS].map((subject) => (
                       <div
                         key={subject}
-                        className={cn('flex', 'items-center', 'justify-center', 'border-b', 'border-black')}
+                        className={cn(
+                          'flex',
+                          'items-center',
+                          'justify-center',
+                          'border-b',
+                          'border-black',
+                        )}
                       >
                         {subject}
                       </div>
@@ -552,16 +663,16 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                   <div className={cn('flex', 'w-full', 'flex-col', 'border-b-0', 'border-black')}>
                     <div className={cn('flex', 'flex-col')}>
                       <div
-                        className={cn([
+                        className={cn(
                           'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        ])}
+                        )}
                       >
                         1학년 1학기
                       </div>
                       <div
-                        className={cn([
+                        className={cn(
                           'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        ])}
+                        )}
                       >
                         성취도/평어
                       </div>
@@ -570,21 +681,28 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                   </div>
                   {semesterArray.map((semester, idx) => (
                     <div
-                      className={cn('flex', 'w-full', 'flex-col', 'border-b-0', 'border-l', 'border-black')}
+                      className={cn(
+                        'flex',
+                        'w-full',
+                        'flex-col',
+                        'border-b-0',
+                        'border-l',
+                        'border-black',
+                      )}
                       key={semester}
                     >
                       <div className={cn('flex', 'flex-col')}>
                         <div
-                          className={cn([
+                          className={cn(
                             'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                          ])}
+                          )}
                         >
                           {semester}
                         </div>
                         <div
-                          className={cn([
+                          className={cn(
                             'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                          ])}
+                          )}
                         >
                           성취도/평어
                         </div>
@@ -592,17 +710,35 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                       {artPhysicalScores[idx] ? (
                         <>
                           <div
-                            className={cn('flex', 'items-center', 'justify-center', 'border-b', 'border-black')}
+                            className={cn(
+                              'flex',
+                              'items-center',
+                              'justify-center',
+                              'border-b',
+                              'border-black',
+                            )}
                           >
                             {artPhysicalScores[idx]![0]}
                           </div>
                           <div
-                            className={cn('flex', 'items-center', 'justify-center', 'border-b', 'border-black')}
+                            className={cn(
+                              'flex',
+                              'items-center',
+                              'justify-center',
+                              'border-b',
+                              'border-black',
+                            )}
                           >
                             {artPhysicalScores[idx]![1]}
                           </div>
                           <div
-                            className={cn('flex', 'items-center', 'justify-center', 'border-b', 'border-black')}
+                            className={cn(
+                              'flex',
+                              'items-center',
+                              'justify-center',
+                              'border-b',
+                              'border-black',
+                            )}
                           >
                             {artPhysicalScores[idx]![2]}
                           </div>
@@ -621,19 +757,37 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                   <thead>
                     <tr>
                       <th
-                        className={cn('border', 'border-black', 'bg-gray-200', 'p-[0.3vh]', 'font-bold')}
+                        className={cn(
+                          'border',
+                          'border-black',
+                          'bg-gray-200',
+                          'p-[0.3vh]',
+                          'font-bold',
+                        )}
                         rowSpan={2}
                       >
                         학년
                       </th>
                       <th
-                        className={cn('border', 'border-black', 'bg-gray-200', 'p-[0.3vh]', 'font-bold')}
+                        className={cn(
+                          'border',
+                          'border-black',
+                          'bg-gray-200',
+                          'p-[0.3vh]',
+                          'font-bold',
+                        )}
                         colSpan={6}
                       >
                         미인정 출결 현황
                       </th>
                       <th
-                        className={cn('border', 'border-black', 'bg-gray-200', 'p-[0.3vh]', 'font-bold')}
+                        className={cn(
+                          'border',
+                          'border-black',
+                          'bg-gray-200',
+                          'p-[0.3vh]',
+                          'font-bold',
+                        )}
                         colSpan={2}
                       >
                         봉사활동
@@ -711,12 +865,25 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                   </tbody>
                 </table>
                 <table
-                  className={cn('mx-auto', 'mt-[1.5vh]', 'w-[80%]', 'border-collapse', 'border', 'text-[1vh]')}
+                  className={cn(
+                    'mx-auto',
+                    'mt-[1.5vh]',
+                    'w-[80%]',
+                    'border-collapse',
+                    'border',
+                    'text-[1vh]',
+                  )}
                 >
                   <thead>
                     <tr>
                       <th
-                        className={cn('border', 'border-black', 'bg-gray-200', 'p-[0.3vh]', 'font-bold')}
+                        className={cn(
+                          'border',
+                          'border-black',
+                          'bg-gray-200',
+                          'p-[0.3vh]',
+                          'font-bold',
+                        )}
                         colSpan={4}
                       >
                         입력자 확인
@@ -725,38 +892,91 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                   </thead>
                   <tbody>
                     <tr>
-                      <th className={cn('border', 'border-black', 'bg-gray-200', 'p-[0.3vh]', 'font-bold')}>
+                      <th
+                        className={cn(
+                          'border',
+                          'border-black',
+                          'bg-gray-200',
+                          'p-[0.3vh]',
+                          'font-bold',
+                        )}
+                      >
                         담임교사
                       </th>
-                      <td className={cn('border', 'border-black', 'p-[0.3vh]', 'text-right')}>(인)</td>
-                      <th className={cn('border', 'border-black', 'bg-gray-200', 'p-[0.3vh]', 'font-bold')}>
+                      <td className={cn('border', 'border-black', 'p-[0.3vh]', 'text-right')}>
+                        (인)
+                      </td>
+                      <th
+                        className={cn(
+                          'border',
+                          'border-black',
+                          'bg-gray-200',
+                          'p-[0.3vh]',
+                          'font-bold',
+                        )}
+                      >
                         지원자
                       </th>
-                      <td className={cn('border', 'border-black', 'p-[0.3vh]', 'text-right')}>(인)</td>
+                      <td className={cn('border', 'border-black', 'p-[0.3vh]', 'text-right')}>
+                        (인)
+                      </td>
                     </tr>
                   </tbody>
                 </table>
                 <table
-                  className={cn('mx-auto', 'mt-[1.5vh]', 'w-[50%]', 'border-collapse', 'border', 'text-[1vh]')}
+                  className={cn(
+                    'mx-auto',
+                    'mt-[1.5vh]',
+                    'w-[50%]',
+                    'border-collapse',
+                    'border',
+                    'text-[1vh]',
+                  )}
                 >
                   <thead>
                     <tr>
                       <th
-                        className={cn('border', 'border-black', 'bg-gray-200', 'p-[0.3vh]', 'font-bold')}
+                        className={cn(
+                          'border',
+                          'border-black',
+                          'bg-gray-200',
+                          'p-[0.3vh]',
+                          'font-bold',
+                        )}
                         rowSpan={2}
                       >
                         접수자 확인
                       </th>
-                      <th className={cn('border', 'border-black', 'bg-gray-200', 'p-[0.3vh]', 'font-bold')}>
+                      <th
+                        className={cn(
+                          'border',
+                          'border-black',
+                          'bg-gray-200',
+                          'p-[0.3vh]',
+                          'font-bold',
+                        )}
+                      >
                         1차
                       </th>
-                      <td className={cn('border', 'border-black', 'p-[0.3vh]', 'text-right')}>(인)</td>
+                      <td className={cn('border', 'border-black', 'p-[0.3vh]', 'text-right')}>
+                        (인)
+                      </td>
                     </tr>
                     <tr>
-                      <th className={cn('border', 'border-black', 'bg-gray-200', 'p-[0.3vh]', 'font-bold')}>
+                      <th
+                        className={cn(
+                          'border',
+                          'border-black',
+                          'bg-gray-200',
+                          'p-[0.3vh]',
+                          'font-bold',
+                        )}
+                      >
                         2차
                       </th>
-                      <td className={cn('border', 'border-black', 'p-[0.3vh]', 'text-right')}>(인)</td>
+                      <td className={cn('border', 'border-black', 'p-[0.3vh]', 'text-right')}>
+                        (인)
+                      </td>
                     </tr>
                   </thead>
                 </table>
@@ -767,7 +987,9 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                     <p className={cn('mr-6')}>월</p>
                     <p>일</p>
                   </div>
-                  <div className={cn('mt-[1vh]', 'flex', 'justify-between', 'text-[1vh]', 'text-sm')}>
+                  <div
+                    className={cn('mt-[1vh]', 'flex', 'justify-between', 'text-[1vh]', 'text-sm')}
+                  >
                     <span>광주소프트웨어마이스터고등학교장 귀하</span>
                     <span>중학교장[직인]</span>
                   </div>

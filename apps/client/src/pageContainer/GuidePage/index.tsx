@@ -237,7 +237,7 @@ const GuidePage = ({ initialData, isOneseoWrite }: GuideProps) => {
   return (
     <div className={cn('w-full', 'flex', 'flex-col', 'justify-center', 'items-center')}>
       <div
-        className={cn([
+        className={cn(
           'relative',
           'w-full',
           'flex',
@@ -248,7 +248,7 @@ const GuidePage = ({ initialData, isOneseoWrite }: GuideProps) => {
           'text-white',
           'text-[2.125rem]/[3.125rem]',
           'font-semibold',
-        ])}
+        )}
       >
         <div className={cn('absolute', 'top-0', 'left-[15%]')}>
           <BlueStarIcon />
@@ -259,7 +259,7 @@ const GuidePage = ({ initialData, isOneseoWrite }: GuideProps) => {
         원서 접수 및 내용 안내
       </div>
       <div
-        className={cn([
+        className={cn(
           'md:w-[66.5625rem]',
           'w-full',
           'px-[2rem]',
@@ -271,10 +271,10 @@ const GuidePage = ({ initialData, isOneseoWrite }: GuideProps) => {
           'gap-20',
           'pt-[6.25rem]',
           'pb-[7.5rem]',
-        ])}
+        )}
       >
         <div
-          className={cn([
+          className={cn(
             'w-full',
             'flex',
             'items-center',
@@ -282,7 +282,7 @@ const GuidePage = ({ initialData, isOneseoWrite }: GuideProps) => {
             'gap-4',
             'md:gap-5',
             'justify-center',
-          ])}
+          )}
         >
           {Elements.map((element, index) => (
             <Steps

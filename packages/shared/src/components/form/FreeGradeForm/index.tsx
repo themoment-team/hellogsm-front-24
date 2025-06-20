@@ -106,7 +106,7 @@ const FreeGradeForm = ({
             ) : (
               <input
                 type="text"
-                className={cn([
+                className={cn(
                   'w-[5.25rem]',
                   'h-[2rem]',
                   'text-center',
@@ -118,7 +118,7 @@ const FreeGradeForm = ({
                   'text-[0.875rem]',
                   'font-normal',
                   'leading-[1.25rem]',
-                ])}
+                )}
                 {...register(`newSubjects.${idx - defaultSubjectLength}`)}
               />
             )}
@@ -134,7 +134,7 @@ const FreeGradeForm = ({
                     defaultValue={Number.isInteger(score) ? String(score) : ''}
                   >
                     <SelectTrigger
-                      className={cn([
+                      className={cn(
                         'w-[5.47917rem]',
                         'h-[2rem]',
                         'text-sm',
@@ -145,7 +145,7 @@ const FreeGradeForm = ({
                         'text-slate-900',
                         'px-[0.5rem]',
                         'border-slate-300',
-                      ])}
+                      )}
                     >
                       <SelectValue placeholder="성적 선택" />
                     </SelectTrigger>

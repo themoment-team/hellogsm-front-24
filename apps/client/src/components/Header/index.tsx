@@ -142,7 +142,7 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
   return (
     <>
       <header
-        className={cn([
+        className={cn(
           'h-[4.625rem]',
           'px-[1.75rem]',
           'md:px-[3.75rem]',
@@ -162,13 +162,13 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
           'border-b-[0.0625rem]',
           'border-gray-100',
           'gap-8',
-        ])}
+        )}
       >
         <Link href="/">
           <I.HelloGSMLogo />
         </Link>
         <nav
-          className={cn([
+          className={cn(
             'gap-[2.75rem]',
             'hidden',
             'md:flex',
@@ -176,7 +176,7 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
             'text-lg',
             'font-[600]',
             'text-gray-500',
-          ])}
+          )}
         >
           {pcNavLinks.map(({ label, href }) => (
             <ActiveLink
@@ -212,7 +212,7 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
 
                   {isDropdown && (
                     <div
-                      className={cn([
+                      className={cn(
                         'absolute',
                         'top-full',
                         'left-[-17.5%]',
@@ -224,7 +224,7 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
                         'shadow-sm',
                         'rounded-md',
                         'bg-white',
-                      ])}
+                      )}
                     >
                       <Link
                         href="/mypage"
@@ -297,7 +297,7 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsMenu(false)}
-                  className={cn([
+                  className={cn(
                     'flex',
                     'items-center',
                     'gap-4',
@@ -307,7 +307,7 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
                     'font-bold',
                     'hover:text-slate-500',
                     'duration-150',
-                  ])}
+                  )}
                   onMouseEnter={() => setHoveredLink(link.href)}
                   onMouseLeave={() => setHoveredLink(null)}
                 >
@@ -322,7 +322,7 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
           </div>
           {isServerHealthy && (
             <button
-              className={cn([
+              className={cn(
                 'flex',
                 'items-center',
                 'gap-4',
@@ -330,7 +330,7 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
                 'text-[1.5rem]',
                 'leading-normal',
                 'font-bold',
-              ])}
+              )}
               onClick={() => {
                 handleLogout();
                 setIsMenu(false);

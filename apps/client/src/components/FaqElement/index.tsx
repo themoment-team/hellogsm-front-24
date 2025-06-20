@@ -47,7 +47,7 @@ const FaqElement = ({
 
   return (
     <button
-      className={cn([
+      className={cn(
         'flex',
         'w-full',
         'px-8',
@@ -56,30 +56,30 @@ const FaqElement = ({
         'bg-slate-50',
         'rounded-2xl',
         'flex-col',
-      ])}
+      )}
       onClick={onToggle}
     >
       <div className={cn('flex', 'w-full', 'items-center', 'justify-between')}>
         <div className={cn('flex', 'items-center')}>
           <p
-            className={cn([
+            className={cn(
               'text-sky-500',
               'text-[1rem]/[1.25rem]',
               'sm:text-[1.25rem]/[1.8125rem]',
               'font-bold',
               'mr-1',
-            ])}
+            )}
           >
             Q.
           </p>
           <p
-            className={cn([
+            className={cn(
               'text-slate-700',
               'text-[0.75rem]/[1rem]',
               'xs:text-[0.75rem]/[1.25rem]',
               'sm:text-[1.125rem]/[1.6875rem]',
               'font-semibold',
-            ])}
+            )}
           >
             {getHighlightedText(title, keyword)}
           </p>
@@ -120,13 +120,13 @@ const FaqElement = ({
           ])}
         />
         <p
-          className={cn([
+          className={cn(
             'text-slate-700',
             'text-[0.875rem]/[1.25rem]',
             'font-normal',
             'text-left',
             'pt-4',
-          ])}
+          )}
         >
           {content}
         </p>

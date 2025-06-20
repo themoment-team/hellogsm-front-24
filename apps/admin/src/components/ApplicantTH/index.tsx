@@ -30,7 +30,7 @@ const ApplicantTH = () => {
                   <QuestionMark />
                   {isDocOver && (
                     <div
-                      className={cn([
+                      className={cn(
                         'px-3',
                         'py-4',
                         'rounded-lg',
@@ -40,7 +40,7 @@ const ApplicantTH = () => {
                         'fixed',
                         'z-[5]',
                         'text-white',
-                      ])}
+                      )}
                     >
                       지원자가 실물 서류를 제출했다면 클릭하여 상태를 변경해주세요!
                     </div>
@@ -66,7 +66,7 @@ const ApplicantTH = () => {
                   <QuestionMark />
                   {isAgreeOver && (
                     <div
-                      className={cn([
+                      className={cn(
                         'px-3',
                         'py-4',
                         'rounded-lg',
@@ -76,7 +76,7 @@ const ApplicantTH = () => {
                         'fixed',
                         'z-[5]',
                         'text-white',
-                      ])}
+                      )}
                     >
                       지원자가 입학 동의서 서류를 제출했다면 클릭하여 상태를 변경해주세요!
                     </div>

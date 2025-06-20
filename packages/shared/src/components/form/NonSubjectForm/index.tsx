@@ -123,7 +123,7 @@ const NonSubjectForm = ({ register, isFreeGrade, isGraduate }: NonSubjectFormPro
                     { valueAsNumber: true },
                   )}
                   type="number"
-                  className={cn([
+                  className={cn(
                     'w-full',
                     'h-[2rem]',
                     'text-center',
@@ -136,7 +136,7 @@ const NonSubjectForm = ({ register, isFreeGrade, isGraduate }: NonSubjectFormPro
                     'font-normal',
                     'leading-[1.25rem]',
                     'appearance-none',
-                  ])}
+                  )}
                   placeholder={index === volunteerTimeIndex ? '시간 입력' : '입력'}
                 />
               </div>

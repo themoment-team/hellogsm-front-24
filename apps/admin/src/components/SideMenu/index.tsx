@@ -12,7 +12,7 @@ import { cn } from 'shared/lib/utils';
 
 const Item = ({ children }: PropsWithChildren) => (
   <div
-    className={cn([
+    className={cn(
       'flex',
       'gap-2',
       'py-2',
@@ -21,7 +21,7 @@ const Item = ({ children }: PropsWithChildren) => (
       'text-sm',
       'font-semibold',
       'leading-5',
-    ])}
+    )}
   >
     {children}
   </div>

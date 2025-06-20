@@ -37,9 +37,9 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
           }`}
         >
           <table
-            className={cn([
+            className={cn(
               'h-[350px] w-full border-collapse text-center text-[0.75rem] font-light leading-[1.25rem]',
-            ])}
+            )}
           >
             <tbody>
               <tr>
