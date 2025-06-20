@@ -1,4 +1,3 @@
-import { cn } from 'shared/lib/utils';
 import {
   GetMyOneseoType,
   GraduationEnum,
@@ -6,6 +5,8 @@ import {
   MajorEnum,
   achievementGradeValues,
 } from 'types';
+
+import { cn } from 'shared/lib/utils';
 
 interface OneseoStatusType {
   oneseo: GetMyOneseoType;
