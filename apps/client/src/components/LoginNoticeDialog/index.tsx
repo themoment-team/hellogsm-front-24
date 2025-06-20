@@ -14,6 +14,7 @@ import {
 import { LoginDialog } from 'client/components';
 
 import { useGetMyAuthInfo } from 'api/hooks';
+import { cn } from 'shared/lib/utils';
 
 interface LoginNoticeDialogProps {
   userName: string | undefined;
