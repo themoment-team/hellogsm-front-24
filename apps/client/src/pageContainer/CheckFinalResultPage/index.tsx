@@ -16,6 +16,7 @@ import {
   Button,
   checkFinalTestResultSchema,
   CustomFormItem,
+  formattedBirthDate,
   FormControl,
   FormItem,
   getKoreanDate,
@@ -34,7 +35,6 @@ import { PassResultDialog } from 'client/components';
 import { useGetFinalTestResult } from 'client/hooks/api';
 
 import { cn } from 'shared/lib/utils';
-import formattedBirthDate from 'shared/utils/formatBirth';
 
 const prevUrl = '/check-result';
 
