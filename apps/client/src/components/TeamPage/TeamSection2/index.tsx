@@ -74,12 +74,12 @@ const TeamSection2 = () => {
         )}
       >
         <div
-          className={cn([
+          className={cn(
             'absolute',
             'inset-0',
             'rounded-[3rem]',
-            'shadow-[10px_-10px_20px_#C8B6FF, -10px_10px_20px_#B6C2FF]', // 그림자 추가
-          ])}
+            'shadow-[10px_-10px_20px_#C8B6FF, -10px_10px_20px_#B6C2FF]',
+          )}
         />
         <TheMomentIcon />
       </div>

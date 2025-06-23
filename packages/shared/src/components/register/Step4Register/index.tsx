@@ -234,7 +234,7 @@ const Step4Register = ({
 
   return (
     <>
-      <div className={cn([['w-[66.5rem]', 'flex', 'flex-col', type === 'admin' && 'pb-20']])}>
+      <div className={cn(['w-[66.5rem]', 'flex', 'flex-col', type === 'admin' && 'pb-20'])}>
         <h1
           className={cn([
             [
@@ -289,7 +289,7 @@ const Step4Register = ({
               'gap-[2.5rem]',
             )}
           >
-            <FormController className={cn([['mt-[5.625rem]']])} />
+            <FormController className={cn('mt-[5.625rem]')} />
             <form
               onSubmit={(e) => e.preventDefault()}
               className={cn('flex', 'flex-col', 'items-center')}

@@ -238,7 +238,11 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
                 ) : (
                   <td
                     rowSpan={2}
-                    className='bg-[url(&apos;data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="100%" x2="100%" y2="0" stroke="gray" /></svg>&apos;)] border border-black'
+                    className={cn(
+                      'bg-[url(&apos;data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="100%" x2="100%" y2="0" stroke="gray" /></svg>&apos;)]',
+                      'border',
+                      'border-black',
+                    )}
                   />
                 )}
               </tr>

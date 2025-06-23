@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import { cn } from 'shared/lib/utils';
-import { Toggle } from 'shared/components';
 import { CheckIcon } from 'shared/assets';
+import { Toggle } from 'shared/components';
 import { Button, Badge } from 'shared/components';
+import { cn } from 'shared/lib/utils';
 
 const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
   ({ className, ...props }, ref) => (

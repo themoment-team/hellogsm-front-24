@@ -62,7 +62,7 @@ const Section1 = ({ isServerCurrentActive }: { isServerCurrentActive: boolean })
             >
               꿈🌟과 끼🤘🏻를 마음껏{' '}
               <span
-                className={cn([
+                className={cn(
                   'relative',
                   'before:absolute',
                   'before:text-lime-400',
@@ -79,7 +79,7 @@ const Section1 = ({ isServerCurrentActive }: { isServerCurrentActive: boolean })
                   'sm:before:left-2',
                   'lg:before:left-[0.675rem]',
                   'lg:before:tracking-[1.15rem]',
-                ])}
+                )}
               >
                 UP
               </span>{' '}

@@ -380,7 +380,7 @@ const StepWrapper = ({
   return (
     <>
       <div
-        className={cn([[
+        className={cn(
           'w-full',
           'h-full',
           'bg-slate-50',
@@ -389,17 +389,17 @@ const StepWrapper = ({
           'hidden',
           'justify-center',
           'pb-[5rem]',
-        ]])}
+        )}
       >
         <div
-          className={cn([[
+          className={cn(
             'w-[66.5rem]',
             'flex',
             'flex-col',
             'bg-white',
             'rounded-[1.25rem]',
             'rounded-b-lg-[1.125rem]',
-          ]])}
+          )}
         >
           <StepBar
             step={step}
@@ -408,7 +408,7 @@ const StepWrapper = ({
             handleCheckScoreButtonClick={handleCheckScoreButtonClick}
           />
           <div
-            className={cn([[
+            className={cn(
               'flex',
               'justify-center',
               'w-full',
@@ -417,7 +417,7 @@ const StepWrapper = ({
               'py-[1.5rem]',
               'bg-white',
               'rounded-b-lg-[1.125rem]',
-            ]])}
+            )}
           >
             {step === '1' && (
               <Step1Register

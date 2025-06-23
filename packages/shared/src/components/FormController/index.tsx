@@ -29,12 +29,12 @@ const FormController = ({ className }: FormControllerProps) => {
   };
 
   return (
-    <div className={cn([['flex', 'flex-col', className]])}>
-      <div className={cn([['flex', 'flex-col', 'gap-[0.125rem]', 'sticky', 'top-[7rem]', 'h-fit']])}>
+    <div className={cn(['flex', 'flex-col', className])}>
+      <div className={cn(['flex', 'flex-col', 'gap-[0.125rem]', 'sticky', 'top-[7rem]', 'h-fit'])}>
         {formArray.map((formName) => (
           <button
             onClick={() => handleButtonClick(formName)}
-            className={cn([[
+            className={cn([
               'flex',
               'w-30',
               'text-sm',
@@ -47,16 +47,18 @@ const FormController = ({ className }: FormControllerProps) => {
               isSelected === formName
                 ? ['font-medium', 'bg-blue-50', 'text-blue-600']
                 : ['font-normal', 'bg-transparent', 'text-slate-400'],
-            ]])}
+            ])}
             key={formName}
           >
             <div
-              className={cn([[
-                'w-2',
-                'h-2',
-                'rounded-full',
-                isSelected === formName ? 'bg-blue-500' : 'bg-slate-200',
-              ]])}
+              className={cn([
+                [
+                  'w-2',
+                  'h-2',
+                  'rounded-full',
+                  isSelected === formName ? 'bg-blue-500' : 'bg-slate-200',
+                ],
+              ])}
             ></div>
             {formName}
           </button>
