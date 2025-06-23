@@ -30,7 +30,7 @@ const FormController = ({ className }: FormControllerProps) => {
 
   return (
     <div className={cn(['flex', 'flex-col', className])}>
-      <div className={cn(['flex', 'flex-col', 'gap-[0.125rem]', 'sticky', 'top-[7rem]', 'h-fit'])}>
+      <div className={cn('flex', 'flex-col', 'gap-[0.125rem]', 'sticky', 'top-[7rem]', 'h-fit')}>
         {formArray.map((formName) => (
           <button
             onClick={() => handleButtonClick(formName)}

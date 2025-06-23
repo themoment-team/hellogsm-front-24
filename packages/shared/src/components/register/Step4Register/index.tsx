@@ -236,16 +236,14 @@ const Step4Register = ({
     <>
       <div className={cn(['w-[66.5rem]', 'flex', 'flex-col', type === 'admin' && 'pb-20'])}>
         <h1
-          className={cn([
-            [
-              'text-[1.25rem]',
-              'font-normal',
-              'font-semibold',
-              'leading-[1.75rem]',
-              'tracking-[-0.00625rem]',
-              'text-gray-900',
-            ],
-          ])}
+          className={cn(
+            'text-[1.25rem]',
+            'font-normal',
+            'font-semibold',
+            'leading-[1.75rem]',
+            'tracking-[-0.00625rem]',
+            'text-gray-900',
+          )}
         >
           {isCalculate ? '모의 성적 계산하기' : '성적을 입력해 주세요.'}
         </h1>
