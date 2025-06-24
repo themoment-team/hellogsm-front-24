@@ -11,44 +11,58 @@ interface ArtPhysicalFormProps {
   setValue: UseFormSetValue<Step4FormType>;
   watch: UseFormWatch<Step4FormType>;
   isFreeGrade: boolean;
+  isFreeSemester: boolean;
   graduationType: GraduationTypeValueEnum.CANDIDATE | GraduationTypeValueEnum.GRADUATE;
   freeSemester: FreeSemesterValueEnum | null;
 }
 
 const artPhysicalGraduationArray = [
-  '1학년 2학기',
   '2학년 1학기',
   '2학년 2학기',
   '3학년 1학기',
   '3학년 2학기',
 ] as const;
 
-const artPhysicalCandidateArray = [
+const artPhysicalCandidateFreeSemesterArray = [
+  '1학년 1학기',
   '1학년 2학기',
   '2학년 1학기',
   '2학년 2학기',
   '3학년 1학기',
 ] as const;
 
+const artPhysicalCandidateFreeYearArray = ['2학년 1학기', '2학년 2학기', '3학년 1학기'] as const;
+
 const artPhysicalGraduationIndexArray = [
-  { subject: '체육', registerIndexList: [0, 3, 6, 9] },
+  { subject: '체육', registerIndexList: [0, 3, 6, 9] }, // 2-1 ~ 3-2(4학기)
   { subject: '음악', registerIndexList: [1, 4, 7, 10] },
   { subject: '미술', registerIndexList: [2, 5, 8, 11] },
 ] as const;
 
-const artPhysicalCandidateIndexArray = [
-  { subject: '체육', registerIndexList: [0, 3, 6] },
-  { subject: '음악', registerIndexList: [1, 4, 7] },
-  { subject: '미술', registerIndexList: [2, 5, 8] },
+const artPhysicalCandidateFreeSemesterIndexArray = [
+  { subject: '체육', registerIndexList: [0, 3, 6, 9, 12] }, // 1-1 ~ 3-1 (5학기)
+  { subject: '음악', registerIndexList: [1, 4, 7, 10, 13] },
+  { subject: '미술', registerIndexList: [2, 5, 8, 11, 14] },
+] as const;
+
+const artPhysicalCandidateFreeYearIndexArray = [
+  { subject: '체육', registerIndexList: [3, 6, 9] }, // 2-1 ~ 3-1 (3학기)
+  { subject: '음악', registerIndexList: [4, 7, 10] },
+  { subject: '미술', registerIndexList: [5, 8, 11] },
 ] as const;
 
 const SemesterIdToTitle = {
+  '1-1': '1학년 1학기',
   '1-2': '1학년 2학기',
   '2-1': '2학년 1학기',
   '2-2': '2학년 2학기',
   '3-1': '3학년 1학기',
   '3-2': '3학년 2학기',
 };
+
+const TitleToSemesterId = Object.fromEntries(
+  Object.entries(SemesterIdToTitle).map(([k, v]) => [v, k]),
+);
 
 const itemStyle = [
   'h-full',
@@ -74,29 +88,23 @@ const rowStyle = [
 const ArtPhysicalForm = ({
   setValue,
   isFreeGrade,
+  isFreeSemester,
   graduationType,
   freeSemester,
   watch,
 }: ArtPhysicalFormProps) => {
-  const artPhysicalArray = (() => {
-    if (graduationType === GraduationTypeValueEnum.CANDIDATE) {
-      if (freeSemester)
-        return artPhysicalCandidateArray.filter(
-          (semester) => semester !== SemesterIdToTitle[freeSemester],
-        );
-      return artPhysicalCandidateArray.slice(1);
-    } else {
-      if (freeSemester)
-        return artPhysicalGraduationArray.filter(
-          (semester) => semester !== SemesterIdToTitle[freeSemester],
-        );
-      return artPhysicalGraduationArray.slice(1);
-    }
-  })();
+  const artPhysicalArray =
+    graduationType === GraduationTypeValueEnum.CANDIDATE
+      ? isFreeSemester
+        ? artPhysicalCandidateFreeSemesterArray
+        : artPhysicalCandidateFreeYearArray
+      : artPhysicalGraduationArray;
 
   const artPhysicalIndexArray =
-    graduationType === 'CANDIDATE'
-      ? artPhysicalCandidateIndexArray
+    graduationType === GraduationTypeValueEnum.CANDIDATE
+      ? isFreeSemester
+        ? artPhysicalCandidateFreeSemesterIndexArray
+        : artPhysicalCandidateFreeYearIndexArray
       : artPhysicalGraduationIndexArray;
 
   return (
@@ -136,7 +144,11 @@ const ArtPhysicalForm = ({
             <h1 className={cn(...itemStyle, 'w-full')}>{subject}</h1>
           </div>
           <div className={cn('flex')}>
-            {registerIndexList.map((registerIndex) => {
+            {registerIndexList.map((registerIndex, idx) => {
+              const semesterTitle = artPhysicalArray[idx];
+              const semesterId = TitleToSemesterId[semesterTitle];
+              const isFreeSemesterCell = isFreeSemester && freeSemester === semesterId;
+
               const score = watch(`artsPhysicalAchievement.${registerIndex}`);
 
               return (
@@ -144,36 +156,53 @@ const ArtPhysicalForm = ({
                   key={registerIndex}
                   className={cn(...itemStyle, isFreeGrade ? 'w-[7.47917rem]' : 'w-[10.3125rem]')}
                 >
-                  <Select
-                    onValueChange={(value) =>
-                      setValue(`artsPhysicalAchievement.${registerIndex}`, Number(value))
-                    }
-                    defaultValue={score ? String(score) : ''}
-                  >
-                    <SelectTrigger
+                  {isFreeSemesterCell ? (
+                    <div
                       className={cn(
-                        'h-[2rem]',
+                        'px-[0.25rem]',
+                        'py-[0.125rem]',
+                        'text-gray-500',
                         'text-sm',
-                        'font-normal',
+                        'font-medium',
                         'leading-5',
-                        'bg-white',
-                        'data-[placeholder]:text-slate-500',
-                        'text-slate-900',
-                        'px-[0.5rem]',
-                        'border-slate-300',
-                        isFreeGrade ? 'w-[5.47917rem]' : 'w-[8.3125rem]',
+                        'rounded-[0.25rem]',
+                        'bg-gray-100',
                       )}
                     >
-                      <SelectValue placeholder="성적 선택" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {ART_PHYSICAL_SCORE_VALUES.map(({ name, value }) => (
-                        <SelectItem value={String(value)} key={value}>
-                          {name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                      자유학기제
+                    </div>
+                  ) : (
+                    <Select
+                      onValueChange={(value) =>
+                        setValue(`artsPhysicalAchievement.${registerIndex}`, Number(value))
+                      }
+                      defaultValue={score ? String(score) : ''}
+                    >
+                      <SelectTrigger
+                        className={cn(
+                          'h-[2rem]',
+                          'text-sm',
+                          'font-normal',
+                          'leading-5',
+                          'bg-white',
+                          'data-[placeholder]:text-slate-500',
+                          'text-slate-900',
+                          'px-[0.5rem]',
+                          'border-slate-300',
+                          isFreeGrade ? 'w-[5.47917rem]' : 'w-[8.3125rem]',
+                        )}
+                      >
+                        <SelectValue placeholder="성적 선택" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {ART_PHYSICAL_SCORE_VALUES.map(({ name, value }) => (
+                          <SelectItem value={String(value)} key={value}>
+                            {name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
                 </div>
               );
             })}
