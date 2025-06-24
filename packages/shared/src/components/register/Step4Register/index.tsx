@@ -65,6 +65,11 @@ const freeGradeGraduateArray = [
 
 const freeSemesterCandidateArray = [
   {
+    title: '1학년 1학기',
+    field: 'achievement1_1',
+    value: FreeSemesterValueEnum['1-1'],
+  },
+  {
     title: '1학년 2학기',
     field: 'achievement1_2',
     value: FreeSemesterValueEnum['1-2'],
@@ -87,11 +92,6 @@ const freeSemesterCandidateArray = [
 ] as const;
 
 const freeSemesterGraduateArray = [
-  {
-    title: '1학년 2학기',
-    field: 'achievement1_2',
-    value: FreeSemesterValueEnum['1-2'],
-  },
   {
     title: '2학년 1학기',
     field: 'achievement2_1',
@@ -157,6 +157,7 @@ const Step4Register = ({
   const handleDeleteSubjectClick = (idx: number) => {
     const filteredSubjects = subjectArray.filter((_, i) => i !== idx);
     unregister(`newSubjects.${idx - defaultSubjectLength}`);
+    unregister(`achievement1_1.${idx}`, undefined);
     unregister(`achievement1_2.${idx}`, undefined);
     unregister(`achievement2_1.${idx}`, undefined);
     unregister(`achievement2_2.${idx}`, undefined);
@@ -165,6 +166,7 @@ const Step4Register = ({
     setSubjectArray(filteredSubjects);
 
     const newSubjects = watch('newSubjects');
+    const score1_1 = watch('achievement1_1');
     const score1_2 = watch('achievement1_2');
     const score2_1 = watch('achievement2_1');
     const score2_2 = watch('achievement2_2');
@@ -175,6 +177,7 @@ const Step4Register = ({
       'newSubjects',
       newSubjects && newSubjects.filter((_, i) => idx - defaultSubjectLength !== i),
     ); // newSubjects 배열에서 인덱스가 N인 값 제거
+    setValue('achievement1_1', score1_1 && score1_1.filter((_, i) => i !== idx));
     setValue('achievement1_2', score1_2 && score1_2.filter((_, i) => i !== idx));
     setValue('achievement2_1', score2_1 && score2_1.filter((_, i) => i !== idx));
     setValue('achievement2_2', score2_2 && score2_2.filter((_, i) => i !== idx));
@@ -210,6 +213,7 @@ const Step4Register = ({
   useEffect(() => {
     if (isGED) {
       setValue('liberalSystem', null);
+      setValue('achievement1_1', null);
       setValue('achievement1_2', null);
       setValue('achievement2_1', null);
       setValue('achievement2_2', null);
@@ -370,6 +374,7 @@ const Step4Register = ({
                     setValue={setValue}
                     watch={watch}
                     isFreeGrade={isFreeGrade}
+                    isFreeSemester={isFreeSemester}
                     freeSemester={watch('freeSemester')}
                   />
                 </div>
@@ -402,44 +407,6 @@ const Step4Register = ({
           </div>
         )}
       </div>
-      {/* <ScoreCalculateDialog
-        isDialog={isDialog}
-        setIsDialog={setIsDialog}
-        scoreCalculateDialogData={scoreCalculateDialogData}
-        type="mock"
-      />
-      <AlertDialog open={showModal}>
-        <AlertDialogContent className="w-[400px]">
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              {type === 'client' ? (
-                <>
-                  원서가 제출되었습니다!
-                  <br />
-                  문제가 있다면
-                  <br />
-                  062-949-6800(교무실)로 연락주세요.
-                </>
-              ) : (
-                <>원서가 수정되었습니다!</>
-              )}
-            </AlertDialogTitle>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogAction>
-              <Link
-                href={type === 'client' ? '/mypage' : '/'}
-                onClick={() => {
-                  setShowModal(false);
-                  if (type === 'client') refetch();
-                }}
-              >
-                확인
-              </Link>
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog> */}
     </>
   );
 };
