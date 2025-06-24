@@ -1,6 +1,6 @@
 import nextJest from 'next/jest';
 
-const createJestConfig = nextJest({ dir: './' });
+const createJestConfig = nextJest({ dir: './apps/admin' });
 
 const customJestConfig = {
   testEnvironment: 'jsdom',
