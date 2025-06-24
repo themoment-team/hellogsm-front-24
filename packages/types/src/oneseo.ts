@@ -16,7 +16,7 @@ export type TestResultType = "ALL" | "FIRST_PASS" | "FINAL_PASS" | "FALL";
 
 export type GraduationType = "CANDIDATE" | "GRADUATE" | "GED";
 
-export type FreeSemesterType = "1-2" | "2-1" | "2-2" | "3-1" | "3-2" | null;
+export type FreeSemesterType = "1-1" | "1-2" | "2-1" | "2-2" | "3-1" | "3-2" | null;
 
 export type LiberalSystemType = "자유학년제" | "자유학기제";
 
@@ -49,6 +49,7 @@ export enum SexEnum {
 }
 
 export type AchievementGradeType =
+  | "achievement1_1"
   | "achievement1_2"
   | "achievement2_1"
   | "achievement2_2"
@@ -56,6 +57,7 @@ export type AchievementGradeType =
   | "achievement3_2";
 
 export const achievementGradeValues = [
+  "achievement1_1",
   "achievement1_2",
   "achievement2_1",
   "achievement2_2",
@@ -70,6 +72,7 @@ export enum MajorEnum {
 }
 
 export interface MiddleSchoolAchievementType {
+  achievement1_1: number[];
   achievement1_2: number[];
   achievement2_1: number[];
   achievement2_2: number[];
@@ -139,6 +142,7 @@ export interface PostOneseoType {
 }
 
 export interface GeneralSubjectsScoreDetailType {
+  score1_1: number | null;
   score1_2: number | null;
   score2_1: number | null;
   score2_2: number | null;
@@ -147,6 +151,7 @@ export interface GeneralSubjectsScoreDetailType {
 }
 
 export interface artsPhysicalSubjectsScoreDetailType {
+  score1_1: number;
   score1_2: number;
   score2_1: number;
   score2_2: number;

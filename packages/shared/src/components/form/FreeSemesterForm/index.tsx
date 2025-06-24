@@ -60,6 +60,7 @@ const freeSemesterButtonStyle = [
 ];
 
 const freeSemesterToAchievementField: Record<FreeSemesterValueEnum, SemesterIdType> = {
+  [FreeSemesterValueEnum['1-1']]: 'achievement1_1',
   [FreeSemesterValueEnum['1-2']]: 'achievement1_2',
   [FreeSemesterValueEnum['2-1']]: 'achievement2_1',
   [FreeSemesterValueEnum['2-2']]: 'achievement2_2',

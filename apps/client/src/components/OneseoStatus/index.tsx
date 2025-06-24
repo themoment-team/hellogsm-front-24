@@ -94,8 +94,15 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
           <td className={tdStyle + 'w-[2.6875rem] bg-slash'}></td>
           {achievementGradeValues.map((gradeKey) => {
             const achievementScoreConvertor: {
-              [key: string]: 'score1_2' | 'score2_1' | 'score2_2' | 'score3_1' | 'score3_2';
+              [key: string]:
+                | 'score1_1'
+                | 'score1_2'
+                | 'score2_1'
+                | 'score2_2'
+                | 'score3_1'
+                | 'score3_2';
             } = {
+              achievement1_1: 'score1_1',
               achievement1_2: 'score1_2',
               achievement2_1: 'score2_1',
               achievement2_2: 'score2_2',

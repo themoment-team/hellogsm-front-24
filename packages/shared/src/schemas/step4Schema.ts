@@ -19,6 +19,7 @@ const nonSubjectSchema = z.nullable(z.array(z.number().refine((value) => !isNaN(
 
 export const step4Schema = z.object({
   liberalSystem: z.nullable(z.enum(getValuesByEnum(LiberalSystemValueEnum))),
+  achievement1_1: achievementSchema(GENERAL_SUBJECTS.length),
   achievement1_2: achievementSchema(GENERAL_SUBJECTS.length),
   achievement2_1: achievementSchema(GENERAL_SUBJECTS.length),
   achievement2_2: achievementSchema(GENERAL_SUBJECTS.length),

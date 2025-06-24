@@ -207,6 +207,7 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
     } = step3UseForm.watch();
     const {
       liberalSystem,
+      achievement1_1,
       achievement1_2,
       achievement2_1,
       achievement2_2,
@@ -257,6 +258,7 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
           }
         : {
             liberalSystem: liberalSystem,
+            achievement1_1: achievement1_1!,
             achievement1_2: achievement1_2!,
             achievement2_1: achievement2_1!,
             achievement2_2: achievement2_2!,
@@ -299,6 +301,7 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
   const handleCheckScoreButtonClick = () => {
     const {
       liberalSystem,
+      achievement1_1,
       achievement1_2,
       achievement2_1,
       achievement2_2,
@@ -319,6 +322,7 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
         }
       : {
           liberalSystem: liberalSystem,
+          achievement1_1: achievement1_1!,
           achievement1_2: achievement1_2!,
           achievement2_1: achievement2_1!,
           achievement2_2: achievement2_2!,
