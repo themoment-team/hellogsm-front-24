@@ -9,7 +9,7 @@ describe('getIsServerHealthy', () => {
     jest.clearAllMocks();
   });
 
-  test('서버가 정상일 때 true를 반환해야 한다.', async () => {
+  test('서버가 정상일 때 true가 반환되어야 한다.', async () => {
     (getDate as jest.Mock).mockResolvedValue({
       'oneseoSubmissionStart': '2025-06-24T14:36:19.430Z',
       'oneseoSubmissionEnd': '2025-06-24T14:36:19.430Z',
@@ -23,7 +23,7 @@ describe('getIsServerHealthy', () => {
     expect(result).toBe(true);
   });
 
-  test('서버가 undefined를 반환할 때 false를 반환해야 한다.', async () => {
+  test('서버가 undefined를 반환할 때 false가 반환되어야 한다.', async () => {
     (getDate as jest.Mock).mockResolvedValue(undefined);
     const result = await getIsServerHealthy();
 

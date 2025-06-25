@@ -21,7 +21,7 @@ describe('scrollToElement', () => {
     jest.clearAllMocks();
   });
 
-  test('요소가 존재할 때 스크롤', () => {
+  test('요소가 존재하면 해당 요소로 스무스하게 스크롤되어야 한다.', () => {
     const mockElement = { scrollIntoView: mockScrollIntoView };
     (document.querySelector as jest.Mock).mockReturnValue(mockElement);
 
@@ -34,7 +34,7 @@ describe('scrollToElement', () => {
     });
   });
 
-  test('요소가 없을 때 에러 없이 처리', () => {
+  test('요소가 존재하지 않으면 에러 없이 아무 동작도 하지 않아야 한다.', () => {
     (document.querySelector as jest.Mock).mockReturnValue(null);
 
     expect(() => scrollToElement('#not-exist')).not.toThrow();
@@ -47,7 +47,7 @@ describe('scrollToLocation', () => {
     jest.clearAllMocks();
   });
 
-  test('smooth 스크롤', () => {
+  test('behavior가 smooth일 때 해당 위치로 스무스하게 스크롤되어야 한다.', () => {
     scrollToLocation(100, 'smooth');
 
     expect(mockScrollTo).toHaveBeenCalledWith({
@@ -56,7 +56,7 @@ describe('scrollToLocation', () => {
     });
   });
 
-  test('auto 스크롤', () => {
+  test('behavior가 auto일 때 해당 위치로 즉시 스크롤되어야 한다.', () => {
     scrollToLocation(500, 'auto');
 
     expect(mockScrollTo).toHaveBeenCalledWith({

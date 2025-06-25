@@ -1,15 +1,15 @@
 import { minutesToMs } from 'shared/utils';
 
 describe('minutesToMs', () => {
-  test('1분 -> 60000ms', () => {
+  test('1을 입력하면 60000이 반환되어야 한다.', () => {
     expect(minutesToMs(1)).toBe(60000);
   });
 
-  test('5분 -> 300000ms', () => {
+  test('5를 입력하면 300000이 반환되어야 한다.', () => {
     expect(minutesToMs(5)).toBe(300000);
   });
 
-  test('0분 -> 0ms', () => {
+  test('0을 입력하면 0이 반환되어야 한다.', () => {
     expect(minutesToMs(0)).toBe(0);
   });
 });

@@ -1,8 +1,7 @@
-
 import { getKoreanDate } from 'shared/utils';
 
 describe('getKoreanDate', () => {
-  test('한국 시간을 반환한다.', () => {
+  test('getKoreanDate를 호출하면 Asia/Seoul 타임존의 현재 날짜와 시간이 반환되어야 한다.', () => {
     const koreanDate = getKoreanDate();
 
     const now = new Date().toLocaleString('en-GB', { timeZone: 'Asia/Seoul' });

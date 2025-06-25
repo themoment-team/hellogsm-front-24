@@ -7,7 +7,7 @@ enum Status {
 }
 
 describe('getValuesByEnum', () => {
-  test('enum의 값을 배열로 반환한다.', () => {
+  test('enum 객체를 전달하면 해당 enum의 값들만 배열로 반환되어야 한다.', () => {
     const result = getValuesByEnum(Status);
     expect(result).toEqual(['A', 'B', 'C']);
   });
