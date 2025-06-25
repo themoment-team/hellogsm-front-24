@@ -46,9 +46,9 @@ const artPhysicalCandidateFreeSemesterIndexArray = [
 ] as const;
 
 const artPhysicalCandidateFreeYearIndexArray = [
-  { subject: '체육', registerIndexList: [3, 6, 9] }, // 2-1 ~ 3-1 (3학기)
-  { subject: '음악', registerIndexList: [4, 7, 10] },
-  { subject: '미술', registerIndexList: [5, 8, 11] },
+  { subject: '체육', registerIndexList: [6, 9, 12] }, // 2-1 ~ 3-1 (3학기)
+  { subject: '음악', registerIndexList: [7, 10, 13] },
+  { subject: '미술', registerIndexList: [8, 11, 14] },
 ] as const;
 
 const SemesterIdToTitle = {
