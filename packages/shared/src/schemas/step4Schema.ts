@@ -26,7 +26,7 @@ export const step4Schema = z.object({
   achievement3_1: achievementSchema(GENERAL_SUBJECTS.length),
   achievement3_2: achievementSchema(GENERAL_SUBJECTS.length),
   newSubjects: z.optional(z.array(z.string().min(1))),
-  artsPhysicalAchievement: achievementSchema(ARTS_PHYSICAL_SUBJECTS.length * 3),
+  artsPhysicalAchievement: achievementSchema(ARTS_PHYSICAL_SUBJECTS.length * 5),
   absentDays: nonSubjectSchema,
   attendanceDays: nonSubjectSchema,
   volunteerTime: nonSubjectSchema,
