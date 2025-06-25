@@ -50,7 +50,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ) => {
     return (
       <div className={cn('flex', 'flex-col', 'gap-1', inputVariants({ width }))}>
-        <div className={cn(['relative flex items-center', className])}>
+        <div className={cn(['relative', 'flex', 'items-center', className])}>
           <input
             type={type}
             className={cn(

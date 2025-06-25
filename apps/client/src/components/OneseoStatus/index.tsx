@@ -34,7 +34,16 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
         <tr>
           <td
             className={cn(
-              'h-[26vh] w-[3%] border border-l-0 border-t-0 border-black bg-[#e9e9e9] p-[0.2vh] align-middle font-medium',
+              'h-[26vh]',
+              'w-[3%]',
+              'border',
+              'border-l-0',
+              'border-t-0',
+              'border-black',
+              'bg-[#e9e9e9]',
+              'p-[0.2vh]',
+              'align-middle',
+              'font-medium',
             )}
             rowSpan={9}
           >
@@ -44,7 +53,13 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
         <tr>
           <td
             className={cn(
-              'border border-t-0 border-black bg-[#e9e9e9] p-[0.2vh] align-middle font-medium',
+              'border',
+              'border-t-0',
+              'border-black',
+              'bg-[#e9e9e9]',
+              'p-[0.2vh]',
+              'align-middle',
+              'font-medium',
             )}
             colSpan={2}
             rowSpan={2}
