@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
@@ -44,7 +44,7 @@ import {
 } from 'shared/components';
 import { ARTS_PHYSICAL_SUBJECTS, GENERAL_SUBJECTS } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
-import { step1Schema, step2Schema, step3Schema, step4Schema } from 'shared/schemas';
+import { step1Schema, step2Schema, step3Schema, getStep4Schema } from 'shared/schemas';
 
 import {
   usePostMockScore,
@@ -108,12 +108,26 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
       schoolTeacherPhoneNumber: data?.privacyDetail.schoolTeacherPhoneNumber,
     },
   });
+  const graduationType = step2UseForm.watch('graduationType');
+  const liberalSystem =
+    data?.middleSchoolAchievement.liberalSystem || LiberalSystemValueEnum.FREE_GRADE;
+  const freeSemester = data?.middleSchoolAchievement.freeSemester || null;
+
+  const step4Schema = useMemo(
+    () =>
+      getStep4Schema({
+        graduationType,
+        liberalSystem,
+        freeSemester,
+      }),
+    [graduationType, liberalSystem, freeSemester],
+  );
 
   const step4UseForm = useForm<Step4FormType>({
     resolver: zodResolver(step4Schema),
     defaultValues: {
-      liberalSystem:
-        data?.middleSchoolAchievement.liberalSystem || LiberalSystemValueEnum.FREE_GRADE,
+      liberalSystem,
+      achievement1_1: data?.middleSchoolAchievement.achievement1_1 || undefined,
       achievement1_2: data?.middleSchoolAchievement.achievement1_2 || undefined,
       achievement2_1: data?.middleSchoolAchievement.achievement2_1 || undefined,
       achievement2_2: data?.middleSchoolAchievement.achievement2_2 || undefined,
@@ -124,7 +138,7 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
       absentDays: data?.middleSchoolAchievement.absentDays || undefined,
       attendanceDays: data?.middleSchoolAchievement.attendanceDays || undefined,
       volunteerTime: data?.middleSchoolAchievement.volunteerTime || undefined,
-      freeSemester: data?.middleSchoolAchievement.freeSemester || null,
+      freeSemester,
       gedTotalScore: data?.middleSchoolAchievement.gedTotalScore || undefined,
     },
   });
@@ -135,7 +149,6 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
     null,
   );
   const { push } = useRouter();
-  const graduationType = step2UseForm.watch('graduationType');
 
   const isClient = type === 'client';
   const isCandidate = graduationType === GraduationTypeValueEnum.CANDIDATE;
