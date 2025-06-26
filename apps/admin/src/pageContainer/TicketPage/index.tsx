@@ -32,7 +32,7 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
       {admissionTickets?.map((ticket, i) => (
         <div
           key={ticket.oneseoSubmitCode}
-          className={cn(
+          className={cn([
             'mx-auto',
             'flex',
             'h-[100dvh]',
@@ -41,7 +41,7 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
             'font-normal',
             'text-black',
             i % 2 !== 0 ? '' : '',
-          )}
+          ])}
         >
           <table
             className={cn(
