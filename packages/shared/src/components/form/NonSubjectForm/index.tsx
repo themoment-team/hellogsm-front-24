@@ -55,20 +55,20 @@ const NonSubjectForm = ({ register, isFreeGrade, isGraduate }: NonSubjectFormPro
   return (
     <div className={cn('flex', 'flex-col', 'w-full')}>
       <div
-        className={cn(
+        className={cn([
           ...rowStyle,
           'bg-zinc-50',
           'rounded-t-[0.375rem]',
           'h-[3rem]',
           'border-t-[0.0625rem]',
-        )}
+        ])}
       >
-        <h1 className={cn(...itemStyle, 'min-w-[3.75rem]')}>학년</h1>
+        <h1 className={cn([...itemStyle, 'min-w-[3.75rem]'])}>학년</h1>
         <div className={cn('flex')}>
           {nonSubjectTitleArray.map((title, idx) => (
             <h1
               key={title}
-              className={cn(
+              className={cn([
                 ...itemStyle,
                 idx === volunteerTimeIndex
                   ? isFreeGrade
@@ -77,7 +77,7 @@ const NonSubjectForm = ({ register, isFreeGrade, isGraduate }: NonSubjectFormPro
                       ? 'w-[17.1875rem]'
                       : 'w-[9.75rem]'
                   : 'w-[5.625rem]',
-              )}
+              ])}
             >
               {title}
             </h1>
@@ -87,21 +87,21 @@ const NonSubjectForm = ({ register, isFreeGrade, isGraduate }: NonSubjectFormPro
       {nonSubjectArray.map(({ grade, registerIndexList }, index) => (
         <div
           key={grade}
-          className={cn(
+          className={cn([
             ...rowStyle,
             'bg-white',
             'h-[3.5rem]',
             index === nonSubjectArray.length - 1 && 'rounded-b-[0.375rem]',
-          )}
+          ])}
         >
           <div className={cn('h-full', 'flex', 'items-center', 'justify-center')}>
-            <h1 className={cn(...itemStyle, 'w-[3.75rem]')}>{grade}</h1>
+            <h1 className={cn([...itemStyle, 'w-[3.75rem]'])}>{grade}</h1>
           </div>
           <div className={cn('flex')}>
             {registerIndexList.map((registerIndex, index) => (
               <div
                 key={index}
-                className={cn(
+                className={cn([
                   ...itemStyle,
                   'px-[0.75rem]',
                   index === volunteerTimeIndex
@@ -111,7 +111,7 @@ const NonSubjectForm = ({ register, isFreeGrade, isGraduate }: NonSubjectFormPro
                         ? 'w-[17.1875rem]'
                         : 'w-[9.75rem]'
                     : 'w-[5.625rem]',
-                )}
+                ])}
               >
                 <input
                   {...register(

@@ -44,13 +44,13 @@ const NotFoundPage = () => {
               {squares.map((square, index) => (
                 <div
                   key={index}
-                  className={cn(
+                  className={cn([
                     'w-[0.9375rem]',
                     'h-[0.9375rem]',
                     'rounded',
                     square.bgColor,
                     square.rotate,
-                  )}
+                  ])}
                 />
               ))}
             </div>

@@ -25,19 +25,19 @@ const RadioButton = <T,>({
 }: RadioButtonProps<T>) => {
   return (
     <div className={cn('w-full', 'flex', 'flex-col', 'items-start', 'gap-[0.75rem]')}>
-      <div className={cn(...textStyle)}>
-        {title} {required && <span className="text-red-600">*</span>}
+      <div className={cn([...textStyle])}>
+        {title} {required && <span className={cn('text-red-600')}>*</span>}
       </div>
       <div className={cn('flex', 'items-start', 'gap-[1.25rem]')}>
         {list.map(({ name, value }, index) => (
           <div
             key={index}
-            className={cn(
+            className={cn([
               'flex',
               'items-center',
               'gap-[0.5rem]',
               disabled ? 'cursor-not-allowed' : 'cursor-pointer',
-            )}
+            ])}
             onClick={() => {
               if (handleOptionClick) handleOptionClick(value);
             }}
@@ -47,7 +47,7 @@ const RadioButton = <T,>({
               type="radio"
               checked={selectedValue === value}
               disabled={disabled || name === disabledOption}
-              className={cn(
+              className={cn([
                 'appearance-none',
                 'w-4',
                 'h-4',
@@ -71,9 +71,9 @@ const RadioButton = <T,>({
                 disabled
                   ? ['cursor-not-allowed', 'after:bg-slate-400']
                   : ['cursor-pointer', 'after:bg-black'],
-              )}
+              ])}
             />
-            <p className={cn(...textStyle)}>{name}</p>
+            <p className={cn([...textStyle])}>{name}</p>
           </div>
         ))}
       </div>

@@ -134,7 +134,7 @@ const Section5 = () => {
                     {element.learn.map((item, idx) => (
                       <div
                         key={idx}
-                        className={cn(
+                        className={cn([
                           'flex',
                           'px-1',
                           'py-1',
@@ -143,16 +143,16 @@ const Section5 = () => {
                           'rounded-[5rem]',
                           'sm:px-2',
                           element.tagColor,
-                        )}
+                        ])}
                       >
                         <p
-                          className={cn(
+                          className={cn([
                             element.textColor,
                             'text-[0.5rem]/[0.75rem]',
                             'font-normal',
                             'sm:text-[0.75rem]/[1rem]',
                             'sm:text-[0.875rem]/[1.25rem]',
-                          )}
+                          ])}
                         >
                           #{item}
                         </p>

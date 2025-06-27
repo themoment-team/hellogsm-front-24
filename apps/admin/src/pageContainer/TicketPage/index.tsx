@@ -10,6 +10,7 @@ import {
   심층면접시험기간,
   역량검사시험기간,
 } from 'shared/constants';
+import { cn } from 'shared/lib/utils';
 
 import { useGetAdmissionTickets } from 'api/hooks';
 
@@ -27,164 +28,326 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
   };
 
   return (
-    <div className="print:exact flex flex-col bg-white print:pt-0">
+    <div className={cn('print:exact', 'flex', 'flex-col', 'bg-white', 'print:pt-0')}>
       {admissionTickets?.map((ticket, i) => (
         <div
           key={ticket.oneseoSubmitCode}
-          className={`mx-auto flex h-[100dvh] w-[920px] items-center font-normal text-black ${
-            i % 2 !== 0 ? '' : ''
-          }`}
+          className={cn(
+            'mx-auto',
+            'flex',
+            'h-[100dvh]',
+            'w-[920px]',
+            'items-center',
+            'font-normal',
+            'text-black',
+          )}
         >
-          <table className="h-[350px] w-full border-collapse text-center text-[0.75rem] font-light leading-[1.25rem]">
+          <table
+            className={cn(
+              'h-[350px]',
+              'w-full',
+              'border-collapse',
+              'text-center',
+              'text-[0.75rem]',
+              'font-light',
+              'leading-[1.25rem]',
+            )}
+          >
             <tbody>
               <tr>
-                <td className="w-[55vw] border border-black text-[20px] font-normal" colSpan={2}>
+                <td
+                  className={cn('w-[55vw]', 'border', 'border-black', 'text-[20px]', 'font-normal')}
+                  colSpan={2}
+                >
                   수험자 안내사항
                 </td>
-                <td className="w-[45vw] border border-black text-[20px] font-normal" colSpan={3}>
+                <td
+                  className={cn('w-[45vw]', 'border', 'border-black', 'text-[20px]', 'font-normal')}
+                  colSpan={3}
+                >
                   수 험 표
                 </td>
               </tr>
               <tr>
-                <td className="w-28 border border-black font-normal">
+                <td className={cn('w-28', 'border', 'border-black', 'font-normal')}>
                   2차 전형 <br />
                   (역량검사)
                 </td>
-                <td className="border border-black pl-[0.625rem] text-left font-normal">
+                <td
+                  className={cn(
+                    'border',
+                    'border-black',
+                    'pl-[0.625rem]',
+                    'text-left',
+                    'font-normal',
+                  )}
+                >
                   {역량검사시험기간}
                 </td>
 
-                <td rowSpan={6} className="h-[200px] w-[150px] border border-black">
+                <td rowSpan={6} className={cn('h-[200px]', 'w-[150px]', 'border', 'border-black')}>
                   {ticket.profileImg && (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={ticket.profileImg}
                       alt="증명사진 오류"
-                      className="block h-full w-full"
+                      className={cn('block', 'h-full', 'w-full')}
                     />
                   )}
                 </td>
                 <td
                   rowSpan={1}
-                  className="w-[10%] border border-black bg-[#e9e9e9] font-medium font-normal"
+                  className={cn(
+                    'w-[10%]',
+                    'border',
+                    'border-black',
+                    'bg-[#e9e9e9]',
+                    'font-medium',
+                    'font-normal',
+                  )}
                 >
                   접수번호
                 </td>
-                <td rowSpan={1} className="border border-black font-normal">
+                <td rowSpan={1} className={cn('border', 'border-black', 'font-normal')}>
                   {ticket.oneseoSubmitCode}
                 </td>
               </tr>
               <tr>
-                <td className="w-28 border border-black font-normal">
+                <td className={cn('w-28', 'border', 'border-black', 'font-normal')}>
                   2차 전형 <br />
                   (심층면접)
                 </td>
-                <td className="border border-black pl-[0.625rem] text-left font-normal">
+                <td
+                  className={cn(
+                    'border',
+                    'border-black',
+                    'pl-[0.625rem]',
+                    'text-left',
+                    'font-normal',
+                  )}
+                >
                   {심층면접시험기간}
                 </td>
                 <td
                   rowSpan={1}
-                  className="w-[10%] border border-black bg-[#e9e9e9] font-medium font-normal"
+                  className={cn(
+                    'w-[10%]',
+                    'border',
+                    'border-black',
+                    'bg-[#e9e9e9]',
+                    'font-medium',
+                    'font-normal',
+                  )}
                 >
                   수험번호
                 </td>
-                <td rowSpan={1} className="border border-black font-normal">
+                <td rowSpan={1} className={cn('border', 'border-black', 'font-normal')}>
                   {ticket.examinationNumber}
                 </td>
               </tr>
               <tr>
-                <td rowSpan={2} className="border border-black font-normal">
+                <td rowSpan={2} className={cn('border', 'border-black', 'font-normal')}>
                   합격자 발표
                 </td>
-                <td className="border border-black pl-[0.625rem] text-left font-normal">
+                <td
+                  className={cn(
+                    'border',
+                    'border-black',
+                    'pl-[0.625rem]',
+                    'text-left',
+                    'font-normal',
+                  )}
+                >
                   입학지원 사이트 로그인 후 확인(hellogsm.kr)
                 </td>
-                <td className="border border-black bg-[#e9e9e9] font-medium font-normal">성명</td>
-                <td className="border border-black">{ticket.memberName}</td>
+                <td
+                  className={cn(
+                    'border',
+                    'border-black',
+                    'bg-[#e9e9e9]',
+                    'font-medium',
+                    'font-normal',
+                  )}
+                >
+                  성명
+                </td>
+                <td className={cn('border', 'border-black')}>{ticket.memberName}</td>
               </tr>
               <tr>
-                <td className="border border-black pl-[0.625rem] text-left font-normal">
+                <td
+                  className={cn(
+                    'border',
+                    'border-black',
+                    'pl-[0.625rem]',
+                    'text-left',
+                    'font-normal',
+                  )}
+                >
                   {passedMemberAnnounceDate}
                 </td>
                 <td
-                  className="border border-black bg-[#e9e9e9] font-medium font-normal"
+                  className={cn(
+                    'border',
+                    'border-black',
+                    'bg-[#e9e9e9]',
+                    'font-medium',
+                    'font-normal',
+                  )}
                   rowSpan={2}
                 >
                   생년월일
                 </td>
-                <td className="border border-black font-normal" rowSpan={2}>
+                <td className={cn('border', 'border-black', 'font-normal')} rowSpan={2}>
                   {ticket.memberBirth}
                 </td>
               </tr>
               <tr>
-                <td rowSpan={2} className="border border-black font-normal">
+                <td rowSpan={2} className={cn('border', 'border-black', 'font-normal')}>
                   합격자 등록 및<br /> 서류 제출
                 </td>
-                <td className="border border-black pl-[0.625rem] text-left font-normal">
+                <td
+                  className={cn(
+                    'border',
+                    'border-black',
+                    'pl-[0.625rem]',
+                    'text-left',
+                    'font-normal',
+                  )}
+                >
                   공문 시행, 직접 방문
                 </td>
               </tr>
               <tr>
-                <td className="border border-black pl-[0.625rem] text-left font-normal">
+                <td
+                  className={cn(
+                    'border',
+                    'border-black',
+                    'pl-[0.625rem]',
+                    'text-left',
+                    'font-normal',
+                  )}
+                >
                   (1) 입학등록동의서 1부 (11. 4.(월) 17시 마감) <br />
                   (2) 건강진단서 1부 (11. 11.(월) 17시 마감) <br />
                   토, 일요일 제외 / 마감시간 이전 도착분에 한하여 유효함.
                 </td>
                 <td
                   rowSpan={2}
-                  className="border border-black bg-[#e9e9e9] font-medium font-normal"
+                  className={cn(
+                    'border',
+                    'border-black',
+                    'bg-[#e9e9e9]',
+                    'font-medium',
+                    'font-normal',
+                  )}
                 >
                   출신학교
                 </td>
                 {ticket.schoolName ? (
-                  <td rowSpan={2} className="border border-black">
+                  <td rowSpan={2} className={cn('border', 'border-black')}>
                     {ticket.schoolName}
                   </td>
                 ) : (
                   <td
                     rowSpan={2}
-                    className='bg-[url(&apos;data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="100%" x2="100%" y2="0" stroke="gray" /></svg>&apos;)] border border-black'
+                    className={cn(
+                      'bg-[url(&apos;data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="100%" x2="100%" y2="0" stroke="gray" /></svg>&apos;)]',
+                      'border',
+                      'border-black',
+                    )}
                   />
                 )}
               </tr>
               <tr>
-                <td className="border border-black font-normal">입학등록동의서 서식</td>
-                <td className="border border-black pl-[0.625rem] text-left font-normal">
+                <td className={cn('border', 'border-black', 'font-normal')}>입학등록동의서 서식</td>
+                <td
+                  className={cn(
+                    'border',
+                    'border-black',
+                    'pl-[0.625rem]',
+                    'text-left',
+                    'font-normal',
+                  )}
+                >
                   본교 홈페이지에서 다운로드
                 </td>
               </tr>
               <tr>
-                <td className="border border-black font-normal">신입생 비전캠프</td>
-                <td className="border border-black pl-[0.625rem] text-left font-normal">
+                <td className={cn('border', 'border-black', 'font-normal')}>신입생 비전캠프</td>
+                <td
+                  className={cn(
+                    'border',
+                    'border-black',
+                    'pl-[0.625rem]',
+                    'text-left',
+                    'font-normal',
+                  )}
+                >
                   {visionCampDate.startDate} ~ {visionCampDate.endDate} 예정
                 </td>
                 <td
                   rowSpan={2}
                   colSpan={2}
-                  className="border border-black pl-2 pr-[0.625rem] text-left font-normal"
+                  className={cn(
+                    'border',
+                    'border-black',
+                    'pl-2',
+                    'pr-[0.625rem]',
+                    'text-left',
+                    'font-normal',
+                  )}
                 >
                   위 사람은 2025학년도 <br /> 본교 신입생 입학전형 지원자임을 확인함.
-                  <p className="pr-[0.625rem] text-center font-normal">2024년 10월 25일</p>
+                  <p className={cn('pr-[0.625rem]', 'text-center', 'font-normal')}>
+                    2024년 10월 25일
+                  </p>
                   <p>광주소프트웨어마이스터고등학교장 [직인생략]</p>
                 </td>
-                <td className="border border-black bg-[#e9e9e9] font-medium font-normal">접수자</td>
+                <td
+                  className={cn(
+                    'border',
+                    'border-black',
+                    'bg-[#e9e9e9]',
+                    'font-medium',
+                    'font-normal',
+                  )}
+                >
+                  접수자
+                </td>
               </tr>
               <tr>
-                <td colSpan={2} className="border border-black pl-[0.625rem] text-left font-normal">
+                <td
+                  colSpan={2}
+                  className={cn(
+                    'border',
+                    'border-black',
+                    'pl-[0.625rem]',
+                    'text-left',
+                    'font-normal',
+                  )}
+                >
                   * 공지 사항: 홈페이지(gsm.gen.hs.kr)-입학 안내 <br />* 문의:062-949-6800
                 </td>
-                <td className="border border-black font-normal">(인)</td>
+                <td className={cn('border', 'border-black', 'font-normal')}>(인)</td>
               </tr>
             </tbody>
           </table>
         </div>
       ))}
       <Button
-        className="fixed bottom-10 right-10 z-50 items-center gap-2 print:hidden"
+        className={cn(
+          'fixed',
+          'bottom-10',
+          'right-10',
+          'z-50',
+          'items-center',
+          'gap-2',
+          'print:hidden',
+        )}
         onClick={handlePrint}
       >
         <PrintIcon />
-        <p className="text-[2.1vh] font-bold hover:text-white">인쇄하기</p>
+        <p className={cn('text-[2.1vh]', 'font-bold', 'hover:text-white')}>인쇄하기</p>
       </Button>
     </div>
   );

@@ -20,7 +20,7 @@ const StepCircle = ({ step, isActive, isCompleted }: StepCircleType) => {
 
   return (
     <div
-      className={cn(
+      className={cn([
         'flex',
         'justify-center',
         'items-center',
@@ -33,7 +33,7 @@ const StepCircle = ({ step, isActive, isCompleted }: StepCircleType) => {
         'duration-500',
         'transform',
         isActiveOrCompleted ? 'bg-blue-500 text-white' : 'border-[1px] text-slate-300',
-      )}
+      ])}
     >
       {isCompleted ? <StepCheckIcon /> : step}
     </div>

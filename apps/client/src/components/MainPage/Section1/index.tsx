@@ -46,8 +46,8 @@ const Section1 = ({ isServerCurrentActive }: { isServerCurrentActive: boolean })
           'justify-center',
         )}
       >
-        <div className={cn(...flexColStyle, 'gap-14')}>
-          <div className={cn(...flexColStyle, 'gap-6')}>
+        <div className={cn([...flexColStyle, 'gap-14'])}>
+          <div className={cn([...flexColStyle, 'gap-6'])}>
             <h1
               className={cn(
                 'w-full',
@@ -87,7 +87,7 @@ const Section1 = ({ isServerCurrentActive }: { isServerCurrentActive: boolean })
               <br />
               광주소프트웨어마이스터고등학교
             </h1>
-            
+
             {isServerCurrentActive && (
               <p
                 className={cn(
@@ -124,7 +124,7 @@ const Section1 = ({ isServerCurrentActive }: { isServerCurrentActive: boolean })
         </div>
       </div>
 
-      <div className={cn('absolute', 'bottom-14', ...flexColStyle, 'gap-1', 'z-[3]')}>
+      <div className={cn(['absolute', 'bottom-14', ...flexColStyle, 'gap-1', 'z-[3]'])}>
         <p
           onClick={scrollToSection2}
           className={cn(

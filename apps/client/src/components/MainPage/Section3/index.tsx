@@ -61,7 +61,7 @@ const Section3 = ({ isServerHealthy }: Section3Props) => {
           </p>
           <Link
             href="/guide"
-            className={cn(
+            className={cn([
               ...buttonStyle,
               'text-sky-900',
               'border-sky-900',
@@ -69,7 +69,7 @@ const Section3 = ({ isServerHealthy }: Section3Props) => {
               'py-[9px]',
               'hidden',
               'lg:inline',
-            )}
+            ])}
           >
             원서 접수 바로가기
           </Link>
@@ -134,7 +134,7 @@ const Section3 = ({ isServerHealthy }: Section3Props) => {
                 최종 합격 하려면 중학교 내신 성적이
                 <br /> 최소 몇 %가 되어야 할까?&nbsp; 🤷🏻‍♀️
               </p>
-              <Link href="/faq" className={cn(...buttonStyle, 'self-end')}>
+              <Link href="/faq" className={cn([...buttonStyle, 'self-end'])}>
                 FAQ 바로가기
               </Link>
             </div>
@@ -167,7 +167,7 @@ const Section3 = ({ isServerHealthy }: Section3Props) => {
                   여러 계정으로 로그인 하는 방법을 알려드릴게요!
                 </p>
               </div>
-              <Link href="/faq?openIndex=0" className={cn(...buttonStyle, 'self-end')}>
+              <Link href="/faq?openIndex=0" className={cn([...buttonStyle, 'self-end'])}>
                 바로가기
               </Link>
             </div>
@@ -199,7 +199,7 @@ const Section3 = ({ isServerHealthy }: Section3Props) => {
                 </p>
               </div>
               {isServerHealthy && (
-                <Link href="/oneseo/calculate" className={cn(...buttonStyle, 'self-end')}>
+                <Link href="/oneseo/calculate" className={cn([...buttonStyle, 'self-end'])}>
                   바로가기
                 </Link>
               )}
