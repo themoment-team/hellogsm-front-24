@@ -18,7 +18,7 @@ const RegisterStepsPage = ({ data, step, info }: RegisterStepsPageProps) => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
       event.preventDefault();
       event.returnValue = '';
-      return '작성하던 내용이 모두 사라집니다. 계속하시겠습니까?';
+      return '변경사항이 저장되지 않을 수 있습니다. 사이트에서 나가시겠습니까?';
     };
 
     if (typeof window !== 'undefined') {
