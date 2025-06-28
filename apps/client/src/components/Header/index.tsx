@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 
-
 import { useQueryClient } from '@tanstack/react-query';
 
 import { memberQueryKeys } from 'api';
@@ -201,13 +200,9 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
             'text-gray-500',
           )}
         >
-          {pcNavLinks.map(({ label, href }) => (
+          {pcNavLinks.map(({ label, href }) =>
             isRegisterPath ? (
-              <a
-                key={label}
-                href={href}
-                className={cn([...activeTextStyle])}
-              >
+              <a key={label} href={href} className={cn([...activeTextStyle])}>
                 {label}
               </a>
             ) : (
@@ -219,8 +214,8 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
               >
                 {label}
               </ActiveLink>
-            )
-          ))}
+            ),
+          )}
         </nav>
 
         {/* PC width 일떄 */}
@@ -346,58 +341,56 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
           <div className={cn('flex', 'flex-col', 'items-start', 'gap-[2.25rem]')}>
             {mobileNavLinks.map((link) => {
               const IconComponent = link.icon;
-              return (
-                isRegisterPath ? (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setIsMenu(false)}
-                    className={cn(
-                      'flex',
-                      'items-center',
-                      'gap-4',
-                      'text-slate-300',
-                      'text-[1.5rem]',
-                      'leading-normal',
-                      'font-bold',
-                      'hover:text-slate-500',
-                      'duration-150',
-                    )}
-                    onMouseEnter={() => setHoveredLink(link.href)}
-                    onMouseLeave={() => setHoveredLink(null)}
-                  >
-                    <IconComponent
-                      size="1.75rem"
-                      color={hoveredLink === link.href ? '#64748B' : '#CBD5E1'}
-                    />
-                    {link.label}
-                  </a>
-                ) : (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setIsMenu(false)}
-                    className={cn(
-                      'flex',
-                      'items-center',
-                      'gap-4',
-                      'text-slate-300',
-                      'text-[1.5rem]',
-                      'leading-normal',
-                      'font-bold',
-                      'hover:text-slate-500',
-                      'duration-150',
-                    )}
-                    onMouseEnter={() => setHoveredLink(link.href)}
-                    onMouseLeave={() => setHoveredLink(null)}
-                  >
-                    <IconComponent
-                      size="1.75rem"
-                      color={hoveredLink === link.href ? '#64748B' : '#CBD5E1'}
-                    />
-                    {link.label}
-                  </Link>
-                )
+              return isRegisterPath ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMenu(false)}
+                  className={cn(
+                    'flex',
+                    'items-center',
+                    'gap-4',
+                    'text-slate-300',
+                    'text-[1.5rem]',
+                    'leading-normal',
+                    'font-bold',
+                    'hover:text-slate-500',
+                    'duration-150',
+                  )}
+                  onMouseEnter={() => setHoveredLink(link.href)}
+                  onMouseLeave={() => setHoveredLink(null)}
+                >
+                  <IconComponent
+                    size="1.75rem"
+                    color={hoveredLink === link.href ? '#64748B' : '#CBD5E1'}
+                  />
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMenu(false)}
+                  className={cn(
+                    'flex',
+                    'items-center',
+                    'gap-4',
+                    'text-slate-300',
+                    'text-[1.5rem]',
+                    'leading-normal',
+                    'font-bold',
+                    'hover:text-slate-500',
+                    'duration-150',
+                  )}
+                  onMouseEnter={() => setHoveredLink(link.href)}
+                  onMouseLeave={() => setHoveredLink(null)}
+                >
+                  <IconComponent
+                    size="1.75rem"
+                    color={hoveredLink === link.href ? '#64748B' : '#CBD5E1'}
+                  />
+                  {link.label}
+                </Link>
               );
             })}
           </div>
