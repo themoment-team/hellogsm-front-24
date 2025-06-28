@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from 'react';
 
+
 import { useQueryClient } from '@tanstack/react-query';
 
 import { memberQueryKeys } from 'api';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 
 import * as I from 'client/assets';
 import { ActiveLink, LoginDialog } from 'client/components';
@@ -76,6 +78,11 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
   const isLogin = authInfo?.authReferrerType && !memberInfo?.name;
   const isSignup = authInfo?.authReferrerType && memberInfo?.name;
 
+  const pathname = usePathname();
+  const isRegisterPath = pathname?.startsWith('/register');
+
+  const router = useRouter();
+
   const MenuToggleButton = () => (
     <button onClick={() => setIsMenu(!isMenu)}>{isMenu ? <I.XIcon /> : <I.HamburgerIcon />}</button>
   );
@@ -139,6 +146,16 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
     };
   }, []);
 
+  const handleLogoutClick = () => {
+    if (confirm('변경사항이 저장되지 않을 수 있습니다. 로그아웃 하시겠습니까?')) {
+      handleLogout();
+      setIsDropdown(false);
+      router.push('/');
+    } else {
+      setIsDropdown(false);
+    }
+  };
+
   return (
     <>
       <header
@@ -164,9 +181,15 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
           'gap-8',
         )}
       >
-        <Link href="/">
-          <I.HelloGSMLogo />
-        </Link>
+        {isRegisterPath ? (
+          <a href="/">
+            <I.HelloGSMLogo />
+          </a>
+        ) : (
+          <Link href="/">
+            <I.HelloGSMLogo />
+          </Link>
+        )}
         <nav
           className={cn(
             'gap-[2.75rem]',
@@ -179,14 +202,24 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
           )}
         >
           {pcNavLinks.map(({ label, href }) => (
-            <ActiveLink
-              key={label}
-              href={href}
-              className={cn([...activeTextStyle])}
-              activeClassName={cn(...activeStyle)}
-            >
-              {label}
-            </ActiveLink>
+            isRegisterPath ? (
+              <a
+                key={label}
+                href={href}
+                className={cn([...activeTextStyle])}
+              >
+                {label}
+              </a>
+            ) : (
+              <ActiveLink
+                key={label}
+                href={href}
+                className={cn([...activeTextStyle])}
+                activeClassName={cn(...activeStyle)}
+              >
+                {label}
+              </ActiveLink>
+            )
           ))}
         </nav>
 
@@ -226,23 +259,44 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
                         'bg-white',
                       )}
                     >
-                      <Link
-                        href="/mypage"
-                        className={cn([...modalBtnStyle])}
-                        onClick={() => setIsDropdown(false)}
-                      >
-                        <I.HomeIcon size="1.5rem" color="#475569" /> 내 정보 페이지
-                      </Link>
-                      <Link
-                        href="/"
-                        className={cn([...modalBtnStyle, 'text-red-600'])}
-                        onClick={() => {
-                          handleLogout();
-                          setIsDropdown(false);
-                        }}
-                      >
-                        <I.LogoutIcon /> 로그아웃
-                      </Link>
+                      {isRegisterPath ? (
+                        <>
+                          <a
+                            href="/mypage"
+                            className={cn([...modalBtnStyle])}
+                            onClick={() => setIsDropdown(false)}
+                          >
+                            <I.HomeIcon size="1.5rem" color="#475569" /> 내 정보 페이지
+                          </a>
+                          <button
+                            type="button"
+                            className={cn([...modalBtnStyle, 'text-red-600'])}
+                            onClick={handleLogoutClick}
+                          >
+                            <I.LogoutIcon /> 로그아웃
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <Link
+                            href="/mypage"
+                            className={cn([...modalBtnStyle])}
+                            onClick={() => setIsDropdown(false)}
+                          >
+                            <I.HomeIcon size="1.5rem" color="#475569" /> 내 정보 페이지
+                          </Link>
+                          <Link
+                            href="/"
+                            className={cn([...modalBtnStyle, 'text-red-600'])}
+                            onClick={() => {
+                              handleLogout();
+                              setIsDropdown(false);
+                            }}
+                          >
+                            <I.LogoutIcon /> 로그아웃
+                          </Link>
+                        </>
+                      )}
                     </div>
                   )}
                 </div>
@@ -293,30 +347,57 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
             {mobileNavLinks.map((link) => {
               const IconComponent = link.icon;
               return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsMenu(false)}
-                  className={cn(
-                    'flex',
-                    'items-center',
-                    'gap-4',
-                    'text-slate-300',
-                    'text-[1.5rem]',
-                    'leading-normal',
-                    'font-bold',
-                    'hover:text-slate-500',
-                    'duration-150',
-                  )}
-                  onMouseEnter={() => setHoveredLink(link.href)}
-                  onMouseLeave={() => setHoveredLink(null)}
-                >
-                  <IconComponent
-                    size="1.75rem"
-                    color={hoveredLink === link.href ? '#64748B' : '#CBD5E1'}
-                  />
-                  {link.label}
-                </Link>
+                isRegisterPath ? (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setIsMenu(false)}
+                    className={cn(
+                      'flex',
+                      'items-center',
+                      'gap-4',
+                      'text-slate-300',
+                      'text-[1.5rem]',
+                      'leading-normal',
+                      'font-bold',
+                      'hover:text-slate-500',
+                      'duration-150',
+                    )}
+                    onMouseEnter={() => setHoveredLink(link.href)}
+                    onMouseLeave={() => setHoveredLink(null)}
+                  >
+                    <IconComponent
+                      size="1.75rem"
+                      color={hoveredLink === link.href ? '#64748B' : '#CBD5E1'}
+                    />
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setIsMenu(false)}
+                    className={cn(
+                      'flex',
+                      'items-center',
+                      'gap-4',
+                      'text-slate-300',
+                      'text-[1.5rem]',
+                      'leading-normal',
+                      'font-bold',
+                      'hover:text-slate-500',
+                      'duration-150',
+                    )}
+                    onMouseEnter={() => setHoveredLink(link.href)}
+                    onMouseLeave={() => setHoveredLink(null)}
+                  >
+                    <IconComponent
+                      size="1.75rem"
+                      color={hoveredLink === link.href ? '#64748B' : '#CBD5E1'}
+                    />
+                    {link.label}
+                  </Link>
+                )
               );
             })}
           </div>
