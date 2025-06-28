@@ -1,0 +1,96 @@
+name: regular deploy PR creation
+
+on:
+  schedule:
+    - cron: "0 0 */14 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+  repository-projects: write
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fetch all branches
+        run: |
+          git fetch origin main
+          git fetch origin develop
+
+      - name: Check for changes between develop and main
+        id: check_changes
+        run: |
+          if git diff --quiet origin/main..origin/develop; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No changes between develop and main"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Changes detected between develop and main"
+          fi
+
+      - name: Check if PR already exists
+        if: steps.check_changes.outputs.has_changes == 'true'
+        id: check_pr
+        run: |
+          PR_COUNT=$(gh pr list --base main --head develop --state open --json number | jq length)
+          if [ "$PR_COUNT" -gt 0 ]; then
+            echo "pr_exists=true" >> $GITHUB_OUTPUT
+            echo "Existing PR found"
+          else
+            echo "pr_exists=false" >> $GITHUB_OUTPUT
+            echo "No existing PR found"
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Pull Request using GitHub CLI
+        if: steps.check_changes.outputs.has_changes == 'true' && steps.check_pr.outputs.pr_exists == 'false'
+        id: create_pr
+        run: |
+          PR_BODY=$(cat <<EOF
+          ### 개요 💡
+          develop 브랜치의 내용을 main 브랜치에 반영합니다.
+          EOF
+          )
+
+          PR_URL=$(gh pr create \
+            --title "[merge] 정기 배포" \
+            --body "$PR_BODY" \
+            --base main \
+            --head develop)
+
+          echo "pull-request-url=$PR_URL" >> $GITHUB_OUTPUT
+          echo "PR created: $PR_URL"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Success Discord Notification
+        uses: sarisia/actions-status-discord@v1.11.0
+        if: success()
+        with:
+          webhook: ${{ secrets.WEBHOOK_URL }}
+          title: "✅ regular deploy PR 생성 성공"
+          status: ${{ job.status }}
+          content: "정기 배포 PR이 성공적으로 생성되었습니다."
+          username: hello-gsm bot
+          color: 4CAF50
+
+      - name: Failure notification to discord
+        uses: sarisia/actions-status-discord@v1.11.0
+        if: failure()
+        with:
+          webhook: ${{ secrets.WEBHOOK_URL }}
+          title: "❌ regular deploy PR 생성 실패"
+          content: "정기 배포 PR 생성 중 에러가 발생했습니다."
+          status: ${{ job.status }}
+          username: hello-gsm bot
+          color: e74c3c
