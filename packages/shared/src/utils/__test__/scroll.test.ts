@@ -7,13 +7,13 @@ const mockScrollTo = jest.fn();
 // querySelector 모킹
 Object.defineProperty(document, 'querySelector', {
   value: jest.fn(),
-  writable: true
+  writable: true,
 });
 
 // window.scrollTo 모킹
 Object.defineProperty(window, 'scrollTo', {
   value: mockScrollTo,
-  writable: true
+  writable: true,
 });
 
 describe('scrollToElement', () => {
@@ -30,7 +30,7 @@ describe('scrollToElement', () => {
     expect(document.querySelector).toHaveBeenCalledWith('#test-element');
     expect(mockScrollIntoView).toHaveBeenCalledWith({
       behavior: 'smooth',
-      block: 'start'
+      block: 'start',
     });
   });
 
@@ -52,7 +52,7 @@ describe('scrollToLocation', () => {
 
     expect(mockScrollTo).toHaveBeenCalledWith({
       top: 100,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   });
 
@@ -61,7 +61,7 @@ describe('scrollToLocation', () => {
 
     expect(mockScrollTo).toHaveBeenCalledWith({
       top: 500,
-      behavior: 'auto'
+      behavior: 'auto',
     });
   });
 });

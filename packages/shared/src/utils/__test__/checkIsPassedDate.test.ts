@@ -15,4 +15,4 @@ describe('checkIsPassedDate', () => {
     const targetDate = new Date('2030-01-01');
     expect(checkIsPassedDate(targetDate)).toBe(false);
   });
-}); 
+});
