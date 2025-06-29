@@ -2,7 +2,7 @@ name: regular deploy PR creation
 
 on:
   schedule:
-    - cron: "0 0 */14 * *"
+    - cron: "0 0 1,15 * *"
   workflow_dispatch:
 
 permissions:
