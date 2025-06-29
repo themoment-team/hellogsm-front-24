@@ -17,9 +17,9 @@ const stepsData = [
     title: '원서 및 성적 입력',
     date: (
       <>
-        <span className="whitespace-nowrap">2025. 10. 20.(월)~</span>
+        <span className={cn('whitespace-nowrap')}>2025. 10. 20.(월)~</span>
         <br className={cn('lg:hidden', 'smx:block', 'hidden')} />
-        <span className="whitespace-nowrap">23.(목) 09:00 ~ 16:30</span>
+        <span className={cn('whitespace-nowrap')}>23.(목) 09:00 ~ 16:30</span>
       </>
     ),
     color: 'border-lime-500',
@@ -29,9 +29,9 @@ const stepsData = [
     title: '입학 원서 및 증빙서류 제출',
     date: (
       <>
-        <span className="whitespace-nowrap">2025. 10. 20.(월)~</span>
+        <span className={cn('whitespace-nowrap')}>2025. 10. 20.(월)~</span>
         <br className={cn('lg:hidden', 'smx:block', 'hidden')} />
-        <span className="whitespace-nowrap">23.(목) 09:00 ~ 16:30</span>
+        <span className={cn('whitespace-nowrap')}>23.(목) 09:00 ~ 16:30</span>
       </>
     ),
     color: 'border-sky-400',
@@ -65,11 +65,13 @@ const stepsData = [
     title: '합격자 등록(서류 제출)',
     date: (
       <>
-        <span className="whitespace-nowrap">2025. 11. 5.(수) ~</span>
+        <span className={cn('whitespace-nowrap')}>2025. 11. 5.(수) ~</span>
         <br className={cn('lg:hidden', 'smx:block', 'hidden')} />
-        <span className="whitespace-nowrap">11. 10.(월) 16:30</span>
+        <span className={cn('whitespace-nowrap')}>11. 10.(월) 16:30</span>
         <br />
-        <span className="whitespace-nowrap">(건강검진 관련서류 제출: 11. 10.(월) 16:30까지)</span>
+        <span className={cn('whitespace-nowrap')}>
+          (건강검진 관련서류 제출: 11. 10.(월) 16:30까지)
+        </span>
       </>
     ),
     color: 'border-sky-400',
@@ -151,7 +153,7 @@ const Section2 = () => {
                 className={cn('flex', 'w-[17rem]', 'flex-col', 'items-center', 'gap-6')}
               >
                 <div
-                  className={cn(
+                  className={cn([
                     'flex',
                     'px-[0.8125rem]',
                     'py-[0.8125rem]',
@@ -163,7 +165,7 @@ const Section2 = () => {
                     'z-10',
                     'bg-white',
                     'border-[3px]',
-                  )}
+                  ])}
                 >
                   {step.icon}
                 </div>
@@ -215,7 +217,7 @@ const Section2 = () => {
                 className={cn('flex', 'w-[18.9375rem]', 'flex-col', 'items-center', 'gap-6')}
               >
                 <div
-                  className={cn(
+                  className={cn([
                     'flex',
                     'px-[0.8125rem]',
                     'py-[0.8125rem]',
@@ -227,7 +229,7 @@ const Section2 = () => {
                     'z-10',
                     'bg-white',
                     'border-[3px]',
-                  )}
+                  ])}
                 >
                   {step.icon}
                 </div>
@@ -277,7 +279,7 @@ const Section2 = () => {
               {stepsData.map((step, index) => (
                 <div key={index} className={cn('flex', 'flex-col', 'items-center')}>
                   <div
-                    className={cn(
+                    className={cn([
                       'flex',
                       'px-[0.8125rem]',
                       'py-[0.8125rem]',
@@ -289,7 +291,7 @@ const Section2 = () => {
                       'z-10',
                       'bg-white',
                       'border-[3px]',
-                    )}
+                    ])}
                   >
                     {step.icon}
                   </div>

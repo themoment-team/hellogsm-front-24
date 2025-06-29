@@ -184,12 +184,12 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
                   로그아웃
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-md" showCloseIcon={false}>
+              <DialogContent className={cn('sm:max-w-md')} showCloseIcon={false}>
                 <DialogHeader>
                   <DialogTitle>Hello,GSM에 로그아웃 하시겠습니까?</DialogTitle>
                 </DialogHeader>
 
-                <DialogFooter className="sm:justify-end">
+                <DialogFooter className={cn('sm:justify-end')}>
                   <DialogClose asChild>
                     <Button variant="outline">취소</Button>
                   </DialogClose>
@@ -258,7 +258,7 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
                       <Button
                         onClick={() => setIsPassOpen(true)}
                         variant="download"
-                        className={cn(...buttonStyle)}
+                        className={cn([...buttonStyle])}
                       >
                         바로가기
                       </Button>
@@ -305,7 +305,7 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
                       <Button
                         onClick={() => push(doc.path)}
                         variant="download"
-                        className={cn(...buttonStyle)}
+                        className={cn([...buttonStyle])}
                       >
                         다운로드
                       </Button>

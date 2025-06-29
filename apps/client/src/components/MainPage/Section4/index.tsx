@@ -57,13 +57,13 @@ const DotWithText = ({ color, text, textColor }: DotWithTextProps) => (
       <Dot color={color} />
     </div>
     <p
-      className={cn(
+      className={cn([
         textColor,
         'text-[1.25rem]/[1.25rem]',
         'xs:text-[1.5rem]/[2rem]',
         'sm:text-[2rem]/[2.5rem]',
         'font-[600]',
-      )}
+      ])}
     >
       {text}
     </p>
@@ -120,13 +120,13 @@ const Section4 = () => {
       <div className={cn('flex', 'flex-col', 'items-center', 'w-full')}>
         <div className={cn('flex', 'items-end')}>
           <DotWithText color="#84CC16" text="인성" textColor="text-[#84CC16]" />
-          <p className={cn(...textStyle)}>과 &nbsp;</p>
+          <p className={cn([...textStyle])}>과 &nbsp;</p>
           <DotWithText color="#84CC16" text="감성" textColor="text-[#84CC16]" />
-          <p className={cn(...textStyle)}>으로 &nbsp;</p>
+          <p className={cn([...textStyle])}>으로 &nbsp;</p>
           <DotWithText color="#38BDF8" text="감동" textColor="text-[#38BDF8]" />
-          <p className={cn(...textStyle)}>을 만드는</p>
+          <p className={cn([...textStyle])}>을 만드는</p>
         </div>
-        <p className={cn(...textStyle)}>광주소프트웨어마이스터고등학교</p>
+        <p className={cn([...textStyle])}>광주소프트웨어마이스터고등학교</p>
       </div>
       <div
         className={cn(

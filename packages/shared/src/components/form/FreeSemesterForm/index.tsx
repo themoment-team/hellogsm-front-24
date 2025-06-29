@@ -99,37 +99,37 @@ const FreeSemesterForm = ({
   return (
     <div className={cn('flex', 'flex-col')}>
       <div
-        className={cn(
+        className={cn([
           ...rowStyle,
           'bg-zinc-50',
           'rounded-t-[0.375rem]',
           'h-[3rem]',
           'border-t-[0.0625rem]',
           'justify-between',
-        )}
+        ])}
       >
-        <h1 className={cn(...itemStyle, 'w-[6.75rem]')}>과목명</h1>
+        <h1 className={cn([...itemStyle, 'w-[6.75rem]'])}>과목명</h1>
         <div className={cn('flex')}>
           {achievementList.map(({ title }) => (
-            <h1 key={title} className={cn(...itemStyle, 'w-[7.3375rem]')}>
+            <h1 key={title} className={cn([...itemStyle, 'w-[7.3375rem]'])}>
               {title}
             </h1>
           ))}
         </div>
       </div>
 
-      <div className={cn(...rowStyle, 'bg-white', 'h-[3.5rem]')}>
-        <h1 className={cn(...itemStyle, 'w-[6.75rem]')}>자유학기제</h1>
+      <div className={cn([...rowStyle, 'bg-white', 'h-[3.5rem]'])}>
+        <h1 className={cn([...itemStyle, 'w-[6.75rem]'])}>자유학기제</h1>
         <div className={cn('flex')}>
           {achievementList.map(({ value, field }) => (
-            <div key={field} className={cn(...itemStyle, 'w-[7.3375rem]')}>
+            <div key={field} className={cn([...itemStyle, 'w-[7.3375rem]'])}>
               {freeSemester === value ? (
                 <button
-                  className={cn(
+                  className={cn([
                     ...freeSemesterButtonStyle,
                     'border-emerald-500',
                     'text-emerald-500',
-                  )}
+                  ])}
                   type="button"
                   onClick={() => setValue('freeSemester', null)}
                 >
@@ -138,7 +138,7 @@ const FreeSemesterForm = ({
                 </button>
               ) : (
                 <button
-                  className={cn(...freeSemesterButtonStyle)}
+                  className={cn([...freeSemesterButtonStyle])}
                   type="button"
                   onClick={() => setValue('freeSemester', value!)}
                 >
@@ -153,17 +153,17 @@ const FreeSemesterForm = ({
       {subjectArray.map((subject, idx) => (
         <div
           key={subject}
-          className={cn(
+          className={cn([
             ...rowStyle,
             'bg-white',
             'h-[3.5rem]',
             'relative',
             idx === subjectArray.length - 1 && 'rounded-b-[0.375rem]',
-          )}
+          ])}
         >
           <div className={cn('h-full', 'w-[6.75rem]', 'flex', 'items-center', 'justify-center')}>
             {idx < defaultSubjectLength ? (
-              <h1 className={cn(...itemStyle, 'w-full', 'w-[6.75rem]')}>{subject}</h1>
+              <h1 className={cn([...itemStyle, 'w-full', 'w-[6.75rem]'])}>{subject}</h1>
             ) : (
               <input
                 type="text"
@@ -189,7 +189,7 @@ const FreeSemesterForm = ({
               const score = watch(`${field}.${idx}`);
 
               return (
-                <div key={field} className={cn(...itemStyle, 'w-[7.3375rem]')}>
+                <div key={field} className={cn([...itemStyle, 'w-[7.3375rem]'])}>
                   {freeSemester === value ? (
                     <div
                       className={cn(

@@ -43,7 +43,7 @@ const TestResultDialog = ({
               width={156}
               height={156}
               alt="hello"
-              className="relative z-10"
+              className={cn('relative', 'z-10')}
             />
             <div className={cn('absolute', '-top-[20px]', 'left-[25px]')}>
               <BlurIcon color="#A8E3FF" />
@@ -82,7 +82,7 @@ const TestResultDialog = ({
           <div className={cn('flex', 'justify-center', 'gap-4')}>
             <Button
               variant="reverseFill"
-              className={cn(...buttonStyle)}
+              className={cn([...buttonStyle])}
               onClick={() => {
                 const today = new Date().toDateString();
                 localStorage.setItem('hideTestResultDialog', today);
@@ -93,7 +93,7 @@ const TestResultDialog = ({
             </Button>
             <Button
               variant="fill"
-              className={cn(...buttonStyle)}
+              className={cn([...buttonStyle])}
               onClick={() => {
                 setIsOpen(false);
                 onOpenPassResultDialog();

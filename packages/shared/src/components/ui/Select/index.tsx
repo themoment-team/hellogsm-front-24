@@ -19,7 +19,7 @@ const SelectTrigger = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
-    className={cn(
+    className={cn([
       'flex',
       'h-10',
       'w-full',
@@ -42,12 +42,12 @@ const SelectTrigger = React.forwardRef<
       'disabled:opacity-50',
       '[&>span]:line-clamp-1',
       className,
-    )}
+    ])}
     {...props}
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 stroke-[#71717A]" />
+      <ChevronDown className={cn('h-4', 'w-4', 'stroke-[#71717A]')} />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ));
@@ -59,10 +59,10 @@ const SelectScrollUpButton = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.ScrollUpButton
     ref={ref}
-    className={cn('flex', 'cursor-default', 'items-center', 'justify-center', 'py-1', className)}
+    className={cn(['flex', 'cursor-default', 'items-center', 'justify-center', 'py-1', className])}
     {...props}
   >
-    <ChevronUp className="h-4 w-4" />
+    <ChevronUp className={cn('h-4', 'w-4')} />
   </SelectPrimitive.ScrollUpButton>
 ));
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
@@ -73,10 +73,10 @@ const SelectScrollDownButton = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.ScrollDownButton
     ref={ref}
-    className={cn('flex', 'cursor-default', 'items-center', 'justify-center', 'py-1', className)}
+    className={cn(['flex', 'cursor-default', 'items-center', 'justify-center', 'py-1', className])}
     {...props}
   >
-    <ChevronDown className="h-4 w-4" />
+    <ChevronDown className={cn('h-4', 'w-4')} />
   </SelectPrimitive.ScrollDownButton>
 ));
 SelectScrollDownButton.displayName = SelectPrimitive.ScrollDownButton.displayName;
@@ -88,7 +88,7 @@ const SelectContent = React.forwardRef<
   <SelectPrimitive.Portal>
     <SelectPrimitive.Content
       ref={ref}
-      className={cn(
+      className={cn([
         'relative',
         'z-50',
         'max-h-96',
@@ -114,7 +114,7 @@ const SelectContent = React.forwardRef<
         position === 'popper' && 'data-[side=right]:translate-x-1',
         position === 'popper' && 'data-[side=top]:-translate-y-1',
         className,
-      )}
+      ])}
       position={position}
       {...props}
     >
@@ -141,7 +141,7 @@ const SelectLabel = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.Label
     ref={ref}
-    className={cn('py-1.5', 'pl-8', 'pr-2', 'text-sm', 'font-semibold', className)}
+    className={cn(['py-1.5', 'pl-8', 'pr-2', 'text-sm', 'font-semibold', className])}
     {...props}
   />
 ));
@@ -153,7 +153,7 @@ const SelectItem = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <SelectPrimitive.Item
     ref={ref}
-    className={cn(
+    className={cn([
       'relative',
       'flex',
       'w-full',
@@ -172,12 +172,12 @@ const SelectItem = React.forwardRef<
       'data-[disabled]:opacity-50',
       'cursor-pointer',
       className,
-    )}
+    ])}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className={cn('absolute', 'left-2', 'flex', 'h-3.5', 'w-3.5', 'items-center', 'justify-center')}>
       <SelectPrimitive.ItemIndicator>
-        <Check className="h-4 w-4" />
+        <Check className={cn('h-4', 'w-4')} />
       </SelectPrimitive.ItemIndicator>
     </span>
 
@@ -192,7 +192,7 @@ const SelectSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.Separator
     ref={ref}
-    className={cn('-mx-1', 'my-1', 'h-px', 'bg-muted', className)}
+    className={cn(['-mx-1', 'my-1', 'h-px', 'bg-muted', className])}
     {...props}
   />
 ));
@@ -201,7 +201,7 @@ SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 const SelectExample = () => {
   return (
     <Select>
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger className={cn('w-[180px]')}>
         <SelectValue placeholder="전형 선택" />
       </SelectTrigger>
       <SelectContent>
