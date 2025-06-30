@@ -1,5 +1,6 @@
 import { getDate } from 'api';
 import { redirect } from 'next/navigation';
+import { getKoreanDate, isTimeAfter, isTimeBefore } from 'shared';
 import { StepEnum } from 'types';
 
 import { getMyMemberInfo, getMyOneseo } from 'client/app/apis';
@@ -18,15 +19,15 @@ export default async function Register({ searchParams }: RegisterProps) {
     getDate(),
   ]);
 
-  const currentTime = new Date(
-    new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' }),
-  ).getTime();
-
+  const currentTime = getKoreanDate();
   const isOneseoWrite =
-    dateList?.oneseoSubmissionStart && dateList?.oneseoSubmissionEnd
-      ? new Date(dateList.oneseoSubmissionStart).getTime() <= currentTime &&
-        currentTime < new Date(dateList.oneseoSubmissionEnd).getTime()
-      : false;
+    !!dateList?.oneseoSubmissionStart &&
+    !!dateList?.oneseoSubmissionEnd &&
+    isTimeAfter({
+      baseTime: new Date(dateList.oneseoSubmissionStart),
+      compareTime: currentTime,
+    }) &&
+    isTimeBefore({ baseTime: new Date(dateList.oneseoSubmissionEnd), compareTime: currentTime });
 
   if (!info || (data && !data.step) || !isOneseoWrite) redirect('/');
 

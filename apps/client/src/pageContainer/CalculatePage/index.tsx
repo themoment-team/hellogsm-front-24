@@ -180,7 +180,7 @@ const CalculatePage = () => {
                     width={56}
                     height={56}
                     alt={text}
-                    className={cn(['ml-[5.81rem]'])}
+                    className={cn('ml-[5.81rem]')}
                   />
                 </button>
               ))}

@@ -76,7 +76,7 @@ const Footer = () => {
               )}
             >
               ©{year} Copyright 광주소프트웨어마이스터고등학교 &nbsp;
-              <br className="sm:hidden" />
+              <br className={cn('sm:hidden')} />
               ALL RIGHTS RESERVED.
             </p>
             <div className={cn('flex', 'gap-2', 'sm:flex-row', 'flex-col', 'sm:gap-6')}>

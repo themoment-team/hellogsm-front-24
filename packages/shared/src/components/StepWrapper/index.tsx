@@ -59,9 +59,19 @@ interface StepWrapperProps {
   step: StepEnum;
   memberId?: number;
   type: 'client' | 'admin';
+  onTempSave?: () => void;
+  onFormChange?: () => void;
 }
 
-const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => {
+const StepWrapper = ({
+  data,
+  step,
+  info,
+  memberId,
+  type,
+  onTempSave,
+  onFormChange,
+}: StepWrapperProps) => {
   const step1UseForm = useForm<Step1FormType>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
@@ -167,15 +177,19 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
   });
 
   const { mutate: postTempStorage } = usePostTempStorage(Number(step), {
-    onSuccess: () =>
+    onSuccess: () => {
       toast.success('임시 저장 되었습니다.', {
         icon: InfoIcon,
         closeButton: (
-          <button className="cursor" onClick={() => toast.dismiss()}>
+          <button className={cn('cursor')} onClick={() => toast.dismiss()}>
             <CloseIcon />
           </button>
         ),
-      }),
+      });
+      if (onTempSave) {
+        onTempSave();
+      }
+    },
     onError: () => toast.error('임시 저장을 실패하였습니다.'),
   });
 
@@ -352,10 +366,26 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
       push(`${BASE_URL}?step=3`);
   }, [step]);
 
+  useEffect(() => {
+    if (!onFormChange) return;
+
+    const step1Subscription = step1UseForm.watch(onFormChange);
+    const step2Subscription = step2UseForm.watch(onFormChange);
+    const step3Subscription = step3UseForm.watch(onFormChange);
+    const step4Subscription = step4UseForm.watch(onFormChange);
+
+    return () => {
+      step1Subscription.unsubscribe();
+      step2Subscription.unsubscribe();
+      step3Subscription.unsubscribe();
+      step4Subscription.unsubscribe();
+    };
+  }, [step1UseForm, step2UseForm, step3UseForm, step4UseForm, onFormChange]);
+
   return (
     <>
       <div
-        className={cn([
+        className={cn(
           'w-full',
           'h-full',
           'bg-slate-50',
@@ -364,17 +394,17 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
           'hidden',
           'justify-center',
           'pb-[5rem]',
-        ])}
+        )}
       >
         <div
-          className={cn([
+          className={cn(
             'w-[66.5rem]',
             'flex',
             'flex-col',
             'bg-white',
             'rounded-[1.25rem]',
             'rounded-b-lg-[1.125rem]',
-          ])}
+          )}
         >
           <StepBar
             step={step}
@@ -383,7 +413,7 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
             handleCheckScoreButtonClick={handleCheckScoreButtonClick}
           />
           <div
-            className={cn([
+            className={cn(
               'flex',
               'justify-center',
               'w-full',
@@ -392,7 +422,7 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
               'py-[1.5rem]',
               'bg-white',
               'rounded-b-lg-[1.125rem]',
-            ])}
+            )}
           >
             {step === '1' && (
               <Step1Register
@@ -440,7 +470,7 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
       />
 
       <AlertDialog open={isOneseoSubmitDialog}>
-        <AlertDialogContent className="w-[400px]">
+        <AlertDialogContent className={cn('w-[400px]')}>
           <AlertDialogHeader>
             <AlertDialogTitle>
               {type === 'client' ? (
