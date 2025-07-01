@@ -119,7 +119,7 @@ const FaqElement = ({
             showContent ? ['max-h-[0.05rem]', 'opacity-100'] : ['max-h-0', 'opacity-0'],
           ])}
         />
-        <p
+        <div
           className={cn(
             'text-slate-700',
             'text-[0.875rem]/[1.25rem]',
@@ -127,9 +127,8 @@ const FaqElement = ({
             'text-left',
             'pt-4',
           )}
-        >
-          {content}
-        </p>
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
       </div>
     </button>
   );
