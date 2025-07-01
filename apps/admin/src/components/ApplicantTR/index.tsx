@@ -188,8 +188,8 @@ const ApplicantTR = ({
     <Table>
       <TableBody>
         <TableRow>
-          <TableCell className="w-[6.25rem] text-zinc-900">{submitCode}</TableCell>
-          <TableCell className="w-[7.25rem] p-0">
+          <TableCell className={cn('w-[6.25rem]', 'text-zinc-900')}>{submitCode}</TableCell>
+          <TableCell className={cn('w-[7.25rem]', 'p-0')}>
             <AlertDialog open={realOneseoDialogOpen}>
               <Toggle
                 onClick={() => setRealOneseoDialogOpen(true)}
@@ -198,7 +198,7 @@ const ApplicantTR = ({
               >
                 제출 완료
               </Toggle>
-              <AlertDialogContent className="w-[25rem]">
+              <AlertDialogContent className={cn('w-[25rem]')}>
                 <AlertDialogHeader>
                   <AlertDialogTitle>서류 제출 여부를 변경하시겠습니까?</AlertDialogTitle>
                 </AlertDialogHeader>
@@ -211,16 +211,18 @@ const ApplicantTR = ({
               </AlertDialogContent>
             </AlertDialog>
           </TableCell>
-          <TableCell className="w-[8.625rem] font-semibold text-zinc-900">
+          <TableCell className={cn('w-[8.625rem]', 'font-semibold', 'text-zinc-900')}>
             {name} <br />
-            <span className="font-normal text-zinc-600">{phoneNumber}</span>
+            <span className={cn('font-normal', 'text-zinc-600')}>{phoneNumber}</span>
           </TableCell>
-          <TableCell className="w-[9.625rem] text-zinc-600">{schoolName}</TableCell>
-          <TableCell className="w-[7.625rem] text-zinc-900">{ScreeningEnum[screening]}</TableCell>
-          <TableCell className="w-[6rem]">
+          <TableCell className={cn('w-[9.625rem]', 'text-zinc-600')}>{schoolName}</TableCell>
+          <TableCell className={cn('w-[7.625rem]', 'text-zinc-900')}>
+            {ScreeningEnum[screening]}
+          </TableCell>
+          <TableCell className={cn('w-[6rem]')}>
             <Badge variant={firstTestResult}>{firstTestResult}</Badge>
           </TableCell>
-          <TableCell className="w-[11.25rem] text-zinc-400">
+          <TableCell className={cn('w-[11.25rem]', 'text-zinc-400')}>
             {firstTestPassYn === 'YES' && is역량검사처리기간 ? (
               <div className={cn('flex', 'gap-1.5')}>
                 <Controller
@@ -244,7 +246,7 @@ const ApplicantTR = ({
               '진행 전'
             )}
           </TableCell>
-          <TableCell className="w-[11.25rem] text-zinc-400">
+          <TableCell className={cn('w-[11.25rem]', 'text-zinc-400')}>
             {firstTestPassYn === 'YES' && is심층면접처리기간 ? (
               <div className={cn('flex', 'gap-1.5')}>
                 <Controller
@@ -268,10 +270,10 @@ const ApplicantTR = ({
               '진행 전'
             )}
           </TableCell>
-          <TableCell className="w-[6rem]">
+          <TableCell className={cn('w-[6rem]')}>
             <Badge variant={secondTestResult}>{secondTestResult}</Badge>
           </TableCell>
-          <TableCell className="w-[8.125rem]">
+          <TableCell className={cn('w-[8.125rem]')}>
             <AlertDialog open={agreeDocDialogOpen}>
               <Toggle
                 onClick={() => setAgreeDocDialogOpen(true)}
@@ -281,7 +283,7 @@ const ApplicantTR = ({
               >
                 제출 완료
               </Toggle>
-              <AlertDialogContent className="w-[25rem]">
+              <AlertDialogContent className={cn('w-[25rem]')}>
                 <AlertDialogHeader>
                   <AlertDialogTitle>입학동의서 제출 여부를 변경하시겠습니까?</AlertDialogTitle>
                 </AlertDialogHeader>
@@ -294,12 +296,12 @@ const ApplicantTR = ({
               </AlertDialogContent>
             </AlertDialog>
           </TableCell>
-          <TableCell className="w-[8.875rem]">
-            <Button onClick={handleOneseoEdit} className="ml-[33.24px]" variant="outline">
+          <TableCell className={cn('w-[8.875rem]')}>
+            <Button onClick={handleOneseoEdit} className={cn('ml-[33.24px]')} variant="outline">
               원서수정
             </Button>
             <AlertDialog open={editOneseoDialogOpen}>
-              <AlertDialogContent className="w-[25rem]">
+              <AlertDialogContent className={cn('w-[25rem]')}>
                 <AlertDialogHeader>
                   <AlertDialogTitle>원서 수정을 할 수 없는 기간입니다.</AlertDialogTitle>
                 </AlertDialogHeader>

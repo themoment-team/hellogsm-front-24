@@ -85,17 +85,17 @@ const FaqElement = ({
           </p>
         </div>
         <div
-          className={cn(
+          className={cn([
             'transition-transform duration-300',
             showContent ? 'rotate-180' : 'rotate-0',
-          )}
+          ])}
         >
           <ChevronIcon />
         </div>
       </div>
 
       <div
-        className={cn(
+        className={cn([
           'w-full',
           'flex-col',
           'gap-4',
@@ -106,10 +106,10 @@ const FaqElement = ({
           'ease-in-out',
           `${isPageChanging ? 'transition-none' : ''}`,
           showContent ? ['max-h-48', 'pt-4'] : ['max-h-0', 'pt-0'],
-        )}
+        ])}
       >
         <div
-          className={cn(
+          className={cn([
             'w-full',
             'h-[0.05rem]',
             'bg-slate-300',
@@ -117,7 +117,7 @@ const FaqElement = ({
             'duration-500',
             'ease-in-out',
             showContent ? ['max-h-[0.05rem]', 'opacity-100'] : ['max-h-0', 'opacity-0'],
-          )}
+          ])}
         />
         <div
           className={cn(

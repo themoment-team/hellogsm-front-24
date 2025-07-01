@@ -40,7 +40,7 @@ const Toggle = React.forwardRef<
     })}
     {...props}
   >
-    {icon && <span className="toggle-icon">{icon}</span>}
+    {icon && <span className={cn('toggle-icon')}>{icon}</span>}
     {props.children}
   </TogglePrimitive.Root>
 ));

@@ -112,7 +112,7 @@ const FilterBar = ({
 
           <div className={cn('flex', 'gap-2')}>
             <Select value={screeningTag} onValueChange={handleScreeningTagChange}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className={cn('w-[180px]')}>
                 <SelectValue placeholder="전형 선택" />
               </SelectTrigger>
               <SelectContent>
@@ -126,7 +126,7 @@ const FilterBar = ({
             </Select>
 
             <Select value={isSubmitted} onValueChange={handleSubmittedChange}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className={cn('w-[180px]')}>
                 <SelectValue placeholder="서류 제출 여부" />
               </SelectTrigger>
               <SelectContent>
@@ -185,7 +185,7 @@ const FilterBar = ({
         </div>
       </div>
       <AlertDialog open={showFirstModal}>
-        <AlertDialogContent className="w-[400px]">
+        <AlertDialogContent className={cn('w-[400px]')}>
           <AlertDialogHeader>
             <AlertDialogTitle>
               확인 버튼 클릭시 전체 지원자들에게 합격, 불합격 여부가 공개됩니다.
@@ -213,7 +213,7 @@ const FilterBar = ({
       </AlertDialog>
 
       <AlertDialog open={showSecondModal}>
-        <AlertDialogContent className="w-[400px]">
+        <AlertDialogContent className={cn('w-[400px]')}>
           <AlertDialogHeader>
             <AlertDialogTitle>
               확인 버튼 클릭시 전체 지원자들에게 합격, 불합격 여부가 공개됩니다.

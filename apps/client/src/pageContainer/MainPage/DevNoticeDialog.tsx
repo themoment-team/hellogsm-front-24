@@ -15,7 +15,7 @@ const DevNoticeDialog = () => {
 
   return (
     <AlertDialog open={isStage} onOpenChange={setIsStage}>
-      <AlertDialogContent className="w-[25rem]">
+      <AlertDialogContent className={cn('w-[25rem]')}>
         <AlertDialogTitle
           className={cn('flex', 'flex-col', 'text-center', 'gap-4', 'items-center')}
         >

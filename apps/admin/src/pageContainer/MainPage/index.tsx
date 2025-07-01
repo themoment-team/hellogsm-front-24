@@ -86,13 +86,13 @@ const MainPage = ({ initialData, isAfterFirstResults, isAfterSecondResults }: Ma
 
   return (
     <main
-      className={cn(
+      className={cn([
         isOpen && 'ml-60',
         isOpen ? 'px-10' : 'pl-20 pr-10',
         'pt-[60px]',
         'pb-8',
         'bg-white',
-      )}
+      ])}
     >
       <SideMenu
         testResultTag={testResultTag}
@@ -100,11 +100,11 @@ const MainPage = ({ initialData, isAfterFirstResults, isAfterSecondResults }: Ma
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
-      <div className={cn(...flexColStyle, 'gap-8')}>
+      <div className={cn([...flexColStyle, 'gap-8'])}>
         <h1 className={cn('text-gray-900', 'text-3xl', 'font-semibold')}>
           {testResultTypeConvertor[testResultTag]}
         </h1>
-        <div className={cn(...flexColStyle, 'gap-5')}>
+        <div className={cn([...flexColStyle, 'gap-5'])}>
           <FilterBar
             screeningTag={screeningTag}
             setScreeningTag={setScreeningTag}

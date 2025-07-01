@@ -122,10 +122,10 @@ const CheckFirstResultPage = ({ isCheckFirstResult }: CheckFirstResultPageProps)
             onSubmit={formMethods.handleSubmit(handleFormSubmit)}
             className={cn('flex', 'flex-col', 'items-center', 'gap-4')}
           >
-            <CustomFormItem className="gap-1" text="지원자 성명">
+            <CustomFormItem className={cn('gap-1')} text="지원자 성명">
               <Input {...formMethods.register('name')} placeholder="지원자 성명 입력" />
             </CustomFormItem>
-            <CustomFormItem className="gap-1" text="생년월일">
+            <CustomFormItem className={cn('gap-1')} text="생년월일">
               <div className={cn('flex', 'gap-2')}>
                 <FormItem>
                   <Select
@@ -133,7 +133,7 @@ const CheckFirstResultPage = ({ isCheckFirstResult }: CheckFirstResultPageProps)
                     defaultValue={birthYear ?? ''}
                   >
                     <FormControl>
-                      <SelectTrigger className="w-[7.5625rem]">
+                      <SelectTrigger className={cn('w-[7.5625rem]')}>
                         <SelectValue placeholder="년도" />
                       </SelectTrigger>
                     </FormControl>
@@ -157,7 +157,7 @@ const CheckFirstResultPage = ({ isCheckFirstResult }: CheckFirstResultPageProps)
                     defaultValue={birthMonth ?? ''}
                   >
                     <FormControl>
-                      <SelectTrigger className="w-[7.5625rem]">
+                      <SelectTrigger className={cn('w-[7.5625rem]')}>
                         <SelectValue placeholder="월" />
                       </SelectTrigger>
                     </FormControl>
@@ -179,7 +179,7 @@ const CheckFirstResultPage = ({ isCheckFirstResult }: CheckFirstResultPageProps)
                     defaultValue={birthDay ?? ''}
                   >
                     <FormControl>
-                      <SelectTrigger className="w-[7.5625rem]">
+                      <SelectTrigger className={cn('w-[7.5625rem]')}>
                         <SelectValue placeholder="일" />
                       </SelectTrigger>
                     </FormControl>
@@ -197,7 +197,7 @@ const CheckFirstResultPage = ({ isCheckFirstResult }: CheckFirstResultPageProps)
                 </FormItem>
               </div>
             </CustomFormItem>
-            <CustomFormItem className="gap-1" text="지원자 전화번호">
+            <CustomFormItem className={cn('gap-1')} text="지원자 전화번호">
               <Input
                 {...formMethods.register('phoneNumber')}
                 placeholder="지원자 전화번호 입력(-제외)"
@@ -224,7 +224,7 @@ const CheckFirstResultPage = ({ isCheckFirstResult }: CheckFirstResultPageProps)
       </div>
 
       <AlertDialog open={!isCheckFirstResult}>
-        <AlertDialogContent className="w-[400px]">
+        <AlertDialogContent className={cn('w-[400px]')}>
           <AlertDialogHeader>
             <AlertDialogTitle>현재 1차 합격 여부를 조회할 수 없는 기간입니다.</AlertDialogTitle>
           </AlertDialogHeader>
@@ -237,7 +237,7 @@ const CheckFirstResultPage = ({ isCheckFirstResult }: CheckFirstResultPageProps)
       </AlertDialog>
 
       <AlertDialog open={isFailRequestDialog}>
-        <AlertDialogContent className="w-[400px]">
+        <AlertDialogContent className={cn('w-[400px]')}>
           <AlertDialogHeader>
             <AlertDialogTitle>
               조회된 사람이 없습니다.
