@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import type { UseQueryOptions } from '@tanstack/react-query';
 
 import { minutesToMs } from 'shared';
 
@@ -8,8 +9,6 @@ interface ExampleDataType {
   id: string;
   data: string;
 }
-
-import type { UseQueryOptions } from '@tanstack/react-query';
 
 export const useGetMyMenteeInfo = (options?: Omit<UseQueryOptions<ExampleDataType>, 'queryKey'>) =>
   useQuery({

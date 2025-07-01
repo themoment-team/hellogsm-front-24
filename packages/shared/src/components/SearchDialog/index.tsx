@@ -25,6 +25,7 @@ interface SearchDialogProps {
 
 interface SchoolType {
   SCHUL_NM: string;
+  // eslint-disable-next-line @cspell/spellchecker
   ORG_RDNMA: string;
 }
 
@@ -80,6 +81,7 @@ const SearchDialog = ({ setValue }: SearchDialogProps) => {
     setSchools([]);
     setIsSelecting(true);
     setValue('schoolName', school.SCHUL_NM);
+    // eslint-disable-next-line @cspell/spellchecker
     setValue('schoolAddress', school.ORG_RDNMA);
   };
 
