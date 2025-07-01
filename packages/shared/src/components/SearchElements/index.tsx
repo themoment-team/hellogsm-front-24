@@ -2,6 +2,7 @@ import { cn } from 'shared/lib/utils';
 
 interface SchoolType {
   SCHUL_NM: string;
+  // eslint-disable-next-line @cspell/spellchecker
   ORG_RDNMA: string;
 }
 
@@ -49,6 +50,7 @@ const SearchElements = ({ schools, onSelectSchool }: SearchElementsProps) => {
           onClick={() => onSelectSchool(school)}
         >
           <p className={cn('text-zinc-950', 'text-body1', 'font-normal')}>
+            {/* eslint-disable-next-line @cspell/spellchecker */}
             {school.SCHUL_NM} ({school.ORG_RDNMA})
           </p>
         </div>

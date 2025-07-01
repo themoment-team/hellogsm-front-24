@@ -29,7 +29,7 @@ import {
   SelectValue,
 } from 'shared';
 import {
-  checkFirstTestResultFormType,
+  CheckFirstTestResultFormType,
   MyMemberInfoType,
   MyTotalTestResultType,
   YesNo,
@@ -62,7 +62,7 @@ const CheckFirstResultPage = ({ isCheckFirstResult }: CheckFirstResultPageProps)
   }>({ name: '', birth: '', phoneNumber: '' });
   const { push } = useRouter();
 
-  const formMethods = useForm<checkFirstTestResultFormType>({
+  const formMethods = useForm<CheckFirstTestResultFormType>({
     resolver: zodResolver(checkFirstTestResultSchema),
     mode: 'onChange',
   });
@@ -75,7 +75,7 @@ const CheckFirstResultPage = ({ isCheckFirstResult }: CheckFirstResultPageProps)
   const birthMonth = formMethods.watch('birth.month');
   const birthDay = formMethods.watch('birth.day');
 
-  const handleFormSubmit = async ({ name, birth, phoneNumber }: checkFirstTestResultFormType) => {
+  const handleFormSubmit = async ({ name, birth, phoneNumber }: CheckFirstTestResultFormType) => {
     const formattedBirth = formattedBirthDate(birth);
 
     setQueryParams({
