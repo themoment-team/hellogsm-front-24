@@ -243,11 +243,7 @@ const DropdownMenu = ({
           'bg-white',
         )}
       >
-        <a
-          href="/mypage"
-          className={cn([...modalBtnStyle])}
-          onClick={() => setIsDropdown(false)}
-        >
+        <a href="/mypage" className={cn([...modalBtnStyle])} onClick={() => setIsDropdown(false)}>
           <I.HomeIcon size="1.5rem" color="#475569" /> 내 정보 페이지
         </a>
         <button
@@ -277,11 +273,7 @@ const DropdownMenu = ({
         'bg-white',
       )}
     >
-      <Link
-        href="/mypage"
-        className={cn([...modalBtnStyle])}
-        onClick={() => setIsDropdown(false)}
-      >
+      <Link href="/mypage" className={cn([...modalBtnStyle])} onClick={() => setIsDropdown(false)}>
         <I.HomeIcon size="1.5rem" color="#475569" /> 내 정보 페이지
       </Link>
       <Link
