@@ -1,4 +1,4 @@
-import { YesNo } from "./oneseo";
+import { YesNo } from './oneseo';
 
 export interface OperationType {
   firstTestResultAnnouncementYn: YesNo;

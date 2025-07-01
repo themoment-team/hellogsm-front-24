@@ -5,13 +5,12 @@ import {
   step2Schema,
   step3Schema,
   step4Schema,
-} from "shared";
+} from 'shared';
+import { z } from 'zod';
 
-import { z } from "zod";
+export type CheckFirstTestResultFormType = z.infer<typeof checkFirstTestResultSchema>;
 
-export type checkFirstTestResultFormType = z.infer<typeof checkFirstTestResultSchema>;
-
-export type checkFinalTestResultFormType = z.infer<typeof checkFinalTestResultSchema>;
+export type CheckFinalTestResultFormType = z.infer<typeof checkFinalTestResultSchema>;
 
 export type Step1FormType = z.infer<typeof step1Schema>;
 
