@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --ext .ts,.tsx"
   },
   "dependencies": {
-    "shared": "workspace:^",
     "eslint-config-custom": "workspace:^",
+    "shared": "workspace:^",
     "types": "workspace:^"
   },
   "keywords": [],
