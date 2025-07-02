@@ -257,7 +257,9 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
 
         {/* Mobile width 일떄 */}
         <div className={cn('md:hidden')}>
-          {isServerHealthy ? (
+          {isLogin ? (
+            '회원가입을 진행해주세요'
+          ) : isServerHealthy ? (
             isSignup ? (
               <MenuToggleButton />
             ) : (
