@@ -6,6 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { memberQueryKeys } from 'api';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 
 import * as I from 'client/assets';
 import { ActiveLink, LoginDialog } from 'client/components';
@@ -54,7 +55,240 @@ interface HeaderProps {
   isServerHealthy: boolean;
 }
 
+interface NavProps {
+  links: Array<{ href: string; label: string }>;
+  isRegisterPath: boolean;
+}
+
+interface MobileNavProps {
+  links: Array<{ href: string; label: string; icon: React.ComponentType<any> }>;
+  isRegisterPath: boolean;
+  hoveredLink: string | null;
+  setHoveredLink: (link: string | null) => void;
+  setIsMenu: (isMenu: boolean) => void;
+}
+
 const mobileWithSize = 1024;
+
+const PCNavigation = ({ links, isRegisterPath }: NavProps) => {
+  if (isRegisterPath) {
+    return (
+      <nav
+        className={cn(
+          'gap-[2.75rem]',
+          'hidden',
+          'md:flex',
+          'justify-between',
+          'text-lg',
+          'font-[600]',
+          'text-gray-500',
+        )}
+      >
+        {links.map(({ label, href }) => (
+          <a key={label} href={href} className={cn([...activeTextStyle])}>
+            {label}
+          </a>
+        ))}
+      </nav>
+    );
+  }
+
+  return (
+    <nav
+      className={cn(
+        'gap-[2.75rem]',
+        'hidden',
+        'md:flex',
+        'justify-between',
+        'text-lg',
+        'font-[600]',
+        'text-gray-500',
+      )}
+    >
+      {links.map(({ label, href }) => (
+        <ActiveLink
+          key={label}
+          href={href}
+          className={cn([...activeTextStyle])}
+          activeClassName={cn(...activeStyle)}
+        >
+          {label}
+        </ActiveLink>
+      ))}
+    </nav>
+  );
+};
+
+const MobileNavigation = ({
+  links,
+  isRegisterPath,
+  hoveredLink,
+  setHoveredLink,
+  setIsMenu,
+}: MobileNavProps) => {
+  if (isRegisterPath) {
+    return (
+      <div className={cn('flex', 'flex-col', 'items-start', 'gap-[2.25rem]')}>
+        {links.map((link) => {
+          const IconComponent = link.icon;
+          return (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={() => setIsMenu(false)}
+              className={cn(
+                'flex',
+                'items-center',
+                'gap-4',
+                'text-slate-300',
+                'text-[1.5rem]',
+                'leading-normal',
+                'font-bold',
+                'hover:text-slate-500',
+                'duration-150',
+              )}
+              onMouseEnter={() => setHoveredLink(link.href)}
+              onMouseLeave={() => setHoveredLink(null)}
+            >
+              <IconComponent
+                size="1.75rem"
+                color={hoveredLink === link.href ? '#64748B' : '#CBD5E1'}
+              />
+              {link.label}
+            </a>
+          );
+        })}
+      </div>
+    );
+  }
+
+  return (
+    <div className={cn('flex', 'flex-col', 'items-start', 'gap-[2.25rem]')}>
+      {links.map((link) => {
+        const IconComponent = link.icon;
+        return (
+          <Link
+            key={link.href}
+            href={link.href}
+            onClick={() => setIsMenu(false)}
+            className={cn(
+              'flex',
+              'items-center',
+              'gap-4',
+              'text-slate-300',
+              'text-[1.5rem]',
+              'leading-normal',
+              'font-bold',
+              'hover:text-slate-500',
+              'duration-150',
+            )}
+            onMouseEnter={() => setHoveredLink(link.href)}
+            onMouseLeave={() => setHoveredLink(null)}
+          >
+            <IconComponent
+              size="1.75rem"
+              color={hoveredLink === link.href ? '#64748B' : '#CBD5E1'}
+            />
+            {link.label}
+          </Link>
+        );
+      })}
+    </div>
+  );
+};
+
+// 로고 컴포넌트
+const Logo = ({ isRegisterPath }: { isRegisterPath: boolean }) => {
+  if (isRegisterPath) {
+    return (
+      <a href="/">
+        <I.HelloGSMLogo />
+      </a>
+    );
+  }
+
+  return (
+    <Link href="/">
+      <I.HelloGSMLogo />
+    </Link>
+  );
+};
+
+// 드롭다운 메뉴 컴포넌트
+const DropdownMenu = ({
+  isRegisterPath,
+  setIsDropdown,
+  handleLogoutClick,
+  handleLogout,
+}: {
+  isRegisterPath: boolean;
+  setIsDropdown: (value: boolean) => void;
+  handleLogoutClick: () => void;
+  handleLogout: () => void;
+}) => {
+  if (isRegisterPath) {
+    return (
+      <div
+        className={cn(
+          'absolute',
+          'top-full',
+          'left-[-17.5%]',
+          'mt-2',
+          'flex',
+          'w-[10rem]',
+          'flex-col',
+          'items-start',
+          'shadow-sm',
+          'rounded-md',
+          'bg-white',
+        )}
+      >
+        <a href="/mypage" className={cn([...modalBtnStyle])} onClick={() => setIsDropdown(false)}>
+          <I.HomeIcon size="1.5rem" color="#475569" /> 내 정보 페이지
+        </a>
+        <button
+          type="button"
+          className={cn([...modalBtnStyle, 'text-red-600'])}
+          onClick={handleLogoutClick}
+        >
+          <I.LogoutIcon /> 로그아웃
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={cn(
+        'absolute',
+        'top-full',
+        'left-[-17.5%]',
+        'mt-2',
+        'flex',
+        'w-[10rem]',
+        'flex-col',
+        'items-start',
+        'shadow-sm',
+        'rounded-md',
+        'bg-white',
+      )}
+    >
+      <Link href="/mypage" className={cn([...modalBtnStyle])} onClick={() => setIsDropdown(false)}>
+        <I.HomeIcon size="1.5rem" color="#475569" /> 내 정보 페이지
+      </Link>
+      <Link
+        href="/"
+        className={cn([...modalBtnStyle, 'text-red-600'])}
+        onClick={() => {
+          handleLogout();
+          setIsDropdown(false);
+        }}
+      >
+        <I.LogoutIcon /> 로그아웃
+      </Link>
+    </div>
+  );
+};
 
 const Header = ({ isServerHealthy }: HeaderProps) => {
   const { data: authInfo } = useGetMyAuthInfo();
@@ -75,6 +309,11 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
   const [isMenu, setIsMenu] = useState(false);
   const isLogin = authInfo?.authReferrerType && !memberInfo?.name;
   const isSignup = authInfo?.authReferrerType && memberInfo?.name;
+
+  const pathname = usePathname();
+  const isRegisterPath = pathname?.startsWith('/register');
+
+  const router = useRouter();
 
   const MenuToggleButton = () => (
     <button onClick={() => setIsMenu(!isMenu)}>{isMenu ? <I.XIcon /> : <I.HamburgerIcon />}</button>
@@ -139,6 +378,16 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
     };
   }, []);
 
+  const handleLogoutClick = () => {
+    if (confirm('변경사항이 저장되지 않을 수 있습니다. 로그아웃 하시겠습니까?')) {
+      handleLogout();
+      setIsDropdown(false);
+      router.push('/');
+    } else {
+      setIsDropdown(false);
+    }
+  };
+
   return (
     <>
       <header
@@ -164,34 +413,11 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
           'gap-8',
         )}
       >
-        <Link href="/">
-          <I.HelloGSMLogo />
-        </Link>
-        <nav
-          className={cn(
-            'gap-[2.75rem]',
-            'hidden',
-            'md:flex',
-            'justify-between',
-            'text-lg',
-            'font-[600]',
-            'text-gray-500',
-          )}
-        >
-          {pcNavLinks.map(({ label, href }) => (
-            <ActiveLink
-              key={label}
-              href={href}
-              className={cn([...activeTextStyle])}
-              activeClassName={cn(...activeStyle)}
-            >
-              {label}
-            </ActiveLink>
-          ))}
-        </nav>
+        <Logo isRegisterPath={isRegisterPath} />
+
+        <PCNavigation links={pcNavLinks} isRegisterPath={isRegisterPath} />
 
         {/* PC width 일떄 */}
-
         {isServerHealthy && (
           <div className={cn('hidden', 'md:flex')}>
             {isSignup ? (
@@ -211,39 +437,12 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
                   </button>
 
                   {isDropdown && (
-                    <div
-                      className={cn(
-                        'absolute',
-                        'top-full',
-                        'left-[-17.5%]',
-                        'mt-2',
-                        'flex',
-                        'w-[10rem]',
-                        'flex-col',
-                        'items-start',
-                        'shadow-sm',
-                        'rounded-md',
-                        'bg-white',
-                      )}
-                    >
-                      <Link
-                        href="/mypage"
-                        className={cn([...modalBtnStyle])}
-                        onClick={() => setIsDropdown(false)}
-                      >
-                        <I.HomeIcon size="1.5rem" color="#475569" /> 내 정보 페이지
-                      </Link>
-                      <Link
-                        href="/"
-                        className={cn([...modalBtnStyle, 'text-red-600'])}
-                        onClick={() => {
-                          handleLogout();
-                          setIsDropdown(false);
-                        }}
-                      >
-                        <I.LogoutIcon /> 로그아웃
-                      </Link>
-                    </div>
+                    <DropdownMenu
+                      isRegisterPath={isRegisterPath}
+                      setIsDropdown={setIsDropdown}
+                      handleLogoutClick={handleLogoutClick}
+                      handleLogout={handleLogout}
+                    />
                   )}
                 </div>
               </>
@@ -291,37 +490,13 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
             'overflow-y-auto',
           )}
         >
-          <div className={cn('flex', 'flex-col', 'items-start', 'gap-[2.25rem]')}>
-            {mobileNavLinks.map((link) => {
-              const IconComponent = link.icon;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsMenu(false)}
-                  className={cn(
-                    'flex',
-                    'items-center',
-                    'gap-4',
-                    'text-slate-300',
-                    'text-[1.5rem]',
-                    'leading-normal',
-                    'font-bold',
-                    'hover:text-slate-500',
-                    'duration-150',
-                  )}
-                  onMouseEnter={() => setHoveredLink(link.href)}
-                  onMouseLeave={() => setHoveredLink(null)}
-                >
-                  <IconComponent
-                    size="1.75rem"
-                    color={hoveredLink === link.href ? '#64748B' : '#CBD5E1'}
-                  />
-                  {link.label}
-                </Link>
-              );
-            })}
-          </div>
+          <MobileNavigation
+            links={mobileNavLinks}
+            isRegisterPath={isRegisterPath}
+            hoveredLink={hoveredLink}
+            setHoveredLink={setHoveredLink}
+            setIsMenu={setIsMenu}
+          />
           {isServerHealthy && (
             <button
               className={cn(
