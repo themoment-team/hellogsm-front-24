@@ -10,7 +10,7 @@ const SexToggle = ({ children, isSelected, ...props }: SexToggleProps) => {
 
   return (
     <div
-      className={cn(
+      className={cn([
         borderColor,
         'cursor-pointer',
         'w-full',
@@ -20,10 +20,10 @@ const SexToggle = ({ children, isSelected, ...props }: SexToggleProps) => {
         'border-solid',
         'flex',
         'justify-center',
-      )}
+      ])}
       {...props}
     >
-      <span className={cn(textColor, 'font-normal', 'text-sm')}>{children}</span>
+      <span className={cn([textColor, 'font-normal', 'text-sm'])}>{children}</span>
     </div>
   );
 };

@@ -95,20 +95,20 @@ const ArtPhysicalForm = ({
   return (
     <div className={cn('flex', 'flex-col', 'w-full')}>
       <div
-        className={cn(
+        className={cn([
           ...rowStyle,
           'bg-zinc-50',
           'rounded-t-[0.375rem]',
           'h-[3rem]',
           'border-t-[0.0625rem]',
-        )}
+        ])}
       >
-        <h1 className={cn(...itemStyle, 'w-[6.25rem]')}>과목명</h1>
+        <h1 className={cn([...itemStyle, 'w-[6.25rem]'])}>과목명</h1>
         <div className={cn('flex')}>
           {artPhysicalArray.map((title) => (
             <h1
               key={title}
-              className={cn(...itemStyle, isFreeGrade ? 'w-[7.47917rem]' : 'w-[10.3125rem]')}
+              className={cn([...itemStyle, isFreeGrade ? 'w-[7.47917rem]' : 'w-[10.3125rem]'])}
             >
               {title}
             </h1>
@@ -118,15 +118,15 @@ const ArtPhysicalForm = ({
       {artPhysicalIndexArray.map(({ subject, registerIndexList }, index) => (
         <div
           key={subject}
-          className={cn(
+          className={cn([
             ...rowStyle,
             'bg-white',
             'h-[3.5rem]',
             index === artPhysicalIndexArray.length - 1 && 'rounded-b-[0.375rem]',
-          )}
+          ])}
         >
           <div className={cn('h-full', 'w-[6.25rem]', 'flex', 'items-center', 'justify-center')}>
-            <h1 className={cn(...itemStyle, 'w-full')}>{subject}</h1>
+            <h1 className={cn([...itemStyle, 'w-full'])}>{subject}</h1>
           </div>
           <div className={cn('flex')}>
             {registerIndexList.map((registerIndex) => {
@@ -135,7 +135,7 @@ const ArtPhysicalForm = ({
               return (
                 <div
                   key={registerIndex}
-                  className={cn(...itemStyle, isFreeGrade ? 'w-[7.47917rem]' : 'w-[10.3125rem]')}
+                  className={cn([...itemStyle, isFreeGrade ? 'w-[7.47917rem]' : 'w-[10.3125rem]'])}
                 >
                   <Select
                     onValueChange={(value) =>
@@ -144,7 +144,7 @@ const ArtPhysicalForm = ({
                     defaultValue={score ? String(score) : ''}
                   >
                     <SelectTrigger
-                      className={cn(
+                      className={cn([
                         'h-[2rem]',
                         'text-sm',
                         'font-normal',
@@ -155,7 +155,7 @@ const ArtPhysicalForm = ({
                         'px-[0.5rem]',
                         'border-slate-300',
                         isFreeGrade ? 'w-[5.47917rem]' : 'w-[8.3125rem]',
-                      )}
+                      ])}
                     >
                       <SelectValue placeholder="성적 선택" />
                     </SelectTrigger>

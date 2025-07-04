@@ -21,8 +21,8 @@ import { useGetEditability, useGetOneseoList } from 'api/hooks';
 
 interface MainPageProps {
   initialData: OneseoListType | undefined;
-  isBeforeFirstResults: boolean;
-  isBeforeSecondResults: boolean;
+  isAfterFirstResults: boolean;
+  isAfterSecondResults: boolean;
 }
 
 const flexColStyle = ['flex', 'flex-col'] as const;
@@ -37,7 +37,7 @@ const testResultTypeConvertor: { [key: string]: string } = {
   FALL: '불합격자 관리',
 };
 
-const MainPage = ({ initialData, isBeforeFirstResults, isBeforeSecondResults }: MainPageProps) => {
+const MainPage = ({ initialData, isAfterFirstResults, isAfterSecondResults }: MainPageProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
   const [keyword, setKeyword] = useState<string>('');
@@ -86,13 +86,13 @@ const MainPage = ({ initialData, isBeforeFirstResults, isBeforeSecondResults }: 
 
   return (
     <main
-      className={cn(
+      className={cn([
         isOpen && 'ml-60',
         isOpen ? 'px-10' : 'pl-20 pr-10',
         'pt-[60px]',
         'pb-8',
         'bg-white',
-      )}
+      ])}
     >
       <SideMenu
         testResultTag={testResultTag}
@@ -100,11 +100,11 @@ const MainPage = ({ initialData, isBeforeFirstResults, isBeforeSecondResults }: 
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
-      <div className={cn(...flexColStyle, 'gap-8')}>
+      <div className={cn([...flexColStyle, 'gap-8'])}>
         <h1 className={cn('text-gray-900', 'text-3xl', 'font-semibold')}>
           {testResultTypeConvertor[testResultTag]}
         </h1>
-        <div className={cn(...flexColStyle, 'gap-5')}>
+        <div className={cn([...flexColStyle, 'gap-5'])}>
           <FilterBar
             screeningTag={screeningTag}
             setScreeningTag={setScreeningTag}
@@ -112,8 +112,8 @@ const MainPage = ({ initialData, isBeforeFirstResults, isBeforeSecondResults }: 
             setKeyword={setKeyword}
             isSubmitted={isSubmitted}
             setIsSubmitted={setIsSubmitted}
-            isBeforeFirstResults={isBeforeFirstResults}
-            isBeforeSecondResults={isBeforeSecondResults}
+            isAfterFirstResults={isAfterFirstResults}
+            isAfterSecondResults={isAfterSecondResults}
           />
           <div
             className={cn(

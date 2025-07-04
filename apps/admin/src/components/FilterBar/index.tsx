@@ -36,8 +36,8 @@ interface FilterBarProps {
   setIsSubmitted: React.Dispatch<React.SetStateAction<YesNo | string>>;
   screeningTag: ScreeningType | string;
   setScreeningTag: React.Dispatch<React.SetStateAction<ScreeningType | string>>;
-  isBeforeFirstResults: boolean;
-  isBeforeSecondResults: boolean;
+  isAfterFirstResults: boolean;
+  isAfterSecondResults: boolean;
 }
 
 const FilterBar = ({
@@ -47,8 +47,8 @@ const FilterBar = ({
   setIsSubmitted,
   setScreeningTag,
   screeningTag,
-  isBeforeFirstResults,
-  isBeforeSecondResults,
+  isAfterFirstResults,
+  isAfterSecondResults,
 }: FilterBarProps) => {
   const [showFirstModal, setShowFirstModal] = useState<boolean>(false);
   const [showSecondModal, setShowSecondModal] = useState<boolean>(false);
@@ -112,7 +112,7 @@ const FilterBar = ({
 
           <div className={cn('flex', 'gap-2')}>
             <Select value={screeningTag} onValueChange={handleScreeningTagChange}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className={cn('w-[180px]')}>
                 <SelectValue placeholder="전형 선택" />
               </SelectTrigger>
               <SelectContent>
@@ -126,7 +126,7 @@ const FilterBar = ({
             </Select>
 
             <Select value={isSubmitted} onValueChange={handleSubmittedChange}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className={cn('w-[180px]')}>
                 <SelectValue placeholder="서류 제출 여부" />
               </SelectTrigger>
               <SelectContent>
@@ -149,7 +149,7 @@ const FilterBar = ({
             variant="outline"
             className={cn('border-slate-900', 'gap-2', 'hover:bg-slate-200')}
             disabled={
-              operationData?.firstTestResultAnnouncementYn === 'YES' || isBeforeFirstResults
+              operationData?.firstTestResultAnnouncementYn === 'YES' || !isAfterFirstResults
             }
             onClick={() => setShowFirstModal(true)}
           >
@@ -159,9 +159,9 @@ const FilterBar = ({
           <Button
             variant="outline"
             className={cn('border-slate-900', 'gap-2', 'hover:bg-slate-200')}
-            // disabled={
-            //   operationData?.secondTestResultAnnouncementYn === 'YES' || isBeforeSecondResults
-            // }
+            disabled={
+              operationData?.secondTestResultAnnouncementYn === 'YES' || !isAfterSecondResults
+            }
             onClick={() => setShowSecondModal(true)}
           >
             <MedalIcon />
@@ -185,7 +185,7 @@ const FilterBar = ({
         </div>
       </div>
       <AlertDialog open={showFirstModal}>
-        <AlertDialogContent className="w-[400px]">
+        <AlertDialogContent className={cn('w-[400px]')}>
           <AlertDialogHeader>
             <AlertDialogTitle>
               확인 버튼 클릭시 전체 지원자들에게 합격, 불합격 여부가 공개됩니다.
@@ -213,7 +213,7 @@ const FilterBar = ({
       </AlertDialog>
 
       <AlertDialog open={showSecondModal}>
-        <AlertDialogContent className="w-[400px]">
+        <AlertDialogContent className={cn('w-[400px]')}>
           <AlertDialogHeader>
             <AlertDialogTitle>
               확인 버튼 클릭시 전체 지원자들에게 합격, 불합격 여부가 공개됩니다.

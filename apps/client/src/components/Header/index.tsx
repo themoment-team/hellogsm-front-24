@@ -182,7 +182,7 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
             <ActiveLink
               key={label}
               href={href}
-              className={cn(...activeTextStyle)}
+              className={cn([...activeTextStyle])}
               activeClassName={cn(...activeStyle)}
             >
               {label}
@@ -198,11 +198,11 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
               <>
                 <div className={cn('relative', 'w-[10rem]')}>
                   <button
-                    className={cn(...loginLinkStyle, 'gap-2', 'relative')}
+                    className={cn([...loginLinkStyle, 'gap-2', 'relative'])}
                     onClick={() => setIsDropdown(!isDropdown)}
                   >
                     <div
-                      className={cn('flex', 'items-center', 'gap-[0.125rem]', ...activeTextStyle)}
+                      className={cn(['flex', 'items-center', 'gap-[0.125rem]', ...activeTextStyle])}
                     >
                       <I.HeaderProfileIcon size="1.5rem" color="#2563EB" />
                       <span className={cn('text-blue-600')}>{memberInfo.name}</span> 님
@@ -228,14 +228,14 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
                     >
                       <Link
                         href="/mypage"
-                        className={cn(...modalBtnStyle)}
+                        className={cn([...modalBtnStyle])}
                         onClick={() => setIsDropdown(false)}
                       >
                         <I.HomeIcon size="1.5rem" color="#475569" /> 내 정보 페이지
                       </Link>
                       <Link
                         href="/"
-                        className={cn(...modalBtnStyle, 'text-red-600')}
+                        className={cn([...modalBtnStyle, 'text-red-600'])}
                         onClick={() => {
                           handleLogout();
                           setIsDropdown(false);

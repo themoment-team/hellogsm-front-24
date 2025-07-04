@@ -42,7 +42,7 @@ const FinalSubmitDialog = ({
         <p>원서 최종 제출</p>
       </Button>
     </DialogTrigger>
-    <DialogContent className="bg-white" showCloseIcon={false}>
+    <DialogContent className={cn('bg-white')} showCloseIcon={false}>
       <DialogHeader>
         <DialogTitle>원서를 최종 제출 하시겠습니까?</DialogTitle>
         <DialogDescription>

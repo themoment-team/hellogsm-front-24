@@ -89,7 +89,7 @@ const SearchDialog = ({ setValue }: SearchDialogProps) => {
         <Button>학교 찾기</Button>
       </DialogTrigger>
       <DialogContent className={cn('w-fit', 'p-0', 'rounded-lg')} showCloseIcon={false}>
-        <DialogTitle className="sr-only">학교 찾기</DialogTitle>
+        <DialogTitle className={cn('sr-only')}>학교 찾기</DialogTitle>
         <div
           className={cn(
             'w-[29.5rem]',

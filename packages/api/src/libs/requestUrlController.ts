@@ -68,8 +68,8 @@ export const opetaionUrl = {
 export const testResultUrl = {
   postSendCode: () => '/test-result/v3/send-code',
   postAuthCode: () => '/test-result/v3/auth-code',
-  getFirstTestResult: (phoneNumber: string, code: string, submitCode: string) =>
-    `/test-result/v3/first-test?phoneNumber=${phoneNumber}&code=${code}&submitCode=${submitCode}`,
-  getFinalTestResult: (phoneNumber: string, code: string, examinationNumber: string) =>
-    `/test-result/v3/second-test?phoneNumber=${phoneNumber}&code=${code}&examinationNumber=${examinationNumber}`,
+  getFirstTestResult: (name: string, birth: string, phoneNumber: string) =>
+    `/test-result/v3/public/first-test?&name=${name}&birth=${birth}&phoneNumber=${phoneNumber}`,
+  getFinalTestResult: (name: string, birth: string, phoneNumber: string) =>
+    `/test-result/v3/public/second-test?&name=${name}&birth=${birth}&phoneNumber=${phoneNumber}`,
 } as const;

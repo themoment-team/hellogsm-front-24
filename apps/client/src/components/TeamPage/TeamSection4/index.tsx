@@ -52,7 +52,7 @@ const MemberCard = ({ githubId, name, role }: MemberCardProps) => {
       />
       <div>
         <p className={cn('text-[1.5rem]/[2rem]', 'font-medium')}>{name}</p>
-        <p className={cn('text-[1.375rem]/[1.75rem]', 'font-normal', roleColors[role])}>{role}</p>
+        <p className={cn(['text-[1.375rem]/[1.75rem]', 'font-normal', roleColors[role]])}>{role}</p>
       </div>
     </a>
   );
