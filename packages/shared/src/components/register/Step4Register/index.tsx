@@ -269,7 +269,7 @@ const Step4Register = ({
           <form onSubmit={(e) => e.preventDefault()}>
             <div className={cn('w-[18.75rem]', 'flex', 'flex-col', 'gap-1')}>
               <p className={cn('text-slate-900', 'text-[0.875rem]/[1.25rem]')}>
-                검정고시 전과목 득점 합계 <span className={cn('text-red-600')}>*</span>
+                검정고시 평균점수 <span className={cn('text-red-600')}>*</span>
               </p>
               <Input
                 {...register('gedTotalScore', {
@@ -375,7 +375,6 @@ const Step4Register = ({
                     watch={watch}
                     isFreeGrade={isFreeGrade}
                     isFreeSemester={isFreeSemester}
-                    freeSemester={watch('freeSemester')}
                   />
                 </div>
                 <div id="nonSubject" className={cn(...formWrapper)}>
