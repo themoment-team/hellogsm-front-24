@@ -1,7 +1,7 @@
 'use client';
 
 import { UseFormSetValue, UseFormWatch } from 'react-hook-form';
-import { FreeSemesterValueEnum, GraduationTypeValueEnum, Step4FormType } from 'types';
+import { GraduationTypeValueEnum, Step4FormType } from 'types';
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared/components';
 import { ART_PHYSICAL_SCORE_VALUES } from 'shared/constants';
@@ -13,7 +13,6 @@ interface ArtPhysicalFormProps {
   isFreeGrade: boolean;
   isFreeSemester: boolean;
   graduationType: GraduationTypeValueEnum.CANDIDATE | GraduationTypeValueEnum.GRADUATE;
-  freeSemester: FreeSemesterValueEnum | null;
 }
 
 const artPhysicalGraduationArray = [
@@ -34,21 +33,21 @@ const artPhysicalCandidateFreeSemesterArray = [
 const artPhysicalCandidateFreeYearArray = ['2학년 1학기', '2학년 2학기', '3학년 1학기'] as const;
 
 const artPhysicalGraduationIndexArray = [
-  { subject: '체육', registerIndexList: [0, 3, 6, 9] }, // 2-1 ~ 3-2(4학기)
+  { subject: '체육', registerIndexList: [0, 3, 6, 9] },
   { subject: '음악', registerIndexList: [1, 4, 7, 10] },
   { subject: '미술', registerIndexList: [2, 5, 8, 11] },
 ] as const;
 
 const artPhysicalCandidateFreeSemesterIndexArray = [
-  { subject: '체육', registerIndexList: [0, 3, 6, 9, 12] }, // 1-1 ~ 3-1 (5학기)
+  { subject: '체육', registerIndexList: [0, 3, 6, 9, 12] }, 
   { subject: '음악', registerIndexList: [1, 4, 7, 10, 13] },
   { subject: '미술', registerIndexList: [2, 5, 8, 11, 14] },
 ] as const;
 
-const artPhysicalCandidateFreeYearIndexArray = [
-  { subject: '체육', registerIndexList: [6, 9, 12] }, // 2-1 ~ 3-1 (3학기)
-  { subject: '음악', registerIndexList: [7, 10, 13] },
-  { subject: '미술', registerIndexList: [8, 11, 14] },
+const artPhysicalCandidateFreeGradeIndexArray = [
+  { subject: '체육', registerIndexList: [0, 3, 6] },
+  { subject: '음악', registerIndexList: [1, 4, 7] },
+  { subject: '미술', registerIndexList: [2, 5, 8] },
 ] as const;
 
 const itemStyle = [
@@ -90,7 +89,7 @@ const ArtPhysicalForm = ({
     graduationType === GraduationTypeValueEnum.CANDIDATE
       ? isFreeSemester
         ? artPhysicalCandidateFreeSemesterIndexArray
-        : artPhysicalCandidateFreeYearIndexArray
+        : artPhysicalCandidateFreeGradeIndexArray
       : artPhysicalGraduationIndexArray;
 
   return (
@@ -147,9 +146,6 @@ const ArtPhysicalForm = ({
                     <SelectTrigger
                       className={cn(
                         'h-[2rem]',
-                        'px-[0.25rem]',
-                        'py-[0.125rem]',
-                        'text-gray-500',
                         'text-sm',
                         'font-normal',
                         'leading-5',
