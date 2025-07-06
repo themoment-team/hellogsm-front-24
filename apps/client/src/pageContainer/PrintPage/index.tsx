@@ -16,6 +16,7 @@ interface PrintPageProps {
 }
 
 const semesterArray: string[] = [
+  '1학년 1학기',
   '1학년 2학기',
   '2학년 1학기',
   '2학년 2학기',
@@ -24,6 +25,7 @@ const semesterArray: string[] = [
 ] as const;
 
 const semesterToScore: { [key: string]: keyof artsPhysicalSubjectsScoreDetailType } = {
+  '1학년 1학기': 'score1_1',
   '1학년 2학기': 'score1_2',
   '2학년 1학기': 'score2_1',
   '2학년 2학기': 'score2_2',
@@ -66,6 +68,11 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
   const handlePrint = () => {
     window.print();
   };
+
+  const totalArtsPhysicalConvertedScore = artPhysicalScores
+    .map((scoreSet) => scoreSet?.[3])
+    .filter((score): score is number => typeof score === 'number')
+    .reduce((acc, cur) => acc + cur, 0);
 
   return (
     <>
@@ -386,7 +393,37 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                         성취도/평어
                       </div>
                     </div>
-                    <div className={cn('h-full', 'bg-slash', 'bg-contain', 'bg-no-repeat')} />
+                    {!oneseo.calculatedScore.generalSubjectsScoreDetail.score1_1 ? (
+                      <div className={cn('h-full', 'bg-slash', 'bg-contain', 'bg-no-repeat')} />
+                    ) : (
+                      <>
+                        {oneseo.middleSchoolAchievement.achievement1_1!.map((score, i) => (
+                          <div
+                            key={i}
+                            className={cn(
+                              'flex',
+                              'items-center',
+                              'justify-center',
+                              'border-b',
+                              'border-black',
+                            )}
+                          >
+                            {scoreToAlphabet[score]}
+                          </div>
+                        ))}
+                        <div
+                          className={cn(
+                            'flex',
+                            'items-center',
+                            'justify-center',
+                            'border-b-0',
+                            'border-black',
+                          )}
+                        >
+                          {oneseo.calculatedScore.generalSubjectsScoreDetail.score1_1}
+                        </div>
+                      </>
+                    )}
                   </div>
                   <div className={cn('flex', 'w-full', 'flex-col', 'border-r', 'border-black')}>
                     <div className={cn('flex', 'flex-col')}>
@@ -606,7 +643,7 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                       <div className={cn('h-full', 'bg-slash', 'bg-contain', 'bg-no-repeat')} />
                     ) : (
                       <>
-                        {oneseo.middleSchoolAchievement.achievement3_1!.map((score, i) => (
+                        {oneseo.middleSchoolAchievement.achievement3_2!.map((score, i) => (
                           <div
                             key={i}
                             className={cn(
@@ -629,129 +666,111 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                             'border-black',
                           )}
                         >
-                          {oneseo.calculatedScore.generalSubjectsScoreDetail.score3_1}
+                          {oneseo.calculatedScore.generalSubjectsScoreDetail.score3_2}
                         </div>
                       </>
                     )}
                   </div>
                 </div>
                 <h2 className={cn('mt-[1.5vh]', 'text-[1.2vh]', 'leading-[2vh]')}>체육예술교과</h2>
-                <div className={cn('flex', 'h-fit', 'border', 'border-black')}>
-                  <div className={cn('flex', 'w-full', 'flex-col', 'border-r', 'border-black')}>
-                    <div
-                      className={cn('relative', 'z-10', 'border-b', 'border-black', 'bg-backslash')}
-                    >
-                      <div className={cn('h-[2.2vh]', 'text-right')}>학년</div>
-                      <div className={cn('h-[2.2vh]', 'text-left')}>과목</div>
-                    </div>
-                    {[...ARTS_PHYSICAL_SUBJECTS].map((subject) => (
-                      <div
-                        key={subject}
+                <table className={cn('w-full', 'border', 'border-black', 'text-center')}>
+                  <thead>
+                    <tr>
+                      <th
+                        rowSpan={2}
                         className={cn(
-                          'flex',
-                          'items-center',
-                          'justify-center',
-                          'border-b',
+                          'relative',
+                          'w-[15%]',
+                          'border',
                           'border-black',
+                          'bg-backslash',
                         )}
                       >
-                        {subject}
-                      </div>
-                    ))}
-                    <div className={cn('flex', 'items-center', 'justify-center')}>환산점</div>
-                  </div>
-                  <div className={cn('flex', 'w-full', 'flex-col', 'border-b-0', 'border-black')}>
-                    <div className={cn('flex', 'flex-col')}>
-                      <div
-                        className={cn(
-                          'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        )}
-                      >
-                        1학년 1학기
-                      </div>
-                      <div
-                        className={cn(
-                          'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        )}
-                      >
-                        성취도/평어
-                      </div>
-                    </div>
-                    <div className={cn('h-full', 'bg-slash', 'bg-contain', 'bg-no-repeat')} />
-                  </div>
-                  {semesterArray.map((semester, idx) => (
-                    <div
-                      className={cn(
-                        'flex',
-                        'w-full',
-                        'flex-col',
-                        'border-b-0',
-                        'border-l',
-                        'border-black',
-                      )}
-                      key={semester}
-                    >
-                      <div className={cn('flex', 'flex-col')}>
-                        <div
+                        <div className={cn('h-[2.2vh]', 'text-right')}>학년</div>
+                        <div className={cn('h-[2.2vh]', 'text-left')}>과목</div>
+                      </th>
+                      {semesterArray.map((semester) => (
+                        <th
+                          key={semester}
                           className={cn(
-                            'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
+                            'h-[2.2vh]',
+                            'border-b',
+                            'border-black',
+                            'bg-gray-200',
+                            'p-[0.2vh]',
+                            'font-bold',
                           )}
                         >
                           {semester}
-                        </div>
-                        <div
+                        </th>
+                      ))}
+                    </tr>
+                    <tr>
+                      {semesterArray.map((_, idx) => (
+                        <th
+                          key={idx}
                           className={cn(
-                            'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
+                            'h-[2.2vh]',
+                            'border-b',
+                            'border-black',
+                            'bg-gray-200',
+                            'p-[0.2vh]',
+                            'text-center',
+                            'font-bold',
                           )}
                         >
                           성취도/평어
-                        </div>
-                      </div>
-                      {artPhysicalScores[idx] ? (
-                        <>
-                          <div
-                            className={cn(
-                              'flex',
-                              'items-center',
-                              'justify-center',
-                              'border-b',
-                              'border-black',
-                            )}
-                          >
-                            {artPhysicalScores[idx]![0]}
-                          </div>
-                          <div
-                            className={cn(
-                              'flex',
-                              'items-center',
-                              'justify-center',
-                              'border-b',
-                              'border-black',
-                            )}
-                          >
-                            {artPhysicalScores[idx]![1]}
-                          </div>
-                          <div
-                            className={cn(
-                              'flex',
-                              'items-center',
-                              'justify-center',
-                              'border-b',
-                              'border-black',
-                            )}
-                          >
-                            {artPhysicalScores[idx]![2]}
-                          </div>
-                          <div className={cn('flex', 'items-center', 'justify-center')}>
-                            {artPhysicalScores[idx]![3]}
-                          </div>
-                        </>
-                      ) : (
-                        <div className={cn('h-full', 'bg-slash', 'bg-contain', 'bg-no-repeat')} />
-                      )}
-                    </div>
-                  ))}
-                </div>
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {ARTS_PHYSICAL_SUBJECTS.map((subject, rowIdx) => (
+                      <tr key={subject}>
+                        <td className={cn('border', 'border-black')}>{subject}</td>
+
+                        {semesterArray.map((_, colIdx) => {
+                          const scoresInSemester = artPhysicalScores[colIdx];
+                          const isSemesterScoreEmpty = Array.isArray(scoresInSemester)
+                            ? scoresInSemester.every((s) => s === null || s === undefined)
+                            : true;
+
+                          if (isSemesterScoreEmpty) {
+                            if (rowIdx === 0) {
+                              return (
+                                <td
+                                  key={`merged-${colIdx}`}
+                                  rowSpan={ARTS_PHYSICAL_SUBJECTS.length}
+                                  className={cn('relative', 'border', 'border-black', 'bg-slash')}
+                                />
+                              );
+                            } else {
+                              return null;
+                            }
+                          }
+
+                          const score = artPhysicalScores[colIdx]?.[rowIdx];
+                          return (
+                            <td
+                              key={`score-${colIdx}-${rowIdx}`}
+                              className={cn('border', 'border-black')}
+                            >
+                              {score ?? ''}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    ))}
+
+                    <tr>
+                      <td className={cn('flex', 'items-center', 'justify-center')}>환산점</td>
+                      <td className={cn('border', 'border-black')} colSpan={semesterArray.length}>
+                        {totalArtsPhysicalConvertedScore}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
                 <h2 className={cn('mt-[1.5vh]', 'text-[1.2vh]', 'leading-[2vh]')}>비교과</h2>
                 <table className={cn('w-full', 'border-collapse', 'border', 'text-[1vh]')}>
                   <thead>
