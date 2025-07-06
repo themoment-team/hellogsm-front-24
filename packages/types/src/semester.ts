@@ -1,4 +1,4 @@
-import { FreeSemesterValueEnum } from "./value";
+import { FreeSemesterValueEnum } from './value';
 
 export type SemesterIdType =
   | "achievement1_1"

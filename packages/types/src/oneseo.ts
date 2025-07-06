@@ -6,46 +6,47 @@ import {
   MockScoreType,
   RelationshipWithGuardianValueEnum,
   ScreeningValueEnum,
-} from "types";
+} from 'types';
 
-export type ScreeningType = "GENERAL" | "SPECIAL" | "EXTRA_VETERANS" | "EXTRA_ADMISSION";
+export type ScreeningType = 'GENERAL' | 'SPECIAL' | 'EXTRA_VETERANS' | 'EXTRA_ADMISSION';
 
-export type MajorType = "SW" | "AI" | "IOT";
+export type MajorType = 'SW' | 'AI' | 'IOT';
 
-export type TestResultType = "ALL" | "FIRST_PASS" | "FINAL_PASS" | "FALL";
+export type TestResultType = 'ALL' | 'FIRST_PASS' | 'FINAL_PASS' | 'FALL';
 
-export type GraduationType = "CANDIDATE" | "GRADUATE" | "GED";
+export type GraduationType = 'CANDIDATE' | 'GRADUATE' | 'GED';
 
 export type FreeSemesterType = "1-1" | "1-2" | "2-1" | "2-2" | "3-1" | "3-2" | null;
 
-export type LiberalSystemType = "자유학년제" | "자유학기제";
 
-export type SexType = "MALE" | "FEMALE";
+export type LiberalSystemType = '자유학년제' | '자유학기제';
 
-export type YesNo = "YES" | "NO";
+export type SexType = 'MALE' | 'FEMALE';
+
+export type YesNo = 'YES' | 'NO';
 
 export enum ScreeningEnum {
-  GENERAL = "일반전형",
-  SPECIAL = "특별전형",
-  EXTRA_VETERANS = "국가보훈",
-  EXTRA_ADMISSION = "특례입학",
+  GENERAL = '일반전형',
+  SPECIAL = '특별전형',
+  EXTRA_VETERANS = '국가보훈',
+  EXTRA_ADMISSION = '특례입학',
 }
 
 export enum GraduationEnum {
-  CANDIDATE = "졸업예정",
-  GRADUATE = "졸업",
-  GED = "검정고시",
+  CANDIDATE = '졸업예정',
+  GRADUATE = '졸업',
+  GED = '검정고시',
 }
 
 export enum MajorEnum {
-  SW = "소프트웨어개발과",
-  IOT = "스마트 IoT과",
-  AI = "인공지능과",
+  SW = '소프트웨어개발과',
+  IOT = '스마트 IoT과',
+  AI = '인공지능과',
 }
 
 export enum SexEnum {
-  MALE = "남자",
-  FEMALE = "여자",
+  MALE = '남자',
+  FEMALE = '여자',
 }
 
 export type AchievementGradeType =
@@ -66,9 +67,9 @@ export const achievementGradeValues = [
 ] as const;
 
 export enum MajorEnum {
-  소프트웨어개발과 = "SW",
-  인공지능과 = "AI",
-  스마트IOT과 = "IOT",
+  소프트웨어개발과 = 'SW',
+  인공지능과 = 'AI',
+  스마트IOT과 = 'IOT',
 }
 
 export interface MiddleSchoolAchievementType {
@@ -84,7 +85,7 @@ export interface MiddleSchoolAchievementType {
   attendanceDays: number[];
   volunteerTime: number[];
   liberalSystem: LiberalSystemValueEnum | null;
-  freeSemester: FreeSemesterValueEnum | null | "";
+  freeSemester: FreeSemesterValueEnum | null | '';
   generalSubjects: string[];
   artsPhysicalSubjects: string[];
 }
@@ -150,7 +151,7 @@ export interface GeneralSubjectsScoreDetailType {
   score3_2: number | null;
 }
 
-export interface artsPhysicalSubjectsScoreDetailType {
+export interface ArtsPhysicalSubjectsScoreDetailType {
   score1_1: number;
   score1_2: number;
   score2_1: number;
@@ -161,7 +162,7 @@ export interface artsPhysicalSubjectsScoreDetailType {
 
 export interface CalculatedScoreType extends MockScoreType {
   generalSubjectsScoreDetail: GeneralSubjectsScoreDetailType;
-  artsPhysicalSubjectsScoreDetail: artsPhysicalSubjectsScoreDetailType;
+  artsPhysicalSubjectsScoreDetail: ArtsPhysicalSubjectsScoreDetailType;
 }
 
 export interface GetMyOneseoType {

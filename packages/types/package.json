@@ -2,16 +2,21 @@
   "name": "types",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint . --ext .ts,.tsx"
   },
   "dependencies": {
+    "eslint-config-custom": "workspace:^",
     "shared": "workspace:^",
     "types": "workspace:^"
   },
-  "types": "workspace:^",
+  "devDependencies": {
+    "eslint-config-custom": "workspace:^"
+  },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "prettier": "eslint-config-custom/prettier"
 }

@@ -1,8 +1,8 @@
-import { SexType, YesNo } from "types";
+import { SexType, YesNo } from 'types';
 
-export type RoleType = "UNAUTHENTICATED" | "APPLICANT" | "ADMIN" | "ROOT";
-export type AuthReferrerType = "KAKAO" | "GOOGLE";
-export type Majors = "AI" | "SW" | "IOT";
+export type RoleType = 'UNAUTHENTICATED' | 'APPLICANT' | 'ADMIN' | 'ROOT';
+export type AuthReferrerType = 'KAKAO' | 'GOOGLE';
+export type Majors = 'AI' | 'SW' | 'IOT';
 
 interface MemberInfoType {
   name: string;

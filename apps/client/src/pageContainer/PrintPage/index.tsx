@@ -1,6 +1,6 @@
 'use client';
 
-import { artsPhysicalSubjectsScoreDetailType, GetMyOneseoType, SexEnum } from 'types';
+import { ArtsPhysicalSubjectsScoreDetailType, GetMyOneseoType, SexEnum } from 'types';
 
 import { OneseoStatus } from 'client/components';
 
@@ -24,7 +24,7 @@ const semesterArray: string[] = [
   '3학년 2학기',
 ] as const;
 
-const semesterToScore: { [key: string]: keyof artsPhysicalSubjectsScoreDetailType } = {
+const semesterToScore: { [key: string]: keyof ArtsPhysicalSubjectsScoreDetailType } = {
   '1학년 1학기': 'score1_1',
   '1학년 2학기': 'score1_2',
   '2학년 1학기': 'score2_1',

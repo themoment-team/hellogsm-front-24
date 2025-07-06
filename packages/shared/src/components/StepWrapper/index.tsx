@@ -59,19 +59,9 @@ interface StepWrapperProps {
   step: StepEnum;
   memberId?: number;
   type: 'client' | 'admin';
-  onTempSave?: () => void;
-  onFormChange?: () => void;
 }
 
-const StepWrapper = ({
-  data,
-  step,
-  info,
-  memberId,
-  type,
-  onTempSave,
-  onFormChange,
-}: StepWrapperProps) => {
+const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => {
   const step1UseForm = useForm<Step1FormType>({
     resolver: zodResolver(step1Schema),
     defaultValues: {
@@ -177,7 +167,7 @@ const StepWrapper = ({
   });
 
   const { mutate: postTempStorage } = usePostTempStorage(Number(step), {
-    onSuccess: () => {
+    onSuccess: () =>
       toast.success('임시 저장 되었습니다.', {
         icon: InfoIcon,
         closeButton: (
@@ -185,11 +175,7 @@ const StepWrapper = ({
             <CloseIcon />
           </button>
         ),
-      });
-      if (onTempSave) {
-        onTempSave();
-      }
-    },
+      }),
     onError: () => toast.error('임시 저장을 실패하였습니다.'),
   });
 
@@ -365,22 +351,6 @@ const StepWrapper = ({
     if (step === StepEnum.FOUR && (!isStepSuccess[1] || !isStepSuccess[2] || !isStepSuccess[3]))
       push(`${BASE_URL}?step=3`);
   }, [step]);
-
-  useEffect(() => {
-    if (!onFormChange) return;
-
-    const step1Subscription = step1UseForm.watch(onFormChange);
-    const step2Subscription = step2UseForm.watch(onFormChange);
-    const step3Subscription = step3UseForm.watch(onFormChange);
-    const step4Subscription = step4UseForm.watch(onFormChange);
-
-    return () => {
-      step1Subscription.unsubscribe();
-      step2Subscription.unsubscribe();
-      step3Subscription.unsubscribe();
-      step4Subscription.unsubscribe();
-    };
-  }, [step1UseForm, step2UseForm, step3UseForm, step4UseForm, onFormChange]);
 
   return (
     <>

@@ -16,6 +16,7 @@ import {
   Button,
   checkFinalTestResultSchema,
   CustomFormItem,
+  formattedBirthDate,
   FormControl,
   FormItem,
   getKoreanDate,
@@ -28,13 +29,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from 'shared';
-import { checkFinalTestResultFormType, MyMemberInfoType, MyTotalTestResultType } from 'types';
+import { CheckFinalTestResultFormType, MyMemberInfoType, MyTotalTestResultType } from 'types';
 
 import { PassResultDialog } from 'client/components';
 import { useGetFinalTestResult } from 'client/hooks/api';
 
 import { cn } from 'shared/lib/utils';
-import formattedBirthDate from 'shared/utils/formatBirth';
 
 const prevUrl = '/check-result';
 
@@ -57,7 +57,7 @@ const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => 
   }>({ name: '', birth: '', phoneNumber: '' });
   const { push } = useRouter();
 
-  const formMethods = useForm<checkFinalTestResultFormType>({
+  const formMethods = useForm<CheckFinalTestResultFormType>({
     resolver: zodResolver(checkFinalTestResultSchema),
     mode: 'onChange',
   });
@@ -70,7 +70,7 @@ const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => 
   const birthMonth = formMethods.watch('birth.month');
   const birthDay = formMethods.watch('birth.day');
 
-  const handleFormSubmit = async ({ name, birth, phoneNumber }: checkFinalTestResultFormType) => {
+  const handleFormSubmit = async ({ name, birth, phoneNumber }: CheckFinalTestResultFormType) => {
     const formattedBirth = formattedBirthDate(birth);
 
     setQueryParams({
