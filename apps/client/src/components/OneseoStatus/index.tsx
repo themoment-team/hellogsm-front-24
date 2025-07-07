@@ -152,7 +152,7 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
           </td>
         </tr>
         <tr>
-          <td className={tdStyle + 'w-[2.6875rem] bg-slash'}></td>
+          <td className={tdStyle + 'bg-slash w-[2.6875rem]'}></td>
           {achievementGradeValues.map((gradeKey) => {
             const achievementScoreConvertor: {
               [key: string]: 'score1_2' | 'score2_1' | 'score2_2' | 'score3_1' | 'score3_2';
@@ -166,7 +166,7 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
 
             // 검정고시나 자유학기제로 점수가 없다면 빈칸 처리
             return isGEDScore || !oneseo.middleSchoolAchievement[gradeKey]?.length ? (
-              <td key={gradeKey} className={tdStyle + 'w-[2.6875rem] bg-slash'}></td>
+              <td key={gradeKey} className={tdStyle + 'bg-slash w-[2.6875rem]'}></td>
             ) : (
               <td key={gradeKey} className={cn('border', 'border-black')}>
                 {
@@ -178,7 +178,7 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
             );
           })}
           {isGEDScore ? (
-            <td className={tdStyle + 'w-[2.6875rem] bg-slash'}></td>
+            <td className={tdStyle + 'bg-slash w-[2.6875rem]'}></td>
           ) : (
             <td className={cn('border', 'border-black')}>
               {oneseo.calculatedScore.artsPhysicalSubjectsScore}
