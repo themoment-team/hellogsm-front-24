@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import { Button } from 'shared';
 
-import { Button } from "shared";
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
-  title: "Example/Test",
+  title: 'Example/Test',
   component: Button,
   //   argTypes: {
   //     children: { control: "text", defaultValue: "Button" },
@@ -17,7 +17,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    variant: "default",
-    children: "Test",
+    variant: 'default',
+    children: 'Test',
   },
 };
