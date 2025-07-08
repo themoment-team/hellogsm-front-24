@@ -152,7 +152,6 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
           </td>
         </tr>
         <tr>
-          <td className={tdStyle + 'w-[2.6875rem] bg-slash'}></td>
           {achievementGradeValues.map((gradeKey) => {
             const achievementScoreConvertor: {
               [key: string]:
