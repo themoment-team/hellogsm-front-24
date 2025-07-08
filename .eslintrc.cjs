@@ -26,7 +26,7 @@ module.exports = {
   ],
   settings: {
     react: {
-      version: 'detect',
+      version: '18',
     },
   },
   rules: {
@@ -34,7 +34,14 @@ module.exports = {
     'import/order': [
       'error',
       {
-        groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index'], 'object', 'type'],
+        groups: [
+          'builtin',
+          'external',
+          'internal',
+          ['parent', 'sibling', 'index'],
+          'object',
+          'type',
+        ],
         pathGroups: [
           { pattern: 'react', group: 'external', position: 'before' },
           { pattern: 'react-dom', group: 'external', position: 'before' },
