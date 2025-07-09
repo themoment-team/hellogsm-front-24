@@ -78,7 +78,6 @@ const UploadPhoto = ({ setValue, watch }: UploadPhotoProps) => {
               htmlFor="file-input"
             >
               {profileImg ? (
-                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={profileImg}
                   alt="Uploaded"

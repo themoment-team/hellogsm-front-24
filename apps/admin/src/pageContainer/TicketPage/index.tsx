@@ -87,7 +87,6 @@ const TicketPage = ({ initialData }: TicketPageProps) => {
 
                 <td rowSpan={6} className={cn('h-[200px]', 'w-[150px]', 'border', 'border-black')}>
                   {ticket.profileImg && (
-                    // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={ticket.profileImg}
                       alt="증명사진 오류"

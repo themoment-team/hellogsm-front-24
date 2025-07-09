@@ -4,11 +4,11 @@ const config: Config = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   moduleNameMapper: {
-    '^shared/(.*)$': '<rootDir>/src/$1'
+    '^shared/(.*)$': '<rootDir>/src/$1',
   },
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
 };
 
-export default config; 
+export default config;
