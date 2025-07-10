@@ -8,9 +8,28 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_PROD_API_BASE_URL }}
+      NEXT_PUBLIC_CHANNEL_IO_KEY: ${{ secrets.NEXT_PUBLIC_CHANNEL_IO_KEY }}
+      NEXT_PUBLIC_IMAGE_URL: ${{ secrets.NEXT_PUBLIC_IMAGE_URL }}
+      NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF: ${{ secrets.NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF }}
+      NEXT_PUBLIC_NEIS_API_KEY: ${{ secrets.NEXT_PUBLIC_NEIS_API_KEY }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9.4.0
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: All Package Build
+        run: |
+          pnpm build
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -87,6 +106,7 @@ jobs:
               -e NEXT_PUBLIC_NEIS_API_KEY=${{ secrets.NEXT_PUBLIC_NEIS_API_KEY }} \
               ${{ secrets.AWS_ECR_STAGE_ADMIN_REPOSITORY }}:latest
 
+             docker image prune -a -f
             EOF
 
       - name: Success Discord Notification
@@ -94,9 +114,9 @@ jobs:
         if: success()
         with:
           webhook: ${{ secrets.WEBHOOK_URL }}
-          title: "✅ hello-gsm stage CD"
+          title: '✅ hello-gsm stage CD'
           status: ${{ job.status }}
-          content: "배포가 성공적으로 완료되었습니다."
+          content: '배포가 성공적으로 완료되었습니다.'
           username: hello-gsm bot
           color: 4CAF50
 
@@ -105,8 +125,8 @@ jobs:
         if: failure()
         with:
           webhook: ${{ secrets.WEBHOOK_URL }}
-          title: "❌ hello-gsm stage CD"
-          content: "배포 중 에러가 발생했습니다."
+          title: '❌ hello-gsm stage CD'
+          content: '배포 중 에러가 발생했습니다.'
           status: ${{ job.status }}
           username: hello-gsm bot
           color: e74c3c
