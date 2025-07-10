@@ -8,9 +8,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_PROD_API_BASE_URL }}
+      NEXT_PUBLIC_CHANNEL_IO_KEY: ${{ secrets.NEXT_PUBLIC_CHANNEL_IO_KEY }}
+      NEXT_PUBLIC_IMAGE_URL: ${{ secrets.NEXT_PUBLIC_IMAGE_URL }}
+      NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF: ${{ secrets.NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF }}
+      NEXT_PUBLIC_NEIS_API_KEY: ${{ secrets.NEXT_PUBLIC_NEIS_API_KEY }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: All Package Build
+        run: |
+          pnpm build
 
       - name: Docker Client build
         run: |
@@ -39,9 +50,9 @@ jobs:
         if: success()
         with:
           webhook: ${{ secrets.WEBHOOK_URL }}
-          title: "✅ hello-gsm prod CI"
+          title: '✅ hello-gsm prod CI'
           status: ${{ job.status }}
-          content: "PR을 확인해주세요."
+          content: 'PR을 확인해주세요.'
           username: hello-gsm bot
           color: 4CAF50
 
@@ -50,8 +61,8 @@ jobs:
         if: failure()
         with:
           webhook: ${{ secrets.WEBHOOK_URL }}
-          title: "❌ hello-gsm prod CI"
-          content: "에러를 확인해주세요."
+          title: '❌ hello-gsm prod CI'
+          content: '에러를 확인해주세요.'
           status: ${{ job.status }}
           username: hello-gsm bot
           color: e74c3c
