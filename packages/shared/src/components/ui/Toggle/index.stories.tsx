@@ -1,9 +1,9 @@
-import { Toggle } from ".";
+import { Toggle } from '.';
 
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Toggle> = {
-  title: "Shared/Toggle",
+  title: 'Shared/Toggle',
   component: Toggle,
 };
 
@@ -13,13 +13,13 @@ type Story = StoryObj<typeof Toggle>;
 
 export const Primary: Story = {
   args: {
-    children: "test",
+    children: 'test',
   },
 };
 
 export const Icon: Story = {
   args: {
-    children: "제출 완료",
+    children: '제출 완료',
     icon: (
       <svg
         width="14"

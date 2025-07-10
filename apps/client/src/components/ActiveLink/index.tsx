@@ -7,7 +7,6 @@ import { usePathname } from 'next/navigation';
 
 import { cn } from 'shared/lib/utils';
 
-
 type ActiveLinkProps = LinkProps & {
   className?: string;
   activeClassName: string;
