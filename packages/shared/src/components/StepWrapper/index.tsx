@@ -44,7 +44,7 @@ import {
 } from 'shared/components';
 import { ARTS_PHYSICAL_SUBJECTS, GENERAL_SUBJECTS } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
-import { step1Schema, step2Schema, step3Schema, step4Schema  } from 'shared/schemas';
+import { step1Schema, step2Schema, step3Schema, step4Schema } from 'shared/schemas';
 
 import {
   usePostMockScore,
@@ -112,7 +112,7 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
   const step4UseForm = useForm<Step4FormType>({
     resolver: zodResolver(step4Schema),
     defaultValues: {
-     liberalSystem:
+      liberalSystem:
         data?.middleSchoolAchievement.liberalSystem || LiberalSystemValueEnum.FREE_GRADE,
       achievement1_1: data?.middleSchoolAchievement.achievement1_1 || undefined,
       achievement1_2: data?.middleSchoolAchievement.achievement1_2 || undefined,
@@ -183,7 +183,7 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
     onSuccess: (data) => {
       setScoreCalculateDialogData(data);
       setIsScoreCalculateDialog(true);
-    }
+    },
   });
 
   const getOneseo = (isTemp: boolean = false) => {

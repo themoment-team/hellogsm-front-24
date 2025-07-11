@@ -39,7 +39,7 @@ const artPhysicalGraduationIndexArray = [
 ] as const;
 
 const artPhysicalCandidateFreeSemesterIndexArray = [
-  { subject: '체육', registerIndexList: [0, 3, 6, 9, 12] }, 
+  { subject: '체육', registerIndexList: [0, 3, 6, 9, 12] },
   { subject: '음악', registerIndexList: [1, 4, 7, 10, 13] },
   { subject: '미술', registerIndexList: [2, 5, 8, 11, 14] },
 ] as const;
