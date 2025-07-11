@@ -8,15 +8,11 @@
     "lint": "eslint . --ext .ts,.tsx"
   },
   "dependencies": {
-    "eslint-config-custom": "workspace:^",
     "shared": "workspace:^",
     "types": "workspace:^"
   },
-  "devDependencies": {
-    "eslint-config-custom": "workspace:^"
-  },
+  "devDependencies": {},
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "prettier": "eslint-config-custom/prettier"
+  "license": "ISC"
 }
