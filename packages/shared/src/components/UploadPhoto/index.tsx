@@ -35,9 +35,8 @@ const UploadPhoto = ({ setValue, watch }: UploadPhotoProps) => {
   const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
+    if (!file) return;
 
     if (file.size >= MAX_FILE_SIZE) return setShowModal(true);
 
