@@ -236,6 +236,10 @@ const Step4Register = ({
     }
   }, []);
 
+  useEffect(() => {
+    setValue('artsPhysicalAchievement', null);
+  }, [isFreeSemester, isFreeGrade, graduationType]);
+
   return (
     <>
       <div className={cn(['w-[66.5rem]', 'flex', 'flex-col', type === 'admin' && 'pb-20'])}>

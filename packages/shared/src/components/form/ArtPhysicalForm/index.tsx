@@ -141,7 +141,7 @@ const ArtPhysicalForm = ({
                     onValueChange={(value) =>
                       setValue(`artsPhysicalAchievement.${registerIndex}`, Number(value))
                     }
-                    defaultValue={score ? String(score) : ''}
+                    value={score !== undefined && score !== null ? String(score) : ''}
                   >
                     <SelectTrigger
                       className={cn([
