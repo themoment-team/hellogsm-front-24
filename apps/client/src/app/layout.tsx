@@ -33,6 +33,12 @@ export const metadata: Metadata = {
   icons: {
     icon: '/images/favicon.png',
   },
+  openGraph: {
+    siteName: 'Hello, GSM',
+    title: '광주소프트웨어마이스터고등학교 입학 지원 서비스',
+    description: '광주소프트웨어마이스터고등학교 입학 지원 서비스 홈페이지입니다.',
+    images: 'https://www.hellogsm.kr/images/opengraph-image.png',
+  },
 };
 
 export default async function RootLayout({
