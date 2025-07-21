@@ -335,6 +335,7 @@ const Step4Register = ({
                       watch={watch}
                       handleDeleteSubjectClick={handleDeleteSubjectClick}
                       freeSemester={watch('freeSemester')}
+                      isGraduate={isGraduate}
                     />
                   )}
                   <button
@@ -366,6 +367,7 @@ const Step4Register = ({
                     watch={watch}
                     isFreeGrade={isFreeGrade}
                     isFreeSemester={isFreeSemester}
+                    isGraduate={isGraduate}
                   />
                 </div>
                 <div id="nonSubject" className={cn([...formWrapper])}>
