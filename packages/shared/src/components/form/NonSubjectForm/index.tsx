@@ -63,7 +63,7 @@ const NonSubjectForm = ({ register, isFreeGrade, isGraduate }: NonSubjectFormPro
           'border-t-[0.0625rem]',
         ])}
       >
-        <h1 className={cn([...itemStyle, 'min-w-[3.75rem]'])}>학년</h1>
+        <h1 className={cn([...itemStyle, 'w-[6.75rem]'])}>학년</h1>
         <div className={cn('flex')}>
           {nonSubjectTitleArray.map((title, idx) => (
             <h1
@@ -71,11 +71,9 @@ const NonSubjectForm = ({ register, isFreeGrade, isGraduate }: NonSubjectFormPro
               className={cn([
                 ...itemStyle,
                 idx === volunteerTimeIndex
-                  ? isFreeGrade
-                    ? 'w-[9.1875rem]'
-                    : isGraduate
-                      ? 'w-[17.1875rem]'
-                      : 'w-[9.75rem]'
+                  ? isFreeGrade || isGraduate
+                    ? 'w-[14.895625rem]'
+                    : 'w-[14.875rem]'
                   : 'w-[5.625rem]',
               ])}
             >
@@ -105,11 +103,9 @@ const NonSubjectForm = ({ register, isFreeGrade, isGraduate }: NonSubjectFormPro
                   ...itemStyle,
                   'px-[0.75rem]',
                   index === volunteerTimeIndex
-                    ? isFreeGrade
-                      ? 'w-[9.1875rem]'
-                      : isGraduate
-                        ? 'w-[17.1875rem]'
-                        : 'w-[9.75rem]'
+                    ? isFreeGrade || isGraduate
+                      ? 'w-[14.895625rem]'
+                      : 'w-[14.875rem]'
                     : 'w-[5.625rem]',
                 ])}
               >

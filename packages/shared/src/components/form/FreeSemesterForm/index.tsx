@@ -21,6 +21,7 @@ interface FreeSemesterFormProps {
   handleDeleteSubjectClick: (idx: number) => void;
   freeSemester: FreeSemesterValueEnum | null;
   achievementList: AchievementType[];
+  isGraduate: boolean;
 }
 
 const itemStyle = [
@@ -76,6 +77,7 @@ const FreeSemesterForm = ({
   handleDeleteSubjectClick,
   freeSemester,
   achievementList,
+  isGraduate,
 }: FreeSemesterFormProps) => {
   useEffect(() => {
     setTimeout(
@@ -112,7 +114,10 @@ const FreeSemesterForm = ({
         <h1 className={cn([...itemStyle, 'w-[6.75rem]'])}>과목명</h1>
         <div className={cn('flex')}>
           {achievementList.map(({ title }) => (
-            <h1 key={title} className={cn([...itemStyle, 'w-[7.3375rem]'])}>
+            <h1
+              key={title}
+              className={cn([...itemStyle, isGraduate ? 'w-[9.34375rem]' : 'w-[7.475rem]'])}
+            >
               {title}
             </h1>
           ))}
@@ -123,7 +128,10 @@ const FreeSemesterForm = ({
         <h1 className={cn([...itemStyle, 'w-[6.75rem]'])}>자유학기제</h1>
         <div className={cn('flex')}>
           {achievementList.map(({ value, field }) => (
-            <div key={field} className={cn([...itemStyle, 'w-[7.3375rem]'])}>
+            <div
+              key={field}
+              className={cn([...itemStyle, isGraduate ? 'w-[9.34375rem]' : 'w-[7.475rem]'])}
+            >
               {freeSemester === value ? (
                 <button
                   className={cn([
@@ -169,7 +177,7 @@ const FreeSemesterForm = ({
               <input
                 type="text"
                 className={cn(
-                  'w-[5.25rem]',
+                  'w-[7.34375rem]',
                   'h-[2rem]',
                   'text-center',
                   'placeholder:text-slate-400',
@@ -190,7 +198,10 @@ const FreeSemesterForm = ({
               const score = watch(`${field}.${idx}`);
 
               return (
-                <div key={field} className={cn([...itemStyle, 'w-[7.3375rem]'])}>
+                <div
+                  key={field}
+                  className={cn([...itemStyle, isGraduate ? 'w-[9.34375rem]' : 'w-[7.475rem]'])}
+                >
                   {freeSemester === value ? (
                     <div
                       className={cn(
@@ -214,7 +225,7 @@ const FreeSemesterForm = ({
                       >
                         <SelectTrigger
                           className={cn(
-                            'w-[5.47917rem]',
+                            isGraduate ? 'w-[7.34375rem]' : 'w-[5.475rem]',
                             'h-[2rem]',
                             'text-sm',
                             'font-normal',

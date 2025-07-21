@@ -12,6 +12,7 @@ interface ArtPhysicalFormProps {
   watch: UseFormWatch<Step4FormType>;
   isFreeGrade: boolean;
   isFreeSemester: boolean;
+  isGraduate: boolean;
   graduationType: GraduationTypeValueEnum.CANDIDATE | GraduationTypeValueEnum.GRADUATE;
 }
 
@@ -75,6 +76,7 @@ const ArtPhysicalForm = ({
   setValue,
   isFreeGrade,
   isFreeSemester,
+  isGraduate,
   graduationType,
   watch,
 }: ArtPhysicalFormProps) => {
@@ -103,12 +105,15 @@ const ArtPhysicalForm = ({
           'border-t-[0.0625rem]',
         ])}
       >
-        <h1 className={cn([...itemStyle, 'w-[6.25rem]'])}>과목명</h1>
+        <h1 className={cn([...itemStyle, 'w-[6.75rem]'])}>과목명</h1>
         <div className={cn('flex')}>
           {artPhysicalArray.map((title) => (
             <h1
               key={title}
-              className={cn([...itemStyle, isFreeGrade ? 'w-[7.47917rem]' : 'w-[10.3125rem]'])}
+              className={cn([
+                ...itemStyle,
+                isFreeGrade || isGraduate ? 'w-[9.34375rem]' : 'w-[7.475rem]',
+              ])}
             >
               {title}
             </h1>
@@ -125,7 +130,7 @@ const ArtPhysicalForm = ({
             index === artPhysicalIndexArray.length - 1 && 'rounded-b-[0.375rem]',
           ])}
         >
-          <div className={cn('h-full', 'w-[6.25rem]', 'flex', 'items-center', 'justify-center')}>
+          <div className={cn('h-full', 'w-[6.75rem]', 'flex', 'items-center', 'justify-center')}>
             <h1 className={cn([...itemStyle, 'w-full'])}>{subject}</h1>
           </div>
           <div className={cn('flex')}>
@@ -135,7 +140,10 @@ const ArtPhysicalForm = ({
               return (
                 <div
                   key={registerIndex}
-                  className={cn([...itemStyle, isFreeGrade ? 'w-[7.47917rem]' : 'w-[10.3125rem]'])}
+                  className={cn([
+                    ...itemStyle,
+                    isFreeGrade || isGraduate ? 'w-[9.34375rem]' : 'w-[7.475rem]',
+                  ])}
                 >
                   <Select
                     onValueChange={(value) =>
@@ -154,7 +162,7 @@ const ArtPhysicalForm = ({
                         'text-slate-900',
                         'px-[0.5rem]',
                         'border-slate-300',
-                        isFreeGrade ? 'w-[5.47917rem]' : 'w-[8.3125rem]',
+                        isFreeGrade || isGraduate ? 'w-[7.34375rem]' : 'w-[5.475rem]',
                       ])}
                     >
                       <SelectValue placeholder="성적 선택" />
