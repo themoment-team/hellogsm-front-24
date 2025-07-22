@@ -38,14 +38,14 @@ export const step4Schema = z
   })
   .superRefine((data, ctx) => {
     if (data.liberalSystem === LiberalSystemValueEnum.FREE_SEMESTER) {
-      const hasAchievement1_1 =
+      const hasAchievement11 =
         data.achievement1_1 &&
         data.achievement1_1.some((score) => score !== null && score !== undefined);
-      const hasAchievement1_2 =
+      const hasAchievement12 =
         data.achievement1_2 &&
         data.achievement1_2.some((score) => score !== null && score !== undefined);
 
-      if ((hasAchievement1_1 || hasAchievement1_2) && !data.freeSemester) {
+      if ((hasAchievement11 || hasAchievement12) && !data.freeSemester) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
         });
