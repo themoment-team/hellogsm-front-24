@@ -29,6 +29,7 @@ import {
 } from 'shared/components';
 import { GENERAL_SUBJECTS } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
+import { getArtPhysicalIndexArray } from 'shared/utils/artPhysicalUtils';
 
 const formWrapper = [
   'flex',
@@ -235,25 +236,14 @@ const Step4Register = ({
   }, []);
 
   useEffect(() => {
-    const artPhysicalCandidateFreeSemesterIndexArray = [
-      { registerIndexList: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] },
-    ];
-    const artPhysicalCandidateFreeGradeIndexArray = [
-      { registerIndexList: [0, 1, 2, 3, 4, 5, 6, 7, 8] },
-    ];
-    const artPhysicalGraduationIndexArray = [
-      { registerIndexList: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] },
-    ];
-
-    const allIndexArray =
-      graduationType === GraduationTypeValueEnum.CANDIDATE
-        ? isFreeSemester
-          ? artPhysicalCandidateFreeSemesterIndexArray
-          : artPhysicalCandidateFreeGradeIndexArray
-        : artPhysicalGraduationIndexArray;
+    const allIndexArray = getArtPhysicalIndexArray({
+      graduationType,
+      isFreeSemester,
+      isFreeGrade,
+    });
 
     const validIndexes = allIndexArray.flatMap(
-      (item: { registerIndexList: number[] }) => item.registerIndexList,
+      (item: { registerIndexList: readonly number[] }) => item.registerIndexList,
     );
     const currentValues = watch('artsPhysicalAchievement') ?? [];
 

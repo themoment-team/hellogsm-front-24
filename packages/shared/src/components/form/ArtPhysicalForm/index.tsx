@@ -6,6 +6,7 @@ import { GraduationTypeValueEnum, Step4FormType } from 'types';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from 'shared/components';
 import { ART_PHYSICAL_SCORE_VALUES } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
+import { getArtPhysicalArray, getArtPhysicalIndexArray } from 'shared/utils/artPhysicalUtils';
 
 interface ArtPhysicalFormProps {
   setValue: UseFormSetValue<Step4FormType>;
@@ -15,41 +16,6 @@ interface ArtPhysicalFormProps {
   isGraduate: boolean;
   graduationType: GraduationTypeValueEnum.CANDIDATE | GraduationTypeValueEnum.GRADUATE;
 }
-
-const artPhysicalGraduationArray = [
-  '2학년 1학기',
-  '2학년 2학기',
-  '3학년 1학기',
-  '3학년 2학기',
-] as const;
-
-const artPhysicalCandidateFreeSemesterArray = [
-  '1학년 1학기',
-  '1학년 2학기',
-  '2학년 1학기',
-  '2학년 2학기',
-  '3학년 1학기',
-] as const;
-
-const artPhysicalCandidateFreeYearArray = ['2학년 1학기', '2학년 2학기', '3학년 1학기'] as const;
-
-const artPhysicalGraduationIndexArray = [
-  { subject: '체육', registerIndexList: [0, 3, 6, 9] },
-  { subject: '음악', registerIndexList: [1, 4, 7, 10] },
-  { subject: '미술', registerIndexList: [2, 5, 8, 11] },
-] as const;
-
-const artPhysicalCandidateFreeSemesterIndexArray = [
-  { subject: '체육', registerIndexList: [0, 3, 6, 9, 12] },
-  { subject: '음악', registerIndexList: [1, 4, 7, 10, 13] },
-  { subject: '미술', registerIndexList: [2, 5, 8, 11, 14] },
-] as const;
-
-const artPhysicalCandidateFreeGradeIndexArray = [
-  { subject: '체육', registerIndexList: [0, 3, 6] },
-  { subject: '음악', registerIndexList: [1, 4, 7] },
-  { subject: '미술', registerIndexList: [2, 5, 8] },
-] as const;
 
 const itemStyle = [
   'h-full',
@@ -80,19 +46,17 @@ const ArtPhysicalForm = ({
   graduationType,
   watch,
 }: ArtPhysicalFormProps) => {
-  const artPhysicalArray =
-    graduationType === GraduationTypeValueEnum.CANDIDATE
-      ? isFreeSemester
-        ? artPhysicalCandidateFreeSemesterArray
-        : artPhysicalCandidateFreeYearArray
-      : artPhysicalGraduationArray;
+  const artPhysicalArray = getArtPhysicalArray({
+    graduationType,
+    isFreeSemester,
+    isFreeGrade,
+  });
 
-  const artPhysicalIndexArray =
-    graduationType === GraduationTypeValueEnum.CANDIDATE
-      ? isFreeSemester
-        ? artPhysicalCandidateFreeSemesterIndexArray
-        : artPhysicalCandidateFreeGradeIndexArray
-      : artPhysicalGraduationIndexArray;
+  const artPhysicalIndexArray = getArtPhysicalIndexArray({
+    graduationType,
+    isFreeSemester,
+    isFreeGrade,
+  });
 
   return (
     <div className={cn('flex', 'flex-col', 'w-full')}>
