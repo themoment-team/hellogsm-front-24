@@ -32,17 +32,23 @@ export const step4Schema = z
     attendanceDays: nonSubjectSchema,
     volunteerTime: nonSubjectSchema,
     freeSemester: z.nullable(z.enum(getValuesByEnum(FreeSemesterValueEnum))),
-    gedTotalScore: z.nullable(z.number().refine((value) => !isNaN(value) && value <= GED_MAX_SCORE)),
+    gedTotalScore: z.nullable(
+      z.number().refine((value) => !isNaN(value) && value <= GED_MAX_SCORE),
+    ),
   })
   .superRefine((data, ctx) => {
-  if (data.liberalSystem === LiberalSystemValueEnum.FREE_SEMESTER) {
-    const hasAchievement1_1 = data.achievement1_1 && data.achievement1_1.some((score) => score !== null && score !== undefined);
-    const hasAchievement1_2 = data.achievement1_2 && data.achievement1_2.some((score) => score !== null && score !== undefined);
+    if (data.liberalSystem === LiberalSystemValueEnum.FREE_SEMESTER) {
+      const hasAchievement1_1 =
+        data.achievement1_1 &&
+        data.achievement1_1.some((score) => score !== null && score !== undefined);
+      const hasAchievement1_2 =
+        data.achievement1_2 &&
+        data.achievement1_2.some((score) => score !== null && score !== undefined);
 
-    if ((hasAchievement1_1 || hasAchievement1_2) && !data.freeSemester) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-      });
+      if ((hasAchievement1_1 || hasAchievement1_2) && !data.freeSemester) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+        });
+      }
     }
-  }
-});
+  });

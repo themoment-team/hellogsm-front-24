@@ -1,3 +1,5 @@
+import { GraduationTypeValueEnum } from 'types';
+
 import {
   artPhysicalCandidateFreeGradeIndexArray,
   artPhysicalCandidateFreeSemesterArray,
@@ -6,7 +8,6 @@ import {
   artPhysicalGraduationArray,
   artPhysicalGraduationIndexArray,
 } from 'shared/constants/ artPhysical';
-import { GraduationTypeValueEnum } from 'types';
 
 interface GetArtPhysicalArraysParams {
   graduationType: GraduationTypeValueEnum;
