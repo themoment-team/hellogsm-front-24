@@ -177,7 +177,7 @@ const FreeSemesterForm = ({
               <input
                 type="text"
                 className={cn(
-                  'w-[7.34375rem]',
+                  'w-[5.25rem]',
                   'h-[2rem]',
                   'text-center',
                   'placeholder:text-slate-400',
