@@ -270,7 +270,12 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
             absentDays: absentDays!,
             attendanceDays: attendanceDays!,
             volunteerTime: volunteerTime!,
-            freeSemester: freeSemester,
+            freeSemester:
+              liberalSystem === LiberalSystemValueEnum.FREE_GRADE
+                ? null
+                : graduationType === GraduationTypeValueEnum.GRADUATE
+                  ? freeSemester ?? ''
+                  : freeSemester,
             generalSubjects: [...GENERAL_SUBJECTS],
             artsPhysicalSubjects: [...ARTS_PHYSICAL_SUBJECTS],
           },
