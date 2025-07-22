@@ -7,7 +7,7 @@ import {
   artPhysicalCandidateFreeYearArray,
   artPhysicalGraduationArray,
   artPhysicalGraduationIndexArray,
-} from 'shared/constants/ artPhysical';
+} from 'shared/constants/artPhysical';
 
 interface GetArtPhysicalArraysParams {
   graduationType: GraduationTypeValueEnum;
