@@ -235,8 +235,37 @@ const Step4Register = ({
   }, []);
 
   useEffect(() => {
-    setValue('artsPhysicalAchievement', null);
-  }, [isFreeSemester, isFreeGrade, graduationType]);
+    const artPhysicalCandidateFreeSemesterIndexArray = [
+      { registerIndexList: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] },
+    ];
+    const artPhysicalCandidateFreeGradeIndexArray = [
+      { registerIndexList: [0, 1, 2, 3, 4, 5, 6, 7, 8] },
+    ];
+    const artPhysicalGraduationIndexArray = [
+      { registerIndexList: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] },
+    ];
+
+    const allIndexArray =
+      graduationType === GraduationTypeValueEnum.CANDIDATE
+        ? isFreeSemester
+          ? artPhysicalCandidateFreeSemesterIndexArray
+          : artPhysicalCandidateFreeGradeIndexArray
+        : artPhysicalGraduationIndexArray;
+
+    const validIndexes = allIndexArray.flatMap(
+      (item: { registerIndexList: number[] }) => item.registerIndexList,
+    );
+    const currentValues = watch('artsPhysicalAchievement') ?? [];
+
+    const newValues = currentValues.map((value, index) =>
+      validIndexes.includes(index) ? value : null,
+    );
+
+    setValue(
+      'artsPhysicalAchievement',
+      newValues.filter((v): v is number => v !== null),
+    );
+  }, [isFreeSemester]);
 
   return (
     <>
