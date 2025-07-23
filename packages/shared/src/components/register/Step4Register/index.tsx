@@ -284,19 +284,19 @@ const Step4Register = ({
         >
           {isCalculate
             ? '성적을 정확히 입력해 주세요.'
-            : '회원가입 시 입력한 기본 정보가 노출됩니다.'}
+            : '계산을 위해 지원자님의 정확한 성적을 입력해주세요.'}
         </p>
         {graduationType === GraduationTypeValueEnum.GED ? (
           <form onSubmit={(e) => e.preventDefault()}>
             <div className={cn('w-[18.75rem]', 'flex', 'flex-col', 'gap-1')}>
               <p className={cn('text-slate-900', 'text-[0.875rem]/[1.25rem]')}>
-                검정고시 평균점수 <span className={cn('text-red-600')}>*</span>
+                검정고시 평균 점수 <span className={cn('text-red-600')}>*</span>
               </p>
               <Input
                 {...register('gedTotalScore', {
                   valueAsNumber: true,
                 })}
-                placeholder="점수 입력"
+                placeholder="평균 점수 입력"
               />
             </div>
           </form>
