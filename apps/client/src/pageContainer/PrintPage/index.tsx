@@ -1,6 +1,6 @@
 'use client';
 
-import { ArtsPhysicalSubjectsScoreDetailType, GetMyOneseoType, SexEnum } from 'types';
+import { GetMyOneseoType, SexEnum } from 'types';
 
 import { OneseoStatus } from 'client/components';
 
@@ -15,23 +15,7 @@ interface PrintPageProps {
   initialData: GetMyOneseoType | undefined;
 }
 
-const semesterArray: string[] = [
-  '1학년 1학기',
-  '1학년 2학기',
-  '2학년 1학기',
-  '2학년 2학기',
-  '3학년 1학기',
-  '3학년 2학기',
-] as const;
-
-const semesterToScore: { [key: string]: keyof ArtsPhysicalSubjectsScoreDetailType } = {
-  '1학년 1학기': 'score1_1',
-  '1학년 2학기': 'score1_2',
-  '2학년 1학기': 'score2_1',
-  '2학년 2학기': 'score2_2',
-  '3학년 1학기': 'score3_1',
-  '3학년 2학기': 'score3_2',
-};
+const semesterArray = ['1-1', '1-2', '2-1', '2-2', '3-1', '3-2'];
 
 const scoreToAlphabet = ['없음', 'E', 'D', 'C', 'B', 'A'] as const;
 
@@ -42,21 +26,35 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
   const { data: oneseo } = useGetMyOneseo({ initialData: initialData });
 
   const artPhysicalScores = (() => {
-    if (!oneseo || oneseo.privacyDetail.graduationType === 'GED')
-      return [null, null, null, null, null];
+    if (!oneseo || oneseo.privacyDetail.graduationType === 'GED') {
+      return [null, null, null, null, null, null];
+    }
 
-    let index = 0;
-    return semesterArray.map((semester) => {
-      if (oneseo.calculatedScore.artsPhysicalSubjectsScoreDetail[semesterToScore[semester]] >= 0) {
-        const scoreArray = [
-          ...oneseo.middleSchoolAchievement.artsPhysicalAchievement.slice(index, index + 3),
-          oneseo.calculatedScore.artsPhysicalSubjectsScoreDetail[semesterToScore[semester]],
-        ];
-        index += 3;
+    const achievements = oneseo.middleSchoolAchievement?.artsPhysicalAchievement || [];
+    const isGraduate = oneseo.privacyDetail.graduationType === 'GRADUATE';
+    const isCandidate = oneseo.privacyDetail.graduationType === 'CANDIDATE';
 
-        return scoreArray;
-      } else return null;
-    });
+    if (isGraduate) {
+      return [
+        null,
+        null,
+        achievements.slice(0, 3),
+        achievements.slice(3, 6),
+        achievements.slice(6, 9),
+        achievements.slice(9, 12),
+      ];
+    } else if (isCandidate) {
+      return [
+        achievements.slice(0, 3),
+        achievements.slice(3, 6),
+        achievements.slice(6, 9),
+        achievements.slice(9, 12),
+        achievements.slice(12, 15),
+        null,
+      ];
+    }
+
+    return [null, null, null, null, null, null];
   })();
 
   if (!oneseo) return <>원서 정보가 없습니다</>;
@@ -69,10 +67,17 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
     window.print();
   };
 
-  const totalArtsPhysicalConvertedScore = artPhysicalScores
-    .map((scoreSet) => scoreSet?.[3])
-    .filter((score): score is number => typeof score === 'number')
-    .reduce((acc, cur) => acc + cur, 0);
+  const totalArtsPhysicalConvertedScore = oneseo.calculatedScore?.artsPhysicalSubjectsScore || 0;
+
+  // 사용 가능한 학기 필터링
+  const availableSemesters = semesterArray.filter((semester) => {
+    if (oneseo.privacyDetail.graduationType === 'GRADUATE') {
+      return ['2-1', '2-2', '3-1', '3-2'].includes(semester);
+    } else if (oneseo.privacyDetail.graduationType === 'CANDIDATE') {
+      return semester !== '3-2';
+    }
+    return false;
+  });
 
   return (
     <>
@@ -367,113 +372,117 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                     ))}
                     <div className={cn('flex', 'items-center', 'justify-center')}>환산점</div>
                   </div>
-                  <div
-                    className={cn(
-                      'flex',
-                      'w-full',
-                      'flex-col',
-                      'border-b-0',
-                      'border-r',
-                      'border-black',
-                    )}
-                  >
-                    <div className={cn('flex', 'flex-col')}>
-                      <div
-                        className={cn(
-                          'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        )}
-                      >
-                        1학년 1학기
+                  {oneseo.privacyDetail.graduationType === 'CANDIDATE' && (
+                    <div
+                      className={cn(
+                        'flex',
+                        'w-full',
+                        'flex-col',
+                        'border-b-0',
+                        'border-r',
+                        'border-black',
+                      )}
+                    >
+                      <div className={cn('flex', 'flex-col')}>
+                        <div
+                          className={cn(
+                            'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
+                          )}
+                        >
+                          1학년 1학기
+                        </div>
+                        <div
+                          className={cn(
+                            'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
+                          )}
+                        >
+                          성취도/평어
+                        </div>
                       </div>
-                      <div
-                        className={cn(
-                          'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        )}
-                      >
-                        성취도/평어
-                      </div>
-                    </div>
-                    {!oneseo.calculatedScore.generalSubjectsScoreDetail.score1_1 ? (
-                      <div className={cn('h-full', 'bg-slash', 'bg-contain', 'bg-no-repeat')} />
-                    ) : (
-                      <>
-                        {oneseo.middleSchoolAchievement.achievement1_1!.map((score, i) => (
+                      {!oneseo.calculatedScore.generalSubjectsScoreDetail.score1_1 ? (
+                        <div className={cn('h-full', 'bg-slash', 'bg-contain', 'bg-no-repeat')} />
+                      ) : (
+                        <>
+                          {oneseo.middleSchoolAchievement.achievement1_1!.map((score, i) => (
+                            <div
+                              key={i}
+                              className={cn(
+                                'flex',
+                                'items-center',
+                                'justify-center',
+                                'border-b',
+                                'border-black',
+                              )}
+                            >
+                              {scoreToAlphabet[score]}
+                            </div>
+                          ))}
                           <div
-                            key={i}
                             className={cn(
                               'flex',
                               'items-center',
                               'justify-center',
-                              'border-b',
+                              'border-b-0',
                               'border-black',
                             )}
                           >
-                            {scoreToAlphabet[score]}
+                            {oneseo.calculatedScore.generalSubjectsScoreDetail.score1_1}
                           </div>
-                        ))}
+                        </>
+                      )}
+                    </div>
+                  )}
+                  {oneseo.privacyDetail.graduationType === 'CANDIDATE' && (
+                    <div className={cn('flex', 'w-full', 'flex-col', 'border-r', 'border-black')}>
+                      <div className={cn('flex', 'flex-col')}>
                         <div
                           className={cn(
-                            'flex',
-                            'items-center',
-                            'justify-center',
-                            'border-b-0',
-                            'border-black',
+                            'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
                           )}
                         >
-                          {oneseo.calculatedScore.generalSubjectsScoreDetail.score1_1}
+                          1학년 2학기
                         </div>
-                      </>
-                    )}
-                  </div>
-                  <div className={cn('flex', 'w-full', 'flex-col', 'border-r', 'border-black')}>
-                    <div className={cn('flex', 'flex-col')}>
-                      <div
-                        className={cn(
-                          'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        )}
-                      >
-                        1학년 2학기
+                        <div
+                          className={cn(
+                            'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
+                          )}
+                        >
+                          성취도/평어
+                        </div>
                       </div>
-                      <div
-                        className={cn(
-                          'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        )}
-                      >
-                        성취도/평어
-                      </div>
-                    </div>
-                    {!oneseo.calculatedScore.generalSubjectsScoreDetail.score1_2 ? (
-                      <div className={cn('h-full', 'bg-slash', 'bg-contain', 'bg-no-repeat')} />
-                    ) : (
-                      <>
-                        {oneseo.middleSchoolAchievement.achievement1_2!.map((score, i) => (
+                      {!oneseo.calculatedScore.generalSubjectsScoreDetail.score1_2 ? (
+                        <div className={cn('h-full', 'bg-slash', 'bg-contain', 'bg-no-repeat')} />
+                      ) : (
+                        <>
+                          {oneseo.middleSchoolAchievement.achievement1_2!.map((score, i) => (
+                            <div
+                              key={i}
+                              className={cn(
+                                'flex',
+                                'items-center',
+                                'justify-center',
+                                'border-b',
+                                'border-black',
+                              )}
+                            >
+                              {scoreToAlphabet[score]}
+                            </div>
+                          ))}
                           <div
-                            key={i}
                             className={cn(
                               'flex',
                               'items-center',
                               'justify-center',
-                              'border-b',
+                              'border-b-0',
                               'border-black',
                             )}
                           >
-                            {scoreToAlphabet[score]}
+                            {oneseo.calculatedScore.generalSubjectsScoreDetail.score1_2}
                           </div>
-                        ))}
-                        <div
-                          className={cn(
-                            'flex',
-                            'items-center',
-                            'justify-center',
-                            'border-b-0',
-                            'border-black',
-                          )}
-                        >
-                          {oneseo.calculatedScore.generalSubjectsScoreDetail.score1_2}
-                        </div>
-                      </>
-                    )}
-                  </div>
+                        </>
+                      )}
+                    </div>
+                  )}
                   <div className={cn('flex', 'w-full', 'flex-col', 'border-r', 'border-black')}>
                     <div className={cn('flex', 'flex-col')}>
                       <div
@@ -572,7 +581,15 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                       </>
                     )}
                   </div>
-                  <div className={cn('flex', 'w-full', 'flex-col', 'border-r', 'border-black')}>
+                  <div
+                    className={cn(
+                      'flex',
+                      'w-full',
+                      'flex-col',
+                      oneseo.privacyDetail.graduationType === 'CANDIDATE' ? '' : 'border-r',
+                      'border-black',
+                    )}
+                  >
                     <div className={cn('flex', 'flex-col')}>
                       <div
                         className={cn(
@@ -621,56 +638,57 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                       </>
                     )}
                   </div>
-                  <div className={cn('flex', 'w-full', 'flex-col', 'border-black')}>
-                    <div className={cn('flex', 'flex-col')}>
-                      <div
-                        className={cn(
-                          'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        )}
-                      >
-                        3학년 2학기
+                  {oneseo.privacyDetail.graduationType !== 'CANDIDATE' && (
+                    <div className={cn('flex', 'w-full', 'flex-col', 'border-black')}>
+                      <div className={cn('flex', 'flex-col')}>
+                        <div
+                          className={cn(
+                            'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
+                          )}
+                        >
+                          3학년 2학기
+                        </div>
+                        <div
+                          className={cn(
+                            'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
+                          )}
+                        >
+                          성취도/평어
+                        </div>
                       </div>
-                      <div
-                        className={cn(
-                          'h-[2.2vh] border-b border-black bg-gray-200 p-[0.2vh] text-center font-bold',
-                        )}
-                      >
-                        성취도/평어
-                      </div>
-                    </div>
-                    {oneseo.privacyDetail.graduationType === 'CANDIDATE' ||
-                    !oneseo.calculatedScore.generalSubjectsScoreDetail.score3_2 ? (
-                      <div className={cn('h-full', 'bg-slash', 'bg-contain', 'bg-no-repeat')} />
-                    ) : (
-                      <>
-                        {oneseo.middleSchoolAchievement.achievement3_2!.map((score, i) => (
+                      {!oneseo.calculatedScore.generalSubjectsScoreDetail.score3_2 ? (
+                        <div className={cn('h-full', 'bg-slash', 'bg-contain', 'bg-no-repeat')} />
+                      ) : (
+                        <>
+                          {oneseo.middleSchoolAchievement.achievement3_2!.map((score, i) => (
+                            <div
+                              key={i}
+                              className={cn(
+                                'flex',
+                                'items-center',
+                                'justify-center',
+                                'border-b',
+                                'border-black',
+                              )}
+                            >
+                              {scoreToAlphabet[score]}
+                            </div>
+                          ))}
                           <div
-                            key={i}
                             className={cn(
                               'flex',
                               'items-center',
                               'justify-center',
-                              'border-b',
+                              'border-b-0',
                               'border-black',
                             )}
                           >
-                            {scoreToAlphabet[score]}
+                            {oneseo.calculatedScore.generalSubjectsScoreDetail.score3_2}
                           </div>
-                        ))}
-                        <div
-                          className={cn(
-                            'flex',
-                            'items-center',
-                            'justify-center',
-                            'border-b-0',
-                            'border-black',
-                          )}
-                        >
-                          {oneseo.calculatedScore.generalSubjectsScoreDetail.score3_2}
-                        </div>
-                      </>
-                    )}
-                  </div>
+                        </>
+                      )}
+                    </div>
+                  )}
                 </div>
                 <h2 className={cn('mt-[1.5vh]', 'text-[1.2vh]', 'leading-[2vh]')}>체육예술교과</h2>
                 <table className={cn('w-full', 'border', 'border-black', 'text-center')}>
@@ -686,15 +704,15 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                           'bg-backslash',
                         )}
                       >
-                        <div className={cn('h-[2.2vh]', 'text-right')}>학년</div>
-                        <div className={cn('h-[2.2vh]', 'text-left')}>과목</div>
+                        <div className={cn('h-[2.2vh]', 'text-right', 'font-normal')}>학년</div>
+                        <div className={cn('h-[2.2vh]', 'text-left', 'font-normal')}>과목</div>
                       </th>
-                      {semesterArray.map((semester) => (
+                      {availableSemesters.map((semester) => (
                         <th
                           key={semester}
                           className={cn(
                             'h-[2.2vh]',
-                            'border-b',
+                            'border',
                             'border-black',
                             'bg-gray-200',
                             'p-[0.2vh]',
@@ -706,12 +724,12 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                       ))}
                     </tr>
                     <tr>
-                      {semesterArray.map((_, idx) => (
+                      {availableSemesters.map((semester, idx) => (
                         <th
-                          key={idx}
+                          key={`achievement-${semester}-${idx}`}
                           className={cn(
                             'h-[2.2vh]',
-                            'border-b',
+                            'border',
                             'border-black',
                             'bg-gray-200',
                             'p-[0.2vh]',
@@ -730,8 +748,9 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                       <tr key={subject}>
                         <td className={cn('border', 'border-black')}>{subject}</td>
 
-                        {semesterArray.map((_, colIdx) => {
-                          const scoresInSemester = artPhysicalScores[colIdx];
+                        {availableSemesters.map((semester, colIdx) => {
+                          const actualColIdx = semesterArray.indexOf(semester);
+                          const scoresInSemester = artPhysicalScores[actualColIdx];
                           const isSemesterScoreEmpty = Array.isArray(scoresInSemester)
                             ? scoresInSemester.every((s) => s === null || s === undefined)
                             : true;
@@ -742,15 +761,21 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                                 <td
                                   key={`merged-${colIdx}`}
                                   rowSpan={ARTS_PHYSICAL_SUBJECTS.length}
-                                  className={cn('relative', 'border', 'border-black', 'bg-slash')}
+                                  className={cn(
+                                    'relative',
+                                    'border',
+                                    'border-black',
+                                    'bg-slash',
+                                    'bg-contain',
+                                    'bg-no-repeat',
+                                  )}
                                 />
                               );
-                            } else {
-                              return null;
                             }
+                            return null;
                           }
 
-                          const score = artPhysicalScores[colIdx]?.[rowIdx];
+                          const score = artPhysicalScores[actualColIdx]?.[rowIdx];
                           return (
                             <td
                               key={`score-${colIdx}-${rowIdx}`}
@@ -764,8 +789,11 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                     ))}
 
                     <tr>
-                      <td className={cn('flex', 'items-center', 'justify-center')}>환산점</td>
-                      <td className={cn('border', 'border-black')} colSpan={semesterArray.length}>
+                      <td className={cn('border', 'border-black')}>환산점</td>
+                      <td
+                        className={cn('border', 'border-black')}
+                        colSpan={availableSemesters.length}
+                      >
                         {totalArtsPhysicalConvertedScore}
                       </td>
                     </tr>
