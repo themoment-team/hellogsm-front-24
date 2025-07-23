@@ -15,7 +15,7 @@ interface OneseoStatusType {
 const tdStyle = 'border border-black ';
 
 const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
-  const isGEDScore = !!oneseo.middleSchoolAchievement.gedTotalScore;
+  const isGEDScore = !!oneseo.middleSchoolAchievement.gedAvgScore;
 
   const graduationDate = oneseo.privacyDetail.graduationDate.split('-');
 
@@ -192,7 +192,7 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
           )}
           <td className={cn('border', 'border-black')}>
             {oneseo.privacyDetail.graduationType === 'GED'
-              ? oneseo.middleSchoolAchievement.gedTotalScore
+              ? oneseo.middleSchoolAchievement.gedAvgScore
               : oneseo.calculatedScore.generalSubjectsScore! +
                 oneseo.calculatedScore.artsPhysicalSubjectsScore!}
           </td>

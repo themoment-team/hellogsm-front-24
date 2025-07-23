@@ -69,12 +69,12 @@ const CalculatePage = () => {
       attendanceDays,
       volunteerTime,
       freeSemester,
-      gedTotalScore,
+      gedAvgScore,
     } = step4UseForm.watch();
 
     const body: MiddleSchoolAchievementType | GEDAchievementType = isGED
       ? {
-          gedTotalScore: gedTotalScore!,
+          gedAvgScore: gedAvgScore!,
         }
       : {
           liberalSystem: liberalSystem,

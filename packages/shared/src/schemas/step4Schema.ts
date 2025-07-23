@@ -32,9 +32,7 @@ export const step4Schema = z
     attendanceDays: nonSubjectSchema,
     volunteerTime: nonSubjectSchema,
     freeSemester: z.nullable(z.enum(getValuesByEnum(FreeSemesterValueEnum))),
-    gedTotalScore: z.nullable(
-      z.number().refine((value) => !isNaN(value) && value <= GED_MAX_SCORE),
-    ),
+    gedAvgScore: z.nullable(z.number().refine((value) => !isNaN(value) && value <= GED_MAX_SCORE)),
   })
   .superRefine((data, ctx) => {
     if (data.liberalSystem === LiberalSystemValueEnum.FREE_SEMESTER) {

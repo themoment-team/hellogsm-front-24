@@ -126,7 +126,7 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
       attendanceDays: data?.middleSchoolAchievement.attendanceDays || undefined,
       volunteerTime: data?.middleSchoolAchievement.volunteerTime || undefined,
       freeSemester: data?.middleSchoolAchievement.freeSemester || null,
-      gedTotalScore: data?.middleSchoolAchievement.gedTotalScore || undefined,
+      gedAvgScore: data?.middleSchoolAchievement.gedAvgScore || undefined,
     },
   });
 
@@ -220,7 +220,7 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
       attendanceDays,
       volunteerTime,
       freeSemester,
-      gedTotalScore,
+      gedAvgScore,
     } = step4UseForm.watch();
 
     const body: PostOneseoType = {
@@ -255,7 +255,7 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
       // step 4
       middleSchoolAchievement: isGED
         ? {
-            gedTotalScore: gedTotalScore!,
+            gedAvgScore: gedAvgScore!,
           }
         : {
             liberalSystem: liberalSystem,
@@ -319,12 +319,12 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
       attendanceDays,
       volunteerTime,
       freeSemester,
-      gedTotalScore,
+      gedAvgScore,
     } = step4UseForm.watch();
 
     const body: MiddleSchoolAchievementType | GEDAchievementType = isGED
       ? {
-          gedTotalScore: gedTotalScore!,
+          gedAvgScore: gedAvgScore!,
         }
       : {
           liberalSystem: liberalSystem,

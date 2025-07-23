@@ -90,7 +90,7 @@ export interface MiddleSchoolAchievementType {
 }
 
 export interface GEDAchievementType {
-  gedTotalScore: number;
+  gedAvgScore: number;
 }
 
 export interface DesireMajorsType {

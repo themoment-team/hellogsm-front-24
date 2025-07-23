@@ -224,7 +224,7 @@ const Step4Register = ({
       setValue('volunteerTime', null);
       setValue('freeSemester', null);
     } else {
-      setValue('gedTotalScore', null);
+      setValue('gedAvgScore', null);
       setValue('liberalSystem', watch('liberalSystem') || LiberalSystemValueEnum.FREE_GRADE);
     }
 
@@ -293,7 +293,7 @@ const Step4Register = ({
                 검정고시 평균 점수 <span className={cn('text-red-600')}>*</span>
               </p>
               <Input
-                {...register('gedTotalScore', {
+                {...register('gedAvgScore', {
                   valueAsNumber: true,
                 })}
                 placeholder="평균 점수 입력"
