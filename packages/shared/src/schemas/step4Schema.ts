@@ -4,6 +4,7 @@ import { z } from 'zod';
 import {
   ARTS_PHYSICAL_SUBJECTS,
   GED_MAX_SCORE,
+  GED_MIN_SCORE,
   GENERAL_SUBJECTS,
   MAX_SCORE,
   MIN_SCORE,
@@ -33,7 +34,11 @@ export const step4Schema = z
     attendanceDays: nonSubjectSchema,
     volunteerTime: nonSubjectSchema,
     freeSemester: z.nullable(z.enum(getValuesByEnum(FreeSemesterValueEnum))),
-    gedAvgScore: z.nullable(z.number().refine((value) => !isNaN(value) && value <= GED_MAX_SCORE)),
+    gedAvgScore: z.nullable(
+      z
+        .number()
+        .refine((value) => !isNaN(value) && value <= GED_MAX_SCORE && value >= GED_MIN_SCORE),
+    ),
   })
   .superRefine((data, ctx) => {
     const isCandidate = data.graduationType === GraduationTypeValueEnum.CANDIDATE;
