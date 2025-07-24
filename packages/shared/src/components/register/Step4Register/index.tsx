@@ -236,6 +236,7 @@ const Step4Register = ({
   }, []);
 
   useEffect(() => {
+    if (isGED) return;
     const allIndexArray = getArtPhysicalIndexArray({
       graduationType,
       isFreeSemester,
@@ -255,7 +256,7 @@ const Step4Register = ({
       'artsPhysicalAchievement',
       newValues.filter((v): v is number => v !== null),
     );
-  }, [isFreeSemester]);
+  }, [isFreeSemester, isGED]);
 
   return (
     <>
