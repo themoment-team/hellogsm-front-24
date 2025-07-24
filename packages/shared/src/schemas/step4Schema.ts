@@ -1,4 +1,4 @@
-import { FreeSemesterValueEnum, LiberalSystemValueEnum } from 'types';
+import { FreeSemesterValueEnum, GraduationTypeValueEnum, LiberalSystemValueEnum } from 'types';
 import { z } from 'zod';
 
 import {
@@ -19,6 +19,7 @@ const nonSubjectSchema = z.nullable(z.array(z.number().refine((value) => !isNaN(
 
 export const step4Schema = z
   .object({
+    graduationType: z.enum(getValuesByEnum(GraduationTypeValueEnum)),
     liberalSystem: z.nullable(z.enum(getValuesByEnum(LiberalSystemValueEnum))),
     achievement1_1: achievementSchema(GENERAL_SUBJECTS.length),
     achievement1_2: achievementSchema(GENERAL_SUBJECTS.length),
@@ -35,18 +36,14 @@ export const step4Schema = z
     gedAvgScore: z.nullable(z.number().refine((value) => !isNaN(value) && value <= GED_MAX_SCORE)),
   })
   .superRefine((data, ctx) => {
-    if (data.liberalSystem === LiberalSystemValueEnum.FREE_SEMESTER) {
-      const hasAchievement11 =
-        data.achievement1_1 &&
-        data.achievement1_1.some((score) => score !== null && score !== undefined);
-      const hasAchievement12 =
-        data.achievement1_2 &&
-        data.achievement1_2.some((score) => score !== null && score !== undefined);
-
-      if ((hasAchievement11 || hasAchievement12) && !data.freeSemester) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-        });
-      }
+    const isCandidate = data.graduationType === GraduationTypeValueEnum.CANDIDATE;
+    if (
+      isCandidate &&
+      data.liberalSystem === LiberalSystemValueEnum.FREE_SEMESTER &&
+      !data.freeSemester
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+      });
     }
   });
