@@ -92,7 +92,7 @@ const SelectContent = React.forwardRef<
         'relative',
         'z-50',
         'max-h-96',
-        'min-w-[8rem]',
+        'w-[var(--radix-select-trigger-width)]',
         'overflow-hidden',
         'rounded-md',
         'border',

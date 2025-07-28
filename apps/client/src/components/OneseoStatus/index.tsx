@@ -15,7 +15,7 @@ interface OneseoStatusType {
 const tdStyle = 'border border-black ';
 
 const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
-  const isGEDScore = !!oneseo.middleSchoolAchievement.gedTotalScore;
+  const isGEDScore = !!oneseo.middleSchoolAchievement.gedAvgScore;
 
   const graduationDate = oneseo.privacyDetail.graduationDate.split('-');
 
@@ -152,11 +152,17 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
           </td>
         </tr>
         <tr>
-          <td className={tdStyle + 'bg-slash w-[2.6875rem]'}></td>
           {achievementGradeValues.map((gradeKey) => {
             const achievementScoreConvertor: {
-              [key: string]: 'score1_2' | 'score2_1' | 'score2_2' | 'score3_1' | 'score3_2';
+              [key: string]:
+                | 'score1_1'
+                | 'score1_2'
+                | 'score2_1'
+                | 'score2_2'
+                | 'score3_1'
+                | 'score3_2';
             } = {
+              achievement1_1: 'score1_1',
               achievement1_2: 'score1_2',
               achievement2_1: 'score2_1',
               achievement2_2: 'score2_2',
@@ -186,7 +192,7 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
           )}
           <td className={cn('border', 'border-black')}>
             {oneseo.privacyDetail.graduationType === 'GED'
-              ? oneseo.middleSchoolAchievement.gedTotalScore
+              ? oneseo.middleSchoolAchievement.gedAvgScore
               : oneseo.calculatedScore.generalSubjectsScore! +
                 oneseo.calculatedScore.artsPhysicalSubjectsScore!}
           </td>

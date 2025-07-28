@@ -114,6 +114,7 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
     defaultValues: {
       liberalSystem:
         data?.middleSchoolAchievement.liberalSystem || LiberalSystemValueEnum.FREE_GRADE,
+      achievement1_1: data?.middleSchoolAchievement.achievement1_1 || undefined,
       achievement1_2: data?.middleSchoolAchievement.achievement1_2 || undefined,
       achievement2_1: data?.middleSchoolAchievement.achievement2_1 || undefined,
       achievement2_2: data?.middleSchoolAchievement.achievement2_2 || undefined,
@@ -125,7 +126,7 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
       attendanceDays: data?.middleSchoolAchievement.attendanceDays || undefined,
       volunteerTime: data?.middleSchoolAchievement.volunteerTime || undefined,
       freeSemester: data?.middleSchoolAchievement.freeSemester || null,
-      gedTotalScore: data?.middleSchoolAchievement.gedTotalScore || undefined,
+      gedAvgScore: data?.middleSchoolAchievement.gedAvgScore || undefined,
     },
   });
 
@@ -207,6 +208,7 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
     } = step3UseForm.watch();
     const {
       liberalSystem,
+      achievement1_1,
       achievement1_2,
       achievement2_1,
       achievement2_2,
@@ -218,7 +220,7 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
       attendanceDays,
       volunteerTime,
       freeSemester,
-      gedTotalScore,
+      gedAvgScore,
     } = step4UseForm.watch();
 
     const body: PostOneseoType = {
@@ -253,10 +255,11 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
       // step 4
       middleSchoolAchievement: isGED
         ? {
-            gedTotalScore: gedTotalScore!,
+            gedAvgScore: gedAvgScore!,
           }
         : {
             liberalSystem: liberalSystem,
+            achievement1_1: achievement1_1!,
             achievement1_2: achievement1_2!,
             achievement2_1: achievement2_1!,
             achievement2_2: achievement2_2!,
@@ -267,7 +270,12 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
             absentDays: absentDays!,
             attendanceDays: attendanceDays!,
             volunteerTime: volunteerTime!,
-            freeSemester: freeSemester,
+            freeSemester:
+              liberalSystem === LiberalSystemValueEnum.FREE_GRADE
+                ? null
+                : graduationType === GraduationTypeValueEnum.GRADUATE
+                  ? freeSemester ?? ''
+                  : freeSemester,
             generalSubjects: [...GENERAL_SUBJECTS],
             artsPhysicalSubjects: [...ARTS_PHYSICAL_SUBJECTS],
           },
@@ -299,6 +307,7 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
   const handleCheckScoreButtonClick = () => {
     const {
       liberalSystem,
+      achievement1_1,
       achievement1_2,
       achievement2_1,
       achievement2_2,
@@ -310,15 +319,16 @@ const StepWrapper = ({ data, step, info, memberId, type }: StepWrapperProps) => 
       attendanceDays,
       volunteerTime,
       freeSemester,
-      gedTotalScore,
+      gedAvgScore,
     } = step4UseForm.watch();
 
     const body: MiddleSchoolAchievementType | GEDAchievementType = isGED
       ? {
-          gedTotalScore: gedTotalScore!,
+          gedAvgScore: gedAvgScore!,
         }
       : {
           liberalSystem: liberalSystem,
+          achievement1_1: achievement1_1!,
           achievement1_2: achievement1_2!,
           achievement2_1: achievement2_1!,
           achievement2_2: achievement2_2!,
