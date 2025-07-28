@@ -40,19 +40,30 @@ interface LoginButtonProps
 
 const LoginButton = React.forwardRef<HTMLButtonElement, LoginButtonProps>(
   ({ className, variant, children, ...props }, ref) => {
-    const REDIRECT_URI = `${window.location.origin}/callback`;
+    const [redirectUri, setRedirectUri] = React.useState('');
+    const [googleLoginUrl, setGoogleLoginUrl] = React.useState('');
+    const [kakaoLoginUrl, setKakaoLoginUrl] = React.useState('');
 
-    const GOOGLE_LOGIN_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=email profile`;
-    const KAKAO_LOGIN_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+    React.useEffect(() => {
+      if (typeof window !== 'undefined') {
+        setRedirectUri(`${window.location.origin}/callback`);
+        setGoogleLoginUrl(
+          `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=email profile`,
+        );
+        setKakaoLoginUrl(
+          `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${redirectUri}&response_type=code`,
+        );
+      }
+    }, []);
 
     const OAuthValues = {
       google: {
         icon: <GoogleIcon />,
-        href: GOOGLE_LOGIN_URL,
+        href: googleLoginUrl,
       },
       kakao: {
         icon: <KakaoIcon />,
-        href: KAKAO_LOGIN_URL,
+        href: kakaoLoginUrl,
       },
     };
 
@@ -60,21 +71,15 @@ const LoginButton = React.forwardRef<HTMLButtonElement, LoginButtonProps>(
       window.sessionStorage.setItem('oauthProvider', provider);
     };
 
+    if (!redirectUri || !variant) return null;
+
     return (
-      <>
-        {variant && (
-          <a href={OAuthValues[variant].href} onClick={() => handleOAuthLogin(variant)}>
-            <Button
-              ref={ref}
-              className={cn(loginButtonVariants({ variant }), className)}
-              {...props}
-            >
-              {OAuthValues[variant].icon}
-              {children}
-            </Button>
-          </a>
-        )}
-      </>
+      <a href={OAuthValues[variant].href} onClick={() => handleOAuthLogin(variant)}>
+        <Button ref={ref} className={cn(loginButtonVariants({ variant }), className)} {...props}>
+          {OAuthValues[variant].icon}
+          {children}
+        </Button>
+      </a>
     );
   },
 );
