@@ -8,8 +8,6 @@ import { GoogleIcon, KakaoIcon } from 'shared/assets';
 import { Button } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
-import { authUrl } from 'api/libs';
-
 const loginButtonVariants = cva(
   cn(
     'text-gray-700',
@@ -42,21 +40,30 @@ interface LoginButtonProps
 
 const LoginButton = React.forwardRef<HTMLButtonElement, LoginButtonProps>(
   ({ className, variant, children, ...props }, ref) => {
+    const REDIRECT_URI = `${window.location.origin}/callback`;
+
+    const GOOGLE_LOGIN_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=email profile`;
+    const KAKAO_LOGIN_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
     const OAuthValues = {
       google: {
         icon: <GoogleIcon />,
-        href: authUrl.getLogin('google'),
+        href: GOOGLE_LOGIN_URL,
       },
       kakao: {
         icon: <KakaoIcon />,
-        href: authUrl.getLogin('kakao'),
+        href: KAKAO_LOGIN_URL,
       },
+    };
+
+    const handleOAuthLogin = (provider: 'google' | 'kakao') => {
+      window.sessionStorage.setItem('oauthProvider', provider);
     };
 
     return (
       <>
         {variant && (
-          <a href={`${process.env.NEXT_PUBLIC_API_BASE_URL}${OAuthValues[variant].href}`}>
+          <a href={OAuthValues[variant].href} onClick={() => handleOAuthLogin(variant)}>
             <Button
               ref={ref}
               className={cn(loginButtonVariants({ variant }), className)}
