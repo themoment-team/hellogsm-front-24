@@ -6,6 +6,8 @@ import { useOAuthLogin } from 'api';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
+import { cn } from 'shared/lib/utils';
+
 const CallbackPage = ({ code }: { code: string }) => {
   const router = useRouter();
 
@@ -44,8 +46,8 @@ const CallbackPage = ({ code }: { code: string }) => {
   }, [code, googleLogin, router]);
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="text-lg font-medium">로그인 처리 중...</div>
+    <div className={cn('flex', 'h-[calc(100vh-4.625rem)]', 'items-center', 'justify-center')}>
+      <div className={cn('text-lg', 'font-medium')}>로그인 처리 중...</div>
     </div>
   );
 };
