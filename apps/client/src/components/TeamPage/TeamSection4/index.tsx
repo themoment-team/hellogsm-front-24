@@ -9,9 +9,9 @@ import MEMBERS from './member.json';
 const GITHUB_URL = 'https://github.com';
 
 const roleColors: Record<string, string> = {
-  'Back-end': 'text-orange-500',
-  'Front-end': 'text-sky-600',
-  'UI/UX Design': 'text-pink-600',
+  Server: 'text-orange-500',
+  Frontend: 'text-sky-600',
+  Design: 'text-pink-600',
   DevOps: 'text-teal-500',
 };
 

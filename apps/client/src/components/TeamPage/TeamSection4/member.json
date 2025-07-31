@@ -1,57 +1,82 @@
 [
   {
     "name": "전지환",
-    "role": "Back-end",
+    "role": "Server",
     "githubId": "jyeonjyan"
   },
   {
     "name": "최장우",
-    "role": "Back-end",
+    "role": "Server",
     "githubId": "jangwooooo"
   },
   {
     "name": "신희성",
-    "role": "Back-end",
+    "role": "Server",
     "githubId": "tlsgmltjd"
   },
   {
     "name": "하제우",
-    "role": "Back-end",
+    "role": "Server",
     "githubId": "hajeu"
   },
   {
+    "name": "김태은",
+    "role": "Server",
+    "githubId": "snowykte0426"
+  },
+  {
+    "name": "이세민",
+    "role": "Server",
+    "githubId": "wwwcomcomcomcom"
+  },
+  {
     "name": "유시온",
-    "role": "Front-end",
+    "role": "Frontend",
     "githubId": "yoosion030"
   },
   {
     "name": "이승제",
-    "role": "Front-end",
+    "role": "Frontend",
     "githubId": "frorong"
   },
   {
     "name": "전예빈",
-    "role": "Front-end",
+    "role": "Frontend",
     "githubId": "yebin0310"
   },
   {
     "name": "김재균",
-    "role": "Front-end",
+    "role": "Frontend",
     "githubId": "gjaegyun"
   },
   {
     "name": "방가온",
-    "role": "Front-end",
+    "role": "Frontend",
     "githubId": "gaoooon"
   },
   {
+    "name": "이상혁",
+    "role": "Frontend",
+    "githubId": "LeeSangHyeok0731"
+  },
+  {
+    "name": "전준연",
+    "role": "Frontend",
+    "githubId": "junjuny0227"
+  },
+  {
+    "name": "정효주",
+    "role": "Frontend",
+    "githubId": "h-0y28"
+  },
+  {
     "name": "김하온",
-    "role": "UI/UX Design",
+    "role": "Design",
     "githubId": "haonee"
   },
   {
     "name": "진예원",
-    "role": "UI/UX Design",
+    "role": "Design",
     "githubId": "iamwls"
   },
   {
