@@ -196,7 +196,7 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
               : (
                   oneseo.calculatedScore.generalSubjectsScore! +
                   oneseo.calculatedScore.artsPhysicalSubjectsScore!
-                ).toFixed(2)}
+                ).toFixed(3)}
           </td>
         </tr>
         <tr>
