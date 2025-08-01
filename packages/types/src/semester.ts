@@ -1,6 +1,7 @@
 import { FreeSemesterValueEnum } from './value';
 
 export type SemesterIdType =
+  | 'achievement1_1'
   | 'achievement1_2'
   | 'achievement2_1'
   | 'achievement2_2'
@@ -8,6 +9,7 @@ export type SemesterIdType =
   | 'achievement3_2';
 
 export type SemesterTitleType =
+  | '1학년 1학기'
   | '1학년 2학기'
   | '2학년 1학기'
   | '2학년 2학기'

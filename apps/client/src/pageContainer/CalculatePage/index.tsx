@@ -57,6 +57,7 @@ const CalculatePage = () => {
   const handleCalculateButtonClick = () => {
     const {
       liberalSystem,
+      achievement1_1,
       achievement1_2,
       achievement2_1,
       achievement2_2,
@@ -68,15 +69,16 @@ const CalculatePage = () => {
       attendanceDays,
       volunteerTime,
       freeSemester,
-      gedTotalScore,
+      gedAvgScore,
     } = step4UseForm.watch();
 
     const body: MiddleSchoolAchievementType | GEDAchievementType = isGED
       ? {
-          gedTotalScore: gedTotalScore!,
+          gedAvgScore: gedAvgScore!,
         }
       : {
           liberalSystem: liberalSystem,
+          achievement1_1: achievement1_1!,
           achievement1_2: achievement1_2!,
           achievement2_1: achievement2_1!,
           achievement2_2: achievement2_2!,

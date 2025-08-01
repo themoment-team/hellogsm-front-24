@@ -80,10 +80,10 @@ const FreeGradeForm = ({
           'border-t-[0.0625rem]',
         ])}
       >
-        <h1 className={cn([...itemStyle, 'w-[6.25rem]'])}>과목명</h1>
+        <h1 className={cn([...itemStyle, 'w-[6.75rem]'])}>과목명</h1>
         <div className={cn('flex')}>
           {achievementList.map(({ title }) => (
-            <h1 key={title} className={cn([...itemStyle, 'w-[7.47917rem]'])}>
+            <h1 key={title} className={cn([...itemStyle, 'w-[9.34375rem]'])}>
               {title}
             </h1>
           ))}
@@ -100,7 +100,7 @@ const FreeGradeForm = ({
             idx === subjectArray.length - 1 && 'rounded-b-[0.375rem]',
           ])}
         >
-          <div className={cn('h-full', 'w-[6.25rem]', 'flex', 'items-center', 'justify-center')}>
+          <div className={cn('h-full', 'w-[6.75rem]', 'flex', 'items-center', 'justify-center')}>
             {idx < defaultSubjectLength ? (
               <h1 className={cn([...itemStyle, 'w-full'])}>{subject}</h1>
             ) : (
@@ -128,14 +128,14 @@ const FreeGradeForm = ({
               const score = watch(`${field}.${idx}`);
 
               return (
-                <div key={field} className={cn([...itemStyle, 'w-[7.47917rem]'])}>
+                <div key={field} className={cn([...itemStyle, 'mx-4'])}>
                   <Select
                     onValueChange={(value) => setValue(`${field}.${idx}`, Number(value))}
                     defaultValue={Number.isInteger(score) ? String(score) : ''}
                   >
                     <SelectTrigger
                       className={cn(
-                        'w-[5.47917rem]',
+                        'w-[7.34375rem]',
                         'h-[2rem]',
                         'text-sm',
                         'font-normal',

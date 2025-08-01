@@ -99,7 +99,7 @@ const StepBar = ({ step, baseUrl, isStepSuccess, handleCheckScoreButtonClick }: 
               disabled={!isStepSuccess[step]}
               onClick={handleCheckScoreButtonClick}
             >
-              점수 확인하기
+              내 성적 계산하기
             </Button>
           ) : (
             <Button

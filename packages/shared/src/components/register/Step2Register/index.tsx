@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect } from 'react';
+
 import { UseFormRegister, UseFormReset, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import {
   DesireMajorValueEnum,
@@ -128,6 +130,13 @@ const Step2Register = ({ register, setValue, watch, reset }: Step2RegisterProps)
         return;
     }
   };
+
+  useEffect(() => {
+    if (!isGED && watch('schoolName') === null) {
+      setValue('schoolName', '');
+      setValue('schoolAddress', '');
+    }
+  }, []);
 
   return (
     <div className={cn('flex', 'w-full', 'flex-col', 'items-start', 'gap-10')}>
