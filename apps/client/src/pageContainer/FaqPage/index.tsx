@@ -17,11 +17,16 @@ import {
 } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
-import exampleElement from './exampleElement.json';
+import type { NotionPage } from 'types';
 
 const ITEMS_PER_PAGE = 10;
 
-const FaqPage = ({ openIndex }: { openIndex?: number }) => {
+interface FaqPageProps {
+  data: NotionPage[];
+  openIndex?: number;
+}
+
+const FaqPage = ({ data, openIndex }: FaqPageProps) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [keyword, setKeyword] = useState<string>('');
   const [faqStates, setFaqStates] = useState<{ [key: number]: boolean }>({});
@@ -32,7 +37,9 @@ const FaqPage = ({ openIndex }: { openIndex?: number }) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const totalItems = exampleElement.filter((item) => item.title.toLowerCase().includes(keyword));
+  const totalItems = data.filter((item) =>
+    item.properties.title.title[0].plain_text.toLowerCase().includes(keyword),
+  );
   const totalPages = Math.ceil(totalItems.length / ITEMS_PER_PAGE);
 
   const handlePageChange = (pageNumber: number) => {
@@ -136,8 +143,8 @@ const FaqPage = ({ openIndex }: { openIndex?: number }) => {
                 return (
                   <FaqElement
                     key={globalIndex}
-                    title={faq.title}
-                    content={faq.content}
+                    title={faq.properties.title.title[0].plain_text}
+                    content={faq.properties.content.rich_text[0].plain_text}
                     keyword={keyword}
                     showContent={!!faqStates[globalIndex]}
                     onToggle={() => toggleFaqContent(globalIndex)}
