@@ -21,7 +21,7 @@ const getFaqData = async (): Promise<FaqPageData[]> => {
 
   const data: FaqListResponse = await response.json();
 
-  const sortedResults = data.results.sort(
+  const sortedResults = (data?.results ?? []).sort(
     (a, b) => a.properties.id.number - b.properties.id.number,
   );
 
