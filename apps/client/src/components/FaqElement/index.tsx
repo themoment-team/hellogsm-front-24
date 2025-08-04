@@ -127,7 +127,7 @@ const FaqElement = ({
             'text-left',
             'pt-4',
           )}
-          dangerouslySetInnerHTML={{ __html: content }}
+          dangerouslySetInnerHTML={{ __html: content.replace(/\\"/g, '"') }}
         />
       </div>
     </button>
