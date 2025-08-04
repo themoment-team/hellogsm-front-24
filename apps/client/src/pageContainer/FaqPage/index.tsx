@@ -17,12 +17,12 @@ import {
 } from 'shared/components';
 import { cn } from 'shared/lib/utils';
 
-import type { NotionPage } from 'types';
+import type { FaqPageData } from 'types';
 
 const ITEMS_PER_PAGE = 10;
 
 interface FaqPageProps {
-  data: NotionPage[];
+  data: FaqPageData[];
   openIndex?: number;
 }
 

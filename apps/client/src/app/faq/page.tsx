@@ -1,8 +1,8 @@
 import { FaqPage } from 'client/pageContainer';
 
-import type { NotionPage, NotionResponse } from 'types';
+import type { FaqListResponse, FaqPageData } from 'types';
 
-const getFaqData = async (): Promise<NotionPage[]> => {
+const getFaqData = async (): Promise<FaqPageData[]> => {
   const response = await fetch(
     new URL(
       `https://api.notion.com/v1/databases/${process.env.NEXT_PUBLIC_NOTION_FAQ_DATABASE_ID}/query`,
@@ -19,7 +19,7 @@ const getFaqData = async (): Promise<NotionPage[]> => {
     },
   );
 
-  const data: NotionResponse = await response.json();
+  const data: FaqListResponse = await response.json();
 
   const sortedResults = data.results.sort(
     (a, b) => a.properties.id.number - b.properties.id.number,
