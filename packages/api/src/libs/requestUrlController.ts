@@ -13,7 +13,7 @@ export const exampleUrl = {
 } as const;
 
 export const authUrl = {
-  getLogin: (provider: 'google' | 'kakao') => `/auth/v3/oauth2/authorization/${provider}`,
+  postLogin: (provider: 'google' | 'kakao') => `/auth/v3/auth/${provider}`,
   getLogout: () => '/auth/v3/logout',
 } as const;
 

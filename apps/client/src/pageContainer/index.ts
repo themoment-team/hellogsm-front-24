@@ -12,3 +12,4 @@ export { default as IntroducePage } from './IntroducePage';
 export { default as CheckResultPage } from './CheckResultPage';
 export { default as CheckFirstResultPage } from './CheckFirstResultPage';
 export { default as CheckFinalResultPage } from './CheckFinalResultPage';
+export { default as CallbackPage } from './CallbackPage';
