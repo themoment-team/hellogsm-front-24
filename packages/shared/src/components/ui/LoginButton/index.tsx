@@ -47,6 +47,11 @@ const LoginButton = React.forwardRef<HTMLButtonElement, LoginButtonProps>(
     React.useEffect(() => {
       if (typeof window !== 'undefined') {
         setRedirectUri(`${window.location.origin}/callback`);
+      }
+    }, []);
+
+    React.useEffect(() => {
+      if (redirectUri) {
         setGoogleLoginUrl(
           `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=email profile`,
         );
@@ -54,7 +59,7 @@ const LoginButton = React.forwardRef<HTMLButtonElement, LoginButtonProps>(
           `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${redirectUri}&response_type=code`,
         );
       }
-    }, []);
+    }, [redirectUri]);
 
     const OAuthValues = {
       google: {
