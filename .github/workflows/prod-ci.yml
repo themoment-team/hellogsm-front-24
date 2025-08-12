@@ -17,6 +17,8 @@ jobs:
       NEXT_PUBLIC_NOTION_FAQ_DATABASE_ID: ${{ secrets.NEXT_PUBLIC_NOTION_FAQ_DATABASE_ID }}
       NEXT_PUBLIC_NOTION_MEMBER_DATABASE_ID: ${{ secrets.NEXT_PUBLIC_NOTION_MEMBER_DATABASE_ID }}
       NEXT_PUBLIC_NOTION_SECRET_API_KEY: ${{ secrets.NEXT_PUBLIC_NOTION_SECRET_API_KEY }}
+      NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_GOOGLE_CLIENT_ID }}
+      NEXT_PUBLIC_KAKAO_REST_API_KEY: ${{ secrets.NEXT_PUBLIC_KAKAO_REST_API_KEY }}
 
     steps:
       - name: Checkout code
@@ -45,6 +47,8 @@ jobs:
           --build-arg NEXT_PUBLIC_NOTION_FAQ_DATABASE_ID=${{ secrets.NEXT_PUBLIC_NOTION_FAQ_DATABASE_ID }} \
           --build-arg NEXT_PUBLIC_NOTION_MEMBER_DATABASE_ID=${{ secrets.NEXT_PUBLIC_NOTION_MEMBER_DATABASE_ID }} \
           --build-arg NEXT_PUBLIC_NOTION_SECRET_API_KEY=${{ secrets.NEXT_PUBLIC_NOTION_SECRET_API_KEY }} \
+          --build-arg NEXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_CLIENT_ID }} \
+          --build-arg NEXT_PUBLIC_KAKAO_REST_API_KEY=${{ secrets.NEXT_PUBLIC_KAKAO_REST_API_KEY }} \
           -f ./client.Dockerfile \
           -t hello-prod-client:latest \
           .
