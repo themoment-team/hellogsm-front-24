@@ -53,6 +53,7 @@ const CallbackPage = ({ code, provider }: { code: string; provider: string }) =>
     } else {
       router.replace('/');
       toast.error('로그인에 실패했습니다.');
+      return;
     }
   }, [code, provider, googleLogin, kakaoLogin, router]);
 

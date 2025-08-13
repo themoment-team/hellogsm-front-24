@@ -17,20 +17,20 @@ const CallbackPage = ({ code, provider }: { code: string; provider: string }) =>
       toast.success('로그인에 성공했습니다.');
     },
     onError: () => {
-      router.replace('/');
+      router.replace('/signin');
       toast.error('로그인에 실패했습니다.');
     },
   });
 
   useEffect(() => {
     if (!code) {
+      router.replace('/signin');
       toast.error('로그인에 실패했습니다.');
-      router.replace('/');
       return;
     }
 
     if (!provider) {
-      router.replace('/');
+      router.replace('/signin');
       toast.error('로그인에 실패했습니다.');
       return;
     }
@@ -38,8 +38,9 @@ const CallbackPage = ({ code, provider }: { code: string; provider: string }) =>
     if (provider === 'google') {
       googleLogin(code);
     } else {
-      router.replace('/');
+      router.replace('/signin');
       toast.error('로그인에 실패했습니다.');
+      return;
     }
   }, [code, provider, googleLogin, router]);
 
