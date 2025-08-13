@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 
 import { cn } from 'shared/lib/utils';
 
-const CallbackPage = ({ code }: { code: string }) => {
+const CallbackPage = ({ code, provider }: { code: string; provider: string }) => {
   const router = useRouter();
 
   const { mutate: googleLogin } = useOAuthLogin('google', {
@@ -39,7 +39,6 @@ const CallbackPage = ({ code }: { code: string }) => {
       return;
     }
 
-    const provider = window.sessionStorage.getItem('oauthProvider');
     if (!provider) {
       router.replace('/');
       toast.error('로그인에 실패했습니다.');
@@ -54,9 +53,7 @@ const CallbackPage = ({ code }: { code: string }) => {
       router.replace('/');
       toast.error('로그인에 실패했습니다.');
     }
-
-    window.sessionStorage.removeItem('oauthProvider');
-  }, [code, googleLogin, kakaoLogin, router]);
+  }, [code, provider, googleLogin, kakaoLogin, router]);
 
   return (
     <div className={cn('flex', 'h-[calc(100vh-4.625rem)]', 'items-center', 'justify-center')}>

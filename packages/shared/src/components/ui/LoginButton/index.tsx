@@ -61,10 +61,10 @@ const LoginButton = React.forwardRef<HTMLButtonElement, LoginButtonProps>(
     React.useEffect(() => {
       if (redirectUri) {
         setGoogleLoginUrl(
-          `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=email profile`,
+          `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=email profile&state=google`,
         );
         setKakaoLoginUrl(
-          `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${redirectUri}&response_type=code`,
+          `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${redirectUri}&response_type=code&state=kakao`,
         );
       }
     }, [redirectUri]);
@@ -80,14 +80,10 @@ const LoginButton = React.forwardRef<HTMLButtonElement, LoginButtonProps>(
       },
     };
 
-    const handleOAuthLogin = (provider: 'google' | 'kakao') => {
-      window.sessionStorage.setItem('oauthProvider', provider);
-    };
-
     if (!redirectUri || !variant) return null;
 
     return (
-      <a href={OAuthValues[variant].href} onClick={() => handleOAuthLogin(variant)}>
+      <a href={OAuthValues[variant].href}>
         <Button ref={ref} className={cn(loginButtonVariants({ variant }), className)} {...props}>
           {OAuthValues[variant].icon}
           {children}
