@@ -24,6 +24,7 @@ const CallbackPage = ({ code, provider }: { code: string; provider: string }) =>
 
   useEffect(() => {
     if (!code) {
+      toast.error('로그인에 실패했습니다.');
       router.replace('/');
       return;
     }
