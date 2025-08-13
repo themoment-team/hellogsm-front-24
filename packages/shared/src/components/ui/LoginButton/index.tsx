@@ -46,7 +46,15 @@ const LoginButton = React.forwardRef<HTMLButtonElement, LoginButtonProps>(
 
     React.useEffect(() => {
       if (typeof window !== 'undefined') {
-        setRedirectUri(`${window.location.origin}/callback`);
+        const currentOrigin = window.location.origin;
+        if (
+          currentOrigin === 'http://localhost:3000' ||
+          currentOrigin === 'http://localhost:3001'
+        ) {
+          setRedirectUri('https://www.stage.hellogsm.kr/callback');
+        } else {
+          setRedirectUri(`${currentOrigin}/callback`);
+        }
       }
     }, []);
 
