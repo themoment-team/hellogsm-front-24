@@ -810,7 +810,6 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
                     </tr>
                   </tbody>
                 </table>
-
                 <h2 className={cn('mt-[1.5vh]', 'text-[1.2vh]', 'leading-[2vh]')}>비교과</h2>
                 <table className={cn('w-full', 'border-collapse', 'border', 'text-[1vh]')}>
                   <thead>
