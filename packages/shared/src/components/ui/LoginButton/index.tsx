@@ -51,6 +51,7 @@ const LoginButton = React.forwardRef<HTMLButtonElement, LoginButtonProps>(
         const stageOrigins = [
           'http://localhost:3000',
           'http://localhost:3001',
+          'https://www.stage.hellogsm.kr',
           'https://admin.stage.hellogsm.kr',
         ];
 
