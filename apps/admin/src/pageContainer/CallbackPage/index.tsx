@@ -16,7 +16,18 @@ const CallbackPage = ({ code, provider }: { code: string; provider: string }) =>
 
   const handleLoginSuccess = async () => {
     await queryClient.invalidateQueries({ queryKey: memberQueryKeys.getMyAuthInfo() });
-    router.replace('/');
+
+    if (provider === 'admin') {
+      const currentOrigin = window.location.origin;
+      if (currentOrigin.includes('stage')) {
+        router.replace('https://admin.stage.hellogsm.kr');
+      } else {
+        router.replace('https://admin.hellogsm.kr');
+      }
+    } else {
+      router.replace('/');
+    }
+
     toast.success('로그인에 성공했습니다.');
   };
 
@@ -37,7 +48,7 @@ const CallbackPage = ({ code, provider }: { code: string; provider: string }) =>
       return;
     }
 
-    if (provider === 'google') {
+    if (provider === 'google' || provider === 'admin') {
       googleLogin(code);
     } else {
       router.replace('/signin');

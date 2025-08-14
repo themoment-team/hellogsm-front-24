@@ -36,10 +36,12 @@ const loginButtonVariants = cva(
 
 interface LoginButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof loginButtonVariants> {}
+    VariantProps<typeof loginButtonVariants> {
+  isAdmin?: boolean;
+}
 
 const LoginButton = React.forwardRef<HTMLButtonElement, LoginButtonProps>(
-  ({ className, variant, children, ...props }, ref) => {
+  ({ className, variant, children, isAdmin = false, ...props }, ref) => {
     const [redirectUri, setRedirectUri] = React.useState('');
     const [googleLoginUrl, setGoogleLoginUrl] = React.useState('');
     const [kakaoLoginUrl, setKakaoLoginUrl] = React.useState('');
@@ -67,14 +69,16 @@ const LoginButton = React.forwardRef<HTMLButtonElement, LoginButtonProps>(
 
     React.useEffect(() => {
       if (redirectUri) {
+        const state = isAdmin ? 'admin' : variant;
+
         setGoogleLoginUrl(
-          `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=email profile&state=google`,
+          `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=email profile&state=${state}`,
         );
         setKakaoLoginUrl(
-          `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${redirectUri}&response_type=code&state=kakao`,
+          `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${redirectUri}&response_type=code&state=${state}`,
         );
       }
-    }, [redirectUri]);
+    }, [redirectUri, isAdmin, variant]);
 
     const OAuthValues = {
       google: {
