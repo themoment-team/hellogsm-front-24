@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import { memberQueryKeys, useOAuthLogin } from 'api'; // userQueryKey를 함께 import
+import { memberQueryKeys, useOAuthLogin } from 'api';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
