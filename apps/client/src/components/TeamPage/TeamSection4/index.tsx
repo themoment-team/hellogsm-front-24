@@ -4,14 +4,14 @@ import Image from 'next/image';
 
 import { cn } from 'shared/lib/utils';
 
-import MEMBERS from './member.json';
+import type { MemberPageData } from 'types';
 
 const GITHUB_URL = 'https://github.com';
 
 const roleColors: Record<string, string> = {
-  'Back-end': 'text-orange-500',
-  'Front-end': 'text-sky-600',
-  'UI/UX Design': 'text-pink-600',
+  Server: 'text-orange-500',
+  Frontend: 'text-sky-600',
+  Design: 'text-pink-600',
   DevOps: 'text-teal-500',
 };
 
@@ -58,15 +58,19 @@ const MemberCard = ({ githubId, name, role }: MemberCardProps) => {
   );
 };
 
-const TeamSection4 = () => {
+interface TeamSection4Props {
+  data: MemberPageData[];
+}
+
+const TeamSection4 = ({ data }: TeamSection4Props) => {
   const itemWidth = 18.4375;
   const itemSpacing = 1;
 
-  const totalItemWidth = MEMBERS.length * itemWidth;
-  const totalSpacingWidth = (MEMBERS.length - 1) * itemSpacing;
+  const totalItemWidth = data.length * itemWidth;
+  const totalSpacingWidth = (data.length - 1) * itemSpacing;
   const totalWidth = totalItemWidth + totalSpacingWidth;
 
-  const memberListDoubled = [...MEMBERS, ...MEMBERS];
+  const memberListDoubled = [...data, ...data];
 
   return (
     <div
@@ -102,7 +106,12 @@ const TeamSection4 = () => {
           }}
         >
           {memberListDoubled.map((member, index) => (
-            <MemberCard key={index} {...member} />
+            <MemberCard
+              key={index}
+              githubId={member.properties.githubId.rich_text[0].plain_text}
+              name={member.properties.name.title[0].plain_text}
+              role={member.properties.role.rich_text[0].plain_text}
+            />
           ))}
         </div>
         <div
@@ -112,8 +121,13 @@ const TeamSection4 = () => {
             animation: 'scrollLeft 25s linear infinite',
           }}
         >
-          {memberListDoubled.reverse().map((member, index) => (
-            <MemberCard key={index} {...member} />
+          {memberListDoubled.map((member, index) => (
+            <MemberCard
+              key={index}
+              githubId={member.properties.githubId.rich_text[0]?.plain_text}
+              name={member.properties.name.title[0]?.plain_text}
+              role={member.properties.role.rich_text[0]?.plain_text}
+            />
           ))}
         </div>
       </div>

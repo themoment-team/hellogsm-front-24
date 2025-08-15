@@ -44,6 +44,17 @@ const ApplicationPage = ({ initialData }: PrintPageProps) => {
         achievements.slice(9, 12),
       ];
     } else if (isCandidate) {
+      const { liberalSystem } = oneseo.middleSchoolAchievement;
+      if (liberalSystem === '자유학년제') {
+        return [
+          null,
+          null,
+          achievements.slice(0, 3),
+          achievements.slice(3, 6),
+          achievements.slice(6, 9),
+          null,
+        ];
+      }
       return [
         achievements.slice(0, 3),
         achievements.slice(3, 6),

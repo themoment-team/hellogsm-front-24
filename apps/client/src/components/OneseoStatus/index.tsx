@@ -193,8 +193,12 @@ const OneseoStatus = ({ oneseo }: OneseoStatusType) => {
           <td className={cn('border', 'border-black')}>
             {oneseo.privacyDetail.graduationType === 'GED'
               ? oneseo.middleSchoolAchievement.gedAvgScore
-              : oneseo.calculatedScore.generalSubjectsScore! +
-                oneseo.calculatedScore.artsPhysicalSubjectsScore!}
+              : parseFloat(
+                  (
+                    oneseo.calculatedScore.generalSubjectsScore! +
+                    oneseo.calculatedScore.artsPhysicalSubjectsScore!
+                  ).toFixed(3),
+                )}
           </td>
         </tr>
         <tr>
