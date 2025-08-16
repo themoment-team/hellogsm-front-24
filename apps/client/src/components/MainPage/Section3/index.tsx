@@ -65,8 +65,9 @@ const Section3 = ({ isServerHealthy }: Section3Props) => {
               ...buttonStyle,
               'text-sky-900',
               'border-sky-900',
-              'px-4',
-              'py-[9px]',
+              'text-[1.25rem]',
+              'px-[2rem]',
+              'py-[0.625rem]',
               'hidden',
               'lg:inline',
             ])}

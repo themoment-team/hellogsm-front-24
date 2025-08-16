@@ -129,7 +129,7 @@ const Section2 = () => {
             className={cn(
               'text-gray-600',
               'font-normal',
-              'text-[1rem]/[1.5rem]',
+              'text-[1.25rem]/[1.75rem]',
               'text-center',
               'smx:text-left',
             )}
