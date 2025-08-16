@@ -69,6 +69,7 @@ const Footer = () => {
             <p
               className={cn(
                 'w-full',
+                'text-[1.125rem]',
                 'text-left',
                 'sm:text-right',
                 'font-normal',
@@ -84,7 +85,7 @@ const Footer = () => {
                 <a
                   key={text}
                   href={link}
-                  className={cn('text-h5', 'font-bold', 'text-slate-600')}
+                  className={cn('text-[1.125rem]/[1.6875rem]', 'font-bold', 'text-slate-600')}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -95,10 +96,10 @@ const Footer = () => {
           </div>
           <p
             className={cn(
-              'text-body2',
               'w-full',
               'text-right',
               'font-normal',
+              'text-[0.875rem]/[1.25rem]',
               'text-slate-400',
               'hidden',
               'sm:block',
