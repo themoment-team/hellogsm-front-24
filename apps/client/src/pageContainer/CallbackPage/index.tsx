@@ -15,7 +15,7 @@ const CallbackPage = ({ code, provider }: { code: string; provider: string }) =>
   const queryClient = useQueryClient();
 
   const handleLoginSuccess = async () => {
-    await queryClient.invalidateQueries({ queryKey: memberQueryKeys.getMyAuthInfo() });
+    await queryClient.invalidateQueries({ queryKey: memberQueryKeys.getMyMemberInfo() });
 
     // 콜백에서는 항상 클라이언트 메인으로 이동하고, 어드민 로그인 시도 여부를 쿼리로 전달
     const currentOrigin = window.location.origin;
