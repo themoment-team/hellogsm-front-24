@@ -1,13 +1,13 @@
 import { RelationshipWithGuardianValueEnum } from 'types';
 import { z } from 'zod';
 
-import { guardianPhoneNumberRegex, teacherPhoneNumberRegex } from 'shared/constants';
+import { phoneNumberRegex, teacherPhoneNumberRegex } from 'shared/constants';
 import { getValuesByEnum } from 'shared/utils';
 
 export const step3Schema = z
   .object({
     guardianName: z.string().min(1),
-    guardianPhoneNumber: z.string().regex(guardianPhoneNumberRegex),
+    guardianPhoneNumber: z.string().regex(phoneNumberRegex),
     relationshipWithGuardian: z.enum(getValuesByEnum(RelationshipWithGuardianValueEnum)),
     otherRelationshipWithGuardian: z.nullable(z.string().min(1)),
     schoolTeacherName: z.nullable(z.string().min(1)),
