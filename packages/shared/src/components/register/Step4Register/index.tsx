@@ -192,19 +192,13 @@ const Step4Register = ({
 
     if (watch('liberalSystem') === LiberalSystemValueEnum.FREE_GRADE) {
       achievementList.forEach(({ field }) =>
-        setValue(
-          `${field}.${subjectArray.length}`,
-          watch(`${field}.${subjectArray.length}`) || undefined!,
-        ),
+        setValue(`${field}.${subjectArray.length}`, watch(`${field}.${subjectArray.length}`)),
       );
     } else {
       achievementList.forEach(
         ({ field, value }) =>
           value !== watch('freeSemester') &&
-          setValue(
-            `${field}.${subjectArray.length}`,
-            watch(`${field}.${subjectArray.length}`) || undefined!,
-          ),
+          setValue(`${field}.${subjectArray.length}`, watch(`${field}.${subjectArray.length}`)),
       );
     }
   };
