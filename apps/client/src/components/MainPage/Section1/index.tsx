@@ -124,7 +124,7 @@ const Section1 = ({ isServerCurrentActive }: { isServerCurrentActive: boolean })
         </div>
       </div>
 
-      <div className={cn(['absolute', 'bottom-14', ...flexColStyle, 'gap-1', 'z-[3]'])}>
+      <div className={cn(['absolute', 'bottom-14', ...flexColStyle, 'gap-[0.75rem]', 'z-[3]'])}>
         <p
           onClick={scrollToSection2}
           className={cn(
