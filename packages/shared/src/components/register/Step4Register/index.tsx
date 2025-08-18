@@ -343,6 +343,7 @@ const Step4Register = ({
                       watch={watch}
                       control={control}
                       handleDeleteSubjectClick={handleDeleteSubjectClick}
+                      isGraduate={isGraduate}
                     />
                   )}
                   {isFreeSemester && (
