@@ -69,6 +69,12 @@ const freeSemesterToAchievementField: Record<FreeSemesterValueEnum, SemesterIdTy
   [FreeSemesterValueEnum['3-2']]: 'achievement3_2',
 };
 
+const disabledFreeSemesters = [
+  FreeSemesterValueEnum['2-2'],
+  FreeSemesterValueEnum['3-1'],
+  FreeSemesterValueEnum['3-2'],
+];
+
 const FreeSemesterForm = ({
   register,
   subjectArray,
@@ -133,7 +139,19 @@ const FreeSemesterForm = ({
               key={field}
               className={cn([...itemStyle, isGraduate ? 'w-[9.34375rem]' : 'w-[7.475rem]'])}
             >
-              {freeSemester === value ? (
+              {value && disabledFreeSemesters.includes(value) ? (
+                <div
+                  className={cn(
+                    ...freeSemesterButtonStyle,
+                    'bg-gray-100',
+                    'text-gray-400',
+                    'cursor-not-allowed',
+                  )}
+                >
+                  <PinIcon type="OFF" />
+                  불가
+                </div>
+              ) : freeSemester === value ? (
                 <button
                   className={cn([
                     ...freeSemesterButtonStyle,
