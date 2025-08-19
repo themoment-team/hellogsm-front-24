@@ -108,7 +108,7 @@ const CheckFinalResultPage = ({ isCheckFinalResult }: CheckFinalResultProps) => 
     ) {
       setIsFailRequestDialog(true);
     }
-  }, [data, error, queryParams]);
+  }, [data, error]);
 
   return (
     <>
