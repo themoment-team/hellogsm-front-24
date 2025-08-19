@@ -109,7 +109,7 @@ const CheckFirstResultPage = ({ isCheckFirstResult }: CheckFirstResultPageProps)
     ) {
       setIsFailRequestDialog(true);
     }
-  }, [data, error, queryParams]);
+  }, [data, error]);
 
   return (
     <>
