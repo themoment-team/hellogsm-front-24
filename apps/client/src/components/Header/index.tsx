@@ -358,6 +358,7 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
         { href: '/', label: '홈' },
         { href: '/guide', label: '원서 접수' },
         { href: '/faq', label: '자주 묻는 질문' },
+        { href: '/oneseo/calculate', label: '모의 성적 계산' },
         {
           href: '/introduce',
           label: '더모먼트',
