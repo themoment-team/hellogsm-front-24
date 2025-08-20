@@ -1,4 +1,3 @@
-import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { MainPage } from 'client/pageContainer';
@@ -25,9 +24,7 @@ export default async function Home({ searchParams }: { searchParams?: { isAdmin?
   const isAdminRole = authInfo?.role === 'ADMIN' || authInfo?.role === 'ROOT';
 
   if (isAdminRequested && isAdminRole) {
-    const forwardedHost = headers().get('x-forwarded-host');
-    const host = typeof forwardedHost === 'string' ? forwardedHost : headers().get('host') ?? '';
-    const isStage = host.includes('stage');
+    const isStage = process.env.NEXT_PUBLIC_API_BASE_URL?.includes('stage');
     const adminUrl = isStage ? 'https://admin.stage.hellogsm.kr' : 'https://admin.hellogsm.kr';
     redirect(adminUrl);
   }
