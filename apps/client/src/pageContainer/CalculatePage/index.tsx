@@ -118,7 +118,7 @@ const CalculatePage = ({ isServerHealthy }: CalculateProps) => {
       <AlertDialog open={!isServerHealthy}>
         <AlertDialogContent className={cn('w-[400px]')}>
           <AlertDialogHeader>
-            <AlertDialogTitle>모의성적 계산은 10월 13일부터 가능합니다.</AlertDialogTitle>
+            <AlertDialogTitle>모의 성적 계산은 10월 13일부터 가능합니다.</AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogAction>
