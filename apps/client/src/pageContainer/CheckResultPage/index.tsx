@@ -1,8 +1,8 @@
 'use client';
 
-import { PassResultDialog } from 'client/components';
+import { useState } from 'react';
+
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,9 +11,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from 'shared';
+import { MyMemberInfoType, MyTotalTestResultType } from 'types';
+
+import { PassResultDialog } from 'client/components';
 
 import { cn } from 'shared/lib/utils';
-import { MyMemberInfoType, MyTotalTestResultType } from 'types';
 
 const divStyle = [
   'text-gray-900',
@@ -52,29 +54,28 @@ const CheckResultPage = ({
   isCheckFirstResult,
   isCheckFinalResult,
 }: CheckResultPageProps) => {
-  const [isCheckTestFirst, setIsCheckTestFirst] = useState<boolean | null>(null);
+  const [isCheckTestFirst, setIsCheckTestFirst] = useState<boolean>(true);
   const [isDialog, setIsDialog] = useState(false);
 
-  const [showModal, setShowModal] = useState<'yet' | null>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
-  const handleCheckTest = (test: boolean) => {
-    console.log(test, showModal);
-    setIsCheckTestFirst(test);
+  const handleIsCheckTestFirst = (testStatus: boolean) => {
+    const isChecked = testStatus ? isCheckFirstResult : isCheckFinalResult;
+    if (isChecked) {
+      setIsDialog(true);
+    } else {
+      setShowModal(true);
+    }
+  };
+
+  const handleCheckTest = (testStatus: boolean) => {
+    setIsCheckTestFirst(testStatus);
+    handleIsCheckTestFirst(testStatus);
   };
 
   const handleDialogClick = () => {
     setIsDialog(false);
   };
-
-  useEffect(() => {
-    if (isCheckTestFirst === null) return;
-
-    if (!isCheckFirstResult || !isCheckFinalResult) {
-      setShowModal('yet');
-    } else {
-      setIsDialog(true);
-    }
-  }, [isCheckTestFirst]);
 
   return (
     <>
@@ -92,7 +93,7 @@ const CheckResultPage = ({
         </div>
       </div>
 
-      <AlertDialog open={showModal === 'yet'}>
+      <AlertDialog open={showModal}>
         <AlertDialogContent className={cn('w-[400px]')}>
           <AlertDialogHeader>
             <AlertDialogTitle>
@@ -102,7 +103,7 @@ const CheckResultPage = ({
           <AlertDialogFooter>
             <AlertDialogAction
               onClick={() => {
-                setShowModal(null), setIsCheckTestFirst(null);
+                setShowModal(false);
               }}
             >
               <Link href={prevUrl}>확인</Link>
@@ -114,7 +115,7 @@ const CheckResultPage = ({
       <PassResultDialog
         isPassOpen={isDialog}
         setIsPassOpen={setIsDialog}
-        isFinishFirstTest={false}
+        isFinishFirstTest={isCheckTestFirst}
         resultInfo={
           isCheckTestFirst
             ? ({
