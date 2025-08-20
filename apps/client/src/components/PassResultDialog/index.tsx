@@ -108,6 +108,8 @@ const PassResultDialog = ({
     );
   };
 
+  console.log(resultKey);
+
   return (
     <Dialog open={isPassOpen}>
       <DialogTitle />
