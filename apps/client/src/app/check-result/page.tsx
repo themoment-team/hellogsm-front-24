@@ -57,17 +57,6 @@ export default async function CheckResult() {
       compareTime: currentTime,
     });
 
-  //memberInfo {
-  //  memberId: 2,
-  //  name: '이상혁',
-  //  phoneNumber: '01063262118',
-  //  birth: [ 2008, 7, 31 ],
-  //  sex: 'MALE'
-  //}
-  //
-  // isServerHealthy true
-  //
-  // resultInfo { firstTestPassYn: null, secondTestPassYn: null, decidedMajor: null }
   return (
     <>
       <CheckResultPage
@@ -77,7 +66,6 @@ export default async function CheckResult() {
         isCheckFirstResult={isCheckFirstResult}
         isCheckFinalResult={isCheckFinalResult}
       />
-      {/* </><AlertDialog open={!authInfo?.authReferrerType || !memberInfo?.name}>*/}{' '}
       <AlertDialog open={!authInfo?.authReferrerType || !memberInfo?.name}>
         <AlertDialogContent className="w-[400px]">
           <AlertDialogHeader>

@@ -46,12 +46,8 @@ export const oneseoUrl = {
 export const memberUrl = {
   getMyMemberInfo: () => '/member/v3/member/me',
   getMyAuthInfo: () => '/member/v3/auth-info/me',
-
-  /* 바뀔예정 */
   getMyFirstTestResult: () => '/member/v3/first-test-result/me',
   getMySecondTestResult: () => '/member/v3/second-test-result/me',
-  /* 바뀔예정 */
-
   getCheckDuplicate: (phoneNumber: string) =>
     `/member/v3/check-duplicate?phoneNumber=${phoneNumber}`,
   postMemberRegister: () => '/member/v3/member/me',

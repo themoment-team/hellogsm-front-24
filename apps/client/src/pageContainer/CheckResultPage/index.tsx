@@ -59,8 +59,8 @@ const CheckResultPage = ({
 
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  const handleIsCheckTestFirst = (testStatus: boolean) => {
-    const isChecked = testStatus ? isCheckFirstResult : isCheckFinalResult;
+  const handleIsCheckTestFirst = (resultStatus: boolean) => {
+    const isChecked = resultStatus ? isCheckFirstResult : isCheckFinalResult;
     if (isChecked) {
       setIsDialog(true);
     } else {
@@ -68,9 +68,9 @@ const CheckResultPage = ({
     }
   };
 
-  const handleCheckTest = (testStatus: boolean) => {
-    setIsCheckTestFirst(testStatus);
-    handleIsCheckTestFirst(testStatus);
+  const handleCheckTest = (resultStatus: boolean) => {
+    setIsCheckTestFirst(resultStatus);
+    handleIsCheckTestFirst(resultStatus);
   };
 
   const handleDialogClick = () => {
