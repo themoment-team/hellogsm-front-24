@@ -6,8 +6,20 @@ import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePostMockScore } from 'api';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useForm } from 'react-hook-form';
-import { Button, ScoreCalculateDialog, Step4Register, step4Schema } from 'shared';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  Button,
+  ScoreCalculateDialog,
+  Step4Register,
+  step4Schema,
+} from 'shared';
 import {
   GEDAchievementType,
   GraduationTypeValueEnum,
@@ -28,7 +40,11 @@ const graduationArray = [
   { text: '검정고시', value: GraduationTypeValueEnum.GED, img: '/images/ged.png' },
 ];
 
-const CalculatePage = () => {
+interface CalculateProps {
+  isServerHealthy: boolean;
+}
+
+const CalculatePage = ({ isServerHealthy }: CalculateProps) => {
   const step4UseForm = useForm<Step4FormType>({
     resolver: zodResolver(step4Schema),
     defaultValues: {
@@ -99,6 +115,19 @@ const CalculatePage = () => {
 
   return (
     <>
+      <AlertDialog open={!isServerHealthy}>
+        <AlertDialogContent className={cn('w-[400px]')}>
+          <AlertDialogHeader>
+            <AlertDialogTitle>모의 성적 계산은 10월 13일부터 가능합니다.</AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction>
+              <Link href={'/'}>확인</Link>
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       <ComputerRecommendedPage />
       {graduationType ? (
         <div className={cn('sm:flex', 'justify-center', 'rounded-[1.25rem]', 'hidden')}>
