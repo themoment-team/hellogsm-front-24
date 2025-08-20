@@ -80,12 +80,12 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
 
   const relatedDocuments = [
     {
-      icon: <PrintIcon />,
-      text: '유형별 제출서류 확인하기',
+      icon: <DocumentIcon />,
+      text: '유형별 제출서류 안내 파일',
       path: '/지원자 제출서류 목록 안내.hwpx',
     },
-    { icon: <ParticleIcon />, text: '입학원서 다운로드', path: '/print' },
-    { icon: <DocumentIcon />, text: '제출서류 다운로드', path: '/입학제출서류.hwp' },
+    { icon: <PrintIcon />, text: '입학원서', path: '/print' },
+    { icon: <PrintIcon />, text: '제출서류', path: '/입학제출서류.hwp' },
   ];
 
   const screeningLabels: Record<string, string> = {
