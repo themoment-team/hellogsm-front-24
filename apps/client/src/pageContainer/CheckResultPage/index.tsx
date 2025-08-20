@@ -43,7 +43,6 @@ const prevUrl = '/check-result';
 interface CheckResultPageProps {
   memberInfo: MyMemberInfoType | undefined;
   resultInfo: MyTotalTestResultType | undefined;
-  isServerHealthy: boolean;
   isCheckFirstResult: boolean;
   isCheckFinalResult: boolean;
 }
