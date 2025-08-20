@@ -33,9 +33,11 @@ const Footer = () => {
         'flex',
         'items-center',
         'justify-center',
-        'p-[3.75rem]',
-        'sm:px-[6.25rem]',
-        '2xl:px-[12.5rem]',
+        'p-15',
+        'md:px-15',
+        'lg:px-[6.25rem]',
+        'xl:px-[15.25rem]',
+        'fhd:px-80',
         'w-full',
       )}
     >
@@ -43,11 +45,11 @@ const Footer = () => {
         className={cn(
           'flex',
           'items-start',
-          'sm:items-center',
+          'sm:items-end',
+          'sm:flex-col',
           'w-full',
           'gap-10',
           'sm:gap-0',
-          'max-w-[77.5rem]',
           'justify-between',
           'sm:flex-row',
           'flex-col',
@@ -97,12 +99,12 @@ const Footer = () => {
           <p
             className={cn(
               'w-full',
-              'text-right',
+              'text-left',
               'font-normal',
               'text-[0.875rem]/[1.25rem]',
               'text-slate-400',
-              'hidden',
               'sm:block',
+              'sm:text-right',
             )}
           >
             우) 62423 광주광역시 광산구 상무대로 312
