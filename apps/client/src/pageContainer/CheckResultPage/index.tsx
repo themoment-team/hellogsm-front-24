@@ -53,7 +53,7 @@ const CheckResultPage = ({
   isCheckFirstResult,
   isCheckFinalResult,
 }: CheckResultPageProps) => {
-  const [isCheckTestFirst, setIsCheckTestFirst] = useState<boolean>(true);
+  const [isFirstTest, setIsFirstTest] = useState<boolean>(true);
   const [isDialog, setIsDialog] = useState(false);
 
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -68,7 +68,7 @@ const CheckResultPage = ({
   };
 
   const handleCheckTest = (resultStatus: boolean) => {
-    setIsCheckTestFirst(resultStatus);
+    setIsFirstTest(resultStatus);
     handleDialog(resultStatus);
   };
 
@@ -96,7 +96,7 @@ const CheckResultPage = ({
         <AlertDialogContent className={cn('w-[400px]')}>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              현재 {isCheckTestFirst ? '1차 합격' : '최종 합격'} 여부를 조회할 수 없는 기간입니다.
+              현재 {isFirstTest ? '1차 합격' : '최종 합격'} 여부를 조회할 수 없는 기간입니다.
             </AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -114,9 +114,9 @@ const CheckResultPage = ({
       <PassResultDialog
         isPassOpen={isDialog}
         setIsPassOpen={setIsDialog}
-        isFinishFirstTest={isCheckTestFirst}
+        isFinishFirstTest={isFirstTest}
         resultInfo={
-          isCheckTestFirst
+          isFirstTest
             ? ({
                 firstTestPassYn: resultInfo?.firstTestPassYn,
               } as MyTotalTestResultType)
