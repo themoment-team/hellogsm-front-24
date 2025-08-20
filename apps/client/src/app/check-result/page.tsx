@@ -19,19 +19,16 @@ import {
 } from 'client/app/apis';
 import { LoginDialog } from 'client/components';
 import { CheckResultPage } from 'client/pageContainer';
-import { getIsServerHealthy } from 'client/utils';
 
 const mainUrl = '/';
 
 export default async function CheckResult() {
-  const [memberInfo, authInfo, firstResultInfo, secondResultInfo, isServerHealthy] =
-    await Promise.all([
-      getMyMemberInfo('/check-result'),
-      getMyAuthInfo('/check-result'),
-      getMyFirstTestResult(),
-      getMySecondTestResult(),
-      getIsServerHealthy(),
-    ]);
+  const [memberInfo, authInfo, firstResultInfo, secondResultInfo] = await Promise.all([
+    getMyMemberInfo('/check-result'),
+    getMyAuthInfo('/check-result'),
+    getMyFirstTestResult(),
+    getMySecondTestResult(),
+  ]);
 
   const resultInfo = {
     firstTestPassYn: firstResultInfo?.firstTestPassYn ?? null,
@@ -62,7 +59,6 @@ export default async function CheckResult() {
       <CheckResultPage
         memberInfo={memberInfo}
         resultInfo={resultInfo}
-        isServerHealthy={isServerHealthy}
         isCheckFirstResult={isCheckFirstResult}
         isCheckFinalResult={isCheckFinalResult}
       />
