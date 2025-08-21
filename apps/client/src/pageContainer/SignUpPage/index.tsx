@@ -426,8 +426,10 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
                     'text-gray-500',
                     'text-[0.75rem]/[1.125rem]',
                     'font-normal',
-                    'overflow-scroll',
+                    'overflow-y-auto',
+                    'overflow-x-hidden',
                     'w-[23.75rem]',
+                    'h-[6.25rem]',
                   )}
                 >
                   ㅡ 서류제출 시 [서식2-1] 개인정보수집활용동의서, [서식2-2] 개인정보 제3자
