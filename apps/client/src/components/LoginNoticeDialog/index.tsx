@@ -33,7 +33,8 @@ const LoginNoticeDialog = ({ userName, usedPath }: LoginNoticeDialogProps) => {
     if (isLoading) return;
 
     if (
-      (process.env.NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF === 'true' || usedPath === 'main') &&
+      process.env.NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF === 'true' &&
+      usedPath === 'main' &&
       (!authInfo?.authReferrerType || !userName)
     ) {
       setIsDialog(true);
@@ -51,7 +52,7 @@ const LoginNoticeDialog = ({ userName, usedPath }: LoginNoticeDialogProps) => {
             학부모/담임교사 합격 확인 시, 보안상의 문제로 <br />
             본인 확인을 위해 회원가입 후 학부모/담임교사의 <br />
             본인 로그인이 필요합니다. <br />
-            <br /> 빠른 확인을 원하시는 경우, 062-949-6842로 전화 주시면 친절히 안내해 드리겠습니다.{' '}
+            <br /> 빠른 확인을 원하시는 경우, 062-949-6843로 전화 주시면 친절히 안내해 드리겠습니다.{' '}
             <br /> 번거롭게 해드려 죄송합니다.
           </AlertDialogTitle>
         </AlertDialogHeader>
