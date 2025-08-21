@@ -426,8 +426,8 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
                     'text-gray-500',
                     'text-[0.75rem]/[1.125rem]',
                     'font-normal',
-                    'overflow-scroll',
                     'overflow-y-auto',
+                    'overflow-x-hidden',
                     'w-[23.75rem]',
                     'h-[6.25rem]',
                   )}
