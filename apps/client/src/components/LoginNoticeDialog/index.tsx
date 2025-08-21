@@ -27,17 +27,18 @@ const LoginNoticeDialog = ({ userName, usedPath }: LoginNoticeDialogProps) => {
   const { data: authInfo, isLoading } = useGetMyAuthInfo();
   const [isDialog, setIsDialog] = useState(false);
 
+  const isMain = usedPath === 'main' ? true : false;
+
   const { back } = useRouter();
 
   useEffect(() => {
     if (isLoading) return;
 
-    const isShowModalFF =
-      process.env.NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF === 'true' && usedPath === 'main';
+    const isShowModalFF = process.env.NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF === 'true' && isMain;
 
     const isNotLoggedIn = !authInfo?.authReferrerType || !userName;
 
-    if ((isShowModalFF && isNotLoggedIn) || (usedPath === 'check-result' && isNotLoggedIn)) {
+    if (isNotLoggedIn && (isShowModalFF || !isMain)) {
       setIsDialog(true);
     }
   }, [isLoading]);
@@ -47,7 +48,9 @@ const LoginNoticeDialog = ({ userName, usedPath }: LoginNoticeDialogProps) => {
       <AlertDialogContent className={cn('w-[400px]')}>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            <strong>로그인을 먼저 진행해주세요</strong>
+            <strong>
+              {isMain ? '성적조회를 하시려면 로그인을 진행해주세요' : '로그인을 먼저 진행해주세요'}
+            </strong>
             <br />
             <br />
             학부모/담임교사 합격 확인 시, 보안상의 문제로 <br />
@@ -59,9 +62,7 @@ const LoginNoticeDialog = ({ userName, usedPath }: LoginNoticeDialogProps) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <LoginDialog />
-          <AlertDialogAction onClick={usedPath === 'check-result' ? () => back() : undefined}>
-            다음에
-          </AlertDialogAction>
+          <AlertDialogAction onClick={!isMain ? () => back() : undefined}>다음에</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
