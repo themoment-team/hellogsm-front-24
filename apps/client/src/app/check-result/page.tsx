@@ -1,19 +1,13 @@
 import { getDate } from 'api';
 import { getKoreanDate, isTimeAfter } from 'shared';
 
-import {
-  getMyAuthInfo,
-  getMyFirstTestResult,
-  getMyMemberInfo,
-  getMySecondTestResult,
-} from 'client/app/apis';
-import { AlertLoginDialog } from 'client/components';
+import { getMyFirstTestResult, getMyMemberInfo, getMySecondTestResult } from 'client/app/apis';
+import { LoginNoticeDialog } from 'client/components';
 import { CheckResultPage } from 'client/pageContainer';
 
 export default async function CheckResult() {
-  const [memberInfo, authInfo, firstResultInfo, secondResultInfo] = await Promise.all([
+  const [memberInfo, firstResultInfo, secondResultInfo] = await Promise.all([
     getMyMemberInfo('/check-result'),
-    getMyAuthInfo('/check-result'),
     getMyFirstTestResult(),
     getMySecondTestResult(),
   ]);
@@ -50,7 +44,7 @@ export default async function CheckResult() {
         isCheckFirstResult={isCheckFirstResult}
         isCheckFinalResult={isCheckFinalResult}
       />
-      <AlertLoginDialog open={!authInfo?.authReferrerType || !memberInfo?.name} />
+      <LoginNoticeDialog userName={memberInfo?.name} usedPath={'check-result'} />
     </>
   );
 }
