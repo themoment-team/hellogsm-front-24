@@ -292,7 +292,7 @@ const Step4Register = ({
                 {...register('gedAvgScore', {
                   setValueAs: (v) => {
                     const num = Number(v);
-                    return !num ? undefined : num; // 0 또는 NaN이면 undefined로 처리
+                    return !num ? undefined : num;
                   },
                 })}
                 placeholder="평균 점수 입력"
