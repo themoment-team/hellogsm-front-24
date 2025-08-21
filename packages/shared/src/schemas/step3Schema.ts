@@ -21,7 +21,5 @@ export const step3Schema = z
   )
   .refine(
     ({ guardianPhoneNumber, schoolTeacherPhoneNumber }) =>
-      !guardianPhoneNumber ||
-      !schoolTeacherPhoneNumber ||
-      guardianPhoneNumber !== schoolTeacherPhoneNumber,
+      !schoolTeacherPhoneNumber || guardianPhoneNumber !== schoolTeacherPhoneNumber,
   );
