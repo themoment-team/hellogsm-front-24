@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from 'react';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useGetDuplicateMember, useGetMyAuthInfo, useGetMyMemberInfo } from 'api';
+import { memberQueryKeys, useGetDuplicateMember } from 'api';
 import { useRouter } from 'next/navigation';
 import { useForm, FormProvider } from 'react-hook-form';
 import { MemberRegisterType, SendCodeType, SexType } from 'types';
@@ -127,8 +129,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
 
   const targetYear = new Date().getFullYear();
 
-  const { refetch: refetchGetMyAuthInfo } = useGetMyAuthInfo();
-  const { refetch: refetchGetMyMemberInfo } = useGetMyMemberInfo();
+  const queryClient = useQueryClient();
 
   const { refetch: checkDuplicateMember } = useGetDuplicateMember(phoneNumber, {
     enabled: false,
@@ -137,8 +138,8 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
   const { mutate: mutateMemberRegister } = usePostMemberRegister({
     onError: () => setShowModal('error'),
     onSuccess: () => {
-      refetchGetMyAuthInfo();
-      refetchGetMyMemberInfo();
+      queryClient.invalidateQueries({ queryKey: memberQueryKeys.getMyAuthInfo() });
+      queryClient.invalidateQueries({ queryKey: memberQueryKeys.getMyMemberInfo() });
       setShowModal('success');
     },
   });
