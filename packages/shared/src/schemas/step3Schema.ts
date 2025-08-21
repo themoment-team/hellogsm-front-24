@@ -18,4 +18,8 @@ export const step3Schema = z
     ({ relationshipWithGuardian, otherRelationshipWithGuardian }) =>
       relationshipWithGuardian !== RelationshipWithGuardianValueEnum.OTHER ||
       otherRelationshipWithGuardian,
+  )
+  .refine(
+    ({ guardianPhoneNumber, schoolTeacherPhoneNumber }) =>
+      !schoolTeacherPhoneNumber || guardianPhoneNumber !== schoolTeacherPhoneNumber,
   );
