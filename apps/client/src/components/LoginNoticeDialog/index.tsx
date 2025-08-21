@@ -49,7 +49,7 @@ const LoginNoticeDialog = ({ userName, usedPath }: LoginNoticeDialogProps) => {
         <AlertDialogHeader>
           <AlertDialogTitle>
             <strong>
-              {isMain ? '성적을 조회하시려면 로그인해 주세요.' : '로그인을 먼저 진행해주세요'}
+              {isMain ? '성적을 조회하시려면 로그인해 주세요' : '로그인을 먼저 진행해주세요'}
             </strong>
             <br />
             <br />
