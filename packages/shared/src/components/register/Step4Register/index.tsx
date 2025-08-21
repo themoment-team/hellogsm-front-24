@@ -294,7 +294,7 @@ const Step4Register = ({
                 placeholder="평균 점수 입력"
                 onChange={(e) => {
                   const value = e.target.value;
-                  const numericValue = isNaN(Number(value)) ? null : Number(value);
+                  const numericValue = isNaN(Number(value)) ? 0 : Number(value);
                   setValue('gedAvgScore', numericValue);
                 }}
               />
