@@ -32,11 +32,12 @@ const LoginNoticeDialog = ({ userName, usedPath }: LoginNoticeDialogProps) => {
   useEffect(() => {
     if (isLoading) return;
 
-    if (
-      process.env.NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF === 'true' &&
-      usedPath === 'main' &&
-      (!authInfo?.authReferrerType || !userName)
-    ) {
+    const isShowModalFF =
+      process.env.NEXT_PUBLIC_SHOW_LOGIN_MODAL_FF === 'true' && usedPath === 'main';
+
+    const isNotLoggedIn = !authInfo?.authReferrerType || !userName;
+
+    if ((isShowModalFF && isNotLoggedIn) || (usedPath === 'check-result' && isNotLoggedIn)) {
       setIsDialog(true);
     }
   }, [isLoading]);
