@@ -290,7 +290,10 @@ const Step4Register = ({
               <Input
                 type="text"
                 {...register('gedAvgScore', {
-                  setValueAs: (v) => (v === '' ? undefined : Number(v)),
+                  setValueAs: (v) => {
+                    const num = Number(v);
+                    return !num ? undefined : num; // 0 또는 NaN이면 undefined로 처리
+                  },
                 })}
                 placeholder="평균 점수 입력"
                 onInput={(e: React.FormEvent<HTMLInputElement>) => {
