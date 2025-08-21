@@ -327,10 +327,13 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
                 <AlertIcon />
                 <span className={cn('text-slate-500', 'text-[0.875rem]/[1.5rem]', 'font-normal')}>
                   <strong>
-                    입학원서, 성적입력확인서, 개인정보 수집 및 활용동의서, 학부모 동의서
+                    입학원서, 입학 전형성적 입력 확인서, 개인정보 수집활용동의서,
+                    <br />
+                    개인정보 제3자 제공 동의서, 보호자 확인서
                   </strong>
-                  를 출력 <br />
-                  하여 원서와 함께 행정실에 제출해야 합니다.
+                  를 출력하여 입학원서 접수처에
+                  <br />
+                  제출해 주세요.
                 </span>
               </div>
             </div>
