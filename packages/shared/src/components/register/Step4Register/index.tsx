@@ -288,14 +288,17 @@ const Step4Register = ({
                 검정고시 평균 점수 <span className={cn('text-red-600')}>*</span>
               </p>
               <Input
+                type="text"
                 {...register('gedAvgScore', {
-                  valueAsNumber: true,
+                  setValueAs: (v) => {
+                    const num = Number(v);
+                    return !num ? undefined : num;
+                  },
                 })}
                 placeholder="평균 점수 입력"
-                onChange={(e) => {
-                  const value = e.target.value;
-                  const numericValue = isNaN(Number(value)) ? null : Number(value);
-                  setValue('gedAvgScore', numericValue);
+                onInput={(e: React.FormEvent<HTMLInputElement>) => {
+                  const input = e.currentTarget;
+                  input.value = input.value.replace(/[^0-9]/g, '');
                 }}
               />
             </div>
