@@ -34,7 +34,6 @@ const Footer = () => {
         'items-center',
         'justify-center',
         'p-15',
-        'md:px-15',
         'lg:px-[6.25rem]',
         'xl:px-[15.25rem]',
         'fhd:px-80',
@@ -44,36 +43,25 @@ const Footer = () => {
       <div
         className={cn(
           'flex',
-          'items-start',
-          'sm:items-end',
-          'sm:flex-col',
           'w-full',
           'gap-10',
-          'sm:gap-0',
+          'md:gap-2',
           'justify-between',
-          'sm:flex-row',
+          'items-start',
+          'md:flex-row',
           'flex-col',
         )}
       >
         <FooterGSMLogo />
-        <div className={cn('flex', 'flex-col', 'items-start', 'gap-16', 'md:items-start')}>
-          <div
-            className={cn(
-              'flex',
-              'flex-col',
-              'items-start',
-              'sm:items-end',
-              'gap-2',
-              'text-white',
-              'md:items-start',
-            )}
-          >
+        <div className={cn('flex', 'flex-col', 'items-start', 'gap-16')}>
+          <div className={cn('flex', 'flex-col', 'items-start', 'gap-2', 'text-white')}>
             <p
               className={cn(
                 'w-full',
                 'text-[1.125rem]',
                 'text-left',
-                'sm:text-right',
+                'text-left',
+                'md:text-right',
                 'font-normal',
                 'text-slate-600',
               )}
@@ -82,7 +70,7 @@ const Footer = () => {
               <br className={cn('sm:hidden')} />
               ALL RIGHTS RESERVED.
             </p>
-            <div className={cn('flex', 'gap-2', 'sm:flex-row', 'flex-col', 'sm:gap-6')}>
+            <div className={cn('flex', 'gap-2', 'md:flex-row', 'flex-col', 'md:gap-6')}>
               {LINKS.map(({ text, link }) => (
                 <a
                   key={text}
@@ -103,8 +91,8 @@ const Footer = () => {
               'font-normal',
               'text-[0.875rem]/[1.25rem]',
               'text-slate-400',
-              'sm:block',
-              'sm:text-right',
+              'md:block',
+              'md:text-right',
             )}
           >
             우) 62423 광주광역시 광산구 상무대로 312
