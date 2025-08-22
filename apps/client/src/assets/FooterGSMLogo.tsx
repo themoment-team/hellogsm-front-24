@@ -5,7 +5,7 @@ const FooterGSMLogo = () => (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 231 141"
     fill="none"
-    className={cn('w-[9rem]', 'h-auto', 'md:w-[14.44rem]')}
+    className={cn('w-[9rem]', 'h-auto', 'lg:w-[14.44rem]', 'mt-auto')}
   >
     <g clipPath="url(#clip0_2582_13103)">
       <path
