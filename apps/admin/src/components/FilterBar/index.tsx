@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
-import { useGetOperation, usePostFirstResult, usePostSecondResult } from 'api';
+import { useGetOperation, usePostExcel, usePostFirstResult, usePostSecondResult } from 'api';
 
-import { SearchIcon, FileIcon, CloverIcon, MedalIcon } from 'admin/assets';
+import { SearchIcon, FileIcon, CloverIcon, MedalIcon, UploadIcon } from 'admin/assets';
 
 import { PrintIcon } from 'shared/assets';
 import {
@@ -52,6 +52,7 @@ const FilterBar = ({
 }: FilterBarProps) => {
   const [showFirstModal, setShowFirstModal] = useState<boolean>(false);
   const [showSecondModal, setShowSecondModal] = useState<boolean>(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { data: operationData, refetch: operationRefetch } = useGetOperation();
 
@@ -63,6 +64,13 @@ const FilterBar = ({
   });
 
   const { mutate: postSecondResult } = usePostSecondResult({
+    onSuccess: () => {
+      operationRefetch();
+    },
+    onError: () => {},
+  });
+
+  const { mutate: postExcel } = usePostExcel({
     onSuccess: () => {
       operationRefetch();
     },
@@ -96,8 +104,32 @@ const FilterBar = ({
     window.open('/print');
   };
 
+  const uploadExcel = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleExcelFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+      postExcel(formData);
+    }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
   return (
     <>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".xlsx"
+        onChange={handleExcelFileChange}
+        className={cn('hidden')}
+      />
       <div className={cn('flex', 'items-center', 'justify-between', 'w-full')}>
         <div className={cn('flex', 'items-center')}>
           <Input
@@ -181,6 +213,14 @@ const FilterBar = ({
           >
             <FileIcon />
             Excel 다운
+          </Button>
+          <Button
+            onClick={uploadExcel}
+            variant="outline"
+            className={cn('border-slate-900', 'gap-2', 'hover:bg-slate-200')}
+          >
+            <UploadIcon />
+            Excel 업로드
           </Button>
         </div>
       </div>
