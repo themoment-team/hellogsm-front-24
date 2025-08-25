@@ -235,7 +235,7 @@ const DropdownMenu = ({
           'left-[-17.5%]',
           'mt-2',
           'flex',
-          'w-[10rem]',
+          'w-auto',
           'flex-col',
           'items-start',
           'shadow-sm',
@@ -265,7 +265,7 @@ const DropdownMenu = ({
         'left-[-17.5%]',
         'mt-2',
         'flex',
-        'w-[10rem]',
+        'w-fit',
         'flex-col',
         'items-start',
         'shadow-sm',
@@ -393,8 +393,7 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
       <header
         className={cn(
           'h-[4.625rem]',
-          'px-[1.75rem]',
-          'md:px-[3.75rem]',
+          'px-[1.25rem]',
           'lg:px-[6.25rem]',
           'xl:px-[15.25rem]',
           'fhd:px-[20rem]',
@@ -422,7 +421,7 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
           <div className={cn('hidden', 'md:flex')}>
             {isSignup ? (
               <>
-                <div className={cn('relative', 'w-[10rem]')}>
+                <div className={cn('relative')}>
                   <button
                     className={cn([...loginLinkStyle, 'gap-2', 'relative'])}
                     onClick={() => setIsDropdown(!isDropdown)}
