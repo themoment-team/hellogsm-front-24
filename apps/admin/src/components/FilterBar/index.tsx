@@ -2,7 +2,10 @@
 
 import { useState, useRef } from 'react';
 
+import type { AxiosError } from 'axios';
+
 import { useGetOperation, usePostExcel, usePostFirstResult, usePostSecondResult } from 'api';
+import { toast } from 'react-toastify';
 
 import { SearchIcon, FileIcon, CloverIcon, MedalIcon, UploadIcon } from 'admin/assets';
 
@@ -73,8 +76,13 @@ const FilterBar = ({
   const { mutate: postExcel } = usePostExcel({
     onSuccess: () => {
       operationRefetch();
+      toast.success('성공했습니다!');
     },
-    onError: () => {},
+    onError: (error) => {
+      const axiosError = error as AxiosError<{ message?: string }>;
+      const serverMessage = axiosError.response?.data?.message;
+      toast.error(serverMessage ?? '오류가 발생했습니다.');
+    },
   });
 
   const handleSubmittedChange = (value: string) => {
