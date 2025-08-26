@@ -112,7 +112,7 @@ const FilterBar = ({
     window.open('/print');
   };
 
-  const uploadExcel = () => {
+  const handleUploadButtonClick = () => {
     fileInputRef.current?.click();
   };
 
@@ -228,7 +228,7 @@ const FilterBar = ({
             Excel 다운
           </Button>
           <Button
-            onClick={uploadExcel}
+            onClick={handleUploadButtonClick}
             variant="outline"
             className={cn('border-slate-900', 'gap-2', 'hover:bg-slate-200')}
           >
