@@ -75,7 +75,7 @@ const PCNavigation = ({ links, isRegisterPath }: NavProps) => {
     return (
       <nav
         className={cn(
-          'gap-[2.75rem]',
+          'gap-[2.5rem]',
           'hidden',
           'md:flex',
           'justify-between',
@@ -96,7 +96,7 @@ const PCNavigation = ({ links, isRegisterPath }: NavProps) => {
   return (
     <nav
       className={cn(
-        'gap-[2.75rem]',
+        'gap-[2.5rem]',
         'hidden',
         'md:flex',
         'justify-between',
@@ -232,10 +232,10 @@ const DropdownMenu = ({
         className={cn(
           'absolute',
           'top-full',
-          'left-[-17.5%]',
+          'left-[-40%]',
           'mt-2',
           'flex',
-          'w-auto',
+          'w-[10rem]',
           'flex-col',
           'items-start',
           'shadow-sm',
@@ -262,10 +262,10 @@ const DropdownMenu = ({
       className={cn(
         'absolute',
         'top-full',
-        'left-[-17.5%]',
+        'left-[-40%]',
         'mt-2',
         'flex',
-        'w-fit',
+        'w-[10rem]',
         'flex-col',
         'items-start',
         'shadow-sm',
