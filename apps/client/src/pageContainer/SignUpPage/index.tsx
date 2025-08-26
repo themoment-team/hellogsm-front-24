@@ -273,12 +273,12 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
                   >
                     <FormControl>
                       <SelectTrigger className={cn('w-[7.5625rem]')}>
-                        <SelectValue placeholder="년도" />
+                        <SelectValue placeholder="연도" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectLabel>년도 선택</SelectLabel>
+                        <SelectLabel>연도 선택</SelectLabel>
                         {Array.from({ length: PERMIT_YEAR }, (_, index) => targetYear - index).map(
                           (year) => (
                             <SelectItem key={year} value={year.toString()}>
@@ -455,7 +455,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
         <AlertDialogContent className={cn('w-[400px]')}>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              인증번호 전송에 실패하였습니다. <br /> (인증번호는 최대 5번만 전송가능합니다.)
+              인증번호 전송에 실패하였습니다. <br /> (인증번호는 최대 5번만 전송 가능합니다.)
             </AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -490,7 +490,7 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
             <AlertDialogTitle>
               같은 전화번호로 생성된 계정이 이미 존재합니다.
               <br />
-              회원가입시, 기존의 정보는 사라집니다. 진행하시겠습니까?
+              회원가입 시, 기존의 정보는 사라집니다. 진행하시겠습니까?
             </AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>

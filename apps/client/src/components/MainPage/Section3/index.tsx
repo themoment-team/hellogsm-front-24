@@ -132,7 +132,7 @@ const Section3 = ({ isServerHealthy }: Section3Props) => {
                   'text-white',
                 )}
               >
-                최종 합격 하려면 중학교 내신 성적이
+                최종 합격하려면 중학교 내신 성적이
                 <br /> 최소 몇 %가 되어야 할까?&nbsp; 🤷🏻‍♀️
               </p>
               <Link href="/faq" className={cn([...buttonStyle, 'self-end'])}>
@@ -162,10 +162,10 @@ const Section3 = ({ isServerHealthy }: Section3Props) => {
                     'font-medium',
                   )}
                 >
-                  여러 계정으로 로그인 하는 방법 🚦
+                  여러 계정으로 로그인하는 방법 🚦
                 </p>
                 <p className={cn('font-400', 'self-start', 'text-sm')}>
-                  여러 계정으로 로그인 하는 방법을 알려드릴게요!
+                  여러 계정으로 로그인하는 방법을 알려드릴게요!
                 </p>
               </div>
               <Link href="/faq?openIndex=0" className={cn([...buttonStyle, 'self-end'])}>

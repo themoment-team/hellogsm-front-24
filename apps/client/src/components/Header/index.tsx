@@ -379,7 +379,7 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
   }, []);
 
   const handleLogoutClick = () => {
-    if (confirm('변경사항이 저장되지 않을 수 있습니다. 로그아웃 하시겠습니까?')) {
+    if (confirm('변경사항이 저장되지 않을 수 있습니다. 로그아웃하시겠습니까?')) {
       handleLogout();
       setIsDropdown(false);
       router.push('/');

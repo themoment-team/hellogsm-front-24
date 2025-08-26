@@ -60,7 +60,7 @@ const Section1 = ({ isServerCurrentActive }: { isServerCurrentActive: boolean })
                 'lg:text-[3.25rem]',
               )}
             >
-              꿈🌟과 끼🤘🏻를 마음껏{' '}
+              꿈🌟과 끼🤘🏻를 마음껏
               <span
                 className={cn(
                   'relative',
@@ -119,7 +119,7 @@ const Section1 = ({ isServerCurrentActive }: { isServerCurrentActive: boolean })
               'border-solid',
             )}
           >
-            원서 접수 하러 가기
+            원서 접수하러 가기
           </button>
         </div>
       </div>
