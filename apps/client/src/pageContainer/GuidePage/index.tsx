@@ -307,15 +307,6 @@ const GuidePage = ({ initialData, isOneseoWrite }: GuideProps) => {
           <div className={cn('w-full', 'flex', 'flex-col', 'gap-5')}>
             <p className={cn([...textStyle, 'text-gray-900'])}>원서 접수 전 꼭 읽어주세요!</p>
             <div className={cn([...descriptionStyle, '[&>span]:font-semibold'])}>
-              {/* <p className={cn('text-red-600')}>
-                본교 최종 합격자는 당해 학년도에는 다른 고등학교 입학전형에 지원할 수 없습니다.
-              </p>
-              본교는 소프트웨어 영 마이스터를 양성하기 위해 교육부와 과학기술정보통신부에서 지정,
-              운영하는 <br />
-              산업수요맞춤형고등학교로 취업을 목표로 하며 대학 진학을 희망하는 학생은 본교에 지원할
-              수 없습니다. <br /> <br />
-              기숙사 생활관은 평일 교육과정을 위하여 운영하는 것을 원칙으로 합니다. <br />
-              주말과 공휴일 등 학교 휴무일에 기숙사를 운영하지 않습니다. <br /> */}
               {mustReadArticles.map((article, idx) => (
                 <div className={cn('flex')} key={idx}>
                   <li />
