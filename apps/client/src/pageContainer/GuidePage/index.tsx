@@ -113,7 +113,7 @@ const Elements: ElementType[] = [
     title: '2차 전형',
     description: (
       <>
-        소프트웨어마이스터고등학교 학업수행에 필요한 기본 자질과 능력을 중심으로
+        소프트웨어마이스터고등학교 학업수행에 필요한 기본 자질과 능력을 중심으로{' '}
         <strong className={cn('font-semibold')}>역량검사</strong>를 진행합니다.
       </>
     ),
