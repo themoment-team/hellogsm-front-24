@@ -227,7 +227,7 @@ const FilterBar = ({
             disabled={isPending}
           >
             <UploadIcon />
-            {isPending ? 'Excel 업로드중' : 'Excel 업로드'}
+            {isPending ? 'Excel 업로드 중' : 'Excel 업로드'}
             <input
               ref={fileInputRef}
               type="file"
