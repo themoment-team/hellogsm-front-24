@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { MyMemberInfoType, MyTotalTestResultType } from 'types';
 
-import { BlurIcon, HelloGSMIcon } from 'client/assets';
+import { BlurIcon, CopyIcon, HelloGSMIcon } from 'client/assets';
 
 import { Button, Dialog, DialogContent, DialogTitle } from 'shared/components';
 import { cn } from 'shared/lib/utils';
@@ -41,9 +41,20 @@ const PassResultDialog = ({
       ),
       message: (
         <>
-          2차 역량검사는 10월 25일 14:30 ~ 16:30에 진행되오니
+          2차 역량검사는 10월 25일 14:30 ~ 16:30에 진행될 예정입니다.
           <br />
-          늦지 않게 본교에 방문해 주시기 바랍니다.
+          <span className="inline-flex items-center gap-1">
+            <CopyIcon color="#2563EB" />
+            <a
+              href="https://www.jobda.im/acca/introduce"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 underline"
+            >
+              잡다 사이트
+            </a>
+            에서 미리 사전 연습을 진행해보시기 바랍니다.
+          </span>
         </>
       ),
     },
@@ -158,14 +169,14 @@ const PassResultDialog = ({
                   className={cn('w-[10.625rem]', 'h-[3.25rem]', 'font-semibold', 'text-base')}
                   onClick={() => handleInterviewClick()}
                 >
-                  심층면접 예상문제 보기
+                  심층면접 예상문제
                 </Button>
                 <Button
                   variant="fill"
                   className={cn('w-[10.625rem]', 'h-[3.25rem]', 'font-semibold', 'text-base')}
                   onClick={() => push('/1차 전형 합격자 안내사항.hwp')}
                 >
-                  합격자 유의사항 다운
+                  합격자 유의사항
                 </Button>
               </>
             ) : (
