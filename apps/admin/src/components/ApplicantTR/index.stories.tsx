@@ -55,7 +55,7 @@ const MockData: ApplicationTRProps = {
   guardianPhoneNumber: '010 1234 5678',
   schoolTeacherPhoneNumber: '010 1234 5678',
   firstTestPassYn: 'YES',
-  aptitudeEvaluationScore: 100,
+  competencyEvaluationScore: 100,
   interviewScore: 100,
   secondTestPassYn: 'YES',
   oneseoRefetch: oneseoFakeRefetch,
