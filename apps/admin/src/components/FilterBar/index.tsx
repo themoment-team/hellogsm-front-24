@@ -73,7 +73,7 @@ const FilterBar = ({
     onError: () => {},
   });
 
-  const { mutate: postExcel } = usePostExcel({
+  const { mutate: postExcel, isPending } = usePostExcel({
     onSuccess: () => {
       operationRefetch();
       toast.success('excel 업로드에 성공했습니다!');
@@ -136,13 +136,6 @@ const FilterBar = ({
 
   return (
     <>
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept=".xlsx"
-        onChange={handleExcelFileChange}
-        className={cn('hidden')}
-      />
       <div className={cn('flex', 'items-center', 'justify-between', 'w-full')}>
         <div className={cn('flex', 'items-center')}>
           <Input
@@ -231,9 +224,17 @@ const FilterBar = ({
             onClick={handleUploadButtonClick}
             variant="outline"
             className={cn('border-slate-900', 'gap-2', 'hover:bg-slate-200')}
+            disabled={isPending}
           >
             <UploadIcon />
-            Excel 업로드
+            {isPending ? 'Excel 업로드중' : 'Excel 업로드'}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".xlsx"
+              onChange={handleExcelFileChange}
+              className={cn('hidden')}
+            />
           </Button>
         </div>
       </div>
