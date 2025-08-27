@@ -43,7 +43,7 @@ const PassResultDialog = ({
         <>
           2차 역량검사는 10월 25일 14:30 ~ 16:30에 진행될 예정입니다.
           <br />
-          <span className="inline-flex items-center gap-1">
+          <div className="flex items-center gap-1">
             <CopyIcon color="#2563EB" />
             <a
               href="https://www.jobda.im/acca/introduce"
@@ -54,7 +54,7 @@ const PassResultDialog = ({
               잡다 사이트
             </a>
             에서 미리 사전 연습을 진행해보시기 바랍니다.
-          </span>
+          </div>
         </>
       ),
     },
