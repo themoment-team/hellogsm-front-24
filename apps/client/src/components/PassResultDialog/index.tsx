@@ -114,8 +114,10 @@ const PassResultDialog = ({
   const { title, message } = resultMessages[resultKey];
 
   const handleInterviewClick = () => {
-    push(
+    window.open(
       'http://gsm.gen.hs.kr/xboard/board.php?mode=view&number=10452&tbnum=65&sCat=0&page=1&keyset=&searchword=',
+      '_blank',
+      'noopener,noreferrer',
     );
   };
 
