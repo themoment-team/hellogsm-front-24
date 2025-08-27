@@ -52,7 +52,7 @@ interface ApplicationTRProps extends OneseoType {
 
 const ApplicantTR = ({
   oneseoRefetch,
-  aptitudeEvaluationScore,
+  competencyEvaluationScore,
   firstTestPassYn,
   guardianPhoneNumber,
   interviewScore,
@@ -124,7 +124,7 @@ const ApplicantTR = ({
   const is역량검사처리기간 = checkIsPassedDate(역량검사처리시작일자);
   const is심층면접처리기간 = checkIsPassedDate(심층면접처리시작일자);
 
-  const formatted역량검사점수 = formatScore(String(aptitudeEvaluationScore ?? ''));
+  const formatted역량검사점수 = formatScore(String(competencyEvaluationScore ?? ''));
   const formatted심층면접점수 = formatScore(String(interviewScore ?? ''));
 
   const { control, watch, setValue } = useForm({
@@ -165,7 +165,7 @@ const ApplicantTR = ({
 
     if (역량검사점수 < 0 || 역량검사점수 > 100 || isNaN(역량검사점수)) return;
 
-    patchAptitudeScore({ aptitudeEvaluationScore: 역량검사점수 });
+    patchAptitudeScore({ competencyEvaluationScore: 역량검사점수 });
   };
 
   const handleInterviewScore = () => {
