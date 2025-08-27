@@ -76,7 +76,7 @@ const FilterBar = ({
   const { mutate: postExcel, isPending } = usePostExcel({
     onSuccess: () => {
       operationRefetch();
-      toast.success('excel 업로드에 성공했습니다!');
+      toast.success('Excel 업로드에 성공했습니다!');
     },
     onError: (error) => {
       const axiosError = error as AxiosError<{ message?: string }>;
@@ -122,7 +122,7 @@ const FilterBar = ({
     const isExcel = file?.name.toLowerCase().endsWith('.xlsx');
 
     if (!isExcel) {
-      toast.error('엑셀 파일(.xlsx)만 업로드 가능합니다.');
+      toast.error('Excel 파일(.xlsx)만 업로드 가능합니다.');
     } else if (file) {
       const formData = new FormData();
       formData.append('file', file);
