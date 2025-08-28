@@ -5,7 +5,7 @@ import { cn } from 'shared/lib/utils';
 /* eslint-disable-next-line no-restricted-imports */
 import ArtsPhysicalTable from '../ArtsPhysicalTable';
 /* eslint-disable-next-line no-restricted-imports */
-import ConfirmationTables from '../ConfirmationTable';
+import ConfirmationTable from '../ConfirmationTable';
 /* eslint-disable-next-line no-restricted-imports */
 import ExtracurricularTable from '../ExtracurricularTable';
 /* eslint-disable-next-line no-restricted-imports */
@@ -25,7 +25,7 @@ const ScoreConfirmationForm = ({ oneseo }: ScoreConfirmationFormProps) => {
         'flex h-fit flex-col items-center justify-center overflow-hidden bg-white p-2 text-[1vh]',
       )}
     >
-      <div className={cn('relative', 'z-[2]', 'w-[63vh]')}>
+      <div className={cn('relative', 'z-[2]', 'w-[66vh]')}>
         <div className={cn('relative', 'z-[2]', 'w-[66vh]', 'overflow-hidden')}>
           <div className={cn('relative', 'bg-white', 'p-4', 'text-black')}>
             <div
@@ -89,7 +89,7 @@ const ScoreConfirmationForm = ({ oneseo }: ScoreConfirmationFormProps) => {
               <h2 className={cn('mt-[1.5vh]', 'text-[1.2vh]', 'leading-[2vh]')}>비교과</h2>
               <ExtracurricularTable oneseo={oneseo} />
 
-              <ConfirmationTables />
+              <ConfirmationTable />
 
               <div className={cn('mt-[2vh]', 'text-center', 'text-[1.2vh]')}>
                 <p>위와 같이 입력하고 확인하였음을 증명합니다.</p>
