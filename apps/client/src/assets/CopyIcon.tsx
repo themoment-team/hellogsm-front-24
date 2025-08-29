@@ -2,7 +2,7 @@ interface CopyIconProps {
   color?: string;
 }
 
-const CopyIcon: React.FC<CopyIconProps> = ({ color = '#94A3B8' }) => (
+const CopyIcon = ({ color }: CopyIconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1.25rem"
