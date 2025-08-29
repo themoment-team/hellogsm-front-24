@@ -80,7 +80,7 @@ const CheckResultPage = ({
     <>
       <div className={cn([containerStyle, 'mt-48'])}>
         <h1 className={cn([h1Style])}>합격 유형을 선택해주세요.</h1>
-        <div className={cn('flex', 'gap-5')}>
+        <div className={cn('flex', 'gap-5', 'xs:flex-row', 'flex-col')}>
           <div onClick={() => handleCheckTest(true)} className={cn([divStyle])}>
             1차 합격 조회
             <img src="/images/🍀.png" className={cn([imgStyle, 'w-[3.75rem]', 'h-[3.75rem]'])} />
