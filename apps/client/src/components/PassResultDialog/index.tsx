@@ -125,7 +125,14 @@ const PassResultDialog = ({
     <Dialog open={isPassOpen}>
       <DialogTitle />
       <DialogContent
-        className={cn('w-[645px]', 'h-[380px]', 'p-0', '!rounded-[20px]')}
+        className={cn(
+          'h-[26.25rem]',
+          'max-w-[29.9375rem]',
+          'sm:h-[23.75rem]',
+          'sm:max-w-[40.3125rem]',
+          'p-0',
+          '!rounded-[0.5rem]',
+        )}
         onClose={() => setIsPassOpen(false)}
       >
         <div className={cn('absolute', 'top-[100px]', 'right-[75px]')}>
@@ -141,12 +148,24 @@ const PassResultDialog = ({
           <div className={cn('flex', 'flex-col', 'items-center', 'gap-10')}>
             <HelloGSMIcon />
             <div className={cn('flex', 'flex-col', 'items-center', 'gap-3')}>
-              <h3 className={cn('text-[1.25rem]/[1.5rem]', 'font-semibold')}>{title}</h3>
+              <h3
+                className={cn(
+                  'text-[1.5rem]/[2rem]',
+                  'font-semibold',
+                  'px-10',
+                  'sm:px-0',
+                  'text-center',
+                )}
+              >
+                {title}
+              </h3>
               <p
                 className={cn(
                   'text-gray-500',
-                  'text-[1rem]/[1.5rem]',
-                  'font-medium',
+                  'text-[0.875rem]/[1.5rem]',
+                  'sm:text-[1.125rem]/[1.75rem]',
+                  'font-normal',
+                  'sm:font-medium',
                   'text-center',
                 )}
               >
