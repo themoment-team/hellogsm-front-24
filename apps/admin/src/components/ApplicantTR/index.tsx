@@ -215,11 +215,7 @@ const ApplicantTR = ({
             <span className={cn('font-normal', 'text-zinc-600')}>{phoneNumber}</span>
           </TableCell>
           <TableCell className={cn('w-[8rem]', 'text-zinc-900')}>
-            {examinationNumber === null ? (
-              <Badge variant={'미정'}>{firstTestResult}</Badge>
-            ) : (
-              examinationNumber
-            )}
+            {examinationNumber === null ? <Badge variant={'미정'}>미정</Badge> : examinationNumber}
           </TableCell>
           <TableCell className={cn('w-[9rem]', 'text-zinc-600')}>{schoolName}</TableCell>
           <TableCell className={cn('w-[7.25rem]', 'text-zinc-900')}>
