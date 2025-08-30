@@ -303,7 +303,7 @@ const ApplicantTR = ({
             </AlertDialog>
           </TableCell>
           <TableCell className={cn('w-[5rem]')}>
-            <Button onClick={handleOneseoEdit} className={cn('')} variant="outline">
+            <Button onClick={handleOneseoEdit} variant="outline">
               원서수정
             </Button>
             <AlertDialog open={editOneseoDialogOpen}>
