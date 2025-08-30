@@ -1,15 +1,11 @@
-import { GetMyOneseoType } from 'types';
+import { OneseoStatusType } from 'types';
 
 import { getArtPhysicalScores, semesterArray } from 'client/utils';
 
 import { ARTS_PHYSICAL_SUBJECTS } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
 
-interface ArtsPhysicalTableProps {
-  oneseo: GetMyOneseoType;
-}
-
-const ArtsPhysicalTable = ({ oneseo }: ArtsPhysicalTableProps) => {
+const ArtsPhysicalTable = ({ oneseo }: OneseoStatusType) => {
   const artPhysicalScores = getArtPhysicalScores(oneseo);
   const totalArtsPhysicalConvertedScore = oneseo.calculatedScore?.artsPhysicalSubjectsScore || 0;
 

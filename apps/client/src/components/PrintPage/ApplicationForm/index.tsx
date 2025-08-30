@@ -1,4 +1,4 @@
-import { GetMyOneseoType } from 'types';
+import { OneseoStatusType } from 'types';
 
 import OneseoStatus from 'client/components/OneseoStatus';
 
@@ -9,11 +9,7 @@ import ApplicationPledge from '../ApplicationPledge';
 /* eslint-disable-next-line no-restricted-imports */
 import PersonalInfoTable from '../PersonalInfoTable';
 
-interface ApplicationFormProps {
-  oneseo: GetMyOneseoType;
-}
-
-const ApplicationForm = ({ oneseo }: ApplicationFormProps) => {
+const ApplicationForm = ({ oneseo }: OneseoStatusType) => {
   const date = new Date();
   const targetDate = date.getFullYear() + 1;
 

@@ -1,12 +1,8 @@
-import { GetMyOneseoType } from 'types';
+import { OneseoStatusType } from 'types';
 
 import { cn } from 'shared/lib/utils';
 
-interface GeneralSubjectsTableProps {
-  oneseo: GetMyOneseoType;
-}
-
-const ExtracurricularTable = ({ oneseo }: GeneralSubjectsTableProps) => {
+const ExtracurricularTable = ({ oneseo }: OneseoStatusType) => {
   return (
     <table className={cn('w-full', 'border-collapse', 'border', 'text-[1vh]')}>
       <thead>

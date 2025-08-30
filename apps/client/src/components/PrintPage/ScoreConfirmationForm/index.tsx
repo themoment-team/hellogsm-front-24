@@ -1,4 +1,4 @@
-import { GetMyOneseoType } from 'types';
+import { OneseoStatusType } from 'types';
 
 import { cn } from 'shared/lib/utils';
 
@@ -11,11 +11,7 @@ import ExtracurricularTable from '../ExtracurricularTable';
 /* eslint-disable-next-line no-restricted-imports */
 import GeneralSubjectsTable from '../GeneralSubjectsTable';
 
-interface ScoreConfirmationFormProps {
-  oneseo: GetMyOneseoType;
-}
-
-const ScoreConfirmationForm = ({ oneseo }: ScoreConfirmationFormProps) => {
+const ScoreConfirmationForm = ({ oneseo }: OneseoStatusType) => {
   const date = new Date();
   const targetDate = date.getFullYear() + 1;
 

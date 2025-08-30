@@ -1,12 +1,8 @@
-import { GetMyOneseoType } from 'types';
+import { OneseoStatusType } from 'types';
 
 import { cn } from 'shared/lib/utils';
 
-interface ApplicationPledgeProps {
-  oneseo: GetMyOneseoType;
-}
-
-const ApplicationPledge = ({ oneseo }: ApplicationPledgeProps) => {
+const ApplicationPledge = ({ oneseo }: OneseoStatusType) => {
   return (
     <div className={cn('border-r', 'border-black', 'p-2', 'text-sm')}>
       <div className={cn('mb-4')}>

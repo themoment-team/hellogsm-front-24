@@ -1,15 +1,10 @@
-import { GetMyOneseoType, SexEnum } from 'types';
+import { OneseoStatusType, SexEnum } from 'types';
 
 import { cn } from 'shared/lib/utils';
-
-interface PersonalInfoTableProps {
-  oneseo: GetMyOneseoType;
-}
-
 const thStyle = 'border border-black bg-[#e9e9e9] ';
 const tdStyle = 'border border-black ';
 
-const PersonalInfoTable = ({ oneseo }: PersonalInfoTableProps) => {
+const PersonalInfoTable = ({ oneseo }: OneseoStatusType) => {
   return (
     <table className={cn('w-full', 'border-collapse', 'text-center', 'text-[1.2vh]')}>
       <thead>

@@ -1,15 +1,11 @@
-import { GetMyOneseoType } from 'types';
+import { OneseoStatusType } from 'types';
 
 import { scoreToAlphabet } from 'client/utils/scoreUtils';
 
 import { GENERAL_SUBJECTS } from 'shared/constants';
 import { cn } from 'shared/lib/utils';
 
-interface GeneralSubjectsTableProps {
-  oneseo: GetMyOneseoType;
-}
-
-const GeneralSubjectsTable = ({ oneseo }: GeneralSubjectsTableProps) => {
+const GeneralSubjectsTable = ({ oneseo }: OneseoStatusType) => {
   return (
     <div className={cn('flex', 'h-fit', 'border', 'border-black')}>
       <div className={cn('flex', 'w-full', 'flex-col', 'border-r', 'border-black')}>
