@@ -6,10 +6,10 @@ import {
   UseFormRegister,
   UseFormSetValue,
   UseFormUnregister,
-  UseFormStateReturn,
   UseFormTrigger,
   UseFormGetValues,
   get,
+  useFormState,
   useWatch,
 } from 'react-hook-form';
 
@@ -132,7 +132,6 @@ interface Step4RegisterProps {
   trigger: UseFormTrigger<Step4FormType>;
   getValues: UseFormGetValues<Step4FormType>;
   control: Control<Step4FormType>;
-  formState: UseFormStateReturn<Step4FormType>;
   isGED: boolean;
   isCandidate: boolean;
   isGraduate: boolean;
@@ -145,7 +144,6 @@ const Step4Register = ({
   setValue,
   control,
   trigger,
-  formState,
   unregister,
   getValues,
   type,
@@ -171,6 +169,10 @@ const Step4Register = ({
   const [subjectKeys, setSubjectKeys] = useState<string[]>(() =>
     GENERAL_SUBJECTS.map((_, index) => `general-${index}`),
   );
+
+  // formState를 props로 받으면 부모의 {...step4UseForm} 스프레드가 메모이즈되어 첫 렌더
+  // 값에 고정된다 — 컴포넌트 안에서 직접 구독한다 (React Compiler 호환)
+  const { errors } = useFormState({ control });
 
   // 렌더 중 구독은 watch() 대신 useWatch 사용 (React Compiler 호환)
   const liberalSystem = useWatch({ control, name: 'liberalSystem' });
@@ -426,8 +428,7 @@ const Step4Register = ({
                   input.value = input.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
                 }}
                 variant={
-                  (Boolean(get(formState.errors, 'gedAvgScore')) || gedAvgScore === undefined) &&
-                  showError
+                  (Boolean(get(errors, 'gedAvgScore')) || gedAvgScore === undefined) && showError
                     ? 'error'
                     : null
                 }
@@ -486,7 +487,7 @@ const Step4Register = ({
                         subjectArray={subjectArray}
                         subjectKeys={subjectKeys}
                         control={control}
-                        errors={formState.errors}
+                        errors={errors}
                         handleDeleteSubjectClick={handleDeleteSubjectClick}
                         isGraduate={isGraduate}
                         showError={showError}
@@ -502,7 +503,7 @@ const Step4Register = ({
                         subjectArray={subjectArray}
                         subjectKeys={subjectKeys}
                         control={control}
-                        errors={formState.errors}
+                        errors={errors}
                         handleDeleteSubjectClick={handleDeleteSubjectClick}
                         freeSemester={freeSemester}
                         isGraduate={isGraduate}
@@ -566,7 +567,7 @@ const Step4Register = ({
                     <NonSubjectForm
                       register={register}
                       trigger={trigger}
-                      errors={formState.errors}
+                      errors={errors}
                       showError={showError}
                       validateForm={validateForm}
                     />

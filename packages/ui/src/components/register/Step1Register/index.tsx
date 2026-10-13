@@ -7,7 +7,7 @@ import {
   UseFormRegister,
   UseFormSetValue,
   UseFormTrigger,
-  FormState,
+  useFormState,
   useWatch,
 } from 'react-hook-form';
 
@@ -33,7 +33,6 @@ interface Step1RegisterProps {
   setValue: UseFormSetValue<Step1FormType>;
   control: Control<Step1FormType>;
   trigger: UseFormTrigger<Step1FormType>;
-  formState: FormState<Step1FormType>;
   showError: boolean;
 }
 
@@ -47,9 +46,12 @@ const Step1Register = ({
   setValue,
   control,
   trigger,
-  formState: { errors },
   showError,
 }: Step1RegisterProps) => {
+  // formState를 props로 받으면 부모의 {...step1UseForm} 스프레드가 메모이즈되어 첫 렌더
+  // 값에 고정된다 — 컴포넌트 안에서 직접 구독한다 (React Compiler 호환)
+  const { errors } = useFormState({ control });
+
   const daumPostCode = useDaumPostcodePopup();
 
   // 렌더 중 구독은 watch() 대신 useWatch 사용 (React Compiler 호환)

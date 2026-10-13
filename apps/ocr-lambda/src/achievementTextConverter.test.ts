@@ -187,3 +187,55 @@ test('같은 표 안에서 학기 칸이 비어도 이미 확정된 반대 학�
     ].join('\n'),
   );
 });
+
+const ATTENDANCE_SECTION = makeTextBlock('2.출결상황');
+
+/** 출결상황 표 헤딩 2줄. 결석·지각·조퇴·결과가 각각 질병/미인정/기타 3칸씩 나뉜다 */
+const ATTENDANCE_HEADER_ROWS = [
+  ['학년', '수업일수', '결석', '', '', '지각', '', '', '조퇴', '', '', '결과', '', '', '특기사항'],
+  ['', '', ...Array.from({ length: 4 }, () => ['질병', '미인정', '기타']).flat(), ''],
+];
+const ATTENDANCE_HEADER_LINES = [
+  '학년 수업일수 결석 지각 조퇴 결과 특기사항',
+  Array.from({ length: 4 }, () => '질병 미인정 기타').join(' '),
+];
+
+const convertAttendanceTable = (dataRows: string[][]): string =>
+  convertKordocBlocks([
+    ATTENDANCE_SECTION,
+    makeTableBlock([...ATTENDANCE_HEADER_ROWS, ...dataRows]),
+  ]).rawText;
+
+test('출결 행은 질병/미인정/기타 12칸을 원본 열 순서 그대로 내보낸다', () => {
+  // 서버 파서는 각 3칸 묶음에서 미인정(가운데) 칸만 반영한다. 열이 한 칸이라도 밀리면
+  // 질병·기타 값이 미인정 자리로 들어가 감점 대상이 아닌 출결이 점수에 반영되므로,
+  // 칸마다 서로 다른 값을 넣어 순서가 그대로 보존되는지 확인한다.
+  const counts = Array.from({ length: 12 }, (_, index) => String(index + 1));
+
+  const rawText = convertAttendanceTable([['1', '190', ...counts, '']]);
+
+  assert.equal(rawText, [...ATTENDANCE_HEADER_LINES, `1 190 ${counts.join(' ')}`].join('\n'));
+});
+
+test('출결 행의 빈 칸과 스캔 잡음은 자리를 지킨 채 0으로 바뀌어 항상 숫자 12개가 된다', () => {
+  // 빈 칸을 건너뛰고 이어붙이면 뒤쪽 값이 앞 칸으로 당겨져 미인정 자리가 어긋난다.
+  const rawText = convertAttendanceTable([
+    ['2', '185', '3', '', '.', '', '1', '', '•', '', '', '', '2', '', ''],
+  ]);
+
+  assert.equal(rawText, [...ATTENDANCE_HEADER_LINES, '2 185 3 0 0 0 1 0 0 0 0 0 2 0'].join('\n'));
+});
+
+test('출결 칸이 모두 비어 있고 특기사항이 개근이면 개근 줄로 내보낸다', () => {
+  const rawText = convertAttendanceTable([['3', '190', ...Array<string>(12).fill(''), '개근']]);
+
+  assert.equal(rawText, [...ATTENDANCE_HEADER_LINES, '3 190 개근'].join('\n'));
+});
+
+test('특기사항이 개근이어도 출결 칸에 값이 있으면 개근으로 덮지 않고 숫자 12개로 내보낸다', () => {
+  const counts = ['', '1', '', '', '', '', '', '', '', '', '', ''];
+
+  const rawText = convertAttendanceTable([['1', '190', ...counts, '개근']]);
+
+  assert.equal(rawText, [...ATTENDANCE_HEADER_LINES, '1 190 0 1 0 0 0 0 0 0 0 0 0 0'].join('\n'));
+});

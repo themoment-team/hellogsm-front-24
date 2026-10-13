@@ -9,12 +9,12 @@ import { usePostMockScore } from '@repo/api/hooks';
 import { ARTS_PHYSICAL_SUBJECTS, GENERAL_SUBJECTS } from '@repo/constants';
 import { useModalStore } from '@repo/store';
 import {
+  createStep4Schema,
   GEDAchievementType,
   GraduationTypeValueEnum,
   LiberalSystemValueEnum,
   MiddleSchoolAchievementType,
   Step4FormType,
-  step4Schema,
   StepEnum,
 } from '@repo/types';
 import { ComputerRecommendedPage, Step4Register } from '@repo/ui/components';
@@ -30,6 +30,10 @@ const graduationArray = [
 const CalculatePage = () => {
   const { setScoreCalculationCompleteModal } = useModalStore();
 
+  const [graduationType, setGraduationType] = useState<GraduationTypeValueEnum | null>(null);
+  // 예체능 성적의 기대 길이가 졸업 유형에 따라 달라지므로 스키마는 graduationType으로 만든다
+  const step4Schema = createStep4Schema(graduationType);
+
   const step4UseForm = useForm<Step4FormType>({
     resolver: zodResolver(step4Schema),
     defaultValues: {
@@ -39,7 +43,6 @@ const CalculatePage = () => {
     },
   });
 
-  const [graduationType, setGraduationType] = useState<GraduationTypeValueEnum | null>(null);
   const [errorStep, setErrorStep] = useState<StepEnum | null>(null);
   const isCandidate = graduationType === GraduationTypeValueEnum.CANDIDATE;
   const isGED = graduationType === GraduationTypeValueEnum.GED;

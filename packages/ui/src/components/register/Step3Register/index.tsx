@@ -3,11 +3,11 @@
 import { useEffect } from 'react';
 import {
   Control,
-  FormState,
   UseFormGetValues,
   UseFormRegister,
   UseFormSetValue,
   UseFormTrigger,
+  useFormState,
   useWatch,
 } from 'react-hook-form';
 
@@ -23,7 +23,6 @@ interface Step3RegisterProps {
   control: Control<Step3FormType>;
   getValues: UseFormGetValues<Step3FormType>;
   trigger: UseFormTrigger<Step3FormType>;
-  formState: FormState<Step3FormType>;
   isCandidate: boolean;
   showError: boolean;
 }
@@ -39,10 +38,13 @@ const Step3Register = ({
   control,
   getValues,
   trigger,
-  formState: { errors },
   isCandidate,
   showError,
 }: Step3RegisterProps) => {
+  // formState를 props로 받으면 부모의 {...step3UseForm} 스프레드가 메모이즈되어 첫 렌더
+  // 값에 고정된다 — 컴포넌트 안에서 직접 구독한다 (React Compiler 호환)
+  const { errors } = useFormState({ control });
+
   // 렌더 중 구독은 watch() 대신 useWatch 사용 (React Compiler 호환)
   const relationshipWithGuardian = useWatch({ control, name: 'relationshipWithGuardian' });
   const otherRelationshipWithGuardian = useWatch({

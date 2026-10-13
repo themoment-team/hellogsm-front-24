@@ -3,12 +3,11 @@
 import { useEffect } from 'react';
 import {
   Control,
-  FormState,
   UseFormGetValues,
-  UseFormRegister,
   UseFormReset,
   UseFormSetValue,
   UseFormTrigger,
+  useFormState,
   useWatch,
 } from 'react-hook-form';
 
@@ -34,13 +33,11 @@ import {
 } from '../../../shadcn';
 
 interface Step2RegisterProps {
-  register: UseFormRegister<Step2FormType>;
   setValue: UseFormSetValue<Step2FormType>;
   control: Control<Step2FormType>;
   getValues: UseFormGetValues<Step2FormType>;
   reset: UseFormReset<Step2FormType>;
   trigger: UseFormTrigger<Step2FormType>;
-  formState: FormState<Step2FormType>;
   showError: boolean;
 }
 
@@ -81,15 +78,17 @@ const majorIntroductions = [
 ] as const;
 
 const Step2Register = ({
-  register,
   setValue,
   control,
   getValues,
   reset,
   trigger,
-  formState: { errors },
   showError,
 }: Step2RegisterProps) => {
+  // formState를 props로 받으면 부모의 {...step2UseForm} 스프레드가 메모이즈되어 첫 렌더
+  // 값에 고정된다 — 컴포넌트 안에서 직접 구독한다 (React Compiler 호환)
+  const { errors } = useFormState({ control });
+
   const majorFieldList: MajorFieldType[] = [
     'firstDesiredMajor',
     'secondDesiredMajor',
@@ -97,6 +96,10 @@ const Step2Register = ({
   ];
 
   // 렌더 중 구독은 watch() 대신 useWatch 사용 (React Compiler 호환)
+  // schoolName은 register()로 연결하지 않는다 — 지망 학과 변경 시의 reset()이 RHF 필드
+  // 참조를 비우는데, 메모이즈된 register() 호출은 다시 실행되지 않아 이후 setValue가
+  // input에 반영되지 않는다. 표시 전용 입력이므로 구독한 값을 그대로 넘긴다.
+  const schoolName = useWatch({ control, name: 'schoolName' });
   const graduationDate = useWatch({ control, name: 'graduationDate' });
   const graduationType = useWatch({ control, name: 'graduationType' });
   const screening = useWatch({ control, name: 'screening' });
@@ -264,7 +267,8 @@ const Step2Register = ({
                     placeholder="내 중학교 찾기"
                     width="full"
                     disabled={true}
-                    {...register('schoolName')}
+                    readOnly
+                    value={schoolName ?? ''}
                     variant={showError && errors.schoolName ? 'error' : null}
                   />
                   <SearchDialog setValue={setValue} />

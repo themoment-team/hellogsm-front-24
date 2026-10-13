@@ -20,6 +20,7 @@ import { oneseoQueryKeys } from '@repo/api/lib';
 import { ARTS_PHYSICAL_SUBJECTS, GENERAL_SUBJECTS } from '@repo/constants';
 import { useModalStore } from '@repo/store';
 import {
+  createStep4Schema,
   GEDAchievementType,
   GetMyOneseoType,
   GraduationTypeValueEnum,
@@ -36,7 +37,6 @@ import {
   Step3FormType,
   step3Schema,
   Step4FormType,
-  step4Schema,
   StepEnum,
 } from '@repo/types';
 import { cn, extractClassroomAndNumber, sendGAEvent } from '@repo/utils';
@@ -47,7 +47,7 @@ import EditBar from '../EditBar';
 import { Step1Register, Step2Register, Step3Register, Step4Register } from '../register';
 import StepBar from '../StepBar';
 
-import { normalizeAchievements } from './normalizeAchievements';
+import { normalizeAchievements, normalizeArtsPhysicalAchievement } from './normalizeAchievements';
 
 /** step 4에서 마지막 입력 이후 이 시간만큼 입력이 없으면 자동으로 임시저장한다 */
 const IDLE_AUTO_SAVE_DELAY = 2 * 60 * 1000;
@@ -131,6 +131,11 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
     },
   });
 
+  // 렌더 중 구독은 watch() 대신 useWatch 사용 (React Compiler 호환)
+  const graduationType = useWatch({ control: step2UseForm.control, name: 'graduationType' });
+  // 예체능 성적의 기대 길이가 졸업 유형에 따라 달라지므로 step 4 스키마는 graduationType으로 만든다
+  const step4Schema = createStep4Schema(graduationType);
+
   const step4UseForm = useForm<Step4FormType>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
@@ -157,8 +162,6 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
   const [errorStep, setErrorStep] = useState<StepEnum | null>(null);
 
   const { push } = useRouter();
-  // 렌더 중 구독은 watch() 대신 useWatch 사용 (React Compiler 호환)
-  const graduationType = useWatch({ control: step2UseForm.control, name: 'graduationType' });
 
   const isClient = type === 'client';
   const isCandidate = graduationType === GraduationTypeValueEnum.CANDIDATE;
@@ -280,7 +283,6 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
     const {
       liberalSystem,
       newSubjects,
-      artsPhysicalAchievement,
       absentDays,
       attendanceDays,
       volunteerTime,
@@ -295,6 +297,10 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
       achievement3_1,
       achievement3_2,
     } = normalizeAchievements(step4FormValues, graduationType);
+    const artsPhysicalAchievement = normalizeArtsPhysicalAchievement(
+      step4FormValues,
+      graduationType,
+    );
 
     const body: PostOneseoType = {
       // step 1
@@ -416,9 +422,9 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
     const body = getOneseo();
 
     if (isModifyApproved) {
-      modifyMyOneseo(body, { onError: resumeIdleTimer });
+      modifyMyOneseo(body, { onError: handleSubmitError });
     } else {
-      postMyOneseo(body, { onError: resumeIdleTimer });
+      postMyOneseo(body, { onError: handleSubmitError });
     }
   };
 
@@ -496,6 +502,24 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
     autoSaveTempStorage(body, { onError: rollbackLastSavedTempBody });
   };
 
+  // 제출 직전의 인적사항 수정(PATCH)은 서버에서 임시저장 캐시까지 함께 지운다. 뒤이은 제출이
+  // 실패하면 원서도 임시저장도 남지 않아 새로고침 시 작성 내용이 전부 사라지므로, 지금
+  // 입력값으로 임시저장을 즉시 되살린다. 직전 저장과 내용이 같아도 서버에는 이미 없으므로
+  // handleAutoTempSave와 달리 중복 여부를 따지지 않고 보낸다.
+  const restoreTempStorage = () => {
+    const { body, key } = getTempStorage();
+
+    lastSavedTempBodyRef.current = key;
+
+    autoSaveTempStorage(body, { onError: rollbackLastSavedTempBody });
+  };
+
+  // 복구 저장이 실패하면 키가 되돌아가므로, 되살린 타이머가 2분 뒤 한 번 더 시도한다
+  const handleSubmitError = () => {
+    resumeIdleTimer();
+    restoreTempStorage();
+  };
+
   // 직전에 관찰한 step 4 입력값 — 실제로 값이 바뀐 경우에만 타이머를 걸기 위해 사용.
   // 이 값이 없으면 step 4에 처음 도착한 시점이라 아직 사용자 입력이 없다는 뜻이다.
   const observedStep4ValuesRef = useRef<string | null>(null);
@@ -539,7 +563,6 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
     const {
       liberalSystem,
       newSubjects,
-      artsPhysicalAchievement,
       absentDays,
       attendanceDays,
       volunteerTime,
@@ -554,6 +577,10 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
       achievement3_1,
       achievement3_2,
     } = normalizeAchievements(step4FormValues, graduationType);
+    const artsPhysicalAchievement = normalizeArtsPhysicalAchievement(
+      step4FormValues,
+      graduationType,
+    );
 
     const body: MiddleSchoolAchievementType | GEDAchievementType = isGED
       ? {
