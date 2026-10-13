@@ -416,9 +416,9 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
     const body = getOneseo();
 
     if (isModifyApproved) {
-      modifyMyOneseo(body, { onError: resumeIdleTimer });
+      modifyMyOneseo(body, { onError: handleSubmitError });
     } else {
-      postMyOneseo(body, { onError: resumeIdleTimer });
+      postMyOneseo(body, { onError: handleSubmitError });
     }
   };
 
@@ -494,6 +494,24 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
     lastSavedTempBodyRef.current = key;
 
     autoSaveTempStorage(body, { onError: rollbackLastSavedTempBody });
+  };
+
+  // 제출 직전의 인적사항 수정(PATCH)은 서버에서 임시저장 캐시까지 함께 지운다. 뒤이은 제출이
+  // 실패하면 원서도 임시저장도 남지 않아 새로고침 시 작성 내용이 전부 사라지므로, 지금
+  // 입력값으로 임시저장을 즉시 되살린다. 직전 저장과 내용이 같아도 서버에는 이미 없으므로
+  // handleAutoTempSave와 달리 중복 여부를 따지지 않고 보낸다.
+  const restoreTempStorage = () => {
+    const { body, key } = getTempStorage();
+
+    lastSavedTempBodyRef.current = key;
+
+    autoSaveTempStorage(body, { onError: rollbackLastSavedTempBody });
+  };
+
+  // 복구 저장이 실패하면 키가 되돌아가므로, 되살린 타이머가 2분 뒤 한 번 더 시도한다
+  const handleSubmitError = () => {
+    resumeIdleTimer();
+    restoreTempStorage();
   };
 
   // 직전에 관찰한 step 4 입력값 — 실제로 값이 바뀐 경우에만 타이머를 걸기 위해 사용.
