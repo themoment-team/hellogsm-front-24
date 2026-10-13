@@ -84,6 +84,16 @@ export const step4Schema = z
     ),
   })
   .superRefine((data, ctx) => {
+    // artsPhysicalAchievement가 nullable인 건 검정고시 때문이다 — 검정고시는 liberalSystem까지
+    // 전부 null로 둔다. liberalSystem이 있는 일반 전형에서 예체능 성적이 통째로 null이면
+    // (자유학기제/자유학년제 스위치를 누르면 초기화된다) 서버가 400으로 거부하므로 여기서 막는다.
+    if (data.liberalSystem !== null && data.artsPhysicalAchievement === null) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['artsPhysicalAchievement'],
+      });
+    }
+
     if (data.liberalSystem === LiberalSystemValueEnum.FREE_SEMESTER) {
       const hasAchievement11 =
         data.achievement1_1 &&
