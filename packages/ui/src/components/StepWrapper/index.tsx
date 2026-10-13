@@ -47,7 +47,7 @@ import EditBar from '../EditBar';
 import { Step1Register, Step2Register, Step3Register, Step4Register } from '../register';
 import StepBar from '../StepBar';
 
-import { normalizeAchievements } from './normalizeAchievements';
+import { normalizeAchievements, normalizeArtsPhysicalAchievement } from './normalizeAchievements';
 
 /** step 4에서 마지막 입력 이후 이 시간만큼 입력이 없으면 자동으로 임시저장한다 */
 const IDLE_AUTO_SAVE_DELAY = 2 * 60 * 1000;
@@ -283,7 +283,6 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
     const {
       liberalSystem,
       newSubjects,
-      artsPhysicalAchievement,
       absentDays,
       attendanceDays,
       volunteerTime,
@@ -298,6 +297,10 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
       achievement3_1,
       achievement3_2,
     } = normalizeAchievements(step4FormValues, graduationType);
+    const artsPhysicalAchievement = normalizeArtsPhysicalAchievement(
+      step4FormValues,
+      graduationType,
+    );
 
     const body: PostOneseoType = {
       // step 1
@@ -560,7 +563,6 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
     const {
       liberalSystem,
       newSubjects,
-      artsPhysicalAchievement,
       absentDays,
       attendanceDays,
       volunteerTime,
@@ -575,6 +577,10 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
       achievement3_1,
       achievement3_2,
     } = normalizeAchievements(step4FormValues, graduationType);
+    const artsPhysicalAchievement = normalizeArtsPhysicalAchievement(
+      step4FormValues,
+      graduationType,
+    );
 
     const body: MiddleSchoolAchievementType | GEDAchievementType = isGED
       ? {
