@@ -20,6 +20,7 @@ import { oneseoQueryKeys } from '@repo/api/lib';
 import { ARTS_PHYSICAL_SUBJECTS, GENERAL_SUBJECTS } from '@repo/constants';
 import { useModalStore } from '@repo/store';
 import {
+  createStep4Schema,
   GEDAchievementType,
   GetMyOneseoType,
   GraduationTypeValueEnum,
@@ -36,7 +37,6 @@ import {
   Step3FormType,
   step3Schema,
   Step4FormType,
-  step4Schema,
   StepEnum,
 } from '@repo/types';
 import { cn, extractClassroomAndNumber, sendGAEvent } from '@repo/utils';
@@ -47,7 +47,7 @@ import EditBar from '../EditBar';
 import { Step1Register, Step2Register, Step3Register, Step4Register } from '../register';
 import StepBar from '../StepBar';
 
-import { normalizeAchievements } from './normalizeAchievements';
+import { normalizeAchievements, normalizeArtsPhysicalAchievement } from './normalizeAchievements';
 
 /** step 4에서 마지막 입력 이후 이 시간만큼 입력이 없으면 자동으로 임시저장한다 */
 const IDLE_AUTO_SAVE_DELAY = 2 * 60 * 1000;
@@ -131,6 +131,11 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
     },
   });
 
+  // 렌더 중 구독은 watch() 대신 useWatch 사용 (React Compiler 호환)
+  const graduationType = useWatch({ control: step2UseForm.control, name: 'graduationType' });
+  // 예체능 성적의 기대 길이가 졸업 유형에 따라 달라지므로 step 4 스키마는 graduationType으로 만든다
+  const step4Schema = createStep4Schema(graduationType);
+
   const step4UseForm = useForm<Step4FormType>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
@@ -157,8 +162,6 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
   const [errorStep, setErrorStep] = useState<StepEnum | null>(null);
 
   const { push } = useRouter();
-  // 렌더 중 구독은 watch() 대신 useWatch 사용 (React Compiler 호환)
-  const graduationType = useWatch({ control: step2UseForm.control, name: 'graduationType' });
 
   const isClient = type === 'client';
   const isCandidate = graduationType === GraduationTypeValueEnum.CANDIDATE;
@@ -280,7 +283,6 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
     const {
       liberalSystem,
       newSubjects,
-      artsPhysicalAchievement,
       absentDays,
       attendanceDays,
       volunteerTime,
@@ -295,6 +297,10 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
       achievement3_1,
       achievement3_2,
     } = normalizeAchievements(step4FormValues, graduationType);
+    const artsPhysicalAchievement = normalizeArtsPhysicalAchievement(
+      step4FormValues,
+      graduationType,
+    );
 
     const body: PostOneseoType = {
       // step 1
@@ -557,7 +563,6 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
     const {
       liberalSystem,
       newSubjects,
-      artsPhysicalAchievement,
       absentDays,
       attendanceDays,
       volunteerTime,
@@ -572,6 +577,10 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
       achievement3_1,
       achievement3_2,
     } = normalizeAchievements(step4FormValues, graduationType);
+    const artsPhysicalAchievement = normalizeArtsPhysicalAchievement(
+      step4FormValues,
+      graduationType,
+    );
 
     const body: MiddleSchoolAchievementType | GEDAchievementType = isGED
       ? {

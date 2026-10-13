@@ -1,4 +1,8 @@
-import { AchievementFieldType, getUsedAchievementFields } from '@repo/constants';
+import {
+  AchievementFieldType,
+  getArtsPhysicalAchievementLength,
+  getUsedAchievementFields,
+} from '@repo/constants';
 import { GraduationTypeValueEnum, Step4FormType } from '@repo/types';
 
 /**
@@ -39,4 +43,32 @@ export const normalizeAchievements = (
     achievement3_1: normalize('achievement3_1'),
     achievement3_2: normalize('achievement3_2'),
   };
+};
+
+/**
+ * 이번 전형에서 쓰지 않는 학기의 예체능 성적이 뒤에 남아 있으면 서버로 나가기 직전에 잘라낸다.
+ *
+ * 졸업자로 예체능을 채운 뒤 step 2에서 졸업예정으로 바꾸면, 화면에서는 3학년 2학기 열이
+ * 사라지지만 값은 배열 끝에 그대로 남는다. 서버는 들어온 칸을 전부 평균에 넣으므로 보이지
+ * 않는 성적이 점수에 섞인다. 같은 전형 안에서는 졸업예정의 배치가 졸업자 배치의 앞부분과
+ * 같아서 기대 길이만큼만 남기면 된다.
+ *
+ * 모자란 경우는 건드리지 않는다 — 덜 채운 값은 createStep4Schema가 제출 전에 막고, 임시저장은
+ * 작성 중인 값을 그대로 보내야 한다.
+ */
+export const normalizeArtsPhysicalAchievement = (
+  values: Step4FormType,
+  graduationType: GraduationTypeValueEnum,
+): number[] | null | undefined => {
+  // 스키마상 number[] | null이지만, 아직 아무 칸도 선택하지 않았으면 런타임에 undefined다
+  const value = values.artsPhysicalAchievement as number[] | null | undefined;
+  if (!value || !graduationType) return value;
+
+  const expectedLength = getArtsPhysicalAchievementLength({
+    graduationType,
+    liberalSystem: values.liberalSystem,
+  });
+
+  if (expectedLength === null || value.length <= expectedLength) return value;
+  return value.slice(0, expectedLength);
 };
