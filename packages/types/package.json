@@ -9,7 +9,8 @@
     "dev": "tsc --watch",
     "build": "tsc",
     "lint": "eslint src",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "test": "tsx --test src/**/*.test.ts"
   },
   "dependencies": {
     "@repo/utils": "workspace:*",
@@ -19,7 +20,9 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@types/node": "^20.19.33",
     "eslint": "^9.39.4",
+    "tsx": "^4.23.15",
     "typescript": "5.9.2"
   }
 }
