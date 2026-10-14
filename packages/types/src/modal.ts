@@ -38,7 +38,7 @@ export interface ClientModals {
   loginRequiredModal: LoginModal;
   resultAnnouncementPeriodModal: ResultModal;
   devServerNoticeModal: SimpleModal;
-  testPeriodNoticeModal: SimpleModal;
+  testPeriodNoticeModal: ConfirmModal;
   verificationCodeSendErrorModal: SimpleModal;
   signupSuccessModal: SimpleModal;
   signupErrorModal: SimpleModal;
@@ -66,7 +66,7 @@ export interface ModalActions {
   setLoginRequiredModal: (isOpen: boolean, isMain?: boolean) => void;
   setResultAnnouncementPeriodModal: (isOpen: boolean, isFirstTest?: boolean) => void;
   setDevServerNoticeModal: (isOpen: boolean) => void;
-  setTestPeriodNoticeModal: (isOpen: boolean) => void;
+  setTestPeriodNoticeModal: (isOpen: boolean, onConfirm?: () => void) => void;
   setVerificationCodeSendErrorModal: (isOpen: boolean) => void;
   setSignupSuccessModal: (isOpen: boolean) => void;
   setSignupErrorModal: (isOpen: boolean) => void;

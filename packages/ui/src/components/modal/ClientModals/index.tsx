@@ -148,10 +148,20 @@ const ClientModals = () => {
           <AlertDialogTitle
             className={cn('flex', 'flex-col', 'text-center', 'gap-4', 'items-center')}
           >
-            <p>현재 테스트 기간입니다.</p>
-            <p>일부 기능이 제한될 수 있습니다.</p>
+            <p>현재 서비스 테스트 중입니다.</p>
+            <p>
+              테스트 기간에 작성된 원서는 정식 접수로 인정되지 않으며,
+              <br />
+              <strong className={cn('text-red-500')}>별도 통보 없이 삭제</strong>됩니다.
+            </p>
+            <p>정식 원서 접수 기간에 다시 작성해 주세요.</p>
           </AlertDialogTitle>
-          <AlertDialogAction onClick={() => setTestPeriodNoticeModal(false)}>
+          <AlertDialogAction
+            onClick={() => {
+              setTestPeriodNoticeModal(false);
+              testPeriodNoticeModal.onConfirm();
+            }}
+          >
             확인
           </AlertDialogAction>
         </AlertDialogContent>
