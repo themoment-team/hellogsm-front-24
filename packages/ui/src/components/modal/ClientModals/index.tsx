@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { useModalStore } from '@repo/store';
 import { cn } from '@repo/utils';
@@ -47,6 +47,7 @@ const ClientModals = () => {
   } = useModalStore();
 
   const { back } = useRouter();
+  const isSignupPage = usePathname() === '/signup';
 
   return (
     <>
@@ -148,13 +149,31 @@ const ClientModals = () => {
           <AlertDialogTitle
             className={cn('flex', 'flex-col', 'text-center', 'gap-4', 'items-center')}
           >
-            <p>현재 서비스 테스트 중입니다.</p>
-            <p>
-              테스트 기간에 작성된 원서는 정식 접수로 인정되지 않으며,
-              <br />
-              <strong className={cn('text-red-500')}>별도 통보 없이 삭제</strong>됩니다.
-            </p>
-            <p>정식 원서 접수 기간에 다시 작성해 주세요.</p>
+            {isSignupPage ? (
+              <>
+                <p>현재 서비스 개발 테스트 중입니다.</p>
+                <p>
+                  테스트 기간에 가입한 회원 정보는
+                  <br />
+                  <strong className={cn('text-red-500')}>별도 통보 없이 삭제</strong>될 수 있습니다.
+                </p>
+                <p>
+                  개발 테스트 진행으로 인해
+                  <br />
+                  회원가입이 원활하게 진행되지 않을 수 있습니다.
+                </p>
+              </>
+            ) : (
+              <>
+                <p>현재 서비스 테스트 중입니다.</p>
+                <p>
+                  테스트 기간에 작성된 원서는 정식 접수로 인정되지 않으며,
+                  <br />
+                  <strong className={cn('text-red-500')}>별도 통보 없이 삭제</strong>됩니다.
+                </p>
+                <p>정식 원서 접수 기간에 다시 작성해 주세요.</p>
+              </>
+            )}
           </AlertDialogTitle>
           <AlertDialogAction
             onClick={() => {

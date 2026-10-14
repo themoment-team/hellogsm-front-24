@@ -35,6 +35,7 @@ import { ChevronIcon } from '@/assets';
 import { Footer, SexToggle } from '@/components';
 import { usePostMemberRegister, useSendCode, useVerifyCode } from '@/hooks';
 import { signupFormSchema } from '@/schemas';
+import { isTestPeriod } from '@/utils';
 
 const PERMIT_YEAR = 50;
 const VERIFICATION_CODE_TIMEOUT = 180;
@@ -56,7 +57,13 @@ const SignUpPage = ({ isPastAnnouncement }: SignUpProps) => {
     setSignupErrorModal,
     setPhoneNumberDuplicateModal,
     setApplicationPeriodModal,
+    setTestPeriodNoticeModal,
   } = useModalStore();
+
+  // 로그인 후 클라이언트 라우팅으로 진입하는 경우에도 안내하기 위해 마운트 시 노출
+  useEffect(() => {
+    if (isTestPeriod) setTestPeriodNoticeModal(true);
+  }, [setTestPeriodNoticeModal]);
 
   const [timeLeft, setTimeLeft] = useState(0);
   // 재전송 버튼 노출 여부는 타이머 진행 여부의 순수 파생값
