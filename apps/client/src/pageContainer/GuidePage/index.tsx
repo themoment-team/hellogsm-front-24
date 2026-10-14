@@ -20,6 +20,7 @@ import { cn } from '@repo/utils';
 import { BlueStarIcon, CloverIcon, CopyIcon } from '@/assets';
 import { Footer } from '@/components';
 import { usePostOneseoModifyRequest } from '@/hooks/api';
+import { isTestPeriod } from '@/utils';
 
 const textStyle = ['text-[1.25rem]/[1.75rem]', 'font-semibold'];
 
@@ -213,7 +214,8 @@ interface GuideProps {
 }
 
 const GuidePage = ({ initialData, isOneseoWrite, initialEditability }: GuideProps) => {
-  const { setLoginRequiredModal, setOneseoModifyRequestModal } = useModalStore();
+  const { setLoginRequiredModal, setOneseoModifyRequestModal, setTestPeriodNoticeModal } =
+    useModalStore();
   const { data: authInfo } = useGetMyAuthInfo();
   const { data: memberInfo } = useGetMyMemberInfo();
   const queryClient = useQueryClient();
@@ -387,6 +389,10 @@ const GuidePage = ({ initialData, isOneseoWrite, initialEditability }: GuideProp
           }
           if (isSubmittedOneseo && editability?.oneseoEditStatus !== 'APPROVED') {
             setOneseoModifyRequestModal(true, () => postOneseoModify());
+            return;
+          }
+          if (isTestPeriod) {
+            setTestPeriodNoticeModal(true, () => push('/register?step=1'));
             return;
           }
           push('/register?step=1');
