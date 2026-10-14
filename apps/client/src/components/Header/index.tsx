@@ -32,8 +32,21 @@ const activeStyle = [
 
 const activeTextStyle = ['relative', 'text-[0.875rem]/[1.5rem]', 'md:text-[1.125rem]/[1.75rem]'];
 
+// 메뉴 간격은 1024px에서 1.5rem으로 시작해 1280px에서 기존 값(2.5rem)까지 늘어남
+const pcNavStyle = [
+  'gap-[clamp(1.5rem,_6.25vw_-_2.5rem,_2.5rem)]',
+  'hidden',
+  'md:flex',
+  'justify-between',
+  'text-lg',
+  'font-[600]',
+  'text-gray-500',
+  'whitespace-nowrap',
+];
+
 const loginLinkStyle = [
   'flex',
+  'whitespace-nowrap',
   'gap-x-1',
   'text-gray-600',
   'font-[600]',
@@ -79,17 +92,7 @@ const mobileWithSize = 1024;
 const PCNavigation = ({ links, isRegisterPath }: NavProps) => {
   if (isRegisterPath) {
     return (
-      <nav
-        className={cn(
-          'gap-[2.5rem]',
-          'hidden',
-          'md:flex',
-          'justify-between',
-          'text-lg',
-          'font-[600]',
-          'text-gray-500',
-        )}
-      >
+      <nav className={cn([...pcNavStyle])}>
         {links.map(({ label, href, isExternal }) => (
           <a
             key={label}
@@ -106,17 +109,7 @@ const PCNavigation = ({ links, isRegisterPath }: NavProps) => {
   }
 
   return (
-    <nav
-      className={cn(
-        'gap-[2.5rem]',
-        'hidden',
-        'md:flex',
-        'justify-between',
-        'text-lg',
-        'font-[600]',
-        'text-gray-500',
-      )}
-    >
+    <nav className={cn([...pcNavStyle])}>
       {links.map(({ label, href, isExternal }) =>
         isExternal ? (
           <a
@@ -443,9 +436,8 @@ const Header = ({ isServerHealthy }: HeaderProps) => {
         className={cn(
           'h-[4.625rem]',
           'px-[1.25rem]',
-          'lg:px-[6.25rem]',
-          'xl:px-[15.25rem]',
-          'fhd:px-[20rem]',
+          // 좌우 여백은 1024px 20px → 1440px 100px로 늘어나고, 이후엔 콘텐츠 폭 80rem 기준 가운데 정렬 (1920px부터 320px 고정)
+          'md:px-[min(max(clamp(1.25rem,_19.23%_-_11.06rem,_6.25rem),_calc((100%_-_80rem)_/_2)),_20rem)]',
           'flex',
           'justify-between',
           'items-center',
