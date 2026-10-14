@@ -18,7 +18,6 @@ import {
 } from '@/components';
 
 import DevNoticeDialog from './DevNoticeDialog';
-import TestPeriodDialog from './TestPeriodDialog';
 
 interface MainPageProps {
   memberInfo: MyMemberInfoType | undefined;
@@ -68,7 +67,6 @@ const MainPage = ({ memberInfo, resultInfo, isServerHealthy }: MainPageProps) =>
       />
 
       <DevNoticeDialog />
-      <TestPeriodDialog />
     </>
   );
 };

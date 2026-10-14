@@ -4,7 +4,7 @@ import { ModalContainer } from '@repo/ui/components';
 import '@repo/ui/styles.css';
 
 import '@/styles/globals.css';
-import { Header } from '@/components';
+import { Header, TestPeriodDialog } from '@/components';
 import { GoogleAnalytics } from '@/lib';
 import { pretendardFont } from '@/styles/pretendard';
 import { getIsServerHealthy } from '@/utils';
@@ -68,6 +68,7 @@ export default async function RootLayout({
           <Header isServerHealthy={isServerHealthy} />
           {children}
           <ModalContainer modal="client" />
+          <TestPeriodDialog />
         </Provider>
       </body>
     </html>
