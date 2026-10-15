@@ -1,6 +1,7 @@
 'use client';
 
 import { useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
@@ -236,6 +237,12 @@ const GuidePage = ({ initialData, isOneseoWrite, initialEditability }: GuideProp
       queryClient.invalidateQueries({ queryKey: oneseoQueryKeys.getMyOneseo() });
       queryClient.invalidateQueries({ queryKey: oneseoQueryKeys.getEditability() });
       toast.success('원서 수정 권한 요청이 성공했습니다.');
+    },
+    onError: (error) => {
+      setOneseoModifyRequestModal(false);
+      const axiosError = error as AxiosError<{ message?: string }>;
+      const serverMessage = axiosError.response?.data?.message;
+      toast.error(serverMessage ?? '원서 수정 권한 요청 중 오류가 발생했습니다.');
     },
   });
 
