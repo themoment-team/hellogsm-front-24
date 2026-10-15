@@ -24,7 +24,7 @@ import {
 } from '@repo/ui/shadcn';
 import { cn } from '@repo/utils';
 
-import { AlertIcon, DocumentIcon, FirstResultCheckIcon, PrintIcon, ProfileIcon } from '@/assets';
+import { AlertIcon, DocumentIcon, PrintIcon, ProfileIcon, ResultCheckIcon } from '@/assets';
 
 interface MyInfoProps {
   initialData: GetMyOneseoType | undefined;
@@ -255,7 +255,12 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
                     'border-slate-300',
                   )}
                 >
-                  <FirstResultCheckIcon />
+                  <div className={cn('flex', 'items-center', 'gap-3')}>
+                    <ResultCheckIcon />
+                    <p className={cn('text-slate-900', 'text-[1rem]/[1.75rem]', 'font-normal')}>
+                      합격자 조회
+                    </p>
+                  </div>
                   <Button
                     onClick={() => push('/check-result')}
                     variant="outline"
