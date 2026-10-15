@@ -31,6 +31,11 @@ interface MyInfoProps {
   isOneseoWrite: boolean;
 }
 
+type RelatedDocumentType = {
+  icon: React.ReactNode;
+  text: string;
+} & ({ fileUrl: string } | { path: string });
+
 const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
   const { push } = useRouter();
 
@@ -76,19 +81,28 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
     AI: '인공지능과',
   };
 
-  const relatedDocuments = [
+  const relatedDocuments: RelatedDocumentType[] = [
     {
       icon: <DocumentIcon />,
       text: '유형별 제출서류 안내 파일',
-      path: `${process.env.NEXT_PUBLIC_CDN_URL}/2027학년도 신입생 최종 합격자 제출 서류 안내.hwpx`,
+      fileUrl: `${process.env.NEXT_PUBLIC_CDN_URL}/2027학년도 신입생 최종 합격자 제출 서류 안내.hwpx`,
     },
     { icon: <PrintIcon />, text: '입학원서', path: 'print' },
     {
       icon: <PrintIcon />,
       text: '제출서류',
-      path: `${process.env.NEXT_PUBLIC_CDN_URL}/2027학년도 신입생 최종 합격자 제출 서류 안내.hwpx`,
+      fileUrl: `${process.env.NEXT_PUBLIC_CDN_URL}/2027학년도 신입생 최종 합격자 제출 서류 안내.hwpx`,
     },
   ];
+
+  const handleDocumentDownload = (doc: RelatedDocumentType) => {
+    // 외부 파일을 router.push로 열면 Next가 같은 URL로의 재이동을 막아 두 번째 클릭부터 다운로드되지 않는다.
+    if ('fileUrl' in doc) {
+      window.open(doc.fileUrl, '_blank', 'noopener,noreferrer');
+      return;
+    }
+    push(doc.path);
+  };
 
   const screeningLabels: Record<string, string> = {
     GENERAL: '일반전형',
@@ -295,7 +309,7 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
                       </div>
 
                       <Button
-                        onClick={() => push(doc.path)}
+                        onClick={() => handleDocumentDownload(doc)}
                         variant="outline"
                         className={cn(buttonStyle)}
                       >
