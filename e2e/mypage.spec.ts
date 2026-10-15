@@ -17,8 +17,8 @@ test.describe('마이페이지 관련서류 다운로드', () => {
       route.fulfill({ json: { data: submittedOneseo } }),
     );
     // 새 탭에서 열리는 요청까지 잡기 위해 context 단위로 CDN 파일 응답을 고정한다.
-    await context.route('**/*.hwpx', (route) =>
-      route.fulfill({ contentType: 'application/haansofthwpx', body: 'hwpx' }),
+    await context.route('**/*.hwp', (route) =>
+      route.fulfill({ contentType: 'application/x-hwp', body: 'hwp' }),
     );
   });
 
@@ -29,7 +29,7 @@ test.describe('마이페이지 관련서류 다운로드', () => {
   }) => {
     const fileRequests: string[] = [];
     context.on('request', (request) => {
-      if (request.url().endsWith('.hwpx')) fileRequests.push(request.url());
+      if (request.url().endsWith('.hwp')) fileRequests.push(request.url());
     });
 
     await page.goto(`${CLIENT_URL}/mypage`);
@@ -37,12 +37,16 @@ test.describe('마이페이지 관련서류 다운로드', () => {
     const downloadButtons = page.getByRole('button', { name: '다운로드', exact: true });
     await expect(downloadButtons).toHaveCount(3);
 
-    // 1번(유형별 제출서류 안내 파일) 두 번, 3번(제출서류) 한 번
+    // 1번(유형별 제출서류 안내 파일) 두 번, 3번(제출서류 양식) 한 번
     for (const index of [0, 0, 2]) {
       const before = fileRequests.length;
       await downloadButtons.nth(index).click();
       await expect.poll(() => fileRequests.length).toBe(before + 1);
     }
+
+    // 안내 파일과 제출서류 양식은 서로 다른 파일을 받아야 한다.
+    expect(fileRequests[0]).toBe(fileRequests[1]);
+    expect(fileRequests[2]).not.toBe(fileRequests[0]);
 
     await expect(page).toHaveURL(`${CLIENT_URL}/mypage`);
     expect(consoleErrors).toEqual([]);
