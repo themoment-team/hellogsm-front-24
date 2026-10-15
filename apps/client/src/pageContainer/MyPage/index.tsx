@@ -85,13 +85,13 @@ const MyPage = ({ initialData, isOneseoWrite }: MyInfoProps) => {
     {
       icon: <DocumentIcon />,
       text: '유형별 제출서류 안내 파일',
-      fileUrl: `${process.env.NEXT_PUBLIC_CDN_URL}/2027학년도 신입생 최종 합격자 제출 서류 안내.hwpx`,
+      fileUrl: `${process.env.NEXT_PUBLIC_CDN_URL}/2027학년도 신입생 입학 지원자 제출 서류 안내.hwp`,
     },
     { icon: <PrintIcon />, text: '입학원서', path: 'print' },
     {
       icon: <PrintIcon />,
-      text: '제출서류',
-      fileUrl: `${process.env.NEXT_PUBLIC_CDN_URL}/2027학년도 신입생 최종 합격자 제출 서류 안내.hwpx`,
+      text: '제출서류 양식',
+      fileUrl: `${process.env.NEXT_PUBLIC_CDN_URL}/2027학년도 입학 제출 서류.hwp`,
     },
   ];
 
