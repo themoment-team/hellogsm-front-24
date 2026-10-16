@@ -47,6 +47,7 @@ import EditBar from '../EditBar';
 import { Step1Register, Step2Register, Step3Register, Step4Register } from '../register';
 import StepBar from '../StepBar';
 
+import { getSubmitErrorMessage } from './getSubmitErrorMessage';
 import { normalizeAchievements, normalizeArtsPhysicalAchievement } from './normalizeAchievements';
 
 /** step 4에서 마지막 입력 이후 이 시간만큼 입력이 없으면 자동으로 임시저장한다 */
@@ -252,6 +253,10 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
     onError: () => toast.error('임시 저장을 실패하였습니다.'),
   });
 
+  // 제출 실패 후 임시저장 복구 전용 — 제출 실패 안내가 이미 떠 있으므로 실패 토스트를 띄우지 않는다.
+  // 마감 후에는 제출과 임시저장이 모두 403이라, 토스트를 띄우면 제출과 무관한 실패 안내가 겹친다.
+  const { mutate: restoreTempStorageMutate } = usePostTempStorage(Number(step));
+
   const { mutate: postMockScore } = usePostMockScore(graduationType, {
     onSuccess: (data) => {
       setScoreCalculationCompleteModal(true, data, 'score');
@@ -409,15 +414,22 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
     };
   };
 
+  const notifySubmitError = (error: unknown) => {
+    toast.error(getSubmitErrorMessage(error, isModifyApproved ? '수정' : '제출'));
+  };
+
   const handleOneseoSubmitButtonClick = async () => {
     // 제출 요청 중에 자동저장이 나가면 서버의 제출 완료 상태가 다시 작성 중으로
     // 되돌아간다. 요청을 보내기 전에 멈추고, 제출이 실패하면 되살린다.
     stopIdleTimer();
 
-    await patchPersonalInfo(getPersonalInfo()).catch((error) => {
+    try {
+      await patchPersonalInfo(getPersonalInfo());
+    } catch (error) {
       resumeIdleTimer();
-      throw error;
-    });
+      notifySubmitError(error);
+      return;
+    }
 
     const body = getOneseo();
 
@@ -511,13 +523,14 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
 
     lastSavedTempBodyRef.current = key;
 
-    autoSaveTempStorage(body, { onError: rollbackLastSavedTempBody });
+    restoreTempStorageMutate(body, { onError: rollbackLastSavedTempBody });
   };
 
   // 복구 저장이 실패하면 키가 되돌아가므로, 되살린 타이머가 2분 뒤 한 번 더 시도한다
-  const handleSubmitError = () => {
+  const handleSubmitError = (error: unknown) => {
     resumeIdleTimer();
     restoreTempStorage();
+    notifySubmitError(error);
   };
 
   // 직전에 관찰한 step 4 입력값 — 실제로 값이 바뀐 경우에만 타이머를 걸기 위해 사용.
