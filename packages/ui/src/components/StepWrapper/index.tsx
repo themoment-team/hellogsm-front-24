@@ -16,7 +16,7 @@ import {
   usePutMyOneseo,
   usePutOneseoByMemberId,
 } from '@repo/api/hooks';
-import { oneseoQueryKeys } from '@repo/api/lib';
+import { memberQueryKeys, oneseoQueryKeys } from '@repo/api/lib';
 import { ARTS_PHYSICAL_SUBJECTS, GENERAL_SUBJECTS } from '@repo/constants';
 import { useModalStore } from '@repo/store';
 import {
@@ -202,7 +202,15 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
     setErrorStep(null);
   };
 
-  const { mutateAsync: patchPersonalInfo } = usePatchPersonalInfo();
+  const { mutateAsync: patchPersonalInfo } = usePatchPersonalInfo({
+    onSuccess: () => {
+      // 헤더·마이페이지의 이름은 react-query 캐시(staleTime 5분)를 읽으므로
+      // 무효화하지 않으면 수정 후에도 이전 이름이 남는다
+      queryClient.invalidateQueries({ queryKey: memberQueryKeys.getMyMemberInfo() });
+      // 서버도 인적사항 수정 시 원서 캐시를 비우거나 갱신한다
+      queryClient.invalidateQueries({ queryKey: oneseoQueryKeys.getMyOneseo() });
+    },
+  });
   const { mutateAsync: patchPersonalInfoByMemberId } = usePatchPersonalInfoByMemberId(
     memberId ?? 0,
   );
