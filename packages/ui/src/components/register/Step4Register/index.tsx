@@ -13,7 +13,11 @@ import {
   useWatch,
 } from 'react-hook-form';
 
-import { ACHIEVEMENT_FIELD_LIST, GENERAL_SUBJECTS } from '@repo/constants';
+import {
+  ACHIEVEMENT_FIELD_LIST,
+  clearFreeSemesterArtsPhysical,
+  GENERAL_SUBJECTS,
+} from '@repo/constants';
 import {
   AchievementType,
   FreeSemesterValueEnum,
@@ -301,17 +305,29 @@ const Step4Register = ({
     // 계산된 achievementList는 아직 OCR 이전 값이라 여기서는 쓸 수 없다.
     // OCR이 인식하지 못한 칸은 null로 내려오는데, 기존 검증 로직이 null을 '입력 필요' 오류로
     // 표시해 주므로 이 값을 그대로 반영하는 것만으로 검수 표시를 겸할 수 있다.
+    const ocrLiberalSystem = achievement.liberalSystem ?? getValues('liberalSystem');
+    const ocrFreeSemester = achievement.freeSemester ?? getValues('freeSemester');
     const mappedAchievementFields = mapOcrAchievementFields(achievement, {
-      liberalSystem: achievement.liberalSystem ?? getValues('liberalSystem'),
+      liberalSystem: ocrLiberalSystem,
       graduationType,
-      freeSemester: achievement.freeSemester ?? getValues('freeSemester'),
+      freeSemester: ocrFreeSemester,
     });
     ACHIEVEMENT_FIELD_LIST.forEach((field) => {
       setValue(field, mappedAchievementFields[field] as Step4FormType[typeof field]);
     });
+    // 예체능의 자유학기 칸은 화면에 '자유학기제'로만 보이므로 0이어야 한다. 이 칸을 0으로
+    // 맞추는 effect(ArtPhysicalForm)는 자유학기를 지정할 때만 돌아, 자유학기를 정한 뒤 OCR을
+    // 적용하면 OCR 값이 보이지 않는 채로 남는다. 제출 직전 정규화와 별개로 폼 상태도 화면과
+    // 맞춰 둔다.
     setValue(
       'artsPhysicalAchievement',
-      (achievement.artsPhysicalAchievement ?? null) as Step4FormType['artsPhysicalAchievement'],
+      (achievement.artsPhysicalAchievement
+        ? clearFreeSemesterArtsPhysical({
+            artsPhysicalAchievement: achievement.artsPhysicalAchievement,
+            liberalSystem: ocrLiberalSystem,
+            freeSemester: ocrFreeSemester,
+          })
+        : null) as Step4FormType['artsPhysicalAchievement'],
     );
     setValue('absentDays', achievement.absentDays as Step4FormType['absentDays']);
     setValue(
