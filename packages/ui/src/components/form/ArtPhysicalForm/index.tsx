@@ -7,6 +7,7 @@ import {
   ART_PHYSICAL_SCORE_VALUES,
   getArtPhysicalArray,
   getArtPhysicalIndexArray,
+  getFreeSemesterArtsPhysicalIndices,
 } from '@repo/constants';
 import { GraduationTypeValueEnum, Step4FormType, FreeSemesterValueEnum } from '@repo/types';
 import { cn } from '@repo/utils';
@@ -44,20 +45,6 @@ const rowStyle = [
   'border-zinc-200',
   'items-center',
 ];
-
-const getFreeSemesterIndices = (semester: FreeSemesterValueEnum | null) => {
-  if (!semester) return [];
-  const semesterParts = semester.split('-');
-  const grade = Number(semesterParts[0]);
-  const sem = Number(semesterParts[1]);
-  if (!Number.isFinite(grade) || !Number.isFinite(sem)) return [];
-
-  // 자유학기제 표는 재학생·졸업자 모두 1학년 1학기부터 시작한다
-  const semesterNumber = (grade - 1) * 2 + (sem - 1);
-
-  if (semesterNumber < 0) return []; // 유효하지 않은 학기
-  return [semesterNumber * 3, semesterNumber * 3 + 1, semesterNumber * 3 + 2];
-};
 
 const ArtPhysicalForm = ({
   freeSemester,
@@ -103,11 +90,11 @@ const ArtPhysicalForm = ({
       ? 'w-[10.46rem]'
       : 'w-[5.47rem]';
 
-  const disabledIndices = isFreeSemester ? getFreeSemesterIndices(freeSemester) : [];
+  const disabledIndices = isFreeSemester ? getFreeSemesterArtsPhysicalIndices(freeSemester) : [];
 
   useEffect(() => {
     if (!isFreeSemester) return;
-    const indices = getFreeSemesterIndices(freeSemester);
+    const indices = getFreeSemesterArtsPhysicalIndices(freeSemester);
     indices.forEach((index) => {
       setValue(`artsPhysicalAchievement.${index}`, 0);
     });

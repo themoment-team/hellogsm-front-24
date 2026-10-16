@@ -1,5 +1,6 @@
 import {
   AchievementFieldType,
+  clearFreeSemesterArtsPhysical,
   getArtsPhysicalAchievementLength,
   getUsedAchievementFields,
 } from '@repo/constants';
@@ -46,7 +47,9 @@ export const normalizeAchievements = (
 };
 
 /**
- * 이번 전형에서 쓰지 않는 학기의 예체능 성적이 뒤에 남아 있으면 서버로 나가기 직전에 잘라낸다.
+ * 화면에 없는 예체능 칸에 남은 값을 서버로 나가기 직전에 정리한다.
+ *
+ * 1. 이번 전형에서 쓰지 않는 학기의 예체능 성적이 뒤에 남아 있으면 잘라낸다.
  *
  * 졸업자로 예체능을 채운 뒤 step 2에서 졸업예정으로 바꾸면, 화면에서는 3학년 2학기 열이
  * 사라지지만 값은 배열 끝에 그대로 남는다. 서버는 들어온 칸을 전부 평균에 넣으므로 보이지
@@ -55,6 +58,13 @@ export const normalizeAchievements = (
  *
  * 모자란 경우는 건드리지 않는다 — 덜 채운 값은 createStep4Schema가 제출 전에 막고, 임시저장은
  * 작성 중인 값을 그대로 보내야 한다.
+ *
+ * 2. 자유학기제의 자유학기 칸(과목 3개)은 0으로 맞춘다.
+ *
+ * 이 칸은 화면에 '자유학기제'로만 표시되어 고칠 수 없고 출력물에서도 빗금 처리되는데, 0으로
+ * 맞추는 effect(ArtPhysicalForm)는 자유학기를 지정할 때만 돈다. 그래서 자유학기를 먼저 정한
+ * 뒤 생기부 OCR을 적용하면 OCR 값이 이 칸에 그대로 남았고, 점수 계산은 freeSemester를 보지
+ * 않고 0이 아닌 칸을 모두 평균에 넣어 보이지 않는 성적이 점수에 섞였다.
  */
 export const normalizeArtsPhysicalAchievement = (
   values: Step4FormType,
@@ -69,6 +79,14 @@ export const normalizeArtsPhysicalAchievement = (
     liberalSystem: values.liberalSystem,
   });
 
-  if (expectedLength === null || value.length <= expectedLength) return value;
-  return value.slice(0, expectedLength);
+  const trimmed =
+    expectedLength === null || value.length <= expectedLength
+      ? value
+      : value.slice(0, expectedLength);
+
+  return clearFreeSemesterArtsPhysical({
+    artsPhysicalAchievement: trimmed,
+    liberalSystem: values.liberalSystem,
+    freeSemester: values.freeSemester,
+  });
 };

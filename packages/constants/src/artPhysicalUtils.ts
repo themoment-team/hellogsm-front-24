@@ -76,3 +76,52 @@ export function getArtsPhysicalAchievementLength({
 
   return semesters.length * ARTS_PHYSICAL_SUBJECTS.length;
 }
+
+type FreeSemesterType = '1-1' | '1-2' | '2-1' | '2-2' | '3-1' | '3-2';
+
+/**
+ * 자유학기제에서 자유학기로 지정한 학기의 예체능 성적 인덱스(과목 3개). 이 칸은 입력 폼
+ * (ArtPhysicalForm)에서 '자유학기제'로만 표시되고 원서 출력물에서도 빗금 처리되므로 항상
+ * 0이어야 한다.
+ *
+ * 자유학기제 표는 졸업예정·졸업자 모두 1학년 1학기부터 시작하므로 학기순번 × 3부터 3칸이다.
+ */
+export function getFreeSemesterArtsPhysicalIndices(freeSemester: FreeSemesterType | null) {
+  if (!freeSemester) return [];
+  const semesterParts = freeSemester.split('-');
+  const grade = Number(semesterParts[0]);
+  const semester = Number(semesterParts[1]);
+  if (!Number.isFinite(grade) || !Number.isFinite(semester)) return [];
+
+  const semesterNumber = (grade - 1) * 2 + (semester - 1);
+  if (semesterNumber < 0) return [];
+
+  return ARTS_PHYSICAL_SUBJECTS.map((_, subjectIndex) => semesterNumber * 3 + subjectIndex);
+}
+
+interface ClearFreeSemesterArtsPhysicalParams<T> {
+  artsPhysicalAchievement: T[];
+  liberalSystem: LiberalSystemType | null;
+  freeSemester: FreeSemesterType | null;
+}
+
+/**
+ * 자유학기 예체능 칸을 0으로 맞춘 새 배열을 돌려준다. 자유학기제가 아니거나 자유학기를 아직
+ * 지정하지 않았으면 그대로 돌려준다.
+ *
+ * 배열 길이 안에 있는 칸만 덮어쓴다 — 아직 덜 채운 배열 뒤에 빈 칸을 만들지 않기 위해서다.
+ */
+export function clearFreeSemesterArtsPhysical<T extends number | null>({
+  artsPhysicalAchievement,
+  liberalSystem,
+  freeSemester,
+}: ClearFreeSemesterArtsPhysicalParams<T>): (T | 0)[] {
+  if (liberalSystem !== '자유학기제') return artsPhysicalAchievement;
+
+  const indices = getFreeSemesterArtsPhysicalIndices(freeSemester);
+  if (indices.every((index) => index >= artsPhysicalAchievement.length)) {
+    return artsPhysicalAchievement;
+  }
+
+  return artsPhysicalAchievement.map((score, index) => (indices.includes(index) ? 0 : score));
+}

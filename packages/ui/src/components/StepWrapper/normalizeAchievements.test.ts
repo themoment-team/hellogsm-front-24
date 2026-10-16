@@ -124,7 +124,8 @@ test('자유학기제에서도 졸업예정의 기대 길이(15개)까지만 남
     GraduationTypeValueEnum.CANDIDATE,
   );
 
-  assert.deepEqual(result, graduateScores.slice(0, 15));
+  // 자유학기(1-1) 칸 0 처리는 아래 자유학기 테스트에서 따로 확인한다
+  assert.deepEqual(result, [0, 0, 0, ...graduateScores.slice(3, 15)]);
 });
 
 test('기대 길이와 같거나 모자란 예체능 성적은 그대로 통과시킨다', () => {
@@ -169,4 +170,85 @@ test('예체능 성적이 없거나 졸업 유형을 모르면 값을 건드리�
     ),
     scores,
   );
+});
+
+test('자유학기를 먼저 정한 뒤 OCR이 자유학기 예체능 칸을 채워도 0으로 맞춘다(회귀 테스트)', () => {
+  // 실제 버그: 자유학기 칸은 화면에 '자유학기제'로만 보이는데, 자유학기를 지정한 뒤 OCR을 적용하면
+  // OCR 값이 이 칸에 남아 그대로 제출됐고 점수 계산이 이 칸까지 평균에 넣었다.
+  const rest = [5, 4, 3, 5, 5, 4, 5, 4, 5, 5, 5, 5, 4, 5, 5];
+
+  const result = normalizeArtsPhysicalAchievement(
+    values({
+      liberalSystem: LiberalSystemValueEnum.FREE_SEMESTER,
+      freeSemester: FreeSemesterValueEnum['1-1'],
+      artsPhysicalAchievement: [5, 5, 4, ...rest],
+    }),
+    GraduationTypeValueEnum.GRADUATE,
+  );
+
+  assert.deepEqual(result, [0, 0, 0, ...rest]);
+});
+
+test('자유학기 위치와 졸업 유형에 맞는 예체능 칸 3개만 0으로 맞춘다', () => {
+  const cases = [
+    { graduationType: GraduationTypeValueEnum.GRADUATE, freeSemester: '1-2', length: 18 },
+    { graduationType: GraduationTypeValueEnum.GRADUATE, freeSemester: '2-1', length: 18 },
+    { graduationType: GraduationTypeValueEnum.GRADUATE, freeSemester: '3-2', length: 18 },
+    { graduationType: GraduationTypeValueEnum.CANDIDATE, freeSemester: '1-1', length: 15 },
+    { graduationType: GraduationTypeValueEnum.CANDIDATE, freeSemester: '2-2', length: 15 },
+    { graduationType: GraduationTypeValueEnum.CANDIDATE, freeSemester: '3-1', length: 15 },
+  ] as const;
+  const semesterNumber = { '1-1': 0, '1-2': 1, '2-1': 2, '2-2': 3, '3-1': 4, '3-2': 5 };
+
+  cases.forEach(({ graduationType, freeSemester, length }) => {
+    const scores = Array.from({ length }, () => 5);
+    const start = semesterNumber[freeSemester] * 3;
+
+    const result = normalizeArtsPhysicalAchievement(
+      values({
+        liberalSystem: LiberalSystemValueEnum.FREE_SEMESTER,
+        freeSemester: FreeSemesterValueEnum[freeSemester],
+        artsPhysicalAchievement: scores,
+      }),
+      graduationType,
+    );
+
+    const expected = scores.map((score, index) =>
+      index >= start && index < start + 3 ? 0 : score,
+    );
+    assert.deepEqual(result, expected, `${graduationType} ${freeSemester}`);
+  });
+});
+
+test('졸업예정으로 잘라낸 뒤에도 자유학기 예체능 칸을 0으로 맞춘다', () => {
+  const graduateScores = artsScores(18);
+
+  const result = normalizeArtsPhysicalAchievement(
+    values({
+      liberalSystem: LiberalSystemValueEnum.FREE_SEMESTER,
+      freeSemester: FreeSemesterValueEnum['2-1'],
+      artsPhysicalAchievement: graduateScores,
+    }),
+    GraduationTypeValueEnum.CANDIDATE,
+  );
+
+  assert.equal(result?.length, 15);
+  assert.deepEqual(result?.slice(6, 9), [0, 0, 0]);
+  assert.deepEqual(result?.slice(0, 6), graduateScores.slice(0, 6));
+  assert.deepEqual(result?.slice(9), graduateScores.slice(9, 15));
+});
+
+test('자유학년제 예체능은 자유학기 값이 남아 있어도 0으로 맞추지 않는다', () => {
+  const scores = artsScores(12);
+
+  const result = normalizeArtsPhysicalAchievement(
+    values({
+      liberalSystem: LiberalSystemValueEnum.FREE_GRADE,
+      freeSemester: FreeSemesterValueEnum['1-1'],
+      artsPhysicalAchievement: scores,
+    }),
+    GraduationTypeValueEnum.GRADUATE,
+  );
+
+  assert.deepEqual(result, scores);
 });
