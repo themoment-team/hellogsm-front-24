@@ -9,6 +9,9 @@ import { cn } from '@repo/utils';
 
 import { BlurIcon, CopyIcon, HelloGSMIcon } from '@/assets';
 
+const FINAL_PASS_DOCUMENT_URL = `${process.env.NEXT_PUBLIC_CDN_URL}/2027학년도 신입생 최종 합격자 제출 서류 안내.hwpx`;
+const FIRST_PASS_NOTICE_URL = `${process.env.NEXT_PUBLIC_CDN_URL}/2027학년도 신입생 선발 1차 전형 합격자 안내사항.hwp`;
+
 interface PassResultProps {
   isPassOpen: boolean;
   setIsPassOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -185,11 +188,7 @@ const PassResultDialog = ({
               <Button
                 variant="reverseFill"
                 className={cn('w-[10.625rem]', 'h-[3.25rem]', 'font-semibold', 'text-base')}
-                onClick={() =>
-                  push(
-                    `${process.env.NEXT_PUBLIC_CDN_URL}/2027학년도 신입생 최종 합격자 제출 서류 안내.hwpx`,
-                  )
-                }
+                onClick={() => push(FINAL_PASS_DOCUMENT_URL)}
               >
                 합격자 제출서류 다운
               </Button>
@@ -206,11 +205,7 @@ const PassResultDialog = ({
                 <Button
                   variant="fill"
                   className={cn('w-[10.625rem]', 'h-[3.25rem]', 'font-semibold', 'text-base')}
-                  onClick={() =>
-                    push(
-                      `${process.env.NEXT_PUBLIC_CDN_URL}/2027학년도 신입생 선발 1차 전형 합격자 안내사항.hwp`,
-                    )
-                  }
+                  onClick={() => push(FIRST_PASS_NOTICE_URL)}
                 >
                   합격자 유의사항
                 </Button>
