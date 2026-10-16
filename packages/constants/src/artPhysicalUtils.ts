@@ -98,3 +98,30 @@ export function getFreeSemesterArtsPhysicalIndices(freeSemester: FreeSemesterTyp
 
   return ARTS_PHYSICAL_SUBJECTS.map((_, subjectIndex) => semesterNumber * 3 + subjectIndex);
 }
+
+interface ClearFreeSemesterArtsPhysicalParams<T> {
+  artsPhysicalAchievement: T[];
+  liberalSystem: LiberalSystemType | null;
+  freeSemester: FreeSemesterType | null;
+}
+
+/**
+ * 자유학기 예체능 칸을 0으로 맞춘 새 배열을 돌려준다. 자유학기제가 아니거나 자유학기를 아직
+ * 지정하지 않았으면 그대로 돌려준다.
+ *
+ * 배열 길이 안에 있는 칸만 덮어쓴다 — 아직 덜 채운 배열 뒤에 빈 칸을 만들지 않기 위해서다.
+ */
+export function clearFreeSemesterArtsPhysical<T extends number | null>({
+  artsPhysicalAchievement,
+  liberalSystem,
+  freeSemester,
+}: ClearFreeSemesterArtsPhysicalParams<T>): (T | 0)[] {
+  if (liberalSystem !== '자유학기제') return artsPhysicalAchievement;
+
+  const indices = getFreeSemesterArtsPhysicalIndices(freeSemester);
+  if (indices.every((index) => index >= artsPhysicalAchievement.length)) {
+    return artsPhysicalAchievement;
+  }
+
+  return artsPhysicalAchievement.map((score, index) => (indices.includes(index) ? 0 : score));
+}
