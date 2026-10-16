@@ -1,7 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
 import { ADMISSION_SCHEDULE } from '@repo/constants';
 import { Majors, MyMemberInfoType, MyTotalTestResultType } from '@repo/types';
 import { Button, Dialog, DialogContent, DialogTitle } from '@repo/ui/shadcn';
@@ -29,8 +27,6 @@ const PassResultDialog = ({
   memberInfo,
   onClick = () => setIsPassOpen(false),
 }: PassResultProps) => {
-  const { push } = useRouter();
-
   const firstTestPass = isFinishFirstTest && resultInfo?.firstTestPassYn === 'YES';
   const secondTestPass = !isFinishFirstTest && resultInfo?.secondTestPassYn === 'YES';
   const major = resultInfo?.decidedMajor;
@@ -123,6 +119,11 @@ const PassResultDialog = ({
 
   const { title, message } = resultMessages[resultKey];
 
+  const handleFileDownload = (fileUrl: string) => {
+    // 외부 파일을 router.push로 열면 Next가 같은 URL로의 재이동을 막아 두 번째 클릭부터 다운로드되지 않는다.
+    window.open(fileUrl, '_blank', 'noopener,noreferrer');
+  };
+
   const handleInterviewClick = () => {
     window.open(
       'http://gsm.gen.hs.kr/xboard/board.php?mode=view&number=10452&tbnum=65&sCat=0&page=1&keyset=&searchword=',
@@ -188,7 +189,7 @@ const PassResultDialog = ({
               <Button
                 variant="reverseFill"
                 className={cn('w-[10.625rem]', 'h-[3.25rem]', 'font-semibold', 'text-base')}
-                onClick={() => push(FINAL_PASS_DOCUMENT_URL)}
+                onClick={() => handleFileDownload(FINAL_PASS_DOCUMENT_URL)}
               >
                 합격자 제출서류 다운
               </Button>
@@ -205,7 +206,7 @@ const PassResultDialog = ({
                 <Button
                   variant="fill"
                   className={cn('w-[10.625rem]', 'h-[3.25rem]', 'font-semibold', 'text-base')}
-                  onClick={() => push(FIRST_PASS_NOTICE_URL)}
+                  onClick={() => handleFileDownload(FIRST_PASS_NOTICE_URL)}
                 >
                   합격자 유의사항
                 </Button>
