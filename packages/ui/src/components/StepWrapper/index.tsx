@@ -67,6 +67,9 @@ const getPersonalInfoKey = ({
   sex?: string;
 }) => JSON.stringify([name, birth, sex]);
 
+/** 인적사항 PATCH가 서버에서 검증받는 필드(이름·생년월일·성별)만 뽑은 스키마 */
+const personalInfoSchema = step1Schema.pick({ name: true, birth: true, sex: true });
+
 interface StepWrapperProps {
   data: GetMyOneseoType | undefined;
   info?: MyMemberInfoType;
@@ -680,14 +683,16 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
     const prevStep = prevStepRef.current;
     prevStepRef.current = step;
 
+    // 서버는 이름·생년월일·성별만 검증하고 나머지 필드는 무시한다(ModifyPersonalInfoReqDto).
+    // step 2·3까지 유효할 때만 보내면 처음 작성하는 지원자는 step 1을 벗어날 때 PATCH가
+    // 나가지 않고, 임시저장은 요청의 이름 대신 회원 정보를 쓰므로 수정한 이름이 미리보기·제출
+    // 전까지 어디에도 저장되지 않는다.
     if (
       prevStep === StepEnum.ONE &&
       step !== StepEnum.ONE &&
       isClient &&
       getPersonalInfoKey(step1UseForm.getValues()) !== lastSavedPersonalInfoKeyRef.current &&
-      isStepSuccess[1] &&
-      isStepSuccess[2] &&
-      isStepSuccess[3]
+      personalInfoSchema.safeParse(step1UseForm.getValues()).success
     ) {
       patchPersonalInfo(getPersonalInfo()).catch(() => {
         toast.error('인적사항 자동 저장에 실패하였습니다.');
