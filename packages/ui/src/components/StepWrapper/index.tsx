@@ -414,11 +414,27 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
     };
   };
 
+  // 인적사항 PATCH부터 원서 등록/수정 요청이 끝날 때까지 제출 버튼을 막는다.
+  // state는 다음 렌더에야 반영되므로 같은 틱의 연속 클릭은 ref로 걸러낸다.
+  // 제출에 성공하면 다시 제출할 일이 없으므로 풀지 않는다.
+  const isSubmittingRef = useRef(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const endSubmitting = () => {
+    isSubmittingRef.current = false;
+    setIsSubmitting(false);
+  };
+
   const notifySubmitError = (error: unknown) => {
     toast.error(getSubmitErrorMessage(error, isModifyApproved ? '수정' : '제출'));
   };
 
   const handleOneseoSubmitButtonClick = async () => {
+    if (isSubmittingRef.current) return;
+
+    isSubmittingRef.current = true;
+    setIsSubmitting(true);
+
     // 제출 요청 중에 자동저장이 나가면 서버의 제출 완료 상태가 다시 작성 중으로
     // 되돌아간다. 요청을 보내기 전에 멈추고, 제출이 실패하면 되살린다.
     stopIdleTimer();
@@ -426,6 +442,7 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
     try {
       await patchPersonalInfo(getPersonalInfo());
     } catch (error) {
+      endSubmitting();
       resumeIdleTimer();
       notifySubmitError(error);
       return;
@@ -528,6 +545,7 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
 
   // 복구 저장이 실패하면 키가 되돌아가므로, 되살린 타이머가 2분 뒤 한 번 더 시도한다
   const handleSubmitError = (error: unknown) => {
+    endSubmitting();
     resumeIdleTimer();
     restoreTempStorage();
     notifySubmitError(error);
@@ -758,6 +776,7 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
           handleTemporarySaveButtonClick={handleTemporarySaveButtonClick}
           handleStepError={handleStepError}
           isModifyApproved={isModifyApproved}
+          isSubmitting={isSubmitting}
         />
       ) : (
         <EditBar

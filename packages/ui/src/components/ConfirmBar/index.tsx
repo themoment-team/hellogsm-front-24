@@ -22,6 +22,7 @@ interface ConfirmBarProps {
   isStep4: boolean;
   handleStepError: (step: StepEnum) => void;
   isModifyApproved?: boolean;
+  isSubmitting?: boolean;
 }
 
 interface FinalSubmitDialogProps {
@@ -30,6 +31,7 @@ interface FinalSubmitDialogProps {
   handleOneseoSubmitButtonClick: () => void;
   onInvalidClick: () => void;
   isModifyApproved?: boolean;
+  isSubmitting?: boolean;
 }
 
 const FinalSubmitDialog = ({
@@ -38,6 +40,7 @@ const FinalSubmitDialog = ({
   handleOneseoSubmitButtonClick,
   onInvalidClick,
   isModifyApproved,
+  isSubmitting,
 }: FinalSubmitDialogProps) => {
   const canOpen = isStep4 && isStep4Success;
   const buttonText = isModifyApproved ? '원서 수정' : '원서 최종 제출';
@@ -46,7 +49,11 @@ const FinalSubmitDialog = ({
     <Dialog>
       {canOpen ? (
         <DialogTrigger asChild>
-          <Button variant="next" className={cn('flex', 'gap-2', 'items-center')}>
+          <Button
+            variant="next"
+            className={cn('flex', 'gap-2', 'items-center')}
+            disabled={isSubmitting}
+          >
             <MouseIcon />
             <p>{buttonText}</p>
           </Button>
@@ -94,7 +101,7 @@ const FinalSubmitDialog = ({
             <button
               className={cn('px-4', 'py-2', 'rounded-md', 'text-white', 'bg-[#0F172A]')}
               type="submit"
-              disabled={!isStep4Success}
+              disabled={!isStep4Success || isSubmitting}
               onClick={handleOneseoSubmitButtonClick}
             >
               {isModifyApproved ? '수정 완료' : '최종 제출'}
@@ -113,6 +120,7 @@ const ConfirmBar = ({
   isStep4,
   handleStepError,
   isModifyApproved,
+  isSubmitting,
 }: ConfirmBarProps) => {
   const handleCheckErrorStepFour = () => {
     handleStepError(StepEnum.FOUR);
@@ -159,6 +167,7 @@ const ConfirmBar = ({
           isStep4Success={isStep4Success}
           onInvalidClick={handleCheckErrorStepFour}
           isModifyApproved={isModifyApproved}
+          isSubmitting={isSubmitting}
         />
       </div>
     </div>
