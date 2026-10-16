@@ -16,7 +16,7 @@ import {
   usePutMyOneseo,
   usePutOneseoByMemberId,
 } from '@repo/api/hooks';
-import { oneseoQueryKeys } from '@repo/api/lib';
+import { memberQueryKeys, oneseoQueryKeys } from '@repo/api/lib';
 import { ARTS_PHYSICAL_SUBJECTS, GENERAL_SUBJECTS } from '@repo/constants';
 import { useModalStore } from '@repo/store';
 import {
@@ -52,6 +52,20 @@ import { normalizeAchievements, normalizeArtsPhysicalAchievement } from './norma
 
 /** step 4에서 마지막 입력 이후 이 시간만큼 입력이 없으면 자동으로 임시저장한다 */
 const IDLE_AUTO_SAVE_DELAY = 2 * 60 * 1000;
+
+/**
+ * 인적사항 PATCH의 중복 여부를 가리는 키. 서버는 요청 중 이름·생년월일·성별만
+ * 반영하므로(ModifyPersonalInfoReqDto) 나머지 필드는 비교하지 않는다.
+ */
+const getPersonalInfoKey = ({
+  name,
+  birth,
+  sex,
+}: {
+  name?: string;
+  birth?: string;
+  sex?: string;
+}) => JSON.stringify([name, birth, sex]);
 
 interface StepWrapperProps {
   data: GetMyOneseoType | undefined;
@@ -202,7 +216,23 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
     setErrorStep(null);
   };
 
-  const { mutateAsync: patchPersonalInfo } = usePatchPersonalInfo();
+  // 서버에 마지막으로 반영된 인적사항 — 페이지 진입 시 받아온 값에서 시작한다.
+  // 폼의 isDirty는 저장에 성공해도 풀리지 않아, 한 번 수정하면 step 1을 벗어날 때마다
+  // 같은 내용을 다시 PATCH했다. 실제 저장된 값과 비교해 바뀐 경우에만 보낸다.
+  const lastSavedPersonalInfoKeyRef = useRef(
+    getPersonalInfoKey({ name: info?.name, birth: info?.birth, sex: info?.sex }),
+  );
+
+  const { mutateAsync: patchPersonalInfo } = usePatchPersonalInfo({
+    onSuccess: (_, personalInfo) => {
+      lastSavedPersonalInfoKeyRef.current = getPersonalInfoKey(personalInfo);
+      // 헤더·마이페이지의 이름은 react-query 캐시(staleTime 5분)를 읽으므로
+      // 무효화하지 않으면 수정 후에도 이전 이름이 남는다
+      queryClient.invalidateQueries({ queryKey: memberQueryKeys.getMyMemberInfo() });
+      // 서버도 인적사항 수정 시 원서 캐시를 비우거나 갱신한다
+      queryClient.invalidateQueries({ queryKey: oneseoQueryKeys.getMyOneseo() });
+    },
+  });
   const { mutateAsync: patchPersonalInfoByMemberId } = usePatchPersonalInfoByMemberId(
     memberId ?? 0,
   );
@@ -654,7 +684,7 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
       prevStep === StepEnum.ONE &&
       step !== StepEnum.ONE &&
       isClient &&
-      step1UseForm.formState.isDirty &&
+      getPersonalInfoKey(step1UseForm.getValues()) !== lastSavedPersonalInfoKeyRef.current &&
       isStepSuccess[1] &&
       isStepSuccess[2] &&
       isStepSuccess[3]
