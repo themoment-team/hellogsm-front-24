@@ -11,8 +11,27 @@ const submittedOneseo = {
   step: null,
 };
 
+/** 학교생활기록부 간인 생략 안내 팝업의 "오늘 하루 그만보기" 저장 키 */
+const SCHOOL_RECORD_NOTICE_HIDE_KEY = 'hideSchoolRecordNoticeDialog';
+
+test.describe('마이페이지 학교생활기록부 간인 생략 안내 팝업', () => {
+  test('진입 시 팝업이 뜨고 확인을 누르면 닫힌다', async ({ page }) => {
+    await page.goto(`${CLIENT_URL}/mypage`);
+
+    const dialog = page.getByRole('dialog', { name: '학교생활기록부 제출 시 간인 생략 안내' });
+    await expect(dialog).toBeVisible();
+
+    await dialog.getByRole('button', { name: '확인', exact: true }).click();
+    await expect(dialog).toBeHidden();
+  });
+});
+
 test.describe('마이페이지 관련서류 다운로드', () => {
   test.beforeEach(async ({ page, context }) => {
+    // 안내 팝업 오버레이가 버튼 클릭을 가리지 않도록 "오늘 하루 그만보기" 상태로 시작한다.
+    await context.addInitScript((key) => {
+      localStorage.setItem(key, new Date().toDateString());
+    }, SCHOOL_RECORD_NOTICE_HIDE_KEY);
     await page.route('**/api/oneseo/v3/oneseo/me', (route) =>
       route.fulfill({ json: { data: submittedOneseo } }),
     );
