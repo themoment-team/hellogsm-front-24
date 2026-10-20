@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { keepPreviousData } from '@tanstack/react-query';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 
 import { useGetEditability, useGetOneseoList } from '@repo/api/hooks';
-import { useDebounce } from '@repo/hooks';
-import { OneseoEditStatusTag, OneseoListType, ScreeningType, YesNo } from '@repo/types';
+import { OneseoListType } from '@repo/types';
 import {
   Pagination,
   PaginationContent,
@@ -21,8 +22,17 @@ import { cn } from '@repo/utils';
 import { ApplicantTH, ApplicantTR, FilterBar, SideMenu } from '@/components';
 import { SideBarType } from '@/schemas';
 
+import {
+  OneseoListQuery,
+  parseOneseoListQuery,
+  toOneseoListRequestParams,
+  toOneseoListSearchString,
+} from './oneseoListQuery';
+
 interface MainPageProps {
   initialData: OneseoListType | undefined;
+  /** 서버가 initialData를 조회한 조건 */
+  initialQuery: OneseoListQuery;
   isAfterFirstResults: boolean;
   isAfterSecondResults: boolean;
   is역량검사처리기간: boolean;
@@ -31,8 +41,7 @@ interface MainPageProps {
 
 const flexColStyle = ['flex', 'flex-col'] as const;
 
-const PER_PAGE = 10;
-const DEFAULT_TEST_RESULT_TAG = 'ALL';
+const KEYWORD_DEBOUNCE_MS = 1000;
 
 const testResultTypeConvertor: { [key: string]: string } = {
   ALL: '전체 지원자 관리',
@@ -42,8 +51,31 @@ const testResultTypeConvertor: { [key: string]: string } = {
   FALL: '불합격자 관리',
 };
 
+/**
+ * 현재 URL의 목록 조건에 patch를 합친 URL을 만듭니다.
+ */
+const getOneseoListUrl = (patch: Partial<OneseoListQuery>) => {
+  const current = parseOneseoListQuery(
+    Object.fromEntries(new URLSearchParams(window.location.search)),
+  );
+  const search = toOneseoListSearchString({ ...current, ...patch });
+
+  return `${window.location.pathname}${search ? `?${search}` : ''}`;
+};
+
+/**
+ * 현재 URL의 목록 조건에 patch를 합쳐 URL을 교체합니다.
+ * router.replace는 서버 컴포넌트를 다시 렌더링해 조건을 바꿀 때마다 서버 왕복을 기다리게 되므로
+ * Next.js Router와 연동되는 history.replaceState를 사용합니다.
+ * 조건 변경이 방문 기록에 쌓이지 않도록 push가 아닌 replace로 처리합니다.
+ */
+const replaceOneseoListQuery = (patch: Partial<OneseoListQuery>) => {
+  window.history.replaceState(null, '', getOneseoListUrl(patch));
+};
+
 const MainPage = ({
   initialData,
+  initialQuery,
   isAfterFirstResults,
   isAfterSecondResults,
   is역량검사처리기간,
@@ -51,33 +83,86 @@ const MainPage = ({
 }: MainPageProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
-  const [keyword, setKeyword] = useState<string>('');
-  const [testResultTag, setTestResultTag] = useState<SideBarType>(DEFAULT_TEST_RESULT_TAG);
-  const [isSubmitted, setIsSubmitted] = useState<YesNo | string>('');
-  const [screeningTag, setScreeningTag] = useState<ScreeningType | string>('');
-  const [requested, setRequested] = useState<OneseoEditStatusTag>('ANY_EDIT');
-  const [page, setPage] = useState<number>(0);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const query = parseOneseoListQuery(Object.fromEntries(searchParams));
+  const { testResultTag, screeningTag, isSubmitted, status: requested, page } = query;
 
-  const debouncedKeyword = useDebounce(keyword, 1000);
+  // 입력창은 바로 반영하고, 디바운스된 검색어만 URL에 반영합니다.
+  const [keywordInput, setKeywordInput] = useState<string>(query.keyword);
+  const keywordTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  const { data, refetch: oneseoRefetch } = useGetOneseoList(
-    {
-      page: page,
-      size: PER_PAGE,
-      testResultTag: testResultTag === 'REQUEST' ? 'ALL' : testResultTag,
-      screeningTag: screeningTag,
-      isSubmitted: testResultTag === 'REQUEST' ? '' : isSubmitted,
-      keyword: debouncedKeyword,
-      status: testResultTag === 'REQUEST' ? requested : undefined,
-    },
-    {
-      initialData: initialData,
-    },
-  );
+  // 화면을 떠난 뒤 남은 타이머가 다른 페이지의 URL을 바꾸지 않도록 정리합니다.
+  useEffect(() => () => clearTimeout(keywordTimerRef.current), []);
+
+  const isInitialQuery = toOneseoListSearchString(query) === toOneseoListSearchString(initialQuery);
+
+  const {
+    data,
+    isPlaceholderData,
+    refetch: oneseoRefetch,
+  } = useGetOneseoList(toOneseoListRequestParams(query), {
+    // initialData는 쿼리 키와 관계없이 새로 만들어지는 모든 쿼리에 들어가므로 서버가 조회한 조건일 때만 넘깁니다.
+    initialData: isInitialQuery ? initialData : undefined,
+    placeholderData: keepPreviousData,
+    // 원서 수정 후 돌아오거나 조건을 바꿀 때마다 최신 목록을 다시 조회합니다.
+    staleTime: 0,
+  });
 
   const { data: editableData, refetch: editableRefetch } = useGetEditability();
 
   const totalPages = data?.info.totalPages;
+
+  // URL의 page가 전체 페이지 수를 넘으면 마지막 페이지로 보정합니다.
+  // 첫 마운트 effect는 Next.js가 history.replaceState를 연동하기 전에 실행되어 URL만 바뀌고
+  // useSearchParams에는 반영되지 않으므로 router.replace를 사용합니다.
+  useEffect(() => {
+    if (totalPages === undefined || isPlaceholderData) return;
+
+    const lastPage = Math.max(totalPages - 1, 0);
+    if (page > lastPage) router.replace(getOneseoListUrl({ page: lastPage }), { scroll: false });
+  }, [isPlaceholderData, page, router, totalPages]);
+
+  // 조건이 바뀌면 1페이지부터 다시 봅니다.
+  const handleTestResultTagChange = (value: SideBarType) => {
+    replaceOneseoListQuery({ testResultTag: value, page: 0 });
+  };
+
+  const handleScreeningTagChange = (value: OneseoListQuery['screeningTag']) => {
+    replaceOneseoListQuery({ screeningTag: value, page: 0 });
+  };
+
+  const handleSubmittedChange = (value: OneseoListQuery['isSubmitted']) => {
+    replaceOneseoListQuery({ isSubmitted: value, page: 0 });
+  };
+
+  const handleRequestedChange = (value: OneseoListQuery['status']) => {
+    replaceOneseoListQuery({ status: value, page: 0 });
+  };
+
+  const handleKeywordChange = (value: string) => {
+    setKeywordInput(value);
+    clearTimeout(keywordTimerRef.current);
+    keywordTimerRef.current = setTimeout(() => {
+      replaceOneseoListQuery({ keyword: value, page: 0 });
+    }, KEYWORD_DEBOUNCE_MS);
+  };
+
+  const handleResetFilter = () => {
+    clearTimeout(keywordTimerRef.current);
+    setKeywordInput('');
+    replaceOneseoListQuery({
+      screeningTag: '',
+      isSubmitted: '',
+      status: 'ANY_EDIT',
+      keyword: '',
+      page: 0,
+    });
+  };
+
+  const handlePageChange = (nextPage: number) => {
+    replaceOneseoListQuery({ page: nextPage });
+  };
 
   const startPage = totalPages ? Math.max(0, Math.min(page, data.info.totalPages - 3)) : 0;
 
@@ -87,18 +172,6 @@ const MainPage = ({
         (_, i) => startPage + i + 1,
       )
     : [];
-
-  useEffect(() => {
-    oneseoRefetch();
-  }, [debouncedKeyword, page, testResultTag, isSubmitted, screeningTag, requested]);
-
-  useEffect(() => {
-    // 필터 조건이 변경 되었을때 1번부터 다시 시작.
-    // 페이지 리셋을 각 필터 핸들러(SideMenu·검색어 입력 등)로 옮기는 것이 정석이나
-    // 핸들러가 여러 컴포넌트에 분산되어 있어 후속 과제로 이월 (Stage 5 범위 제외)
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setPage(0);
-  }, [debouncedKeyword, testResultTag, isSubmitted, screeningTag, requested]);
 
   return (
     <main
@@ -112,7 +185,7 @@ const MainPage = ({
     >
       <SideMenu
         testResultTag={testResultTag}
-        setTestResultTag={setTestResultTag}
+        setTestResultTag={handleTestResultTagChange}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
@@ -123,13 +196,14 @@ const MainPage = ({
         <div className={cn([...flexColStyle, 'gap-5'])}>
           <FilterBar
             screeningTag={screeningTag}
-            setScreeningTag={setScreeningTag}
-            keyword={keyword}
-            setKeyword={setKeyword}
+            setScreeningTag={handleScreeningTagChange}
+            keyword={keywordInput}
+            setKeyword={handleKeywordChange}
             isSubmitted={isSubmitted}
-            setIsSubmitted={setIsSubmitted}
+            setIsSubmitted={handleSubmittedChange}
             requested={requested}
-            setRequested={setRequested}
+            setRequested={handleRequestedChange}
+            resetFilter={handleResetFilter}
             testResultTag={testResultTag}
             isAfterFirstResults={isAfterFirstResults}
             isAfterSecondResults={isAfterSecondResults}
@@ -172,15 +246,13 @@ const MainPage = ({
             <Pagination>
               <PaginationContent>
                 <PaginationItem>
-                  <PaginationPrevious
-                    onClick={() => setPage((prev) => (prev > 0 ? prev - 1 : 0))}
-                  />
+                  <PaginationPrevious onClick={() => handlePageChange(Math.max(page - 1, 0))} />
                 </PaginationItem>
                 {pageNumbers.map((pageNumber: number) => (
                   <PaginationItem key={pageNumber}>
                     <PaginationLink
                       isActive={pageNumber - 1 === page}
-                      onClick={() => setPage(pageNumber - 1)}
+                      onClick={() => handlePageChange(pageNumber - 1)}
                     >
                       {pageNumber}
                     </PaginationLink>
@@ -188,11 +260,7 @@ const MainPage = ({
                 ))}
                 <PaginationItem>
                   <PaginationNext
-                    onClick={() =>
-                      setPage((prev) =>
-                        prev < data.info.totalPages - 1 ? prev + 1 : data.info.totalPages - 1,
-                      )
-                    }
+                    onClick={() => handlePageChange(Math.min(page + 1, data.info.totalPages - 1))}
                   />
                 </PaginationItem>
               </PaginationContent>

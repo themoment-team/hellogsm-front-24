@@ -52,6 +52,7 @@ export default async function Home({ searchParams }: HomeProps) {
   return (
     <MainPage
       initialData={data}
+      initialQuery={initialQuery}
       isAfterFirstResults={isAfterFirstResults}
       isAfterSecondResults={isAfterSecondResults}
       is역량검사처리기간={is역량검사처리기간}

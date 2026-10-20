@@ -98,7 +98,7 @@ interface SideMenuProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   testResultTag: SideBarType;
-  setTestResultTag: React.Dispatch<React.SetStateAction<SideBarType>>;
+  setTestResultTag: (testResultTag: SideBarType) => void;
 }
 
 const SideMenu = ({ isOpen, setIsOpen, testResultTag, setTestResultTag }: SideMenuProps) => {
