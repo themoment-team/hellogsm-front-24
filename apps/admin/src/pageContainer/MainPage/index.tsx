@@ -160,6 +160,10 @@ const MainPage = ({
     });
   };
 
+  const handleSortChange = (sort: OneseoListQuery['sort']) => {
+    replaceOneseoListQuery({ sort, page: 0 });
+  };
+
   const handlePageChange = (nextPage: number) => {
     replaceOneseoListQuery({ page: nextPage });
   };
@@ -222,7 +226,7 @@ const MainPage = ({
           >
             <Table>
               <TableHeader>
-                <ApplicantTH />
+                <ApplicantTH sort={query.sort} onSortChange={handleSortChange} />
               </TableHeader>
               <TableBody>
                 {data?.oneseos &&

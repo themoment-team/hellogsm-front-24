@@ -20,6 +20,8 @@ test('URL 쿼리를 목록 조건으로 바꾸고 page는 0부터 시작하는 �
       submitted: 'NO',
       status: 'APPROVED',
       q: '김',
+      sort: 'NAME',
+      order: 'desc',
       page: '3',
     }),
     {
@@ -28,6 +30,7 @@ test('URL 쿼리를 목록 조건으로 바꾸고 page는 0부터 시작하는 �
       isSubmitted: 'NO',
       status: 'APPROVED',
       keyword: '김',
+      sort: { sortBy: 'NAME', sortDirection: 'DESC' },
       page: 2,
     },
   );
@@ -40,6 +43,8 @@ test('잘못된 값은 기본값으로 대체한다', () => {
       screening: 'EXTRA_VETERANS',
       submitted: 'yes',
       status: 'NONE',
+      sort: 'AGE',
+      order: 'desc',
     }),
     DEFAULT_ONESEO_LIST_QUERY,
   );
@@ -79,6 +84,7 @@ test('쿼리스트링으로 바꾼 뒤 다시 읽으면 같은 조건이 된다'
     isSubmitted: 'YES',
     status: 'REQUESTED',
     keyword: '광주 & 중학교',
+    sort: { sortBy: 'COMPETENCY_SCORE', sortDirection: 'DESC' },
     page: 4,
   } as const;
 
@@ -117,5 +123,33 @@ test('REQUEST 탭이 아니면 수정 상태는 보내지 않는다', () => {
     isSubmitted: 'NO',
     keyword: '',
     status: undefined,
+    sortBy: undefined,
+    sortDirection: undefined,
   });
+});
+
+test('정렬 order가 없거나 잘못되면 오름차순으로 본다', () => {
+  for (const order of [undefined, 'ASC', 'up']) {
+    assert.deepEqual(parseOneseoListQuery({ sort: 'SCHOOL_NAME', order }).sort, {
+      sortBy: 'SCHOOL_NAME',
+      sortDirection: 'ASC',
+    });
+  }
+});
+
+test('정렬 order는 대소문자를 구분하지 않는다', () => {
+  assert.equal(parseOneseoListQuery({ sort: 'NAME', order: 'DESC' }).sort?.sortDirection, 'DESC');
+});
+
+test('정렬은 sort와 소문자 order로 쿼리스트링에 넣고 API에는 sortBy·sortDirection으로 보낸다', () => {
+  const query = {
+    ...DEFAULT_ONESEO_LIST_QUERY,
+    sort: { sortBy: 'INTERVIEW_SCORE', sortDirection: 'ASC' },
+  } as const;
+
+  assert.equal(toOneseoListSearchString(query), 'sort=INTERVIEW_SCORE&order=asc');
+
+  const params = toOneseoListRequestParams(query);
+  assert.equal(params.sortBy, 'INTERVIEW_SCORE');
+  assert.equal(params.sortDirection, 'ASC');
 });
