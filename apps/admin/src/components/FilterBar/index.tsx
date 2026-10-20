@@ -26,13 +26,16 @@ import { CloverIcon, FileIcon, MedalIcon, SearchIcon, UploadIcon } from '@/asset
 import { ScreeningTagFilter } from '@/pageContainer/MainPage/oneseoListQuery';
 import { SideBarType } from '@/schemas';
 
+// Radix Select는 SelectItem에 빈 문자열 value를 쓸 수 없어 '전체'는 별도 값으로 받고 상태에는 ''를 저장합니다.
+const ALL_OPTION_VALUE = 'ALL';
+
 interface FilterBarProps {
   keyword: string;
   setKeyword: (keyword: string) => void;
   isSubmitted: YesNo | '';
-  setIsSubmitted: (isSubmitted: YesNo) => void;
+  setIsSubmitted: (isSubmitted: YesNo | '') => void;
   screeningTag: ScreeningTagFilter | '';
-  setScreeningTag: (screeningTag: ScreeningTagFilter) => void;
+  setScreeningTag: (screeningTag: ScreeningTagFilter | '') => void;
   requested: OneseoEditStatusTag;
   setRequested: (requested: OneseoEditStatusTag) => void;
   resetFilter: () => void;
@@ -74,6 +77,11 @@ const FilterBar = ({
   });
 
   const handleSubmittedChange = (value: string) => {
+    if (value === ALL_OPTION_VALUE) {
+      setIsSubmitted('');
+      return;
+    }
+
     if (value === 'YES' || value === 'NO') {
       setIsSubmitted(value);
       return;
@@ -85,6 +93,11 @@ const FilterBar = ({
   };
 
   const handleScreeningTagChange = (value: string) => {
+    if (value === ALL_OPTION_VALUE) {
+      setScreeningTag('');
+      return;
+    }
+
     if (value === 'GENERAL' || value === 'SPECIAL' || value === 'EXTRA') {
       setScreeningTag(value);
     }
@@ -142,6 +155,7 @@ const FilterBar = ({
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>전형선택</SelectLabel>
+                  <SelectItem value={ALL_OPTION_VALUE}>전체</SelectItem>
                   <SelectItem value="GENERAL">일반전형</SelectItem>
                   <SelectItem value="SPECIAL">특별전형</SelectItem>
                   <SelectItem value="EXTRA">정원 외 특별전형</SelectItem>
@@ -171,6 +185,7 @@ const FilterBar = ({
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>서류 제출 여부</SelectLabel>
+                    <SelectItem value={ALL_OPTION_VALUE}>전체</SelectItem>
                     <SelectItem value="NO">제출 전</SelectItem>
                     <SelectItem value="YES">제출 완료</SelectItem>
                   </SelectGroup>
