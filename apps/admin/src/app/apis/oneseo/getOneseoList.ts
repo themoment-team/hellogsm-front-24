@@ -24,12 +24,21 @@ export const getOneseoList = async ({
   query,
 }: GetOneseoListParams): Promise<OneseoListType | undefined> => {
   const session = (await cookies()).get('SESSION')?.value;
-  const { page, size, testResultTag, screeningTag, isSubmitted, keyword, status } =
-    toOneseoListRequestParams(query);
+  const {
+    page,
+    size,
+    testResultTag,
+    screeningTag,
+    isSubmitted,
+    keyword,
+    status,
+    sortBy,
+    sortDirection,
+  } = toOneseoListRequestParams(query);
 
   const response = await fetch(
     new URL(
-      `${oneseoUrl.getSearchedOneseoList(page, size, testResultTag, screeningTag, isSubmitted, keyword, status)}`,
+      `${oneseoUrl.getSearchedOneseoList(page, size, testResultTag, screeningTag, isSubmitted, keyword, status, sortBy, sortDirection)}`,
       process.env.NEXT_PUBLIC_API_BASE_URL,
     ),
     {
