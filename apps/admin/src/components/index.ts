@@ -1,3 +1,4 @@
+export { default as ApplicantPagination } from './ApplicantPagination';
 export { default as ApplicantTH } from './ApplicantTH';
 export { default as ApplicantTR } from './ApplicantTR';
 export { default as TextField } from './TextField';

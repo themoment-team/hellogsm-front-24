@@ -1,25 +1,15 @@
 'use client';
 
 import { keepPreviousData } from '@tanstack/react-query';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 import { useGetEditability, useGetOneseoList } from '@repo/api/hooks';
 import { OneseoListType } from '@repo/types';
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-  Table,
-  TableBody,
-  TableHeader,
-} from '@repo/ui/shadcn';
+import { Table, TableBody, TableHeader } from '@repo/ui/shadcn';
 import { cn } from '@repo/utils';
 
-import { ApplicantTH, ApplicantTR, FilterBar, SideMenu } from '@/components';
+import { ApplicantPagination, ApplicantTH, ApplicantTR, FilterBar, SideMenu } from '@/components';
 import { SideBarType } from '@/schemas';
 
 import {
@@ -84,6 +74,7 @@ const MainPage = ({
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const query = parseOneseoListQuery(Object.fromEntries(searchParams));
   const { testResultTag, screeningTag, isSubmitted, status: requested, page } = query;
@@ -91,6 +82,7 @@ const MainPage = ({
   // 입력창은 바로 반영하고, 디바운스된 검색어만 URL에 반영합니다.
   const [keywordInput, setKeywordInput] = useState<string>(query.keyword);
   const keywordTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const tableContainerRef = useRef<HTMLDivElement>(null);
 
   // 화면을 떠난 뒤 남은 타이머가 다른 페이지의 URL을 바꾸지 않도록 정리합니다.
   useEffect(() => () => clearTimeout(keywordTimerRef.current), []);
@@ -166,16 +158,13 @@ const MainPage = ({
 
   const handlePageChange = (nextPage: number) => {
     replaceOneseoListQuery({ page: nextPage });
+    tableContainerRef.current?.scrollTo({ top: 0 });
   };
 
-  const startPage = totalPages ? Math.max(0, Math.min(page, data.info.totalPages - 3)) : 0;
-
-  const pageNumbers = totalPages
-    ? Array.from(
-        { length: Math.min(3, data.info.totalPages - startPage) },
-        (_, i) => startPage + i + 1,
-      )
-    : [];
+  const getPageHref = (targetPage: number) => {
+    const search = toOneseoListSearchString({ ...query, page: targetPage });
+    return `${pathname}${search ? `?${search}` : ''}`;
+  };
 
   return (
     <main
@@ -213,6 +202,7 @@ const MainPage = ({
             isAfterSecondResults={isAfterSecondResults}
           />
           <div
+            ref={tableContainerRef}
             className={cn(
               'border',
               'border-solid',
@@ -247,28 +237,13 @@ const MainPage = ({
           </div>
 
           {totalPages ? (
-            <Pagination>
-              <PaginationContent>
-                <PaginationItem>
-                  <PaginationPrevious onClick={() => handlePageChange(Math.max(page - 1, 0))} />
-                </PaginationItem>
-                {pageNumbers.map((pageNumber: number) => (
-                  <PaginationItem key={pageNumber}>
-                    <PaginationLink
-                      isActive={pageNumber - 1 === page}
-                      onClick={() => handlePageChange(pageNumber - 1)}
-                    >
-                      {pageNumber}
-                    </PaginationLink>
-                  </PaginationItem>
-                ))}
-                <PaginationItem>
-                  <PaginationNext
-                    onClick={() => handlePageChange(Math.min(page + 1, data.info.totalPages - 1))}
-                  />
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
+            <ApplicantPagination
+              page={page}
+              totalPages={totalPages}
+              totalElements={data.info.totalElements}
+              getPageHref={getPageHref}
+              onPageChange={handlePageChange}
+            />
           ) : (
             <span className={cn('text-red-500')}>조회된 지원자 데이터가 없습니다.</span>
           )}
