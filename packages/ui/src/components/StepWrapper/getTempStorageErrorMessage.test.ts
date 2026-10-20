@@ -57,3 +57,15 @@ test('400이 아니거나 axios 에러가 아니면 공통 문구만 보여준�
   assert.equal(getTempStorageErrorMessage(axiosError()), '임시 저장을 실패하였습니다.');
   assert.equal(getTempStorageErrorMessage(new Error('unknown')), '임시 저장을 실패하였습니다.');
 });
+
+test('400이어도 검증 실패 형식이 아닌 개발자용 원문은 덧붙이지 않는다', () => {
+  assert.equal(
+    getTempStorageErrorMessage(
+      axiosError(
+        400,
+        'JSON parse error: Cannot deserialize value of type `FreeSemester` from String ""',
+      ),
+    ),
+    '임시 저장을 실패하였습니다.',
+  );
+});
