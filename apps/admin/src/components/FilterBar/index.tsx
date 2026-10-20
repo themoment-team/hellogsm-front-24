@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { useGetOperation, usePostExcel } from '@repo/api/hooks';
 import { oneseoUrl } from '@repo/api/lib';
 import { useModalStore } from '@repo/store';
-import { OneseoEditStatusTag, ScreeningType, YesNo } from '@repo/types';
+import { OneseoEditStatusTag, YesNo } from '@repo/types';
 import { PrintIcon } from '@repo/ui/icons';
 import {
   Button,
@@ -23,17 +23,19 @@ import {
 import { cn } from '@repo/utils';
 
 import { CloverIcon, FileIcon, MedalIcon, SearchIcon, UploadIcon } from '@/assets';
+import { ScreeningTagFilter } from '@/pageContainer/MainPage/oneseoListQuery';
 import { SideBarType } from '@/schemas';
 
 interface FilterBarProps {
   keyword: string;
-  setKeyword: React.Dispatch<React.SetStateAction<string>>;
-  isSubmitted: YesNo | string;
-  setIsSubmitted: React.Dispatch<React.SetStateAction<YesNo | string>>;
-  screeningTag: ScreeningType | string;
-  setScreeningTag: React.Dispatch<React.SetStateAction<ScreeningType | string>>;
+  setKeyword: (keyword: string) => void;
+  isSubmitted: YesNo | '';
+  setIsSubmitted: (isSubmitted: YesNo) => void;
+  screeningTag: ScreeningTagFilter | '';
+  setScreeningTag: (screeningTag: ScreeningTagFilter) => void;
   requested: OneseoEditStatusTag;
-  setRequested: React.Dispatch<React.SetStateAction<OneseoEditStatusTag>>;
+  setRequested: (requested: OneseoEditStatusTag) => void;
+  resetFilter: () => void;
   testResultTag: SideBarType;
   isAfterFirstResults: boolean;
   isAfterSecondResults: boolean;
@@ -48,6 +50,7 @@ const FilterBar = ({
   screeningTag,
   requested,
   setRequested,
+  resetFilter,
   testResultTag,
   isAfterFirstResults,
   isAfterSecondResults,
@@ -85,13 +88,6 @@ const FilterBar = ({
     if (value === 'GENERAL' || value === 'SPECIAL' || value === 'EXTRA') {
       setScreeningTag(value);
     }
-  };
-
-  const resetFilterData = () => {
-    setIsSubmitted('');
-    setScreeningTag('');
-    setKeyword('');
-    setRequested('ANY_EDIT');
   };
 
   const printExcel = () => {
@@ -182,7 +178,7 @@ const FilterBar = ({
               </Select>
             )}
 
-            <Button onClick={resetFilterData} variant="ghost" className={cn('text-slate-400')}>
+            <Button onClick={resetFilter} variant="ghost" className={cn('text-slate-400')}>
               필터 초기화
             </Button>
           </div>

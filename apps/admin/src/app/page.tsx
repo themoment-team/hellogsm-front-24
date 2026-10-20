@@ -2,12 +2,20 @@ import { getDate } from '@repo/api/apis';
 import { getKoreanDate, isTimeAfter } from '@repo/utils';
 
 import { MainPage } from '@/pageContainer';
+import { SearchParamsRecord, parseOneseoListQuery } from '@/pageContainer/MainPage/oneseoListQuery';
 
 import { getOneseoList } from './apis';
 
-export default async function Home() {
+interface HomeProps {
+  searchParams: Promise<SearchParamsRecord>;
+}
+
+export default async function Home({ searchParams }: HomeProps) {
+  // 클라이언트가 같은 조건의 쿼리 키로 이어받을 수 있도록 URL과 같은 조건으로 초기 목록을 받습니다.
+  const initialQuery = parseOneseoListQuery(await searchParams);
+
   const [data, dateList] = await Promise.all([
-    getOneseoList({ redirectUrl: '/signin' }),
+    getOneseoList({ redirectUrl: '/signin', query: initialQuery }),
     getDate(),
   ]);
 
@@ -44,6 +52,7 @@ export default async function Home() {
   return (
     <MainPage
       initialData={data}
+      initialQuery={initialQuery}
       isAfterFirstResults={isAfterFirstResults}
       isAfterSecondResults={isAfterSecondResults}
       is역량검사처리기간={is역량검사처리기간}

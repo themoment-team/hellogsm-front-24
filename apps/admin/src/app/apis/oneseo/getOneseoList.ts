@@ -4,11 +4,14 @@ import { redirect } from 'next/navigation';
 import { oneseoUrl } from '@repo/api/lib';
 import { OneseoListType } from '@repo/types';
 
-const DEFAULT_LIST_SIZE = 10;
-const DEFAULT_TEST_RESULT_TAG = 'ALL';
+import {
+  OneseoListQuery,
+  toOneseoListRequestParams,
+} from '@/pageContainer/MainPage/oneseoListQuery';
 
 interface GetOneseoListParams {
   redirectUrl: string;
+  query: OneseoListQuery;
 }
 
 /**
@@ -18,12 +21,15 @@ interface GetOneseoListParams {
  */
 export const getOneseoList = async ({
   redirectUrl,
+  query,
 }: GetOneseoListParams): Promise<OneseoListType | undefined> => {
   const session = (await cookies()).get('SESSION')?.value;
+  const { page, size, testResultTag, screeningTag, isSubmitted, keyword, status } =
+    toOneseoListRequestParams(query);
 
   const response = await fetch(
     new URL(
-      `${oneseoUrl.getSearchedOneseoList(0, DEFAULT_LIST_SIZE, DEFAULT_TEST_RESULT_TAG)}`,
+      `${oneseoUrl.getSearchedOneseoList(page, size, testResultTag, screeningTag, isSubmitted, keyword, status)}`,
       process.env.NEXT_PUBLIC_API_BASE_URL,
     ),
     {
