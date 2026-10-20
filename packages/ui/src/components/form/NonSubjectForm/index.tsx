@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { KeyboardEvent, useEffect } from 'react';
 import { FieldErrors, UseFormRegister, UseFormTrigger, get, Path } from 'react-hook-form';
 
 import { Step4FormType } from '@repo/types';
@@ -32,6 +32,14 @@ const nonSubjectArray = [
 const nonSubjectTitleArray = ['결석', '지각', '조퇴', '결과', '봉사활동(시간)'] as const;
 
 const volunteerTimeIndex = nonSubjectTitleArray.length - 1;
+
+// type="number"는 min만으로는 직접 타이핑한 음수를 막지 못한다. 서버는 음수 봉사시간이 담긴
+// 임시저장을 400으로 거부하므로 부호·지수 표기 키 입력 자체를 막는다.
+const BLOCKED_VOLUNTEER_TIME_KEYS = ['-', '+', 'e', 'E'];
+
+const preventNegativeVolunteerTime = (e: KeyboardEvent<HTMLInputElement>) => {
+  if (BLOCKED_VOLUNTEER_TIME_KEYS.includes(e.key)) e.preventDefault();
+};
 
 const itemStyle = [
   'h-full',
@@ -111,18 +119,21 @@ const NonSubjectForm = ({ register, errors, showError, validateForm }: NonSubjec
               ) as Path<Step4FormType>;
 
               const hasError = Boolean(get(errors, fieldPath)) && showError;
+              const isVolunteerTime = idx === volunteerTimeIndex;
               return (
                 <div
                   key={idx}
                   className={cn([
                     ...itemStyle,
                     'px-[0.75rem]',
-                    idx === volunteerTimeIndex ? 'w-[15rem]' : 'w-[5.625rem]',
+                    isVolunteerTime ? 'w-[15rem]' : 'w-[5.625rem]',
                   ])}
                 >
                   <input
                     {...register(fieldPath, { valueAsNumber: true })}
                     type="number"
+                    min={isVolunteerTime ? 0 : undefined}
+                    onKeyDown={isVolunteerTime ? preventNegativeVolunteerTime : undefined}
                     className={cn(
                       'w-full',
                       'h-[2rem]',
@@ -140,7 +151,7 @@ const NonSubjectForm = ({ register, errors, showError, validateForm }: NonSubjec
                         '!border-red-600': hasError,
                       },
                     )}
-                    placeholder={idx === volunteerTimeIndex ? '시간 입력' : '입력'}
+                    placeholder={isVolunteerTime ? '시간 입력' : '입력'}
                   />
                 </div>
               );
