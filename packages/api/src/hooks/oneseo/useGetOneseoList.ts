@@ -14,10 +14,22 @@ interface UseGetOneseoListParams {
   isSubmitted?: string;
   keyword?: string;
   status?: string;
+  sortBy?: string;
+  sortDirection?: string;
 }
 
 export const useGetOneseoList = (
-  { page, size, testResultTag, screeningTag, isSubmitted, keyword, status }: UseGetOneseoListParams,
+  {
+    page,
+    size,
+    testResultTag,
+    screeningTag,
+    isSubmitted,
+    keyword,
+    status,
+    sortBy,
+    sortDirection,
+  }: UseGetOneseoListParams,
   options?: Omit<UseQueryOptions<OneseoListType>, 'queryKey'>,
 ) =>
   useQuery({
@@ -29,6 +41,8 @@ export const useGetOneseoList = (
       isSubmitted,
       keyword,
       status,
+      sortBy,
+      sortDirection,
     ),
     queryFn: () =>
       get<OneseoListType>(
@@ -40,6 +54,8 @@ export const useGetOneseoList = (
           isSubmitted,
           keyword,
           status,
+          sortBy,
+          sortDirection,
         ),
       ),
     staleTime: minutesToMs(5),

@@ -212,6 +212,21 @@ export type OneseoEditStatusType = 'NONE' | 'REQUESTED' | 'APPROVED';
 
 export type OneseoEditStatusTag = 'ANY_EDIT' | 'REQUESTED' | 'APPROVED';
 
+/** 원서 검색 정렬 기준 */
+export type OneseoSortBy =
+  | 'SUBMIT_CODE'
+  | 'NAME'
+  | 'SCHOOL_NAME'
+  | 'SCREENING'
+  | 'COMPETENCY_SCORE'
+  | 'INTERVIEW_SCORE'
+  | 'REAL_ONESEO_ARRIVED'
+  | 'FIRST_TEST_PASS'
+  | 'SECOND_TEST_PASS'
+  | 'ENTRANCE_INTENTION';
+
+export type SortDirection = 'ASC' | 'DESC';
+
 export interface OneseoType {
   memberId: number;
   submitCode: string | null;

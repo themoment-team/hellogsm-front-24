@@ -51,6 +51,8 @@ export const oneseoUrl = {
     isSubmitted?: string,
     keyword?: string,
     status?: string,
+    sortBy?: string,
+    sortDirection?: string,
   ) => {
     const searchParams = new URLSearchParams();
 
@@ -61,6 +63,8 @@ export const oneseoUrl = {
     addParam(searchParams, 'isSubmitted', isSubmitted);
     addParam(searchParams, 'keyword', keyword);
     addParam(searchParams, 'status', status);
+    addParam(searchParams, 'sortBy', sortBy);
+    addParam(searchParams, 'sortDirection', sortDirection);
 
     return `/oneseo/v3/oneseo/search?${searchParams.toString()}`;
   },
