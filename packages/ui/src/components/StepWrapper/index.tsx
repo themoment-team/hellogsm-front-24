@@ -48,7 +48,10 @@ import { Step1Register, Step2Register, Step3Register, Step4Register } from '../r
 import StepBar from '../StepBar';
 
 import { getSubmitErrorMessage } from './getSubmitErrorMessage';
-import { getTempStorageErrorMessage } from './getTempStorageErrorMessage';
+import {
+  getRestoreTempStorageErrorMessage,
+  getTempStorageErrorMessage,
+} from './getTempStorageErrorMessage';
 import { normalizeAchievements, normalizeArtsPhysicalAchievement } from './normalizeAchievements';
 
 /** step 4에서 마지막 입력 이후 이 시간만큼 입력이 없으면 자동으로 임시저장한다 */
@@ -287,9 +290,14 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
     onError: (error) => toast.error(getTempStorageErrorMessage(error)),
   });
 
-  // 제출 실패 후 임시저장 복구 전용 — 제출 실패 안내가 이미 떠 있으므로 실패 토스트를 띄우지 않는다.
-  // 마감 후에는 제출과 임시저장이 모두 403이라, 토스트를 띄우면 제출과 무관한 실패 안내가 겹친다.
-  const { mutate: restoreTempStorageMutate } = usePostTempStorage(Number(step));
+  // 제출 실패 후 임시저장 복구 전용 — 제출 실패 안내와 별개로, 복구까지 실패하면 서버에 원서도
+  // 임시저장도 남지 않으므로 따로 알린다. 마감 후 403은 제출 실패 안내와 원인이 같아 띄우지 않는다.
+  const { mutate: restoreTempStorageMutate } = usePostTempStorage(Number(step), {
+    onError: (error) => {
+      const message = getRestoreTempStorageErrorMessage(error);
+      if (message) toast.error(message);
+    },
+  });
 
   const { mutate: postMockScore } = usePostMockScore(graduationType, {
     onSuccess: (data) => {

@@ -3,7 +3,10 @@ import test from 'node:test';
 
 import { AxiosError, AxiosHeaders, AxiosResponse } from 'axios';
 
-import { getTempStorageErrorMessage } from './getTempStorageErrorMessage';
+import {
+  getRestoreTempStorageErrorMessage,
+  getTempStorageErrorMessage,
+} from './getTempStorageErrorMessage';
 
 const axiosError = (status?: number, message?: string) => {
   const config = { headers: new AxiosHeaders() };
@@ -68,4 +71,33 @@ test('400이어도 검증 실패 형식이 아닌 개발자용 원문은 덧붙�
     ),
     '임시 저장을 실패하였습니다.',
   );
+});
+
+const RESTORE_FAILED =
+  '작성 중인 내용이 임시 저장되지 않았습니다. 새로고침하거나 페이지를 나가면 입력한 내용이 사라질 수 있습니다.';
+
+test('복구 저장이 검증 실패로 400이면 작성 내용 유실 안내에 원인을 덧붙인다', () => {
+  assert.equal(
+    getRestoreTempStorageErrorMessage(
+      axiosError(
+        400,
+        "{'fieldErrors':{'middleSchoolAchievement.volunteerTime[1]':'봉사시간은 0 이상이어야 합니다.'}}",
+      ),
+    ),
+    `${RESTORE_FAILED} 봉사시간은 0 이상이어야 합니다.`,
+  );
+});
+
+test('복구 저장이 403이 아닌 이유로 실패하면 작성 내용 유실 안내만 보여준다', () => {
+  assert.equal(
+    getRestoreTempStorageErrorMessage(axiosError(400, 'JSON parse error')),
+    RESTORE_FAILED,
+  );
+  assert.equal(getRestoreTempStorageErrorMessage(axiosError(500)), RESTORE_FAILED);
+  assert.equal(getRestoreTempStorageErrorMessage(axiosError()), RESTORE_FAILED);
+  assert.equal(getRestoreTempStorageErrorMessage(new Error('unknown')), RESTORE_FAILED);
+});
+
+test('마감 후 403이면 제출 실패 안내와 겹치지 않도록 안내하지 않는다', () => {
+  assert.equal(getRestoreTempStorageErrorMessage(axiosError(403)), null);
 });
