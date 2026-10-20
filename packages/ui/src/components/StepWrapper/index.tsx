@@ -48,6 +48,7 @@ import { Step1Register, Step2Register, Step3Register, Step4Register } from '../r
 import StepBar from '../StepBar';
 
 import { getSubmitErrorMessage } from './getSubmitErrorMessage';
+import { getTempStorageErrorMessage } from './getTempStorageErrorMessage';
 import { normalizeAchievements, normalizeArtsPhysicalAchievement } from './normalizeAchievements';
 
 /** step 4에서 마지막 입력 이후 이 시간만큼 입력이 없으면 자동으로 임시저장한다 */
@@ -278,12 +279,12 @@ const StepWrapper = ({ data, step, info, memberId, type, isModifyApproved }: Ste
         ),
       });
     },
-    onError: () => toast.error('임시 저장을 실패하였습니다.'),
+    onError: (error) => toast.error(getTempStorageErrorMessage(error)),
   });
 
   // 단계 이동 시 자동 저장 전용 — 성공 토스트 없이 조용히 저장한다
   const { mutate: autoSaveTempStorage } = usePostTempStorage(Number(step), {
-    onError: () => toast.error('임시 저장을 실패하였습니다.'),
+    onError: (error) => toast.error(getTempStorageErrorMessage(error)),
   });
 
   // 제출 실패 후 임시저장 복구 전용 — 제출 실패 안내가 이미 떠 있으므로 실패 토스트를 띄우지 않는다.
