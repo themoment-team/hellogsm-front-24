@@ -29,6 +29,19 @@ test('400이면 서버 message를 그대로 보여준다', () => {
   );
 });
 
+test('400이 요청 검증 실패면 원문 대신 필드별 메시지를 보여준다', () => {
+  assert.equal(
+    getSubmitErrorMessage(
+      axiosError(
+        400,
+        "{'fieldErrors':{'middleSchoolAchievement.volunteerTime[2]':'봉사시간은 0 이상이어야 합니다.'}}",
+      ),
+      '제출',
+    ),
+    '봉사시간은 0 이상이어야 합니다.',
+  );
+});
+
 test('400인데 서버 message가 없으면 기본 실패 문구를 보여준다', () => {
   assert.equal(
     getSubmitErrorMessage(axiosError(400), '제출'),
