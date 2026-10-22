@@ -287,7 +287,7 @@ const ClientModals = () => {
           </AlertDialogHeader>
           <AlertDialogDescription>
             최종 제출 후에는 원서 수정이 원칙적으로 불가능하며, 관리자 승인 시에만 수정이
-            가능합니다.
+            가능합니다. 수정 권한 요청은 9시부터 16시 사이까지 가능합니다.
           </AlertDialogDescription>
           <AlertDialogFooter>
             <Button variant="outline" onClick={() => setOneseoModifyRequestModal(false)}>
